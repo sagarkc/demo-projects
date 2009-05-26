@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Box xmlns:mx="http://www.adobe.com/2006/mxml"  backgroundColor="#FFFFFF"
+<mx:Box xmlns:mx="http://www.adobe.com/2006/mxml"  backgroundColor="#247FAE"
 	height="135" xmlns:view="com.gs.view.*">
 	
-	<mx:HBox width="100%" height="100%">
-		<mx:VBox width="224" height="100%"
-			horizontalAlign="left" verticalAlign="middle">
-			<mx:Image source="assets/images/self_help_library_home.jpg" width="100%" height="100%"/>		
-		</mx:VBox>
+	<mx:VBox width="100%" height="100%">
 		
-		<mx:VBox width="100%" height="100%">
+		
+		<mx:HBox width="100%" height="100%">
+			<mx:HBox width="200" height="100%">
+				
+			</mx:HBox>
+		
 			<mx:VBox width="100%" height="100%">
 				<mx:HBox width="100%" height="100%" horizontalAlign="right" verticalAlign="middle">
 					<mx:Text text="Xyz Library" fontFamily="Georgia" fontSize="24" fontWeight="bold" fontStyle="italic"/>
@@ -17,9 +18,10 @@
 					<mx:Text text="Welcome Guest" fontWeight="bold"/>
 				</mx:HBox>
 			</mx:VBox>
-			<mx:HBox width="100%" height="46">
-				<view:TopButtonBar width="100%" height="45"/>
-			</mx:HBox>
-		</mx:VBox>
-	</mx:HBox>
+			
+		</mx:HBox>
+		<mx:HBox width="100%" height="46">
+				<view:TopButtonBar width="100%" height="45" horizontalAlign="right"/>
+		</mx:HBox>
+	</mx:VBox>
 </mx:Box>
