@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml"  xmlns:view="com.gs.view.*">
+	
+	<view:HeaderBox width="100%" height="132"/>
+	<view:HorizontalSplitPane width="100%" height="100%"/>
+	<mx:HBox id="footerBox" width="100%" height="30" horizontalAlign="center" verticalAlign="middle">
+		<mx:Text text="Copyright Xyz library"/>
+	</mx:HBox>
+</mx:VBox>
