@@ -1,0 +1,436 @@
+/* CSS file */
+Application{
+backgroundColor:#ffffff;
+padding-bottom:10;
+padding-left:0;
+padding-right:0;
+padding-top:0;
+backgroundGradientColors: #ffffff, #ffffff;
+font-size: 11;
+theme-color: #cdcdcd;
+color: #333333;
+}
+
+ComboBox 
+{
+	/*skin: Embed("/assets/graphics/combobox_skin.png",
+	scaleGridLeft="4",
+	scaleGridRight="130",
+	scaleGridTop="4",
+	scaleGridBottom="25");
+	over-skin: Embed("/assets/graphics/combobox_over_skin.png",
+	scaleGridLeft="4",
+	scaleGridRight="130",
+	scaleGridTop="4",
+	scaleGridBottom="25");
+	down-skin: Embed("/assets/graphics/combobox_down_skin.png",
+	scaleGridLeft="4",
+	scaleGridRight="130",
+	scaleGridTop="4",
+	scaleGridBottom="25");*/
+	corner-radius: 2;
+	open-duration: 0;
+	close-duration: 0;
+	font-weight: normal;
+}
+
+.sideLnks 
+{			
+	icon:Embed("/assets/graphics/arrowTop.jpg");
+	text-align:left;
+	font-size:11;
+}
+
+Button 
+{
+	corner-radius : 0;
+}
+							
+.myButton
+{	
+	fillColors: #666666, #cccccc, #666666, #eeeeee;	
+	color: #000000;
+}
+
+.myButtonBg
+{
+	up-skin:Embed("/assets/graphics/buttonBG1.jpg");
+	over-skin: Embed("/assets/graphics/buttonBG1.jpg");
+	down-skin: Embed("/assets/graphics/buttonBG1.jpg");								
+	color:white;
+	text-align:left;
+	text-indent:7;
+}
+
+.myButtontop
+{
+	icon:Embed("/assets/graphics/greenarrow.gif");
+	roll-over-color : #FFFFFF;
+}
+						
+.myButtonBgSmall
+{
+	over-skin: Embed("/assets/graphics/buttonBG2.jpg");
+	down-skin: Embed("/assets/graphics/buttonBG2.jpg");	
+	color:white;
+	padding-left:0;
+	padding-right:0;
+	padding-top:0;
+	padding-bottom:0;
+	text-align:left;
+	text-indent:7;
+}
+						
+.noBoderCell
+{          
+	padding-left:4;
+	padding-top:0;
+	padding-right:4;
+	padding-bottom:4;
+}
+
+.paddingCell   
+{          
+	padding-left:7;
+	padding-top:5;
+	padding-right:7;
+	padding-bottom:5;
+}
+						
+.borderCell
+{
+	border-color:#1c4094;
+	border-style:insert;
+	padding-bottom:0;
+	padding-left:0;
+	padding-right:0;
+	padding-top:0;
+}
+						
+.borderCell1
+{
+	border-color:#b7babc;
+	border-style:insert;
+	padding-bottom:0;
+	padding-left:0;
+	padding-right:0;
+	padding-top:0;
+}
+ 	      
+ 	      
+.borderPaddingCell      {
+		
+							  border-color:#ADADAD;
+							  border-style:solid;
+							  padding-left:7;
+							  padding-top:5;
+							  padding-right:7;
+							  padding-bottom:5;
+							  background-color:#E2E9DD;
+							  roll-over-color:#F0F0F0;
+		
+		
+		 				 }
+		   
+ 	      
+ 	      
+ 	      
+ 	       .rightAlign  {
+ 	       						 horizontal-align:right;
+ 	       				}
+ 	      
+ 	      .leftAlign   {
+ 	       						 horizontal-align:left;
+ 	       				}
+ 	      
+ 	
+ 	
+ 	
+ 	
+							TextInput 
+							{
+									
+									padding-left: 2;
+									vertical-align:middle;
+							}
+							 
+						.myLinks { 
+									borderStyle: solid; 
+									borderThickness: 1;
+									border-color:#FFFFFF;
+					  	 }
+					   
+					   
+			.myLinkbutton 
+					     {          text-align:left;
+									corner-radius:0;
+									font-size:10;
+					  	 }
+					   
+				.imgBox  
+						{
+							       background-color:#5B962F;
+							       vertical-align:top;
+							       color:#ffffff;
+							       font-weight:bold;
+		                }
+		       
+		       
+		          HRule 
+		          		{			strokeColor: #DEDECE;
+		          					strokeWidth: 1;
+		          		}
+		
+				.myPanel
+						{
+								   /*borderColor: #1c4094;
+								   borderAlpha: 1;
+								   borderAlpha: 1;
+								   headerColors: #1c4094, #1c4094;
+								   borderThicknessLeft: 7;
+								   borderThicknessTop:5;
+								   borderThicknessBottom: 7;
+								   borderThicknessRight: 7;
+								   dropShadowEnabled: true;
+								   corner-radius:0;
+								   shadowDistance: 7;
+								   padding-left:3;
+								   padding-right:3;
+								   padding-top:5;*/
+		  
+		   
+						}
+						
+						
+				.sePanel{
+								   borderAlpha: 1;
+								   borderThicknessLeft: 0;
+								   borderThicknessTop: 0;
+								   borderThicknessBottom: 0;
+								   borderThicknessRight: 0;
+								   highlightAlphas: 0, 0;
+								   headerColors: #1c4094, #1c4094;
+								   
+								   color:#FFFFFF;
+								   padding-left:7;
+								   padding-right:5;
+								   padding-top:7;
+								    corner-radius:0;
+								   padding-bottom:5;
+								  font-size:13;
+						}
+						
+						
+					Label{
+							      font-weight:bold;	
+						 }
+					
+					
+					Text{
+							      font-weight:normal;	
+						 }
+		
+		
+		
+		
+		
+		.myText{color:#000000;}
+		.myText1{color:#ffffff;}
+		.boldtext{font-weight:bold;}
+		.heading1{font-weight:bold;font-size:13;color:#1c4094}
+		.heading{font-weight:bold;font-size:11;}
+		.myLink
+		{
+		font-size:10;
+		font-weight:bold;
+		text-decoration:underline;
+		color:#0000ff
+		}
+		.loginPanel
+		{
+		   borderColor: #6692B5;
+		   borderAlpha: 1;
+		   headerColors: #6692B5, #6692B5;			  
+		   borderAlpha: 1;
+		   borderThicknessLeft: 2;
+		   borderThicknessTop:2;
+		   borderThicknessBottom: 2;
+		   borderThicknessRight: 2;
+		   dropShadowEnabled: false;
+		   shadowDistance: 2;
+		   padding-left:5;
+		   padding-right:5;
+		   padding-top:5;
+		   corner-radius:0;
+		   tab-style-name:myText1;
+		   
+		}
+		.myLabel{background-color:#1c4094;color:#FFFFFF;padding-left:5;padding-top:2;padding-bottom:2;font-weight:bold;}
+		
+		.myLabel1{background-color:#cccccc;color:#505050;padding-left:5;padding-top:2;padding-bottom:2;font-weight:bold;}
+		
+		.myTitle
+		{
+			color:#1c4094;
+			font-weight:bold;
+			font-size:10;
+		}
+		.title{
+			color:#FFFFFF;
+			font-weight:bold;
+			font-size:12;
+		}
+		
+		.padding10 {
+			padding-left:10;
+			padding-right:10;
+			padding-bottom:10;
+			padding-top:10;
+		}
+		
+		.myStyleTabTextColor{
+			color:#E66929;
+		}
+		
+		TitleWindow{
+			border-style:solid;
+			border-color:#7E8A93;
+			border-thickness-left:10;
+			border-thickness-right:10;
+			border-thickness-bottom:10;
+			border-thickness-top:0;
+			header-height:30;
+			header-colors:#7E8A93,#7E8A93;				
+		}
+			
+			.openAccountGridItemHeader
+{
+	padding-bottom: 3;
+	padding-left: 3;
+	padding-right: 3;
+	padding-top: 3;
+	border-style: solid;
+	border-thickness : 0.5;
+	background-color : #F0F0F0;
+}
+
+.openAccountGridItem1
+{
+	padding-bottom: 3;
+	padding-left: 3;
+	padding-right: 3;
+	padding-top: 3;
+	border-style: none;
+	border-thickness : 0.5;
+	background-color : #FFFFFF;
+	font-weight: normal;
+}
+.openAccountGridItem2
+{
+	padding-bottom: 3;
+	padding-left: 3;
+	padding-right: 3;
+	padding-top: 3;
+	border-style: none;
+	border-thickness : 0.5;
+	background-color : #F7F7F7;
+	font-weight: normal;
+}
+.checkCreditHbox1
+{
+	border-thickness : 0.5;
+	background-color : #FFFFFF;
+	font-weight: normal;
+	vertical-gap : 0;
+	horizontal-gap : 0;
+	vertical-align :middle;
+	horizontal-align :center;
+	border-style :none;
+}
+.checkCreditHbox2
+{
+	border-thickness : 0.5;
+	background-color : #F7F7F7;
+	font-weight: normal;
+	vertical-gap : 0;
+	horizontal-gap : 0;
+	vertical-align :middle;
+	horizontal-align :center;
+	border-style :none;
+}
+
+.myButtontop
+{
+	icon:Embed("/assets/graphics/greenarrow.gif");
+	roll-over-color : #FFFFFF;	
+}
+						
+.myButtontop1
+{
+	icon:Embed("/assets/graphics/HomeLoans.gif");
+	roll-over-color : #FFFFFF;	
+}
+
+.myButtontop2
+{
+	icon:Embed("/assets/graphics/Auto_Loan_Blue.gif");
+    roll-over-color : #FFFFFF;	
+}
+
+.myButtontopauto2
+{
+	icon:Embed("/assets/graphics/AutoLoan.gif");
+	roll-over-color : #FFFFFF;	
+}
+
+.myButtontop3
+{
+	icon:Embed("/assets/graphics/HomeValueEst.gif");
+    roll-over-color : #FFFFFF;	
+}
+
+.myButtontop4
+{
+	icon:Embed("/assets/graphics/Rates.gif");
+	roll-over-color : #FFFFFF;	
+}
+
+.myButtontop5
+{
+	icon:Embed("/assets/graphics/EditInfo.gif");
+    roll-over-color : #FFFFFF;	
+}
+
+.myButtontop6
+{
+	icon:Embed("/assets/graphics/LogIn.gif");
+	roll-over-color : #FFFFFF;	
+}
+
+.myButtontop7
+{
+	icon:Embed("/assets/graphics/LogOut.gif");
+	roll-over-color : #FFFFFF;	
+}
+
+.topNavigationSelected{
+	background-color:#EAEAEA;
+}
+
+.topNavigationUnSelected{
+	background-color:#FFFFFF;
+}
+
+.topNavigationLinkEnabled{
+	color:#000000;
+	corner-radius:0;
+}
+
+.topNavigationLinkDisabled{
+	color:#C0C0C0;
+	corner-radius:0;
+}
+
+.myTabStyle1{
+	corner-radius :  5;
+}

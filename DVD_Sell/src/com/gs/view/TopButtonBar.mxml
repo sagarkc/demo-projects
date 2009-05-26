@@ -10,41 +10,17 @@
         ]]>
     </mx:Script>
 
-    <mx:XMLList id="menuXML">
-        <menuitem label="File">
-            <menuitem label="New" data="New"/>
-            <menuitem label="Open" data="Open"/>
-            <menuitem label="Save" data="Save"/>
-            <menuitem label="Exit" data="Exit"/>
-        </menuitem>
-        <menuitem label="Edit">
-            <menuitem label="Cut" data="Cut"/>
-            <menuitem label="Copy" data="Copy"/>
-            <menuitem label="Paste" data="Paste"/>
-        </menuitem>
-        <menuitem label="View"/>
-    </mx:XMLList>
-
-    <mx:Array id="cmbDP">
-        <mx:String>Item 1</mx:String>
-        <mx:String>Item 2</mx:String>
-        <mx:String>Item 3</mx:String>
-    </mx:Array>
-
-    
-        <mx:MenuBar height="26" 
-            dataProvider="{menuXML}" 
-            labelField="@label" 
-            showRoot="true"/>
-        <mx:HBox width="100%" height="100%" horizontalAlign="right" verticalAlign="middle"
-        	horizontalGap="0">
-            <mx:ComboBox dataProvider="{cmbDP}"/>
-            <mx:Spacer width="100%"/>
-            <mx:TextInput id="myTI" text=""/>
-            <mx:Button id="srch1" 
-                label="Search" 
-                click="Alert.show('Searching')"/>
-        </mx:HBox>
+    <mx:LinkButton label="Home" height="100%"/>
+    <mx:LinkButton label="Catalog" height="100%"/>
+    <mx:LinkButton label="About Us" height="100%"/>
+    <mx:LinkButton label="Contact Us" height="100%"/>
+    <mx:HBox width="100%" height="100%" horizontalAlign="right" verticalAlign="middle"
+    	horizontalGap="0">
+        <mx:TextInput id="myTI" text=""/>
+        <mx:Button id="srch1" 
+            label="Search" 
+            click="Alert.show('Searching')"/>
+    </mx:HBox>
     
     
 </mx:ApplicationControlBar>

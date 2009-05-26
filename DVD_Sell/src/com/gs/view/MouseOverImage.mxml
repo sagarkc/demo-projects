@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Image xmlns:mx="http://www.adobe.com/2006/mxml" mouseOver="onMouseOver()"
+	mouseOut="onMouseOut()" mouseChildren="true" buttonMode="true">
+	
+	<mx:Script>
+		<![CDATA[
+			
+			public var _disabled:Boolean;
+			
+			public var _mouseOverSource:String;
+			
+			
+			public function onMouseOver():void{
+				if(!_disabled){
+					this.alpha = 0.85;
+				}
+			} 
+			
+			public function onMouseOut():void{
+				if(!_disabled){
+					this.alpha = 1;
+				}
+			} 
+			
+			public function set mouseOverSource(mouseOverSrc:String):void{
+				this._mouseOverSource = mouseOverSrc;
+			} 
+		]]>
+	</mx:Script>
+	
+</mx:Image>
