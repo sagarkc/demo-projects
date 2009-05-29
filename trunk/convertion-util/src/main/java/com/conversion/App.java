@@ -18,7 +18,7 @@ public class App {
 
 	
 	public static void main(String[] args) {
-		AlmoConversionUtil.convertXml2Csv("D:/AlmoCatalog-2142008.xml", null, ',');
+		AlmoConversionUtil.convertXml2Csv("D:/AlmoCatalog-2142008.xml", null, ',', "mappings/almo-mapping.xml");
 	}
 	
 }

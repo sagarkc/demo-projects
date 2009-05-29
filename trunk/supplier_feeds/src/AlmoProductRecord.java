@@ -1,10 +1,9 @@
-package com.conversion.mapping;
+
 
 import java.io.Serializable;
 
-import com.conversion.csv.CSVObject;
 
-public class AlmoProductRecord implements Serializable, CSVObject{
+public class AlmoProductRecord implements Serializable{
 
 	/**
 	 * Generated serialVersionUID
