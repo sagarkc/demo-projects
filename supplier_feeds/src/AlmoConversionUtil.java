@@ -1,4 +1,4 @@
-package com.conversion.util;
+
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,7 +10,6 @@ import org.exolab.castor.mapping.Mapping;
 import org.exolab.castor.xml.Unmarshaller;
 import org.xml.sax.InputSource;
 
-import com.conversion.mapping.AlmoCatalogData;
 
 public class AlmoConversionUtil {
 
