@@ -37,6 +37,9 @@
 		<field name="whs141NorthCarolina" type="java.lang.String">
 			<bind-xml name="whs_141_North_Carolina" node="element" />
 		</field>
+		<field name="whs166California" type="java.lang.String">
+			<bind-xml name="whs_166_California" node="element" />
+		</field>
 		<field name="whs167Harrisburg" type="java.lang.String">
 			<bind-xml name="whs_167_Harrisburg" node="element" />
 		</field>
