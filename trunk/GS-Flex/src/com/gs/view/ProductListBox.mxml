@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="400" height="300"
+	>
+	
+	
+	<mx:HBox id="viewBox" width="100%" height="25" horizontalAlign="right"
+		verticalAlign="middle">
+		<mx:Label text="View As "/>
+		<mx:ComboBox width="86">
+			<mx:dataProvider>
+				<mx:String>List</mx:String>
+				<mx:String>Details</mx:String>
+				<mx:String>Icons</mx:String>
+			</mx:dataProvider>
+		</mx:ComboBox>
+		<mx:Spacer width="100%"/>
+		<mx:Label text="Records / Page: "/>
+		<mx:TextInput text="50" width="45"/>
+	</mx:HBox>
+	<mx:HRule width="100%"/>
+	
+</mx:VBox>
