@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" height="155" 
 	verticalGap="0"
-	xmlns:view="com.gs.view.*">
+	xmlns:view="com.gs.view.*" xmlns:components="com.gs.components.*">
 	
 	
 	<mx:HBox width="100%" height="105">
 		<mx:HBox width="150" height="100%" id="logoBox"
 			horizontalAlign="center" verticalAlign="middle">
-			<mx:Image source="assets/images/LOGO.PNG"/>
+			<mx:Image source="http://optimistworld.com/images_tidyup/search.gif"/>
+			
 		</mx:HBox>
 		
 		<mx:VBox id="nameDetailsBox" width="100%" height="100%"
