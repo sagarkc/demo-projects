@@ -61,6 +61,7 @@ namespace Log2Chart
             foreach (string fn in allLogFileNames)
             {
                 allLogLines.AddRange(FileRWUtil.readAllLogLines(fn));
+
             }
         }
 
