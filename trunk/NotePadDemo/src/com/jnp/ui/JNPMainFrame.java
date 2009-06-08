@@ -26,6 +26,7 @@ import com.lowagie.text.pdf.PdfWriter;
 import com.lowagie.text.rtf.RtfWriter2;
 import de.muntjak.tinylookandfeel.TinyLookAndFeel;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.ScrollPane;
 import java.awt.Toolkit;
@@ -52,16 +53,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SwingWorker;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
+import javax.swing.undo.UndoableEdit;
 import org.fife.plaf.Office2003.Office2003LookAndFeel;
 import org.jvnet.substance.skin.SubstanceOfficeBlue2007LookAndFeel;
 
@@ -82,6 +91,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     public JNPMainFrame() {
         loadSavedContext();
         initComponents();
+        jButton6.setAction(undoAction);
         setFrameProperty();
         addNewFile();
     }
@@ -104,6 +114,9 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private void setFrameProperty(){
         setTitle("Notepad");
+        setIconImage(
+                new javax.swing.ImageIcon(
+                getClass().getResource("/icons/Notepadicon.png")).getImage());
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         Dimension fd = getSize();
         Toolkit tk = Toolkit.getDefaultToolkit();
@@ -129,7 +142,9 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
+        lnfButtonGroup = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
@@ -150,6 +165,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jButton11 = new javax.swing.JButton();
         notesTabbedPane = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -196,6 +213,13 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         jMenuItem25 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
+        jMenu8 = new javax.swing.JMenu();
+        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
+        jSeparator15 = new javax.swing.JSeparator();
+        jRadioButtonMenuItem2 = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem3 = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem4 = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem5 = new javax.swing.JRadioButtonMenuItem();
         jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -207,6 +231,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 formWindowClosing(evt);
             }
         });
+
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -279,6 +305,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton6);
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/redo.gif"))); // NOI18N
@@ -333,40 +364,54 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jButton11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton11);
 
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        jPanel1.add(jToolBar1, gridBagConstraints);
+
         notesTabbedPane.setBackground(new java.awt.Color(204, 204, 204));
         notesTabbedPane.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
         notesTabbedPane.setFocusTraversalPolicyProvider(true);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel1.add(notesTabbedPane, gridBagConstraints);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.setPreferredSize(new java.awt.Dimension(729, 25));
+
+        jLabel1.setText("jLabel1");
+
+        jLabel2.setText("jLabel2");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 725, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 509, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addComponent(jLabel2))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(notesTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(notesTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        jPanel1.add(jPanel2, gridBagConstraints);
 
         jMenu1.setText("File");
 
@@ -463,6 +508,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jMenuItem10.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/undo.gif"))); // NOI18N
         jMenuItem10.setText("Undo");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem10);
 
         jMenuItem11.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
@@ -594,6 +644,33 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("View");
+
+        jMenu8.setText("Look N Feel");
+
+        lnfButtonGroup.add(jRadioButtonMenuItem1);
+        jRadioButtonMenuItem1.setSelected(true);
+        jRadioButtonMenuItem1.setText("System");
+        jMenu8.add(jRadioButtonMenuItem1);
+        jMenu8.add(jSeparator15);
+
+        lnfButtonGroup.add(jRadioButtonMenuItem2);
+        jRadioButtonMenuItem2.setText("Forest");
+        jMenu8.add(jRadioButtonMenuItem2);
+
+        lnfButtonGroup.add(jRadioButtonMenuItem3);
+        jRadioButtonMenuItem3.setText("Office 2003");
+        jMenu8.add(jRadioButtonMenuItem3);
+
+        lnfButtonGroup.add(jRadioButtonMenuItem4);
+        jRadioButtonMenuItem4.setText("Office 2007 Blue");
+        jMenu8.add(jRadioButtonMenuItem4);
+
+        lnfButtonGroup.add(jRadioButtonMenuItem5);
+        jRadioButtonMenuItem5.setText("Business");
+        jMenu8.add(jRadioButtonMenuItem5);
+
+        jMenu4.add(jMenu8);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Help");
@@ -605,11 +682,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
         );
 
         pack();
@@ -815,6 +892,29 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
             }
         }
     }//GEN-LAST:event_jMenuItem28ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        int s = notesTabbedPane.getSelectedIndex();
+        if(s != -1){
+            TextEditor ed = textEditorList.get(s);
+            JTextArea ta = ed.getTextArea();
+            String fileName = ed.getFileName();
+            if(fileName == null || fileName.equals("")){
+               fileName = "New File.txt";
+            }
+            if(ta != null){
+                
+            }
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+
+
 
     private void convertToXML(JTextArea textArea) {
         String fn = browseForPDF();
@@ -1066,6 +1166,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
             for (File file : files) {
                 JTextArea ta = readFile(file);
                 ta.setMargin(new java.awt.Insets(2, 2, 2, 2));
+                ta.getDocument().addUndoableEditListener(undoAction);
+                ta.getDocument().addUndoableEditListener(redoAction);
                 JScrollPane sp = new JScrollPane(ta);
                 sp.setViewportView(ta);
                 notesTabbedPane.addTab(file.getName(), sp);
@@ -1134,12 +1236,53 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private void addNewFile(){
         JScrollPane sp = new JScrollPane();
-        JTextArea ta = new JTextArea(5,8);
-        ta.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        ta.setFont(DEFAULT_TEXT_FONT);
+        JTextArea textcomp = new JTextArea(5,8);
+        textcomp.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        textcomp.setFont(DEFAULT_TEXT_FONT);
+        final UndoManager undo = new UndoManager();
+        javax.swing.text.Document doc = textcomp.getDocument();
+
+        // Listen for undo and redo events
+        doc.addUndoableEditListener(new UndoableEditListener() {
+            public void undoableEditHappened(UndoableEditEvent evt) {
+                undo.addEdit(evt.getEdit());
+            }
+        });
+
+        // Create an undo action and add it to the text component
+        textcomp.getActionMap().put("Undo",
+                new AbstractAction("Undo") {
+                    public void actionPerformed(ActionEvent evt) {
+                        try {
+                            if (undo.canUndo()) {
+                                undo.undo();
+                            }
+                        } catch (CannotUndoException e) {
+                        }
+                    }
+                });
+
+        // Bind the undo action to ctl-Z
+        textcomp.getInputMap().put(KeyStroke.getKeyStroke("control Z"), "Undo");
+
+        // Create a redo action and add it to the text component
+        textcomp.getActionMap().put("Redo",
+                new AbstractAction("Redo") {
+                    public void actionPerformed(ActionEvent evt) {
+                        try {
+                            if (undo.canRedo()) {
+                                undo.redo();
+                            }
+                        } catch (CannotRedoException e) {
+                        }
+                    }
+                });
+
+        // Bind the redo action to ctl-Y
+        textcomp.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "Redo");
         //sta.addPropertyChangeListener("TEXT", list);
-        sp.add(ta);
-        sp.setViewportView(ta);
+        sp.add(textcomp);
+        sp.setViewportView(textcomp);
         
         notesTabbedPane.addTab("New File *", sp);
         int n = notesTabbedPane.getTabCount();
@@ -1147,7 +1290,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 new ButtonTabComponent(notesTabbedPane, textEditorList));
         notesTabbedPane.setSelectedIndex(n-1);
         TextEditor ed = new TextEditor();
-        ed.setTextArea(ta);
+        ed.setTextArea(textcomp);
         ed.setIsNewFile(true);
         textEditorList.add(n-1, ed);
     }
@@ -1165,9 +1308,9 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                     String osName = System.getProperty("os.name");
                     String lnfClass = TinyLookAndFeel.class.getCanonicalName();
                     if (osName.toLowerCase().contains("win")) {
-                        lnfClass = TinyLookAndFeel.class.getCanonicalName();
+                        //lnfClass = TinyLookAndFeel.class.getCanonicalName();
                         //lnfClass = SubstanceOfficeBlue2007LookAndFeel.class.getCanonicalName();
-                        //lnfClass = Office2003LookAndFeel.class.getCanonicalName();
+                        lnfClass = Office2003LookAndFeel.class.getCanonicalName();
                     }
                     UIManager.setLookAndFeel(lnfClass);
                 } catch (ClassNotFoundException ex) {
@@ -1186,6 +1329,10 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private List<TextEditor> textEditorList = new ArrayList<TextEditor>();
 
+    protected EditUndoAction undoAction = new EditUndoAction(); // an Action for undo
+
+    protected EditRedoAction redoAction = new EditRedoAction(); // an Action for redo
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
@@ -1199,6 +1346,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -1206,6 +1355,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
@@ -1238,12 +1388,18 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem3;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem4;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;
     private javax.swing.JSeparator jSeparator13;
     private javax.swing.JToolBar.Separator jSeparator14;
+    private javax.swing.JSeparator jSeparator15;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
@@ -1253,6 +1409,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JToolBar.Separator jSeparator9;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.ButtonGroup lnfButtonGroup;
     private javax.swing.JTabbedPane notesTabbedPane;
     // End of variables declaration//GEN-END:variables
 
@@ -1375,6 +1532,62 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private void error(String msg) {
         message(true, msg);
     }
+
+    public class EditUndoAction extends AbstractAction
+            implements UndoableEditListener {
+    private UndoableEdit edit;
+
+    public EditUndoAction() {
+      super("Undo");
+      //jMenuItem10.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
+      setIconImage(new javax.swing.ImageIcon(
+              getClass().getResource("/icons/undo.gif")).getImage());
+      //addKeyListener(l);
+      setEnabled(false);
+    }
+
+    public void updateEnabled() {
+      setEnabled(edit.canUndo());
+    }
+
+    public void undoableEditHappened(UndoableEditEvent event) {
+      edit = event.getEdit();
+      putValue(NAME, edit.getUndoPresentationName());
+      updateEnabled();
+    }
+
+    public void actionPerformed(ActionEvent ae) {
+      edit.undo();
+      updateEnabled(); // disable undo
+      redoAction.updateEnabled(); // enable redo
+    }
+  }
+
+  public class EditRedoAction extends AbstractAction
+          implements UndoableEditListener {
+    private UndoableEdit edit;
+
+    public EditRedoAction() {
+      super("Redo");
+      setEnabled(false);
+    }
+
+    public boolean updateEnabled() {
+      return edit.canRedo();
+    }
+
+    public void undoableEditHappened(UndoableEditEvent event) {
+      edit = event.getEdit();
+      putValue(NAME, edit.getRedoPresentationName());
+      updateEnabled();
+    }
+
+    public void actionPerformed(ActionEvent ae) {
+      edit.redo();
+      updateEnabled(); // disable redo
+      undoAction.updateEnabled(); // enable undo
+    }
+  }
 
     
 }
