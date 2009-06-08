@@ -361,6 +361,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jButton11.setFocusable(false);
         jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton11);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -559,6 +564,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jMenuItem16.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/find.gif"))); // NOI18N
         jMenuItem16.setText("Find...");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem16);
 
         jMenuItem17.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
@@ -569,6 +579,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jMenuItem18.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/replace.gif"))); // NOI18N
         jMenuItem18.setText("Replace...");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem18);
 
         jMenuItem19.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
@@ -912,7 +927,38 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        
+        JTextArea ta = getSelectedTextArea();
+        if(ta != null){
+            FindDialog fd = new FindDialog(this, false, ta);
+            fd.setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
 
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        JTextArea ta = getSelectedTextArea();
+        if(ta != null){
+            FindReplaceDialog fd = new FindReplaceDialog(this, false, ta);
+            fd.setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        jMenuItem16ActionPerformed(evt);
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+
+
+    public JTextArea getSelectedTextArea(){
+        JTextArea ta = null;
+        int s = notesTabbedPane.getSelectedIndex();
+        if(s != -1){
+            TextEditor ed = textEditorList.get(s);
+            ta = ed.getTextArea();
+        }
+        return ta;
+    }
 
 
     private void convertToXML(JTextArea textArea) {
@@ -1165,8 +1211,47 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
             for (File file : files) {
                 JTextArea ta = readFile(file);
                 ta.setMargin(new java.awt.Insets(2, 2, 2, 2));
-                ta.getDocument().addUndoableEditListener(undoAction);
-                ta.getDocument().addUndoableEditListener(redoAction);
+                final UndoManager undo = new UndoManager();
+                javax.swing.text.Document doc = ta.getDocument();
+
+                // Listen for undo and redo events
+                doc.addUndoableEditListener(new UndoableEditListener() {
+                    public void undoableEditHappened(UndoableEditEvent evt) {
+                        undo.addEdit(evt.getEdit());
+                    }
+                });
+
+                // Create an undo action and add it to the text component
+                ta.getActionMap().put("Undo",
+                        new AbstractAction("Undo") {
+                            public void actionPerformed(ActionEvent evt) {
+                                try {
+                                    if (undo.canUndo()) {
+                                        undo.undo();
+                                    }
+                                } catch (CannotUndoException e) {
+                                }
+                            }
+                        });
+
+                // Bind the undo action to ctl-Z
+                ta.getInputMap().put(KeyStroke.getKeyStroke("control Z"), "Undo");
+
+                // Create a redo action and add it to the text component
+                ta.getActionMap().put("Redo",
+                        new AbstractAction("Redo") {
+                            public void actionPerformed(ActionEvent evt) {
+                                try {
+                                    if (undo.canRedo()) {
+                                        undo.redo();
+                                    }
+                                } catch (CannotRedoException e) {
+                                }
+                            }
+                        });
+
+                // Bind the redo action to ctl-Y
+                ta.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "Redo");
                 JScrollPane sp = new JScrollPane(ta);
                 sp.setViewportView(ta);
                 notesTabbedPane.addTab(file.getName(), sp);
@@ -1244,6 +1329,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         // Listen for undo and redo events
         doc.addUndoableEditListener(new UndoableEditListener() {
             public void undoableEditHappened(UndoableEditEvent evt) {
+                evt.
                 undo.addEdit(evt.getEdit());
             }
         });

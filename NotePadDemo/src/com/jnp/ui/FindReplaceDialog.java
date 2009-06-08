@@ -4,37 +4,33 @@
  */
 
 /*
- * FindDialog.java
+ * FindReplaceDialog.java
  *
- * Created on Jun 8, 2009, 4:41:57 PM
+ * Created on Jun 8, 2009, 2:31:21 PM
  */
 
 package com.jnp.ui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
-import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
 /**
  *
- * @author sabuj.das
+ * @author Green Moon
  */
-public class FindDialog extends javax.swing.JDialog {
-
+public class FindReplaceDialog extends javax.swing.JDialog {
     private JTextArea selectedTextArea;
-    /** Creates new form FindDialog */
-    public FindDialog(java.awt.Frame parent, boolean modal, JTextArea ta) {
+    /** Creates new form FindReplaceDialog */
+    public FindReplaceDialog(java.awt.Frame parent, boolean modal, JTextArea ta) {
         super(parent, modal);
-        setTitle("Find");
+        setTitle("Find/Replace");
         selectedTextArea = ta;
         initComponents();
         getRootPane().setDefaultButton(findButton);
         kwTextField.setText(ta.getSelectedText());
         bringToCenter();
     }
-
     public JTextArea getSelectedTextArea() {
         return selectedTextArea;
     }
@@ -52,8 +48,6 @@ public class FindDialog extends javax.swing.JDialog {
             ));
     }
 
-    
-
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -63,7 +57,6 @@ public class FindDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         kwTextField = new javax.swing.JTextField();
@@ -73,6 +66,10 @@ public class FindDialog extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         upRadioButton = new javax.swing.JRadioButton();
         downRadioButton = new javax.swing.JRadioButton();
+        jLabel2 = new javax.swing.JLabel();
+        replaceWithTextField = new javax.swing.JTextField();
+        replaceButton = new javax.swing.JButton();
+        replaceAllButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -98,10 +95,8 @@ public class FindDialog extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(" Direction "));
 
-        buttonGroup1.add(upRadioButton);
         upRadioButton.setText("UP");
 
-        buttonGroup1.add(downRadioButton);
         downRadioButton.setSelected(true);
         downRadioButton.setText("DOWN");
 
@@ -125,44 +120,80 @@ public class FindDialog extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel2.setText("Replace With");
+
+        replaceButton.setText("Replace");
+        replaceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                replaceButtonActionPerformed(evt);
+            }
+        });
+
+        replaceAllButton.setText("Replace All");
+        replaceAllButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                replaceAllButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
-                        .addComponent(cancekButton))
-                    .addComponent(matchCheckBox)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(kwTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                        .addComponent(findButton)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cancekButton)
+                    .addComponent(replaceAllButton)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(18, 18, 18)
+                                .addComponent(kwTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(matchCheckBox)
+                                        .addGap(61, 61, 61))
+                                    .addComponent(replaceWithTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(replaceButton)
+                            .addComponent(findButton))))
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cancekButton, findButton});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cancekButton, findButton, replaceAllButton, replaceButton});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(kwTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(findButton))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(findButton)
+                            .addComponent(kwTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(replaceButton)
+                            .addComponent(replaceWithTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(replaceAllButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cancekButton)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(matchCheckBox)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cancekButton))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -181,21 +212,33 @@ public class FindDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void findButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findButtonActionPerformed
-        
+
         selectedTextArea = ((JNPMainFrame)getParent()).getSelectedTextArea();
         if(selectedTextArea != null){
             find(
                     kwTextField.getText(),
                     (upRadioButton.isSelected() ? true : false),
                     (matchCheckBox.isSelected() ? true : false)
-                 );
-            
+                    );
+
         }
 }//GEN-LAST:event_findButtonActionPerformed
 
     private void cancekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancekButtonActionPerformed
         dispose();
-    }//GEN-LAST:event_cancekButtonActionPerformed
+}//GEN-LAST:event_cancekButtonActionPerformed
+
+    private void replaceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_replaceButtonActionPerformed
+        selectedTextArea = ((JNPMainFrame)getParent()).getSelectedTextArea();
+        replace(kwTextField.getText(), replaceWithTextField.getText());
+    }//GEN-LAST:event_replaceButtonActionPerformed
+
+    private void replaceAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_replaceAllButtonActionPerformed
+        selectedTextArea = ((JNPMainFrame)getParent()).getSelectedTextArea();
+        replaceAll();
+    }//GEN-LAST:event_replaceAllButtonActionPerformed
+
+
     int pos;
     /**      */
     int count;
@@ -206,16 +249,16 @@ public class FindDialog extends javax.swing.JDialog {
     int newcounter;
 
     public void find(String key, boolean up, boolean match){
-        int position = 0;
+        pos = 0;
         int count = 0, a = 0;
         String text = selectedTextArea.getText();
         if(!match){
             text = text.toLowerCase();
             key = key.toLowerCase();
         }
-        position = text.indexOf(key, selectedTextArea.getSelectionEnd() + newcounter);
-        if(position >= 0){
-            selectedTextArea.select( position , position + key.length());
+        pos = text.indexOf(key, selectedTextArea.getSelectionEnd() + newcounter);
+        if(pos >= 0){
+            selectedTextArea.select( pos , pos + key.length());
         }
     }
 
@@ -224,13 +267,14 @@ public class FindDialog extends javax.swing.JDialog {
         int start = selectedTextArea.getSelectionStart();
         int end = selectedTextArea.getSelectionEnd();
         if (end > start){
-            selectedTextArea.replaceRange(key, start, end);
+            selectedTextArea.replaceRange(replacewith, start, end);
         }
         selectedTextArea.select(start, start + replacewith.length());
         find(key, true, true);
     }
 
 
+    @Override
     public void setVisible(boolean visible)
     {
         super.setVisible(visible);
@@ -243,24 +287,28 @@ public class FindDialog extends javax.swing.JDialog {
         }
     }
 
-//    public void replaceAll()
-//    {
-//        selectedTextArea.select(0, 0);
-//        while (pos >= 0)
-//            Replace();
-//    }
+    public void replaceAll()
+    {
+        selectedTextArea.select(0, 0);
+        while (pos >= 0)
+            replace(kwTextField.getText(), replaceWithTextField.getText());
+    }
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cancekButton;
     private javax.swing.JRadioButton downRadioButton;
     private javax.swing.JButton findButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField kwTextField;
     private javax.swing.JCheckBox matchCheckBox;
+    private javax.swing.JButton replaceAllButton;
+    private javax.swing.JButton replaceButton;
+    private javax.swing.JTextField replaceWithTextField;
     private javax.swing.JRadioButton upRadioButton;
     // End of variables declaration//GEN-END:variables
 
