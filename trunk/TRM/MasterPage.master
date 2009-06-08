@@ -1,0 +1,60 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>Untitled Page</title>
+   <link  href="StyleSheet.css" rel="Stylesheet" type="text/css"/>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+    <asp:Image runat="server" ID="imgleft" ImageUrl="~/ResourceManagementImages/Resource.jpg" Height="150px" Width="150px" />
+    <div style="z-index: 102; left: 161px; width: 790px; position: absolute; top: 16px;height: 150px" class="topBar">
+     <div style="width: 768px; height: 36px; z-index: 100; left: 2px; position: absolute; top: 0px;" class="topbarimage">                           
+                <div><asp:LinkButton ID="LinkButton5" runat="server" Height="27px" Width="103px" CssClass="homeButton" Text="Home" style="z-index: 104; left: 6px; position: absolute; top: 4px"></asp:LinkButton></div>
+                <asp:LinkButton ID="LinkButton6" runat="server" Height="27px" Width="94px" CssClass="homeButton" Text="About Us" style="z-index: 101; left: 270px; position: absolute; top: 6px"></asp:LinkButton>            
+                <asp:LinkButton ID="LinkButton7" runat="server" Height="20px" Width="76px" CssClass="homeButton" Text="Help" style="z-index: 102; left: 414px; position: absolute; top: 9px"></asp:LinkButton>
+                <asp:LinkButton ID="LinkButton8" runat="server" Height="27px" Width="116px" CssClass="homeButton" Text="Contact Us" style="z-index: 103; left: 131px; position: absolute; top: 2px"></asp:LinkButton>
+     </div>
+    </div>
+    </div>
+    
+    
+   <div style="width: 200px; height: 594px; z-index: 104; left: 10px; position: absolute; top: 168px; background-color: #ffcc99;">
+            
+       <asp:TreeView ID="TreeView1" runat="server" DataSourceID="XmlDataSource1" ImageSet="Arrows" HoverNodeStyle-Font-Bold="True"
+  RootNodeStyle-ForeColor="Blue" Width="198px">
+            <DataBindings>
+                <asp:TreeNodeBinding  DataMember="Catagory" TextField="Title" />
+                <asp:TreeNodeBinding  DataMember="Sub-Catagories" TextField="Title" NavigateUrlField="url"/>
+            </DataBindings>
+           <HoverNodeStyle Font-Bold="True" />
+           <RootNodeStyle ForeColor="Blue" />
+       </asp:TreeView>       
+       <asp:XmlDataSource ID="XmlDataSource1" runat="server" DataFile="~/XMLFile.xml">
+       </asp:XmlDataSource>
+        </div>     
+    
+    <div style="z-index: 103; left: 210px; width: 788px; position: absolute; top: 167px;
+            height: 595px;  background-color: #999999;">            
+            <div>
+            <asp:Label runat="server" ID="labelSearch" Text="Search By Catagory"></asp:Label>
+            <asp:DropDownList runat ="server" ID="dropdownlistSearch" DataSourceID="SqlDataSource1" DataTextField="CatagoryName" DataValueField="CatagoryName" ></asp:DropDownList>
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:RMSConnectionString %>"
+                SelectCommand="SELECT [CatagoryName] FROM [dropdownListSearch] ORDER BY [CatagoryName]">
+            </asp:SqlDataSource>
+            <asp:Button  runat="server" ID="buttonSearch" Text="Search" />
+            &nbsp;&nbsp;&nbsp;
+            <asp:Label runat="server" id="LabelKeywords" Text="Keywords:"></asp:Label>
+            <asp:TextBox runat="server" id="textBoxKeywords" ToolTip="Type the word you want to search by"></asp:TextBox>
+            </div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div> 
+    <div style="background-color: #ff9900;" ><asp:Table runat="server" ID="tb" Height="44px" Width="953px" style="z-index: 101; left: 10px; position: absolute; top:761px " BackColor="#FF8000" ForeColor="Black"><asp:TableRow ID="TableRow1" runat="server"><asp:TableCell ID="TableCell1" runat="server" CssClass="topbarimage"><asp:Label ID="Label1" runat="server" Text="Copyright &#169; 2006-2009 Tavant Technologies. All Rights Reserved." ></asp:Label></asp:TableCell></asp:TableRow></asp:Table>
+    </div>  
+    </form>
+</body>
+</html>

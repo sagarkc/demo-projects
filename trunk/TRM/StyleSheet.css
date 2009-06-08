@@ -1,0 +1,20 @@
+﻿body {
+}
+.homeButton
+{
+	vertical-align: middle;
+	direction: ltr;
+	line-height: normal;
+	letter-spacing: normal;
+	background-color: lightsalmon;
+	text-align: center;
+	color: cornflowerblue;
+	font-family: Verdana;
+}
+.topBar
+{
+	background-position: left top;
+	background-attachment: scroll;
+	background-image: url(ResourceManagementImages/gradient.jpg);
+	background-repeat: repeat-x;
+}

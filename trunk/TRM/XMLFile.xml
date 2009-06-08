@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Catagories>
+  <Catagory Title="Books">
+    <Sub-Catagories Title="Story Books" url="Story_Books.aspx"/>
+    <Sub-Catagories Title="Technical Books" url="Story_Books.aspx"/>
+  </Catagory>
+  <Catagory Title="Movies">
+    <Sub-Catagories Title="Indian Languages" url="Story_Books.aspx"/>
+    <Sub-Catagories Title="Foreign Languages" url="Story_Books.aspx"/>
+  </Catagory>
+  <Catagory Title="Songs">
+    <Sub-Catagories Title="Indian Languages" url="Story_Books.aspx"/>
+    <Sub-Catagories Title="Foreign Languages" url="Story_Books.aspx"/>
+  </Catagory>
+</Catagories>
