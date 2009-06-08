@@ -5,6 +5,7 @@
 
 package com.jnp.ui;
 
+import java.awt.Font;
 import javax.swing.JTextArea;
 
 /**
@@ -17,6 +18,7 @@ public class TextEditor {
     private boolean isNewFile;
     private String fileName;
     private boolean isEdited;
+    private Font currentFont;
 
     public String getFileName() {
         return fileName;
@@ -48,6 +50,14 @@ public class TextEditor {
 
     public void setTextArea(JTextArea textArea) {
         this.textArea = textArea;
+    }
+
+    public Font getCurrentFont() {
+        return currentFont;
+    }
+
+    public void setCurrentFont(Font currentFont) {
+        this.currentFont = currentFont;
     }
 
     
