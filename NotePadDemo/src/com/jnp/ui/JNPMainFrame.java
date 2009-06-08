@@ -91,7 +91,6 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     public JNPMainFrame() {
         loadSavedContext();
         initComponents();
-        jButton6.setAction(undoAction);
         setFrameProperty();
         addNewFile();
     }
