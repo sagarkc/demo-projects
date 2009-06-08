@@ -13,10 +13,28 @@ package com.jnp.ui;
 
 import com.jnp.utils.FileRWUtil;
 import com.jnp.utils.NotePadContext;
+import com.lowagie.text.Chapter;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Font;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.html.HtmlWriter;
+import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.pdf.DefaultFontMapper;
+import com.lowagie.text.pdf.PdfIndirectReference;
+import com.lowagie.text.pdf.PdfWriter;
+import com.lowagie.text.rtf.RtfWriter2;
+import de.muntjak.tinylookandfeel.TinyLookAndFeel;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.ScrollPane;
 import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -44,17 +62,22 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import org.fife.plaf.Office2003.Office2003LookAndFeel;
+import org.jvnet.substance.skin.SubstanceOfficeBlue2007LookAndFeel;
+
+
 
 /**
  *
  * @author Green Moon
  */
 public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
-        PropertyChangeListener
+        PropertyChangeListener, ActionListener
 {
 
     private static NotePadContext context = NotePadContext.getInstance();
-
+    private static final java.awt.Font DEFAULT_TEXT_FONT
+            = new java.awt.Font(java.awt.Font.MONOSPACED, java.awt.Font.PLAIN, 12);
     /** Creates new form JNPMainFrame */
     public JNPMainFrame() {
         loadSavedContext();
@@ -62,6 +85,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         setFrameProperty();
         addNewFile();
     }
+
+
 
     private void loadSavedContext() {
         context = FileRWUtil.readContext();
@@ -114,7 +139,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jButton4 = new javax.swing.JButton();
         jSeparator5 = new javax.swing.JToolBar.Separator();
         jButton5 = new javax.swing.JButton();
-        jToolBar2 = new javax.swing.JToolBar();
+        jSeparator14 = new javax.swing.JToolBar.Separator();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jSeparator9 = new javax.swing.JToolBar.Separator();
@@ -159,7 +184,17 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jMenuItem19 = new javax.swing.JMenuItem();
         jSeparator8 = new javax.swing.JSeparator();
         jMenuItem20 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuItem24 = new javax.swing.JMenuItem();
+        jMenuItem26 = new javax.swing.JMenuItem();
+        jMenuItem27 = new javax.swing.JMenuItem();
+        jMenuItem28 = new javax.swing.JMenuItem();
+        jSeparator13 = new javax.swing.JSeparator();
+        jMenuItem29 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
+        jMenuItem25 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
 
@@ -237,53 +272,66 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
             }
         });
         jToolBar1.add(jButton5);
-
-        jToolBar2.setFloatable(false);
-        jToolBar2.setRollover(true);
+        jToolBar1.add(jSeparator14);
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/undo.gif"))); // NOI18N
         jButton6.setToolTipText("Undo");
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(jButton6);
+        jToolBar1.add(jButton6);
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/redo.gif"))); // NOI18N
         jButton7.setToolTipText("Redo");
         jButton7.setFocusable(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(jButton7);
-        jToolBar2.add(jSeparator9);
+        jToolBar1.add(jButton7);
+        jToolBar1.add(jSeparator9);
 
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cut.gif"))); // NOI18N
         jButton8.setToolTipText("Cut");
         jButton8.setFocusable(false);
         jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(jButton8);
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton8);
 
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/copy.gif"))); // NOI18N
         jButton9.setToolTipText("Copy");
         jButton9.setFocusable(false);
         jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(jButton9);
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton9);
 
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/paste.gif"))); // NOI18N
         jButton10.setToolTipText("Paste");
         jButton10.setFocusable(false);
         jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(jButton10);
-        jToolBar2.add(jSeparator10);
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton10);
+        jToolBar1.add(jSeparator10);
 
         jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/find.gif"))); // NOI18N
         jButton11.setToolTipText("Find");
         jButton11.setFocusable(false);
         jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(jButton11);
+        jToolBar1.add(jButton11);
 
         notesTabbedPane.setBackground(new java.awt.Color(204, 204, 204));
         notesTabbedPane.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -306,20 +354,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(412, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(notesTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(notesTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -432,16 +474,31 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jMenuItem12.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cut.gif"))); // NOI18N
         jMenuItem12.setText("Cut");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem12);
 
         jMenuItem13.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/copy.gif"))); // NOI18N
         jMenuItem13.setText("Copy");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem13);
 
         jMenuItem14.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/paste.gif"))); // NOI18N
         jMenuItem14.setText("Paste");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem14);
 
         jMenuItem15.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0));
@@ -477,7 +534,63 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
         jMenuBar1.add(jMenu2);
 
+        jMenu6.setText("Tools");
+
+        jMenu7.setText("Export As...");
+
+        jMenuItem24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/text-html.png"))); // NOI18N
+        jMenuItem24.setText("HTML");
+        jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem24ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem24);
+
+        jMenuItem26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/x-pdf.png"))); // NOI18N
+        jMenuItem26.setText("PDF");
+        jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem26ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem26);
+
+        jMenuItem27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/x-office-document.png"))); // NOI18N
+        jMenuItem27.setText("RTF");
+        jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem27ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem27);
+
+        jMenuItem28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/Filetype-XML-16x16.png"))); // NOI18N
+        jMenuItem28.setText("XML");
+        jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem28ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem28);
+
+        jMenu6.add(jMenu7);
+        jMenu6.add(jSeparator13);
+
+        jMenuItem29.setText("Settings");
+        jMenu6.add(jMenuItem29);
+
+        jMenuBar1.add(jMenu6);
+
         jMenu3.setText("Format");
+
+        jCheckBoxMenuItem1.setSelected(true);
+        jCheckBoxMenuItem1.setText("Word Wrap");
+        jMenu3.add(jCheckBoxMenuItem1);
+
+        jMenuItem25.setText("Font");
+        jMenu3.add(jMenuItem25);
+
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("View");
@@ -552,6 +665,304 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         printText();
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        int s = notesTabbedPane.getSelectedIndex();
+        if(s != -1){
+            TextEditor ed = textEditorList.get(s);
+            JTextArea ta = ed.getTextArea();
+            String fileName = ed.getFileName();
+            if(fileName == null || fileName.equals("")){
+               fileName = "New File.txt";
+            }
+            if(ta != null){
+                cut(ta);
+            }
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        int s = notesTabbedPane.getSelectedIndex();
+        if(s != -1){
+            TextEditor ed = textEditorList.get(s);
+            JTextArea ta = ed.getTextArea();
+            String fileName = ed.getFileName();
+            if(fileName == null || fileName.equals("")){
+               fileName = "New File.txt";
+            }
+            if(ta != null){
+                copy(ta);
+            }
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        int s = notesTabbedPane.getSelectedIndex();
+        if(s != -1){
+            TextEditor ed = textEditorList.get(s);
+            JTextArea ta = ed.getTextArea();
+            String fileName = ed.getFileName();
+            if(fileName == null || fileName.equals("")){
+               fileName = "New File.txt";
+            }
+            if(ta != null){
+                paste(ta);
+            }
+        }
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        int s = notesTabbedPane.getSelectedIndex();
+        if(s != -1){
+            TextEditor ed = textEditorList.get(s);
+            JTextArea ta = ed.getTextArea();
+            String fileName = ed.getFileName();
+            if(fileName == null || fileName.equals("")){
+               fileName = "New File.txt";
+            }
+            if(ta != null){
+                cut(ta);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        int s = notesTabbedPane.getSelectedIndex();
+        if(s != -1){
+            TextEditor ed = textEditorList.get(s);
+            JTextArea ta = ed.getTextArea();
+            String fileName = ed.getFileName();
+            if(fileName == null || fileName.equals("")){
+               fileName = "New File.txt";
+            }
+            if(ta != null){
+                copy(ta);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        int s = notesTabbedPane.getSelectedIndex();
+        if(s != -1){
+            TextEditor ed = textEditorList.get(s);
+            JTextArea ta = ed.getTextArea();
+            String fileName = ed.getFileName();
+            if(fileName == null || fileName.equals("")){
+               fileName = "New File.txt";
+            }
+            if(ta != null){
+                paste(ta);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
+        int s = notesTabbedPane.getSelectedIndex();
+        if(s != -1){
+            TextEditor ed = textEditorList.get(s);
+            JTextArea ta = ed.getTextArea();
+            String fileName = ed.getFileName();
+            if(fileName == null || fileName.equals("")){
+               fileName = "New File.txt";
+            }
+            if(ta != null){
+                convertToPDF(ta);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem26ActionPerformed
+
+    private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
+        int s = notesTabbedPane.getSelectedIndex();
+        if(s != -1){
+            TextEditor ed = textEditorList.get(s);
+            JTextArea ta = ed.getTextArea();
+            String fileName = ed.getFileName();
+            if(fileName == null || fileName.equals("")){
+               fileName = "New File.txt";
+            }
+            if(ta != null){
+                convertToHTML(ta);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem24ActionPerformed
+
+    private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
+        int s = notesTabbedPane.getSelectedIndex();
+        if(s != -1){
+            TextEditor ed = textEditorList.get(s);
+            JTextArea ta = ed.getTextArea();
+            String fileName = ed.getFileName();
+            if(fileName == null || fileName.equals("")){
+               fileName = "New File.txt";
+            }
+            if(ta != null){
+                convertToRTF(ta);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem27ActionPerformed
+
+    private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
+        int s = notesTabbedPane.getSelectedIndex();
+        if(s != -1){
+            TextEditor ed = textEditorList.get(s);
+            JTextArea ta = ed.getTextArea();
+            String fileName = ed.getFileName();
+            if(fileName == null || fileName.equals("")){
+               fileName = "New File.txt";
+            }
+            if(ta != null){
+                convertToXML(ta);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem28ActionPerformed
+
+    private void convertToXML(JTextArea textArea) {
+        String fn = browseForPDF();
+        if (fn.equals("")) {
+            return;
+        }
+        Document document = new Document();
+        try {
+            RtfWriter2.getInstance(document, new FileOutputStream(fn));
+            document.open();
+
+            java.awt.Font jFont = textArea.getFont();
+            DefaultFontMapper fontMapper = new DefaultFontMapper();
+
+            BaseFont bf = fontMapper.awtToPdf(jFont);
+
+            Font font = new Font(bf);
+//            font.setFamily(jFont.getFamily());
+//            font.setColor(textArea.getForeground());
+//            font.setSize(jFont.getSize());
+//            font.setStyle(jFont.getStyle());
+            Paragraph paragraph = new Paragraph(textArea.getText());
+            paragraph.setFont(font);
+            Chapter chapter = new Chapter(paragraph, 1);
+            document.add(chapter);
+
+        } catch (DocumentException de) {
+            System.err.println(de.getMessage());
+        } catch (IOException ioe) {
+            System.err.println(ioe.getMessage());
+        }finally{
+            document.close();
+        }
+    }
+
+
+    private void convertToRTF(JTextArea textArea) {
+        String fn = browseForPDF();
+        if (fn.equals("")) {
+            return;
+        }
+        Document document = new Document();
+        try {
+            RtfWriter2.getInstance(document, new FileOutputStream(fn));
+            document.open();
+
+            java.awt.Font jFont = textArea.getFont();
+            DefaultFontMapper fontMapper = new DefaultFontMapper();
+
+            BaseFont bf = fontMapper.awtToPdf(jFont);
+
+            Font font = new Font(bf);
+//            font.setFamily(jFont.getFamily());
+//            font.setColor(textArea.getForeground());
+//            font.setSize(jFont.getSize());
+//            font.setStyle(jFont.getStyle());
+            Paragraph paragraph = new Paragraph(textArea.getText());
+            paragraph.setFont(font);
+            Chapter chapter = new Chapter(paragraph, 1);
+            document.add(chapter);
+
+        } catch (DocumentException de) {
+            System.err.println(de.getMessage());
+        } catch (IOException ioe) {
+            System.err.println(ioe.getMessage());
+        }finally{
+            document.close();
+        }
+    }
+
+    private String browseForPDF(){
+        JFileChooser chooser = new JFileChooser(".");
+        chooser.setMultiSelectionEnabled(false);
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int opt = chooser.showSaveDialog(this);
+        String fileName = "";
+        if(opt == JFileChooser.APPROVE_OPTION){
+            fileName = chooser.getSelectedFile().getAbsolutePath();
+            
+        }
+        return fileName;
+    }
+
+    private void convertToPDF(JTextArea textArea) {
+        String fn = browseForPDF();
+        if (fn.equals("")) {
+            return;
+        }
+        Document document = new Document();
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream(fn));
+            document.open();
+            
+            java.awt.Font jFont = textArea.getFont();
+            Font font = new Font();
+            font.setFamily(jFont.getFamily());
+            font.setColor(textArea.getForeground());
+            font.setSize(jFont.getSize());
+            font.setStyle(jFont.getStyle());
+            Paragraph paragraph = new Paragraph(textArea.getText());
+            paragraph.setFont(font);
+            Chapter chapter = new Chapter(paragraph, 1);
+            document.add(chapter);
+            
+        } catch (DocumentException de) {
+            System.err.println(de.getMessage());
+        } catch (IOException ioe) {
+            System.err.println(ioe.getMessage());
+        }finally{
+            document.close();
+        }
+    }
+
+    private void convertToHTML(JTextArea textArea) {
+        String fn = browseForPDF();
+        if (fn.equals("")) {
+            return;
+        }
+        Document document = new Document();
+        try {
+            HtmlWriter.getInstance(document, new FileOutputStream(fn));
+            document.open();
+
+            java.awt.Font jFont = textArea.getFont();
+            DefaultFontMapper fontMapper = new DefaultFontMapper();
+
+            BaseFont bf = fontMapper.awtToPdf(jFont);
+
+            Font font = new Font(bf);
+//            font.setFamily(jFont.getFamily());
+//            font.setColor(textArea.getForeground());
+//            font.setSize(jFont.getSize());
+//            font.setStyle(jFont.getStyle());
+            Paragraph paragraph = new Paragraph(textArea.getText());
+            paragraph.setFont(font);
+            Chapter chapter = new Chapter(paragraph, 1);
+            document.add(chapter);
+
+        } catch (DocumentException de) {
+            System.err.println(de.getMessage());
+        } catch (IOException ioe) {
+            System.err.println(ioe.getMessage());
+        }finally{
+            document.close();
+        }
+    }
+
+
 
     private void printText(){
         int s = notesTabbedPane.getSelectedIndex();
@@ -692,6 +1103,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private JTextArea readFile(File f){
         JTextArea ta = new JTextArea(10,8);
+        ta.setFont(DEFAULT_TEXT_FONT);
         if(f.exists()){
             BufferedReader br = null;
             try{
@@ -724,6 +1136,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         JScrollPane sp = new JScrollPane();
         JTextArea ta = new JTextArea(5,8);
         ta.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        ta.setFont(DEFAULT_TEXT_FONT);
         //sta.addPropertyChangeListener("TEXT", list);
         sp.add(ta);
         sp.setViewportView(ta);
@@ -744,11 +1157,19 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     /**
     * @param args the command line arguments
     */
-    public static void main(String args[]) {
+    public static void main(String args[]) {        
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                    String osName = System.getProperty("os.name");
+                    String lnfClass = TinyLookAndFeel.class.getCanonicalName();
+                    if (osName.toLowerCase().contains("win")) {
+                        lnfClass = TinyLookAndFeel.class.getCanonicalName();
+                        //lnfClass = SubstanceOfficeBlue2007LookAndFeel.class.getCanonicalName();
+                        //lnfClass = Office2003LookAndFeel.class.getCanonicalName();
+                    }
+                    UIManager.setLookAndFeel(lnfClass);
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (InstantiationException ex) {
@@ -777,11 +1198,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
@@ -799,6 +1223,12 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem23;
+    private javax.swing.JMenuItem jMenuItem24;
+    private javax.swing.JMenuItem jMenuItem25;
+    private javax.swing.JMenuItem jMenuItem26;
+    private javax.swing.JMenuItem jMenuItem27;
+    private javax.swing.JMenuItem jMenuItem28;
+    private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
@@ -812,6 +1242,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JToolBar.Separator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator12;
+    private javax.swing.JSeparator jSeparator13;
+    private javax.swing.JToolBar.Separator jSeparator14;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
@@ -821,7 +1253,6 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JToolBar.Separator jSeparator9;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JToolBar jToolBar2;
     private javax.swing.JTabbedPane notesTabbedPane;
     // End of variables declaration//GEN-END:variables
 
@@ -833,7 +1264,56 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         
     }
 
-    
+    public void actionPerformed(ActionEvent e) {
+        String cmd = e.getActionCommand();
+        JTextArea ta = null;
+        if(e.getSource() instanceof JTextArea){
+            ta = (JTextArea) e.getSource();
+        }
+        if (cmd.equals("COPY")) {
+            copy(ta);
+        } else if (cmd.equals("Cut")) {
+            cut(ta);
+        } else if (cmd.equals("Paste")) {
+            paste(ta);
+        }
+    }
+
+    private void copy(JTextArea ta) {
+        String s = ta.getSelectedText();
+        int start = ta.getSelectionStart();
+        int end = ta.getSelectionEnd();
+        StringSelection ss = new StringSelection(s);
+        // Set the content to the clipboard.
+        this.getToolkit().getSystemClipboard().
+                setContents(ss, ss);
+    }
+
+    private void cut(JTextArea field) {
+        String s = field.getSelectedText();
+        int start = field.getSelectionStart();
+        int end = field.getSelectionEnd();
+        field.replaceRange("", start, end);
+        StringSelection ss = new StringSelection(s);
+        // Set the content to the clipboard.
+        this.getToolkit().getSystemClipboard().setContents(ss,
+                ss);
+    }
+
+    private void paste(JTextArea field) {
+        Clipboard cb = this.getToolkit().getSystemClipboard();
+        Transferable tr = cb.getContents(this);
+        try {
+        // Get the content from the clipboard.
+            String s = (String) tr.getTransferData(DataFlavor.stringFlavor);
+            int start = field.getSelectionStart();
+            int end = field.getSelectionEnd();
+            field.replaceRange(s, start, end);
+        } catch (Exception e) {
+            return;
+        }
+    }
+
     private class PrintingTask extends SwingWorker<Object, Object> {
         private final MessageFormat headerFormat;
         private final MessageFormat footerFormat;
