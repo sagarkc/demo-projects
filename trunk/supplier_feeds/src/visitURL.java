@@ -7,9 +7,16 @@
 */
 
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -35,6 +42,7 @@ class visitURL
 	
 	public String fileLocation;
 	public String fileType;
+	public String fileName = "response.tmp";
 
 	visitURL(){
 		for(int i=0;i<cookie.length;i++){
@@ -45,22 +53,8 @@ class visitURL
 	}
 
 	String visitURL(String url){
-		String host = "";
-		String protocol = "";
-		String method = "POST";
-		String quString = "";
-		String path = "";
-		try {
-			URL url2 = new URL(url);
-			protocol = url2.getProtocol();
-			host = url2.getHost();
-			path = url2.getPath();
-			
-			quString = url2.getQuery();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		return visitURL(protocol + "://" + host + path, true, method, 0,quString);
+		
+		return visitURL(url, true);
 	}
 
 	String visitURL(String url, boolean followRedirect){
@@ -204,7 +198,7 @@ class visitURL
 			// Get all cookies from the server.
 			// Note: The first call to getHeaderFieldKey() will implicit send
 			// the HTTP request to the server.
-
+			boolean downloadAsBinary = false;
 			String key = "";
 			if (connection != null)
 			{
@@ -233,10 +227,8 @@ class visitURL
 								if(index >= 0){
 									String ss = headerValue.substring(index+1);
 									l.log_msg("Content File: "+ss);
-									String type = ss.substring(ss.indexOf('.'));
-									if(type.equalsIgnoreCase(fileType)){
-										
-									}
+									fileName = ss;
+									downloadAsBinary = true;
 								}
 							}
 						}
@@ -275,6 +267,7 @@ class visitURL
 					}
 				}
 
+				
 
 
 				StringBuffer sb = new StringBuffer();
@@ -315,15 +308,38 @@ class visitURL
 						file += line;
 					}
 					*/
-
-					char chars[] = new char[1024];
-					int len = 0;
-					while ((len = reader.read(chars, 0, chars.length)) >= 0)
-					{
-						sb.append(chars, 0, len);
-					}
-
-					file = sb.toString();
+					/*if(downloadAsBinary){
+						BufferedInputStream bi = new BufferedInputStream(
+								connection.getInputStream()
+							);
+						BufferedOutputStream bo = new BufferedOutputStream(
+								new FileOutputStream(new File(fileLocation + fileName))
+							);
+						String encoding = connection.getContentEncoding();
+						int length = connection.getContentLength();
+						
+						byte[] b = new byte[102400];
+						while(bi.read(b) > 0){
+							//System.out.println(new String(b));
+							bo.write(b);
+						}
+						bo.close();
+						bi.close();
+						return supplier_feeds.DONE;
+					}else{*/
+						char chars[] = new char[1024];
+						int len = 0;
+						BufferedWriter bw = new BufferedWriter(
+								new FileWriter(new File(fileLocation + fileName)));
+						while ((len = reader.read(chars, 0, chars.length)) >= 0)
+						{
+							sb.append(chars, 0, len);
+							bw.write(chars);
+						}
+						bw.close();
+						if(downloadAsBinary)
+						file = supplier_feeds.DONE;
+					//}
 				}
 
 				int refresh = file.indexOf("URL=",file.indexOf("http-equiv=\"refresh")+1);
