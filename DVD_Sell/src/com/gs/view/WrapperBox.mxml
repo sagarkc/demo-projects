@@ -25,7 +25,13 @@
 				
 			</mx:HBox>
 			<mx:HorizontalList width="100%" height="100%" cornerRadius="18" borderColor="#247FAE">
-				
+				<mx:dataProvider>
+					<mx:LinkButton label="fdghs dk"/>
+					<mx:LinkButton label="fdghs dk"/>
+					<mx:LinkButton label="fdghs dk"/>
+					<mx:LinkButton label="fdghs dk"/>
+					<mx:LinkButton label="fdghs dk"/>
+				</mx:dataProvider>
 			</mx:HorizontalList>
 		</mx:VBox>
 	</mx:HBox>

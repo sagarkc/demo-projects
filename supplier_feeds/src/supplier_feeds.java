@@ -37,8 +37,10 @@ class supplier_feeds implements Runnable{
 	static String DB_USER		=	"root";
 	static String DB_PASS		=	"root123";
 	
-	static final String SUPPLIERS_DIR = "F:\\NorthPacificTrading\\suppliers\\";
-
+	public static final String SUPPLIERS_DIR = "D:\\NorthPacificTrading\\suppliers\\";
+	public static final String DONE = "DONE";
+	public static final String FAILED = "FAILED";
+	
 	Connection sqlconnection;
 	ResultSet rs;
 	File f;
@@ -51,6 +53,8 @@ class supplier_feeds implements Runnable{
 	boolean isAdvancedFTP = false;
 	boolean isXLS = false;
 	boolean isZip = false;
+	boolean isZipXml = false;
+	boolean isXml = false;
 	String ftpHost, ftpUser, ftpPass, ftpDir, ftpFileLocation, ftpFileName;
 	String username, password;// for basiclogin
 	boolean updateUrl = false;
@@ -248,17 +252,49 @@ class supplier_feeds implements Runnable{
 					} else {
 						s1.isZip = false;
 					}
+					if (file_type.equals("xml")) {
+						s1.isXml = true;
+					} else {
+						s1.isXml = false;
+					}
+					if (file_type.equals("zip-xml")) {
+						s1.isZipXml = true;
+					} else {
+						s1.isZipXml = false;
+					}
 					
-					if(formLoginUrl != null){
-						String htmlResponse = "";
-						if(formLoginUrl != null && !formLoginUrl.equals("")){
-							visitURL v = new visitURL();
-							htmlResponse = v.visitURL(formLoginUrl);
-							/*htmlResponse = v.visitURL("https://access.almo.com/login.asp", true, 
-									"POST", 0, "uName=support@dropshipaccess.com&uPwd=SlyAlmo7747");*/ 
-							htmlResponse = v.visitURL(supplier_url);
-							
+					if(formLoginUrl != null && !formLoginUrl.equals("")){
+						String host = "";
+						String protocol = "";
+						String method = "POST";
+						String quString = "";
+						String path = "";
+						try {
+							URL url2 = new URL(formLoginUrl);
+							protocol = url2.getProtocol();
+							host = url2.getHost();
+							path = url2.getPath();
+							quString = url2.getQuery();
+						} catch (MalformedURLException e) {
+							e.printStackTrace();
 						}
+						String htmlResponse = "";
+						visitURL v = new visitURL();
+						v.fileLocation = SUPPLIERS_DIR + foldername + "\\feed\\";
+						v.fileType = file_type;
+						htmlResponse = v.visitURL(protocol + "://" + host + path, true, method, 0,quString);
+						//htmlResponse = v.visitURL(formLoginUrl);
+						/*htmlResponse = v.visitURL("https://access.almo.com/login.asp", true, 
+								"POST", 0, "uName=support@dropshipaccess.com&uPwd=SlyAlmo7747");*/ 
+						htmlResponse = v.visitURL(supplier_url);
+						if(DONE.equals(htmlResponse)){//AlmoAccess
+							if(s1.supplier.equals("Almo Access")){
+								f = new File(v.fileLocation + v.fileName);
+								handleZipFile(f);
+								handleAlmoZippedXmlFile(f);
+							}
+						}
+						return;
 					} else {
 						s1.isFormLogin = false;
 					}
@@ -897,11 +933,7 @@ class supplier_feeds implements Runnable{
 			// finished...
 			if (isXLS) {
 
-				POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(f));
-				PrintStream ps = new PrintStream(f.toString() + ".csv");
-
-				XLS2CSVmra xls2csv = new XLS2CSVmra(fs, ps, -1);
-				xls2csv.process();
+				handleXlsFile(f);
 				/*
 				 *
 				 * HSSFWorkbook wb = new HSSFWorkbook(fs); HSSFSheet sheet =
@@ -940,15 +972,7 @@ class supplier_feeds implements Runnable{
 			 * import_data
 			 */
 			if (isZip) {
-				//  unzip
-				ZipFile zipFile = new ZipFile(f);
-				unzip(zipFile);
-				//  delete the old zip file, store the file name
-				String oldZipName = f.getName();
-				String parentDirPath = f.getParent() + "\\";
-				f.delete();
-				// re-zip with the same old zip file name
-				createNewZip(oldZipName, parentDirPath);
+				handleZipFile(f);
 			}
 
 			if (suppliers_feed_id > 0) {
@@ -1004,6 +1028,42 @@ class supplier_feeds implements Runnable{
 				//isSuccessful= false;
 			}
 		}
+	}
+	
+	private void handleAlmoZippedXmlFile(File f) throws ZipException, IOException{
+		//  unzip
+		ZipFile zipFile = new ZipFile(f);
+		unzip(zipFile);
+		File parentDir = new File(f.getParent()) ;
+		
+		String[] filenames = parentDir.list();
+		for (int i=0; i<filenames.length; i++) {
+			if(filenames[i].endsWith(".xml")){
+				String mappingFile = "mappings/almo-mapping.xml";
+				AlmoConversionUtil.convertXml2Csv(filenames[i], 
+						null, ',', mappingFile);
+			}
+        }
+	}
+	
+	private void handleXlsFile(File f) throws FileNotFoundException, IOException{
+		POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(f));
+		PrintStream ps = new PrintStream(f.toString() + ".csv");
+
+		XLS2CSVmra xls2csv = new XLS2CSVmra(fs, ps, -1);
+		xls2csv.process();
+	}
+	
+	private void handleZipFile(File f) throws ZipException, IOException{
+		//  unzip
+		ZipFile zipFile = new ZipFile(f);
+		unzip(zipFile);
+		//  delete the old zip file, store the file name
+		String oldZipName = f.getName();
+		String parentDirPath = f.getParent() + "\\";
+		f.delete();
+		// re-zip with the same old zip file name
+		createNewZip(oldZipName, parentDirPath);
 	}
 
 	private void createNewZip(String newZipFileName, String parentDirPath) {
