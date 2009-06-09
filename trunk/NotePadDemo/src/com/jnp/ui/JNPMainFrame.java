@@ -26,6 +26,7 @@ import com.lowagie.text.pdf.PdfWriter;
 import com.lowagie.text.rtf.RtfWriter2;
 import de.muntjak.tinylookandfeel.TinyLookAndFeel;
 import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.ScrollPane;
@@ -36,6 +37,8 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.print.PrinterException;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -60,6 +63,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -67,11 +71,20 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
 import org.fife.plaf.Office2003.Office2003LookAndFeel;
+import org.jvnet.substance.SubstanceLookAndFeel;
+import org.jvnet.substance.skin.SubstanceBusinessBlueSteelLookAndFeel;
+import org.jvnet.substance.skin.SubstanceBusinessLookAndFeel;
+import org.jvnet.substance.skin.SubstanceChallengerDeepLookAndFeel;
+import org.jvnet.substance.skin.SubstanceEmeraldDuskLookAndFeel;
+import org.jvnet.substance.skin.SubstanceMistAquaLookAndFeel;
+import org.jvnet.substance.skin.SubstanceNebulaLookAndFeel;
 import org.jvnet.substance.skin.SubstanceOfficeBlue2007LookAndFeel;
 
 
@@ -86,7 +99,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private static NotePadContext context = NotePadContext.getInstance();
     private static final java.awt.Font DEFAULT_TEXT_FONT
-            = new java.awt.Font(java.awt.Font.MONOSPACED, java.awt.Font.PLAIN, 12);
+            = new java.awt.Font(java.awt.Font.MONOSPACED,
+                java.awt.Font.PLAIN, 12);
     /** Creates new form JNPMainFrame */
     public JNPMainFrame() {
         loadSavedContext();
@@ -162,6 +176,10 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jButton10 = new javax.swing.JButton();
         jSeparator10 = new javax.swing.JToolBar.Separator();
         jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
+        jButton13 = new javax.swing.JButton();
+        jSeparator16 = new javax.swing.JToolBar.Separator();
+        jToggleButton1 = new javax.swing.JToggleButton();
         notesTabbedPane = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -219,7 +237,10 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jRadioButtonMenuItem3 = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItem4 = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItem5 = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem6 = new javax.swing.JRadioButtonMenuItem();
         jMenu5 = new javax.swing.JMenu();
+        jMenuItem30 = new javax.swing.JMenuItem();
+        jMenuItem31 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -368,6 +389,44 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         });
         jToolBar1.add(jButton11);
 
+        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/findnext.gif"))); // NOI18N
+        jButton12.setToolTipText("Find Next");
+        jButton12.setActionCommand("jButton12");
+        jButton12.setFocusable(false);
+        jButton12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton12.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton12ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton12);
+
+        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/replacenext.gif"))); // NOI18N
+        jButton13.setToolTipText("Find / Replace");
+        jButton13.setFocusable(false);
+        jButton13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton13.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton13);
+        jToolBar1.add(jSeparator16);
+
+        jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/button-word-wrap.gif"))); // NOI18N
+        jToggleButton1.setToolTipText("Word Wrap");
+        jToggleButton1.setFocusable(false);
+        jToggleButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jToggleButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jToggleButton1);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -395,7 +454,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 509, Short.MAX_VALUE)
@@ -405,7 +464,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
                 .addComponent(jLabel2))
         );
 
@@ -574,6 +633,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jMenuItem17.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
         jMenuItem17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/findnext.gif"))); // NOI18N
         jMenuItem17.setText("Find Next");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem17);
 
         jMenuItem18.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
@@ -594,12 +658,18 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jMenuItem20.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/selectall.gif"))); // NOI18N
         jMenuItem20.setText("Select All");
+        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem20ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem20);
 
         jMenuBar1.add(jMenu2);
 
         jMenu6.setText("Tools");
 
+        jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/export.gif"))); // NOI18N
         jMenu7.setText("Export As...");
 
         jMenuItem24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/text-html.png"))); // NOI18N
@@ -641,18 +711,35 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jMenu6.add(jMenu7);
         jMenu6.add(jSeparator13);
 
+        jMenuItem29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/wm_settings.gif"))); // NOI18N
         jMenuItem29.setText("Settings");
         jMenu6.add(jMenuItem29);
 
         jMenuBar1.add(jMenu6);
 
         jMenu3.setText("Format");
+        jMenu3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu3ActionPerformed(evt);
+            }
+        });
 
-        jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("Word Wrap");
+        jCheckBoxMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/button-word-wrap.gif"))); // NOI18N
+        jCheckBoxMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jCheckBoxMenuItem1);
 
+        jMenuItem25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/fonts.gif"))); // NOI18N
         jMenuItem25.setText("Font");
+        jMenuItem25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem25ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem25);
 
         jMenuBar1.add(jMenu3);
@@ -664,30 +751,75 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         lnfButtonGroup.add(jRadioButtonMenuItem1);
         jRadioButtonMenuItem1.setSelected(true);
         jRadioButtonMenuItem1.setText("System");
+        jRadioButtonMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu8.add(jRadioButtonMenuItem1);
         jMenu8.add(jSeparator15);
 
         lnfButtonGroup.add(jRadioButtonMenuItem2);
         jRadioButtonMenuItem2.setText("Forest");
+        jRadioButtonMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu8.add(jRadioButtonMenuItem2);
 
         lnfButtonGroup.add(jRadioButtonMenuItem3);
         jRadioButtonMenuItem3.setText("Office 2003");
+        jRadioButtonMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu8.add(jRadioButtonMenuItem3);
 
         lnfButtonGroup.add(jRadioButtonMenuItem4);
         jRadioButtonMenuItem4.setText("Office 2007 Blue");
+        jRadioButtonMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu8.add(jRadioButtonMenuItem4);
 
         lnfButtonGroup.add(jRadioButtonMenuItem5);
         jRadioButtonMenuItem5.setText("Business");
+        jRadioButtonMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu8.add(jRadioButtonMenuItem5);
+
+        lnfButtonGroup.add(jRadioButtonMenuItem6);
+        jRadioButtonMenuItem6.setText("Mist Aqua");
+        jRadioButtonMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jRadioButtonMenuItem6);
 
         jMenu4.add(jMenu8);
 
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Help");
+
+        jMenuItem30.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItem30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/help.gif"))); // NOI18N
+        jMenuItem30.setText("Help Index");
+        jMenu5.add(jMenuItem30);
+
+        jMenuItem31.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/about.gif"))); // NOI18N
+        jMenuItem31.setText("About Notepad");
+        jMenu5.add(jMenuItem31);
+
         jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
@@ -948,7 +1080,220 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jMenuItem16ActionPerformed(evt);
     }//GEN-LAST:event_jButton11ActionPerformed
 
+    private void jRadioButtonMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem1ActionPerformed
+        if(jRadioButtonMenuItem1.isSelected()){
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                SwingUtilities.updateComponentTreeUI(this);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jRadioButtonMenuItem1ActionPerformed
 
+    private void jRadioButtonMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem2ActionPerformed
+        if(jRadioButtonMenuItem2.isSelected()){
+            try {
+                UIManager.setLookAndFeel(TinyLookAndFeel.class.getCanonicalName());
+                SwingUtilities.updateComponentTreeUI(this);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jRadioButtonMenuItem2ActionPerformed
+
+    private void jRadioButtonMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem3ActionPerformed
+        if(jRadioButtonMenuItem3.isSelected()){
+            try {
+                UIManager.setLookAndFeel(Office2003LookAndFeel.class.getCanonicalName());
+                SwingUtilities.updateComponentTreeUI(this);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jRadioButtonMenuItem3ActionPerformed
+
+    private void jRadioButtonMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem4ActionPerformed
+        if(jRadioButtonMenuItem4.isSelected()){
+            try {
+                UIManager.setLookAndFeel(SubstanceOfficeBlue2007LookAndFeel.class.getCanonicalName());
+                SwingUtilities.updateComponentTreeUI(this);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jRadioButtonMenuItem4ActionPerformed
+
+    private void jRadioButtonMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem5ActionPerformed
+        if(jRadioButtonMenuItem5.isSelected()){
+            try {
+                UIManager.setLookAndFeel(SubstanceBusinessBlueSteelLookAndFeel.class.getCanonicalName());
+                SwingUtilities.updateComponentTreeUI(this);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jRadioButtonMenuItem5ActionPerformed
+
+    private void jRadioButtonMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem6ActionPerformed
+        if(jRadioButtonMenuItem6.isSelected()){
+            try {
+                UIManager.setLookAndFeel(SubstanceMistAquaLookAndFeel.class.getCanonicalName());
+                SwingUtilities.updateComponentTreeUI(this);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jRadioButtonMenuItem6ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        selectedTextArea = getSelectedTextArea();
+        if(selectedTextArea != null){
+            String key = selectedTextArea.getSelectedText();
+            if(key!= null && key.length() > 0){
+                find(
+                    key,
+                    true,
+                    true
+                 );
+            }
+        }
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+        selectedTextArea = getSelectedTextArea();
+        if(selectedTextArea != null){
+            String key = selectedTextArea.getSelectedText();
+            if(key!= null && key.length() > 0){
+                find(
+                    key,
+                    true,
+                    true
+                 );
+            }
+        }
+    }//GEN-LAST:event_jButton12ActionPerformed
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        JTextArea ta = getSelectedTextArea();
+        if(ta != null){
+            FindReplaceDialog fd = new FindReplaceDialog(this, false, ta);
+            fd.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+       selectedTextArea = getSelectedTextArea();
+        if(selectedTextArea != null){
+            selectedTextArea.setSelectionStart(0);
+            selectedTextArea.setSelectionEnd(selectedTextArea.getText().length());
+        }
+    }//GEN-LAST:event_jMenuItem20ActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        if(jToggleButton1.isSelected()){
+            getSelectedTextArea().setLineWrap(true);
+            jCheckBoxMenuItem1.setSelected(true);
+            return;
+        }
+        if(!jToggleButton1.isSelected()){
+            getSelectedTextArea().setLineWrap(false);
+            jCheckBoxMenuItem1.setSelected(false);
+        }
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
+        
+    }//GEN-LAST:event_jMenu3ActionPerformed
+
+    private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem1ActionPerformed
+        if(jCheckBoxMenuItem1.isSelected()){
+            getSelectedTextArea().setLineWrap(true);
+            jToggleButton1.setSelected(true);
+            return;
+        }
+        if(!jCheckBoxMenuItem1.isSelected()){
+            getSelectedTextArea().setLineWrap(false);
+            jToggleButton1.setSelected(false);
+        }
+    }//GEN-LAST:event_jCheckBoxMenuItem1ActionPerformed
+public static String[] fontNames;
+    public static String[] fontSizes;
+    private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
+        selectedTextArea = getSelectedTextArea();
+        if(selectedTextArea != null){
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            fontNames = ge.getAvailableFontFamilyNames();
+            fontSizes = new String[]{"8", "9", "10", "11", "12", "14", "16",
+                        "18", "20", "22", "24", "26", "28", "36", "48", "72"};
+
+            AdvancedFontChooser dlg = new AdvancedFontChooser(this);
+            SimpleAttributeSet a = new SimpleAttributeSet();
+            StyleConstants.setFontFamily(a, "Monospaced");
+            StyleConstants.setFontSize(a, 12);
+            dlg.setAttributes(a);
+            dlg.show();
+        }
+    }//GEN-LAST:event_jMenuItem25ActionPerformed
+
+    int pos;
+    /**      */
+    int count;
+    /**      *
+     */
+    int a;
+    /**      */
+    int newcounter;
+
+    public void find(String key, boolean up, boolean match){
+        int position = 0;
+        int count = 0, a = 0;
+        String text = selectedTextArea.getText();
+        if(!match){
+            text = text.toLowerCase();
+            key = key.toLowerCase();
+        }
+        position = text.indexOf(key, selectedTextArea.getSelectionEnd() + newcounter);
+        if(position >= 0){
+            selectedTextArea.select( position , position + key.length());
+        }
+    }
 
     public JTextArea getSelectedTextArea(){
         JTextArea ta = null;
@@ -1329,7 +1674,6 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         // Listen for undo and redo events
         doc.addUndoableEditListener(new UndoableEditListener() {
             public void undoableEditHappened(UndoableEditEvent evt) {
-                evt.
                 undo.addEdit(evt.getEdit());
             }
         });
@@ -1390,14 +1734,24 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
+                    
                     String osName = System.getProperty("os.name");
                     String lnfClass = TinyLookAndFeel.class.getCanonicalName();
+                    
                     if (osName.toLowerCase().contains("win")) {
-                        //lnfClass = TinyLookAndFeel.class.getCanonicalName();
-                        //lnfClass = SubstanceOfficeBlue2007LookAndFeel.class.getCanonicalName();
-                        lnfClass = Office2003LookAndFeel.class.getCanonicalName();
+                        lnfClass = UIManager.getSystemLookAndFeelClassName();
+                        
                     }
                     UIManager.setLookAndFeel(lnfClass);
+
+                    JNPMainFrame frame = new JNPMainFrame();
+                    if(TinyLookAndFeel.class.getCanonicalName().equals(lnfClass)){
+                        frame.jRadioButtonMenuItem2.setSelected(true);
+                    }
+                    if(UIManager.getSystemLookAndFeelClassName().equals(lnfClass)){
+                        frame.jRadioButtonMenuItem1.setSelected(true);
+                    }
+                    frame.setVisible(true);
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (InstantiationException ex) {
@@ -1407,7 +1761,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 } catch (UnsupportedLookAndFeelException ex) {
                     Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                new JNPMainFrame().setVisible(true);
+                
             }
         });
     }
@@ -1418,10 +1772,20 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     protected EditRedoAction redoAction = new EditRedoAction(); // an Action for redo
 
+    private JTextArea selectedTextArea;
+
+    
+
+    public void setSelectedTextArea(JTextArea selectedTextArea) {
+        this.selectedTextArea = selectedTextArea;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1465,6 +1829,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenuItem jMenuItem28;
     private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem30;
+    private javax.swing.JMenuItem jMenuItem31;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
@@ -1478,6 +1844,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem3;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem4;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem5;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
@@ -1485,6 +1852,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JSeparator jSeparator13;
     private javax.swing.JToolBar.Separator jSeparator14;
     private javax.swing.JSeparator jSeparator15;
+    private javax.swing.JToolBar.Separator jSeparator16;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
@@ -1493,6 +1861,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JToolBar.Separator jSeparator9;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.ButtonGroup lnfButtonGroup;
     private javax.swing.JTabbedPane notesTabbedPane;
