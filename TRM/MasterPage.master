@@ -6,28 +6,61 @@
 <head runat="server">
     <title>Untitled Page</title>
    <link  href="StyleSheet.css" rel="Stylesheet" type="text/css"/>
+<script language="javascript" type="text/javascript">
+// <!CDATA[
+
+function DIV1_onclick() {
+
+}
+
+function DIV3_onclick() {
+
+}
+
+// ]]>
+</script>
 </head>
 <body>
-    <form id="form1" runat="server">
-    <div>
-    <asp:Image runat="server" ID="imgleft" ImageUrl="~/ResourceManagementImages/Resource.jpg" Height="150px" Width="150px" />
-    <div style="z-index: 102; left: 161px; width: 790px; position: absolute; top: 16px;height: 150px" class="topBar">
-     <div style="width: 768px; height: 36px; z-index: 100; left: 2px; position: absolute; top: 0px;" class="topbarimage">                           
-                <div><asp:LinkButton ID="LinkButton5" runat="server" Height="27px" Width="103px" CssClass="homeButton" Text="Home" style="z-index: 104; left: 6px; position: absolute; top: 4px"></asp:LinkButton></div>
-                <asp:LinkButton ID="LinkButton6" runat="server" Height="27px" Width="94px" CssClass="homeButton" Text="About Us" style="z-index: 101; left: 270px; position: absolute; top: 6px"></asp:LinkButton>            
-                <asp:LinkButton ID="LinkButton7" runat="server" Height="20px" Width="76px" CssClass="homeButton" Text="Help" style="z-index: 102; left: 414px; position: absolute; top: 9px"></asp:LinkButton>
-                <asp:LinkButton ID="LinkButton8" runat="server" Height="27px" Width="116px" CssClass="homeButton" Text="Contact Us" style="z-index: 103; left: 131px; position: absolute; top: 2px"></asp:LinkButton>
+    <form id="form1" runat="server" enctype="multipart/form-data" >
+    <div class="imageBar1" style="z-index: 101; left: 8px; width: 142px; position: absolute; top: 16px;height: 150px" >
+    </div>
+    <div style="z-index: 102; left: 149px; width: 840px; position: absolute; top: 16px;height: 150px" class="topBar1" id="DIV3" onclick="return DIV3_onclick()">
+     <div style="width: 840px; height: 28px; z-index: 100; left: 0px; position: absolute; top: 0px;" class="topbarimage" id="DIV1" onclick="return DIV1_onclick()">                           
+         <div>
+         <asp:LinkButton ID="LinkButton5" runat="server" Height="27px" Width="103px" CssClass="homeButton" Text="Home" style="z-index: 104; left: 0px; position: absolute; top: 0px" OnClick="LinkButton5_Click"></asp:LinkButton></div>
+                <asp:LinkButton ID="LinkButton6" runat="server" Height="27px" Width="104px" CssClass="homeButton" Text="About Us" style="z-index: 101; left: 214px; position: absolute; top: 0px" ></asp:LinkButton>            
+                <asp:LinkButton ID="LinkButton7" runat="server" Height="27px" Width="80px" CssClass="homeButton" Text="Help" style="z-index: 102; left: 316px; position: absolute; top: 0px"></asp:LinkButton>
+                <asp:LinkButton ID="LinkButton8" runat="server" Height="27px" Width="120px" CssClass="homeButton" Text="Contact Us" style="z-index: 103; left: 100px; position: absolute; top: 0px"></asp:LinkButton>
+                <asp:LinkButton ID="LinkButtonLog" runat="server" Height="27px" Width="120px" CssClass="homeButton" Text="Login" style="z-index: 105; left: 720px; position: absolute; top: 0px" OnClick="LinkButtonLog_Click" ></asp:LinkButton>
+     </div>
+     <div><div style="width: 840px; height: 1px; z-index: 100; left: 0px; position: relative; top: 120px;" class="topbarimage" id="Div2" onclick="return DIV1_onclick()">
+         <div>
+            <asp:Label runat="server" ID="labelSearch" Text="Search By Catagory" style="position: relative; left: 0px; top: 0px;"></asp:Label>
+            <asp:DropDownList ID="dropdownList1" runat="server" DataSourceID="SqlDataSource1" DataTextField="CatagoryName" DataValueField="CatagoryName" style="position: relative" 
+                 />
+            <asp:Label runat="server" id="LabelKeywords" Text="Keywords:" style="position: relative"></asp:Label>
+            <asp:TextBox runat="server" id="textBoxKeywords" ToolTip="Type the word you want to search by" style="position: relative"></asp:TextBox>
+            <asp:Button  runat="server" ID="buttonSearch" Text="Search" style="position: relative" />
+            <asp:Button  runat="server" ID="buttonUpload" Text="Upload" OnClick="buttonUpload_Click" style="position: relative" />
+            <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
+            ConnectionString="<%$ ConnectionStrings:RMSConnectionString2 %>"
+                     SelectCommand="SELECT * FROM [dropdownListSearch]" 
+                     ></asp:SqlDataSource>
+         </div>
+         &nbsp; &nbsp;
      </div>
     </div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+        </asp:ContentPlaceHolder>
     </div>
     
     
-   <div style="width: 200px; height: 594px; z-index: 104; left: 10px; position: absolute; top: 168px; background-color: #ffcc99;">
+   <div style="width: 200px; height: 594px; z-index: 104; left: 8px; position: absolute; top: 168px; background-color: Transparent;">
             
-       <asp:TreeView ID="TreeView1" runat="server" DataSourceID="XmlDataSource1" ImageSet="Arrows" HoverNodeStyle-Font-Bold="True"
+       <asp:TreeView ID="TreeView1" runat="server" DataSourceID="XmlDataSource1" ImageSet="Arrows" HoverNodeStyle-Font-Italic="True"
   RootNodeStyle-ForeColor="Blue" Width="198px">
             <DataBindings>
-                <asp:TreeNodeBinding  DataMember="Catagory" TextField="Title" />
+                <asp:TreeNodeBinding DataMember="Catagory" TextField="Title" />
                 <asp:TreeNodeBinding  DataMember="Sub-Catagories" TextField="Title" NavigateUrlField="url"/>
             </DataBindings>
            <HoverNodeStyle Font-Bold="True" />
@@ -37,21 +70,17 @@
        </asp:XmlDataSource>
         </div>     
     
-    <div style="z-index: 103; left: 210px; width: 788px; position: absolute; top: 167px;
-            height: 595px;  background-color: #999999;">            
+    <div style="z-index: 103; left: 207px; width: 788px; position: absolute; top: 168px;
+            height: 595px;  background-color: Transparent;">            
             <div>
-            <asp:Label runat="server" ID="labelSearch" Text="Search By Catagory"></asp:Label>
-            <asp:DropDownList runat ="server" ID="dropdownlistSearch" DataSourceID="SqlDataSource1" DataTextField="CatagoryName" DataValueField="CatagoryName" ></asp:DropDownList>
-            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:RMSConnectionString %>"
-                SelectCommand="SELECT [CatagoryName] FROM [dropdownListSearch] ORDER BY [CatagoryName]">
-            </asp:SqlDataSource>
-            <asp:Button  runat="server" ID="buttonSearch" Text="Search" />
-            &nbsp;&nbsp;&nbsp;
-            <asp:Label runat="server" id="LabelKeywords" Text="Keywords:"></asp:Label>
-            <asp:TextBox runat="server" id="textBoxKeywords" ToolTip="Type the word you want to search by"></asp:TextBox>
-            </div>
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
+                &nbsp; &nbsp;&nbsp;
+                                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder3" runat="server">
+            </asp:ContentPlaceHolder>
+            </div>
         </div> 
     <div style="background-color: #ff9900;" ><asp:Table runat="server" ID="tb" Height="44px" Width="953px" style="z-index: 101; left: 10px; position: absolute; top:761px " BackColor="#FF8000" ForeColor="Black"><asp:TableRow ID="TableRow1" runat="server"><asp:TableCell ID="TableCell1" runat="server" CssClass="topbarimage"><asp:Label ID="Label1" runat="server" Text="Copyright &#169; 2006-2009 Tavant Technologies. All Rights Reserved." ></asp:Label></asp:TableCell></asp:TableRow></asp:Table>
     </div>  
