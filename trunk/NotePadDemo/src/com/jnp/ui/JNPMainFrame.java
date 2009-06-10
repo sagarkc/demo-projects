@@ -8,7 +8,6 @@
  *
  * Created on Jun 6, 2009, 3:04:56 PM
  */
-
 package com.jnp.ui;
 
 import com.jnp.utils.FileRWUtil;
@@ -21,15 +20,11 @@ import com.lowagie.text.Paragraph;
 import com.lowagie.text.html.HtmlWriter;
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.DefaultFontMapper;
-import com.lowagie.text.pdf.PdfIndirectReference;
 import com.lowagie.text.pdf.PdfWriter;
 import com.lowagie.text.rtf.RtfWriter2;
 import de.muntjak.tinylookandfeel.TinyLookAndFeel;
 import java.awt.Dimension;
-import java.awt.GraphicsEnvironment;
-import java.awt.Image;
 import java.awt.Point;
-import java.awt.ScrollPane;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -37,8 +32,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -47,7 +41,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -71,36 +64,26 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
 import org.fife.plaf.Office2003.Office2003LookAndFeel;
-import org.jvnet.substance.SubstanceLookAndFeel;
 import org.jvnet.substance.skin.SubstanceBusinessBlueSteelLookAndFeel;
-import org.jvnet.substance.skin.SubstanceBusinessLookAndFeel;
-import org.jvnet.substance.skin.SubstanceChallengerDeepLookAndFeel;
-import org.jvnet.substance.skin.SubstanceEmeraldDuskLookAndFeel;
 import org.jvnet.substance.skin.SubstanceMistAquaLookAndFeel;
-import org.jvnet.substance.skin.SubstanceNebulaLookAndFeel;
 import org.jvnet.substance.skin.SubstanceOfficeBlue2007LookAndFeel;
-
-
 
 /**
  *
  * @author Green Moon
  */
 public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
-        PropertyChangeListener, ActionListener
-{
+        PropertyChangeListener, ActionListener {
 
     private static NotePadContext context = NotePadContext.getInstance();
-    private static final java.awt.Font DEFAULT_TEXT_FONT
-            = new java.awt.Font(java.awt.Font.MONOSPACED,
-                java.awt.Font.PLAIN, 12);
+    public static final java.awt.Font DEFAULT_TEXT_FONT = new java.awt.Font(java.awt.Font.MONOSPACED,
+            java.awt.Font.PLAIN, 12);
+
     /** Creates new form JNPMainFrame */
     public JNPMainFrame() {
         loadSavedContext();
@@ -109,11 +92,9 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         addNewFile();
     }
 
-
-
     private void loadSavedContext() {
         context = FileRWUtil.readContext();
-        if(context == null){
+        if (context == null) {
             context = NotePadContext.getInstance();
         }
     }
@@ -121,11 +102,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private void saveCurrentContext() {
         context.frameLocation = getLocation();
         context.frameSize = getSize();
-        
+
         FileRWUtil.writeContext(context);
     }
 
-    private void setFrameProperty(){
+    private void setFrameProperty() {
         setTitle("Notepad");
         setIconImage(
                 new javax.swing.ImageIcon(
@@ -134,15 +115,15 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         Dimension fd = getSize();
         Toolkit tk = Toolkit.getDefaultToolkit();
         Dimension resolution = tk.getScreenSize();
-        if(context.frameLocation != null){
+        if (context.frameLocation != null) {
             setLocation(context.frameLocation);
-        }else{
+        } else {
             Point cd = new Point();
-            cd.x = resolution.width/2 - fd.width/2;
-            cd.y = resolution.height/2 - fd.height/2;
+            cd.x = resolution.width / 2 - fd.width / 2;
+            cd.y = resolution.height / 2 - fd.height / 2;
             setLocation(cd);
         }
-        if(context.frameSize != null){
+        if (context.frameSize != null) {
             setSize(context.frameSize);
         }
     }
@@ -540,6 +521,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/printpreview.gif"))); // NOI18N
         jMenuItem6.setText("Print Preview");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem6);
 
         jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
@@ -872,7 +858,6 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -891,14 +876,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         int s = notesTabbedPane.getSelectedIndex();
-        if(s != -1){
+        if (s != -1) {
             TextEditor ed = textEditorList.get(s);
             JTextArea ta = ed.getTextArea();
             String fileName = ed.getFileName();
-            if(fileName == null || fileName.equals("")){
-               fileName = "New File.txt";
+            if (fileName == null || fileName.equals("")) {
+                fileName = "New File.txt";
             }
-            if(ta != null){
+            if (ta != null) {
                 cut(ta);
             }
         }
@@ -906,14 +891,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         int s = notesTabbedPane.getSelectedIndex();
-        if(s != -1){
+        if (s != -1) {
             TextEditor ed = textEditorList.get(s);
             JTextArea ta = ed.getTextArea();
             String fileName = ed.getFileName();
-            if(fileName == null || fileName.equals("")){
-               fileName = "New File.txt";
+            if (fileName == null || fileName.equals("")) {
+                fileName = "New File.txt";
             }
-            if(ta != null){
+            if (ta != null) {
                 copy(ta);
             }
         }
@@ -921,14 +906,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         int s = notesTabbedPane.getSelectedIndex();
-        if(s != -1){
+        if (s != -1) {
             TextEditor ed = textEditorList.get(s);
             JTextArea ta = ed.getTextArea();
             String fileName = ed.getFileName();
-            if(fileName == null || fileName.equals("")){
-               fileName = "New File.txt";
+            if (fileName == null || fileName.equals("")) {
+                fileName = "New File.txt";
             }
-            if(ta != null){
+            if (ta != null) {
                 paste(ta);
             }
         }
@@ -936,14 +921,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         int s = notesTabbedPane.getSelectedIndex();
-        if(s != -1){
+        if (s != -1) {
             TextEditor ed = textEditorList.get(s);
             JTextArea ta = ed.getTextArea();
             String fileName = ed.getFileName();
-            if(fileName == null || fileName.equals("")){
-               fileName = "New File.txt";
+            if (fileName == null || fileName.equals("")) {
+                fileName = "New File.txt";
             }
-            if(ta != null){
+            if (ta != null) {
                 cut(ta);
             }
         }
@@ -951,14 +936,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         int s = notesTabbedPane.getSelectedIndex();
-        if(s != -1){
+        if (s != -1) {
             TextEditor ed = textEditorList.get(s);
             JTextArea ta = ed.getTextArea();
             String fileName = ed.getFileName();
-            if(fileName == null || fileName.equals("")){
-               fileName = "New File.txt";
+            if (fileName == null || fileName.equals("")) {
+                fileName = "New File.txt";
             }
-            if(ta != null){
+            if (ta != null) {
                 copy(ta);
             }
         }
@@ -966,14 +951,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
         int s = notesTabbedPane.getSelectedIndex();
-        if(s != -1){
+        if (s != -1) {
             TextEditor ed = textEditorList.get(s);
             JTextArea ta = ed.getTextArea();
             String fileName = ed.getFileName();
-            if(fileName == null || fileName.equals("")){
-               fileName = "New File.txt";
+            if (fileName == null || fileName.equals("")) {
+                fileName = "New File.txt";
             }
-            if(ta != null){
+            if (ta != null) {
                 paste(ta);
             }
         }
@@ -981,14 +966,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
         int s = notesTabbedPane.getSelectedIndex();
-        if(s != -1){
+        if (s != -1) {
             TextEditor ed = textEditorList.get(s);
             JTextArea ta = ed.getTextArea();
             String fileName = ed.getFileName();
-            if(fileName == null || fileName.equals("")){
-               fileName = "New File.txt";
+            if (fileName == null || fileName.equals("")) {
+                fileName = "New File.txt";
             }
-            if(ta != null){
+            if (ta != null) {
                 convertToPDF(ta);
             }
         }
@@ -996,14 +981,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
         int s = notesTabbedPane.getSelectedIndex();
-        if(s != -1){
+        if (s != -1) {
             TextEditor ed = textEditorList.get(s);
             JTextArea ta = ed.getTextArea();
             String fileName = ed.getFileName();
-            if(fileName == null || fileName.equals("")){
-               fileName = "New File.txt";
+            if (fileName == null || fileName.equals("")) {
+                fileName = "New File.txt";
             }
-            if(ta != null){
+            if (ta != null) {
                 convertToHTML(ta);
             }
         }
@@ -1011,14 +996,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
         int s = notesTabbedPane.getSelectedIndex();
-        if(s != -1){
+        if (s != -1) {
             TextEditor ed = textEditorList.get(s);
             JTextArea ta = ed.getTextArea();
             String fileName = ed.getFileName();
-            if(fileName == null || fileName.equals("")){
-               fileName = "New File.txt";
+            if (fileName == null || fileName.equals("")) {
+                fileName = "New File.txt";
             }
-            if(ta != null){
+            if (ta != null) {
                 convertToRTF(ta);
             }
         }
@@ -1026,14 +1011,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
         int s = notesTabbedPane.getSelectedIndex();
-        if(s != -1){
+        if (s != -1) {
             TextEditor ed = textEditorList.get(s);
             JTextArea ta = ed.getTextArea();
             String fileName = ed.getFileName();
-            if(fileName == null || fileName.equals("")){
-               fileName = "New File.txt";
+            if (fileName == null || fileName.equals("")) {
+                fileName = "New File.txt";
             }
-            if(ta != null){
+            if (ta != null) {
                 convertToXML(ta);
             }
         }
@@ -1041,28 +1026,26 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         // TODO add your handling code here:
-        
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         int s = notesTabbedPane.getSelectedIndex();
-        if(s != -1){
+        if (s != -1) {
             TextEditor ed = textEditorList.get(s);
             JTextArea ta = ed.getTextArea();
             String fileName = ed.getFileName();
-            if(fileName == null || fileName.equals("")){
-               fileName = "New File.txt";
+            if (fileName == null || fileName.equals("")) {
+                fileName = "New File.txt";
             }
-            if(ta != null){
-                
+            if (ta != null) {
             }
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        
+
         JTextArea ta = getSelectedTextArea();
-        if(ta != null){
+        if (ta != null) {
             FindDialog fd = new FindDialog(this, false, ta);
             fd.setVisible(true);
         }
@@ -1070,7 +1053,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
         JTextArea ta = getSelectedTextArea();
-        if(ta != null){
+        if (ta != null) {
             FindReplaceDialog fd = new FindReplaceDialog(this, false, ta);
             fd.setVisible(true);
         }
@@ -1081,7 +1064,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jRadioButtonMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem1ActionPerformed
-        if(jRadioButtonMenuItem1.isSelected()){
+        if (jRadioButtonMenuItem1.isSelected()) {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                 SwingUtilities.updateComponentTreeUI(this);
@@ -1098,7 +1081,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     }//GEN-LAST:event_jRadioButtonMenuItem1ActionPerformed
 
     private void jRadioButtonMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem2ActionPerformed
-        if(jRadioButtonMenuItem2.isSelected()){
+        if (jRadioButtonMenuItem2.isSelected()) {
             try {
                 UIManager.setLookAndFeel(TinyLookAndFeel.class.getCanonicalName());
                 SwingUtilities.updateComponentTreeUI(this);
@@ -1115,7 +1098,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     }//GEN-LAST:event_jRadioButtonMenuItem2ActionPerformed
 
     private void jRadioButtonMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem3ActionPerformed
-        if(jRadioButtonMenuItem3.isSelected()){
+        if (jRadioButtonMenuItem3.isSelected()) {
             try {
                 UIManager.setLookAndFeel(Office2003LookAndFeel.class.getCanonicalName());
                 SwingUtilities.updateComponentTreeUI(this);
@@ -1132,7 +1115,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     }//GEN-LAST:event_jRadioButtonMenuItem3ActionPerformed
 
     private void jRadioButtonMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem4ActionPerformed
-        if(jRadioButtonMenuItem4.isSelected()){
+        if (jRadioButtonMenuItem4.isSelected()) {
             try {
                 UIManager.setLookAndFeel(SubstanceOfficeBlue2007LookAndFeel.class.getCanonicalName());
                 SwingUtilities.updateComponentTreeUI(this);
@@ -1149,7 +1132,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     }//GEN-LAST:event_jRadioButtonMenuItem4ActionPerformed
 
     private void jRadioButtonMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem5ActionPerformed
-        if(jRadioButtonMenuItem5.isSelected()){
+        if (jRadioButtonMenuItem5.isSelected()) {
             try {
                 UIManager.setLookAndFeel(SubstanceBusinessBlueSteelLookAndFeel.class.getCanonicalName());
                 SwingUtilities.updateComponentTreeUI(this);
@@ -1166,7 +1149,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     }//GEN-LAST:event_jRadioButtonMenuItem5ActionPerformed
 
     private void jRadioButtonMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem6ActionPerformed
-        if(jRadioButtonMenuItem6.isSelected()){
+        if (jRadioButtonMenuItem6.isSelected()) {
             try {
                 UIManager.setLookAndFeel(SubstanceMistAquaLookAndFeel.class.getCanonicalName());
                 SwingUtilities.updateComponentTreeUI(this);
@@ -1184,94 +1167,89 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
         selectedTextArea = getSelectedTextArea();
-        if(selectedTextArea != null){
+        if (selectedTextArea != null) {
             String key = selectedTextArea.getSelectedText();
-            if(key!= null && key.length() > 0){
+            if (key != null && key.length() > 0) {
                 find(
-                    key,
-                    true,
-                    true
-                 );
+                        key,
+                        true,
+                        true);
             }
         }
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         selectedTextArea = getSelectedTextArea();
-        if(selectedTextArea != null){
+        if (selectedTextArea != null) {
             String key = selectedTextArea.getSelectedText();
-            if(key!= null && key.length() > 0){
+            if (key != null && key.length() > 0) {
                 find(
-                    key,
-                    true,
-                    true
-                 );
+                        key,
+                        true,
+                        true);
             }
         }
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         JTextArea ta = getSelectedTextArea();
-        if(ta != null){
+        if (ta != null) {
             FindReplaceDialog fd = new FindReplaceDialog(this, false, ta);
             fd.setVisible(true);
         }
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
-       selectedTextArea = getSelectedTextArea();
-        if(selectedTextArea != null){
+        selectedTextArea = getSelectedTextArea();
+        if (selectedTextArea != null) {
             selectedTextArea.setSelectionStart(0);
             selectedTextArea.setSelectionEnd(selectedTextArea.getText().length());
         }
     }//GEN-LAST:event_jMenuItem20ActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        if(jToggleButton1.isSelected()){
+        if (jToggleButton1.isSelected()) {
             getSelectedTextArea().setLineWrap(true);
             jCheckBoxMenuItem1.setSelected(true);
             return;
         }
-        if(!jToggleButton1.isSelected()){
+        if (!jToggleButton1.isSelected()) {
             getSelectedTextArea().setLineWrap(false);
             jCheckBoxMenuItem1.setSelected(false);
         }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
-        
     }//GEN-LAST:event_jMenu3ActionPerformed
 
     private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem1ActionPerformed
-        if(jCheckBoxMenuItem1.isSelected()){
+        if (jCheckBoxMenuItem1.isSelected()) {
             getSelectedTextArea().setLineWrap(true);
             jToggleButton1.setSelected(true);
             return;
         }
-        if(!jCheckBoxMenuItem1.isSelected()){
+        if (!jCheckBoxMenuItem1.isSelected()) {
             getSelectedTextArea().setLineWrap(false);
             jToggleButton1.setSelected(false);
         }
     }//GEN-LAST:event_jCheckBoxMenuItem1ActionPerformed
-public static String[] fontNames;
+    public static String[] fontNames;
     public static String[] fontSizes;
     private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
         selectedTextArea = getSelectedTextArea();
-        if(selectedTextArea != null){
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            fontNames = ge.getAvailableFontFamilyNames();
-            fontSizes = new String[]{"8", "9", "10", "11", "12", "14", "16",
-                        "18", "20", "22", "24", "26", "28", "36", "48", "72"};
-
-            AdvancedFontChooser dlg = new AdvancedFontChooser(this);
-            SimpleAttributeSet a = new SimpleAttributeSet();
-            StyleConstants.setFontFamily(a, "Monospaced");
-            StyleConstants.setFontSize(a, 12);
-            dlg.setAttributes(a);
-            dlg.show();
+        if (selectedTextArea != null) {
+            FontChooserDialog dlg = new FontChooserDialog(this, false,
+                    selectedTextArea.getFont());
+            dlg.setVisible(true);
+            selectedTextArea.setFont(dlg.getSelectedFont());
         }
     }//GEN-LAST:event_jMenuItem25ActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        Printable p = getSelectedTextArea().getPrintable(createFormat(""),
+                createFormat(""));
+        
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
     int pos;
     /**      */
     int count;
@@ -1281,30 +1259,29 @@ public static String[] fontNames;
     /**      */
     int newcounter;
 
-    public void find(String key, boolean up, boolean match){
+    public void find(String key, boolean up, boolean match) {
         int position = 0;
         int count = 0, a = 0;
         String text = selectedTextArea.getText();
-        if(!match){
+        if (!match) {
             text = text.toLowerCase();
             key = key.toLowerCase();
         }
         position = text.indexOf(key, selectedTextArea.getSelectionEnd() + newcounter);
-        if(position >= 0){
-            selectedTextArea.select( position , position + key.length());
+        if (position >= 0) {
+            selectedTextArea.select(position, position + key.length());
         }
     }
 
-    public JTextArea getSelectedTextArea(){
+    public JTextArea getSelectedTextArea() {
         JTextArea ta = null;
         int s = notesTabbedPane.getSelectedIndex();
-        if(s != -1){
+        if (s != -1) {
             TextEditor ed = textEditorList.get(s);
             ta = ed.getTextArea();
         }
         return ta;
     }
-
 
     private void convertToXML(JTextArea textArea) {
         String fn = browseForPDF();
@@ -1335,11 +1312,10 @@ public static String[] fontNames;
             System.err.println(de.getMessage());
         } catch (IOException ioe) {
             System.err.println(ioe.getMessage());
-        }finally{
+        } finally {
             document.close();
         }
     }
-
 
     private void convertToRTF(JTextArea textArea) {
         String fn = browseForPDF();
@@ -1370,20 +1346,20 @@ public static String[] fontNames;
             System.err.println(de.getMessage());
         } catch (IOException ioe) {
             System.err.println(ioe.getMessage());
-        }finally{
+        } finally {
             document.close();
         }
     }
 
-    private String browseForPDF(){
+    private String browseForPDF() {
         JFileChooser chooser = new JFileChooser(".");
         chooser.setMultiSelectionEnabled(false);
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int opt = chooser.showSaveDialog(this);
         String fileName = "";
-        if(opt == JFileChooser.APPROVE_OPTION){
+        if (opt == JFileChooser.APPROVE_OPTION) {
             fileName = chooser.getSelectedFile().getAbsolutePath();
-            
+
         }
         return fileName;
     }
@@ -1397,7 +1373,7 @@ public static String[] fontNames;
         try {
             PdfWriter.getInstance(document, new FileOutputStream(fn));
             document.open();
-            
+
             java.awt.Font jFont = textArea.getFont();
             Font font = new Font();
             font.setFamily(jFont.getFamily());
@@ -1408,12 +1384,12 @@ public static String[] fontNames;
             paragraph.setFont(font);
             Chapter chapter = new Chapter(paragraph, 1);
             document.add(chapter);
-            
+
         } catch (DocumentException de) {
             System.err.println(de.getMessage());
         } catch (IOException ioe) {
             System.err.println(ioe.getMessage());
-        }finally{
+        } finally {
             document.close();
         }
     }
@@ -1447,24 +1423,22 @@ public static String[] fontNames;
             System.err.println(de.getMessage());
         } catch (IOException ioe) {
             System.err.println(ioe.getMessage());
-        }finally{
+        } finally {
             document.close();
         }
     }
 
-
-
-    private void printText(){
+    private void printText() {
         int s = notesTabbedPane.getSelectedIndex();
-        if(s != -1){
+        if (s != -1) {
             TextEditor ed = textEditorList.get(s);
             JTextArea ta = ed.getTextArea();
             String fileName = ed.getFileName();
-            if(fileName == null || fileName.equals("")){
-               fileName = "New File.txt";
+            if (fileName == null || fileName.equals("")) {
+                fileName = "New File.txt";
             }
-            if(ta != null){
-                MessageFormat header = createFormat("FILE: "+fileName);
+            if (ta != null) {
+                MessageFormat header = createFormat("FILE: " + fileName);
                 MessageFormat footer = createFormat("Green Moon --- Page  {0}");
                 boolean interactive = true;
                 boolean background = false;
@@ -1480,18 +1454,17 @@ public static String[] fontNames;
 
     }
 
-    private void checkAndSaveFiles(){
-        int i =0, count = notesTabbedPane.getTabCount();
-        for(; i<count; i++){
+    private void checkAndSaveFiles() {
+        int i = 0, count = notesTabbedPane.getTabCount();
+        for (; i < count; i++) {
             TextEditor ed = textEditorList.get(i);
             JTextArea ta = ed.getTextArea();
-            if(ed.isIsNewFile() || ed.isIsEdited()){
+            if (ed.isIsNewFile() || ed.isIsEdited()) {
                 int opt = JOptionPane.showConfirmDialog(this,
                         "Do you want to save the file?",
                         "Save",
-                        JOptionPane.OK_CANCEL_OPTION
-                      );
-                if(opt == JOptionPane.OK_OPTION){
+                        JOptionPane.OK_CANCEL_OPTION);
+                if (opt == JOptionPane.OK_OPTION) {
                     notesTabbedPane.setSelectedIndex(i);
                     saveFile();
                 }
@@ -1501,38 +1474,38 @@ public static String[] fontNames;
         }
     }
 
-    private void saveFile(){
+    private void saveFile() {
         int s = notesTabbedPane.getSelectedIndex();
-        if(s != -1){
+        if (s != -1) {
             TextEditor ed = textEditorList.get(s);
             JTextArea ta = ed.getTextArea();
             String fileName = ed.getFileName();
-            if(fileName != null && !fileName.equals("")){
-                if(ta != null){
+            if (fileName != null && !fileName.equals("")) {
+                if (ta != null) {
                     writeFile(fileName, ta.getText());
                     ed.setIsEdited(false);
                     ed.setIsNewFile(false);
                 }
-            }else{
+            } else {
                 saveAs();
             }
-            
+
         }
     }
 
-    private void saveAs(){
+    private void saveAs() {
         JFileChooser chooser = new JFileChooser(".");
         chooser.setMultiSelectionEnabled(false);
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int opt = chooser.showSaveDialog(this);
-        if(opt == JFileChooser.APPROVE_OPTION){
+        if (opt == JFileChooser.APPROVE_OPTION) {
             String fileName = chooser.getSelectedFile().getAbsolutePath();
             int s = notesTabbedPane.getSelectedIndex();
-            if(s != -1){
+            if (s != -1) {
                 TextEditor ed = textEditorList.get(s);
                 JTextArea ta = ed.getTextArea();
                 ed.setFileName(fileName);
-                if(ta != null){
+                if (ta != null) {
                     writeFile(fileName, ta.getText());
                     ed.setIsEdited(false);
                     ed.setIsNewFile(false);
@@ -1541,17 +1514,17 @@ public static String[] fontNames;
                     notesTabbedPane.updateUI();
                 }
             }
-            
+
         }
     }
 
-    private void openFile(){
+    private void openFile() {
         JFileChooser chooser = new JFileChooser(".");
         chooser.setMultiSelectionEnabled(true);
 
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int opt = chooser.showOpenDialog(this);
-        if(opt == JFileChooser.APPROVE_OPTION){
+        if (opt == JFileChooser.APPROVE_OPTION) {
             File[] files = chooser.getSelectedFiles();
             for (File file : files) {
                 JTextArea ta = readFile(file);
@@ -1561,6 +1534,7 @@ public static String[] fontNames;
 
                 // Listen for undo and redo events
                 doc.addUndoableEditListener(new UndoableEditListener() {
+
                     public void undoableEditHappened(UndoableEditEvent evt) {
                         undo.addEdit(evt.getEdit());
                     }
@@ -1569,6 +1543,7 @@ public static String[] fontNames;
                 // Create an undo action and add it to the text component
                 ta.getActionMap().put("Undo",
                         new AbstractAction("Undo") {
+
                             public void actionPerformed(ActionEvent evt) {
                                 try {
                                     if (undo.canUndo()) {
@@ -1585,6 +1560,7 @@ public static String[] fontNames;
                 // Create a redo action and add it to the text component
                 ta.getActionMap().put("Redo",
                         new AbstractAction("Redo") {
+
                             public void actionPerformed(ActionEvent evt) {
                                 try {
                                     if (undo.canRedo()) {
@@ -1601,9 +1577,9 @@ public static String[] fontNames;
                 sp.setViewportView(ta);
                 notesTabbedPane.addTab(file.getName(), sp);
                 int n = notesTabbedPane.getTabCount();
-                notesTabbedPane.setTabComponentAt(n-1,
+                notesTabbedPane.setTabComponentAt(n - 1,
                         new ButtonTabComponent(notesTabbedPane, textEditorList));
-                notesTabbedPane.setSelectedIndex(n-1);
+                notesTabbedPane.setSelectedIndex(n - 1);
                 TextEditor ed = new TextEditor();
                 ed.setTextArea(ta);
                 ed.setIsNewFile(true);
@@ -1614,44 +1590,44 @@ public static String[] fontNames;
 
     }
 
-    private void writeFile(String fileName, String date){
+    private void writeFile(String fileName, String date) {
         BufferedWriter bw = null;
-        try{
+        try {
             bw = new BufferedWriter(new FileWriter(new File(fileName)));
             bw.write(date);
-        }catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
-        }finally{
-            if(bw != null){
-                    try {
-                        bw.close();
-                    } catch (IOException ex) {
-                        Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+        } finally {
+            if (bw != null) {
+                try {
+                    bw.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }
         }
     }
 
-    private JTextArea readFile(File f){
-        JTextArea ta = new JTextArea(10,8);
+    private JTextArea readFile(File f) {
+        JTextArea ta = new JTextArea(10, 8);
         ta.setFont(DEFAULT_TEXT_FONT);
-        if(f.exists()){
+        if (f.exists()) {
             BufferedReader br = null;
-            try{
+            try {
                 StringBuffer line = new StringBuffer();
                 int count = 0;
                 char[] buffer = new char[1024];
                 br = new BufferedReader(
                         new InputStreamReader(new FileInputStream(f)));
-                while((count = br.read(buffer, 0, buffer.length)) >= 0){
+                while ((count = br.read(buffer, 0, buffer.length)) >= 0) {
                     line.append(buffer, 0, count);
                     ta.append(line.toString());
                     line = new StringBuffer();
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, e);
-            }finally{
-                if(br != null){
+            } finally {
+                if (br != null) {
                     try {
                         br.close();
                     } catch (IOException ex) {
@@ -1663,9 +1639,9 @@ public static String[] fontNames;
         return ta;
     }
 
-    private void addNewFile(){
+    private void addNewFile() {
         JScrollPane sp = new JScrollPane();
-        JTextArea textcomp = new JTextArea(5,8);
+        JTextArea textcomp = new JTextArea(5, 8);
         textcomp.setMargin(new java.awt.Insets(2, 2, 2, 2));
         textcomp.setFont(DEFAULT_TEXT_FONT);
         final UndoManager undo = new UndoManager();
@@ -1673,6 +1649,7 @@ public static String[] fontNames;
 
         // Listen for undo and redo events
         doc.addUndoableEditListener(new UndoableEditListener() {
+
             public void undoableEditHappened(UndoableEditEvent evt) {
                 undo.addEdit(evt.getEdit());
             }
@@ -1681,6 +1658,7 @@ public static String[] fontNames;
         // Create an undo action and add it to the text component
         textcomp.getActionMap().put("Undo",
                 new AbstractAction("Undo") {
+
                     public void actionPerformed(ActionEvent evt) {
                         try {
                             if (undo.canUndo()) {
@@ -1697,6 +1675,7 @@ public static String[] fontNames;
         // Create a redo action and add it to the text component
         textcomp.getActionMap().put("Redo",
                 new AbstractAction("Redo") {
+
                     public void actionPerformed(ActionEvent evt) {
                         try {
                             if (undo.canRedo()) {
@@ -1712,43 +1691,42 @@ public static String[] fontNames;
         //sta.addPropertyChangeListener("TEXT", list);
         sp.add(textcomp);
         sp.setViewportView(textcomp);
-        
+
         notesTabbedPane.addTab("New File *", sp);
         int n = notesTabbedPane.getTabCount();
-        notesTabbedPane.setTabComponentAt(n-1, 
+        notesTabbedPane.setTabComponentAt(n - 1,
                 new ButtonTabComponent(notesTabbedPane, textEditorList));
-        notesTabbedPane.setSelectedIndex(n-1);
+        notesTabbedPane.setSelectedIndex(n - 1);
         TextEditor ed = new TextEditor();
         ed.setTextArea(textcomp);
         ed.setIsNewFile(true);
-        textEditorList.add(n-1, ed);
+        textEditorList.add(n - 1, ed);
     }
 
-
-
     /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {        
-        
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             public void run() {
                 try {
-                    
+
                     String osName = System.getProperty("os.name");
                     String lnfClass = TinyLookAndFeel.class.getCanonicalName();
-                    
+
                     if (osName.toLowerCase().contains("win")) {
                         lnfClass = UIManager.getSystemLookAndFeelClassName();
-                        
+
                     }
                     UIManager.setLookAndFeel(lnfClass);
 
                     JNPMainFrame frame = new JNPMainFrame();
-                    if(TinyLookAndFeel.class.getCanonicalName().equals(lnfClass)){
+                    if (TinyLookAndFeel.class.getCanonicalName().equals(lnfClass)) {
                         frame.jRadioButtonMenuItem2.setSelected(true);
                     }
-                    if(UIManager.getSystemLookAndFeelClassName().equals(lnfClass)){
+                    if (UIManager.getSystemLookAndFeelClassName().equals(lnfClass)) {
                         frame.jRadioButtonMenuItem1.setSelected(true);
                     }
                     frame.setVisible(true);
@@ -1761,20 +1739,14 @@ public static String[] fontNames;
                 } catch (UnsupportedLookAndFeelException ex) {
                     Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
             }
         });
     }
-
     private List<TextEditor> textEditorList = new ArrayList<TextEditor>();
-
     protected EditUndoAction undoAction = new EditUndoAction(); // an Action for undo
-
     protected EditRedoAction redoAction = new EditRedoAction(); // an Action for redo
-
     private JTextArea selectedTextArea;
-
-    
 
     public void setSelectedTextArea(JTextArea selectedTextArea) {
         this.selectedTextArea = selectedTextArea;
@@ -1868,17 +1840,15 @@ public static String[] fontNames;
     // End of variables declaration//GEN-END:variables
 
     public void stateChanged(ChangeEvent e) {
-        
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
-        
     }
 
     public void actionPerformed(ActionEvent e) {
         String cmd = e.getActionCommand();
         JTextArea ta = null;
-        if(e.getSource() instanceof JTextArea){
+        if (e.getSource() instanceof JTextArea) {
             ta = (JTextArea) e.getSource();
         }
         if (cmd.equals("COPY")) {
@@ -1915,7 +1885,7 @@ public static String[] fontNames;
         Clipboard cb = this.getToolkit().getSystemClipboard();
         Transferable tr = cb.getContents(this);
         try {
-        // Get the content from the clipboard.
+            // Get the content from the clipboard.
             String s = (String) tr.getTransferData(DataFlavor.stringFlavor);
             int start = field.getSelectionStart();
             int end = field.getSelectionEnd();
@@ -1926,6 +1896,7 @@ public static String[] fontNames;
     }
 
     private class PrintingTask extends SwingWorker<Object, Object> {
+
         private final MessageFormat headerFormat;
         private final MessageFormat footerFormat;
         private final boolean interactive;
@@ -1934,7 +1905,7 @@ public static String[] fontNames;
         private final JTextArea textArea;
 
         public PrintingTask(MessageFormat header, MessageFormat footer,
-                            boolean interactive, JTextArea ta) {
+                boolean interactive, JTextArea ta) {
             this.headerFormat = header;
             this.footerFormat = footer;
             this.interactive = interactive;
@@ -1951,7 +1922,7 @@ public static String[] fontNames;
                 message = "Sorry, a printer error occurred";
             } catch (SecurityException ex) {
                 message =
-                    "Sorry, cannot access the printer due to security reasons";
+                        "Sorry, cannot access the printer due to security reasons";
             }
             return null;
         }
@@ -1978,8 +1949,7 @@ public static String[] fontNames;
     }
 
     private void message(boolean error, String msg) {
-        int type = (error ? JOptionPane.ERROR_MESSAGE :
-                            JOptionPane.INFORMATION_MESSAGE);
+        int type = (error ? JOptionPane.ERROR_MESSAGE : JOptionPane.INFORMATION_MESSAGE);
         JOptionPane.showMessageDialog(this, msg, "Printing", type);
     }
 
@@ -1989,59 +1959,59 @@ public static String[] fontNames;
 
     public class EditUndoAction extends AbstractAction
             implements UndoableEditListener {
-    private UndoableEdit edit;
 
-    public EditUndoAction() {
-      super("Undo");
-      //jMenuItem10.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
-      setIconImage(new javax.swing.ImageIcon(
-              getClass().getResource("/icons/undo.gif")).getImage());
-      //addKeyListener(l);
-      setEnabled(false);
+        private UndoableEdit edit;
+
+        public EditUndoAction() {
+            super("Undo");
+            //jMenuItem10.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
+            setIconImage(new javax.swing.ImageIcon(
+                    getClass().getResource("/icons/undo.gif")).getImage());
+            //addKeyListener(l);
+            setEnabled(false);
+        }
+
+        public void updateEnabled() {
+            setEnabled(edit.canUndo());
+        }
+
+        public void undoableEditHappened(UndoableEditEvent event) {
+            edit = event.getEdit();
+            putValue(NAME, edit.getUndoPresentationName());
+            updateEnabled();
+        }
+
+        public void actionPerformed(ActionEvent ae) {
+            edit.undo();
+            updateEnabled(); // disable undo
+            redoAction.updateEnabled(); // enable redo
+        }
     }
 
-    public void updateEnabled() {
-      setEnabled(edit.canUndo());
+    public class EditRedoAction extends AbstractAction
+            implements UndoableEditListener {
+
+        private UndoableEdit edit;
+
+        public EditRedoAction() {
+            super("Redo");
+            setEnabled(false);
+        }
+
+        public boolean updateEnabled() {
+            return edit.canRedo();
+        }
+
+        public void undoableEditHappened(UndoableEditEvent event) {
+            edit = event.getEdit();
+            putValue(NAME, edit.getRedoPresentationName());
+            updateEnabled();
+        }
+
+        public void actionPerformed(ActionEvent ae) {
+            edit.redo();
+            updateEnabled(); // disable redo
+            undoAction.updateEnabled(); // enable undo
+        }
     }
-
-    public void undoableEditHappened(UndoableEditEvent event) {
-      edit = event.getEdit();
-      putValue(NAME, edit.getUndoPresentationName());
-      updateEnabled();
-    }
-
-    public void actionPerformed(ActionEvent ae) {
-      edit.undo();
-      updateEnabled(); // disable undo
-      redoAction.updateEnabled(); // enable redo
-    }
-  }
-
-  public class EditRedoAction extends AbstractAction
-          implements UndoableEditListener {
-    private UndoableEdit edit;
-
-    public EditRedoAction() {
-      super("Redo");
-      setEnabled(false);
-    }
-
-    public boolean updateEnabled() {
-      return edit.canRedo();
-    }
-
-    public void undoableEditHappened(UndoableEditEvent event) {
-      edit = event.getEdit();
-      putValue(NAME, edit.getRedoPresentationName());
-      updateEnabled();
-    }
-
-    public void actionPerformed(ActionEvent ae) {
-      edit.redo();
-      updateEnabled(); // disable redo
-      undoAction.updateEnabled(); // enable undo
-    }
-  }
-
-    
 }
