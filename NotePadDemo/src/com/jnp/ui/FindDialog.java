@@ -75,6 +75,7 @@ public class FindDialog extends javax.swing.JDialog {
         downRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Find what");
 

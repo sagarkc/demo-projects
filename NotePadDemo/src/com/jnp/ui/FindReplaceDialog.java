@@ -57,6 +57,7 @@ public class FindReplaceDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         kwTextField = new javax.swing.JTextField();
@@ -72,6 +73,7 @@ public class FindReplaceDialog extends javax.swing.JDialog {
         replaceAllButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Find what");
 
@@ -95,8 +97,10 @@ public class FindReplaceDialog extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(" Direction "));
 
+        buttonGroup1.add(upRadioButton);
         upRadioButton.setText("UP");
 
+        buttonGroup1.add(downRadioButton);
         downRadioButton.setSelected(true);
         downRadioButton.setText("DOWN");
 
@@ -297,6 +301,7 @@ public class FindReplaceDialog extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton cancekButton;
     private javax.swing.JRadioButton downRadioButton;
     private javax.swing.JButton findButton;
