@@ -1,0 +1,6 @@
+#summary One-sentence summary of this page.
+#labels Featured,Phase-Implementation
+
+= Introduction =
+
+This Project is not a single one, it is a collection of Projects. One of them is "Java Notepad". it is a simple Notepad I have created. This is a copy of Windows' Notepad.
