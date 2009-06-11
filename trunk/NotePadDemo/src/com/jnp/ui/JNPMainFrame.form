@@ -39,6 +39,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem39">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Open N Lines"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem39ActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JSeparator" name="jSeparator11">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem22">
@@ -375,6 +383,59 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
+            <Menu class="javax.swing.JMenu" name="jMenu9">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Convertre"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem32">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="XML to CSV"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem33">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="XML to Excel"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JSeparator" name="jSeparator17">
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem34">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="CSV to XML"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem35">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Excel to XML"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JSeparator" name="jSeparator18">
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem36">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Excel to CSV"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+            <Menu class="javax.swing.JMenu" name="jMenu10">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="File Splitter"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem37">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Large Text File"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem38">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Large XML File"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
             <MenuItem class="javax.swing.JSeparator" name="jSeparator13">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem29">
@@ -565,7 +626,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" pref="476" max="32767" attributes="0"/>
+          <Component id="jPanel1" alignment="0" pref="478" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -843,7 +904,7 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                      <Component id="jLabel1" alignment="3" pref="19" max="32767" attributes="0"/>
+                      <Component id="jLabel1" alignment="3" pref="21" max="32767" attributes="0"/>
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -851,14 +912,8 @@
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel1"/>
-              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jLabel2"/>
-              </Properties>
             </Component>
           </SubComponents>
         </Container>
