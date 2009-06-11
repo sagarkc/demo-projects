@@ -1285,10 +1285,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
         selectedTextArea = getSelectedTextArea();
         if (selectedTextArea != null) {
-            FontChooserDialog dlg = new FontChooserDialog(this, false,
+            FontChooserDialog dlg = new FontChooserDialog(this, true,
                     selectedTextArea.getFont());
-            dlg.setVisible(true);
-            selectedTextArea.setFont(dlg.getSelectedFont());
+            int opt = dlg.showFontChooserDialog();
+            if(opt == FontChooserDialog.OK_OPTION){
+                java.awt.Font f = dlg.getSelectedFont();
+                selectedTextArea.setFont(f);
+                selectedTextArea.updateUI();
+            }
         }
     }//GEN-LAST:event_jMenuItem25ActionPerformed
 

@@ -25,6 +25,10 @@ public class FontChooserDialog extends javax.swing.JDialog {
     public static String[] installedFontNames;
     public static Integer[] fontSizes = new Integer[92];
     public static String[] fontStyles = new String[4];
+    public static final int OK_OPTION = 1110;
+    public static final int CANCEL_OPTION = 1111;
+
+    private int selectedOption = CANCEL_OPTION;
 
     static{
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -38,6 +42,13 @@ public class FontChooserDialog extends javax.swing.JDialog {
         fontStyles[3] = "Bold Italic";
     }
 
+    public int getSelectedOption() {
+        return selectedOption;
+    }
+    public int showFontChooserDialog(){
+        this.setVisible(true);
+        return selectedOption;
+    }
     /** Creates new form FontChooserDialog */
     public FontChooserDialog(java.awt.Frame parent, boolean modal, Font f) {
         super(parent, modal);
@@ -352,6 +363,7 @@ public class FontChooserDialog extends javax.swing.JDialog {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         cancel();
+        selectedOption = CANCEL_OPTION;
     }//GEN-LAST:event_formWindowClosing
 
     private void fontStyleTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fontStyleTextFieldActionPerformed
@@ -396,12 +408,11 @@ public class FontChooserDialog extends javax.swing.JDialog {
     private void ok() {
         updatePreview();
         oldFont = selectedFont;
-        dispose();
+        
     }
     private void cancel() {
         selectedFont = oldFont;
-        dispose();
-
+        
     }
 
     public Font getSelectedFont(){
@@ -410,10 +421,14 @@ public class FontChooserDialog extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         ok();
+        selectedOption = OK_OPTION;
+        dispose();
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         cancel();
+        selectedOption = CANCEL_OPTION;
+        dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
 
