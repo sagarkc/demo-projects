@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jnlp codebase="file:/E:/SVN_HOME/MyProjects/demo-projects/trunk/NotePadDemo/dist/" href="launch.jnlp" spec="1.0+">
+    <information>
+        <title>NotePadDemo</title>
+        <vendor>sabuj.das</vendor>
+        <homepage href=""/>
+        <description>This is a simple notepad like the Windows Notepad. This does have some extra features, like converter and splitter(s).</description>
+        <description kind="short">NotePadDemo</description>
+
+
+    <icon href="Notepadicon.png" kind="default"/>
+<offline-allowed/>
+</information>
+<security>
+<all-permissions/>
+</security>
+    <resources>
+<j2se version="1.5+"/>
+<jar eager="true" href="NotePadDemo.jar" main="true"/>
+
+
+    <jar href="lib/itext-2.0.5.jar"/>
+<jar href="lib/OfficeLnFs_2.7.jar"/>
+<jar href="lib/substance.jar"/>
+<jar href="lib/tinylaf.jar"/>
+<jar href="lib/beansbinding-1.2.1.jar"/>
+</resources>
+    <application-desc main-class="com.jnp.ui.JNPMainFrame">
+
+    </application-desc>
+</jnlp>
