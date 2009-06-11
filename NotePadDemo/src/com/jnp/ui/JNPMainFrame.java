@@ -169,6 +169,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem39 = new javax.swing.JMenuItem();
         jSeparator11 = new javax.swing.JSeparator();
         jMenuItem22 = new javax.swing.JMenuItem();
         jMenuItem23 = new javax.swing.JMenuItem();
@@ -205,6 +206,17 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jMenuItem26 = new javax.swing.JMenuItem();
         jMenuItem27 = new javax.swing.JMenuItem();
         jMenuItem28 = new javax.swing.JMenuItem();
+        jMenu9 = new javax.swing.JMenu();
+        jMenuItem32 = new javax.swing.JMenuItem();
+        jMenuItem33 = new javax.swing.JMenuItem();
+        jSeparator17 = new javax.swing.JSeparator();
+        jMenuItem34 = new javax.swing.JMenuItem();
+        jMenuItem35 = new javax.swing.JMenuItem();
+        jSeparator18 = new javax.swing.JSeparator();
+        jMenuItem36 = new javax.swing.JMenuItem();
+        jMenu10 = new javax.swing.JMenu();
+        jMenuItem37 = new javax.swing.JMenuItem();
+        jMenuItem38 = new javax.swing.JMenuItem();
         jSeparator13 = new javax.swing.JSeparator();
         jMenuItem29 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -427,10 +439,6 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setPreferredSize(new java.awt.Dimension(729, 25));
 
-        jLabel1.setText("jLabel1");
-
-        jLabel2.setText("jLabel2");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -445,7 +453,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
                 .addComponent(jLabel2))
         );
 
@@ -478,6 +486,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
             }
         });
         jMenu1.add(jMenuItem2);
+
+        jMenuItem39.setText("Open N Lines");
+        jMenuItem39.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem39ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem39);
         jMenu1.add(jSeparator11);
 
         jMenuItem22.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.ALT_MASK));
@@ -695,6 +711,37 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jMenu7.add(jMenuItem28);
 
         jMenu6.add(jMenu7);
+
+        jMenu9.setText("Convertre");
+
+        jMenuItem32.setText("XML to CSV");
+        jMenu9.add(jMenuItem32);
+
+        jMenuItem33.setText("XML to Excel");
+        jMenu9.add(jMenuItem33);
+        jMenu9.add(jSeparator17);
+
+        jMenuItem34.setText("CSV to XML");
+        jMenu9.add(jMenuItem34);
+
+        jMenuItem35.setText("Excel to XML");
+        jMenu9.add(jMenuItem35);
+        jMenu9.add(jSeparator18);
+
+        jMenuItem36.setText("Excel to CSV");
+        jMenu9.add(jMenuItem36);
+
+        jMenu6.add(jMenu9);
+
+        jMenu10.setText("File Splitter");
+
+        jMenuItem37.setText("Large Text File");
+        jMenu10.add(jMenuItem37);
+
+        jMenuItem38.setText("Large XML File");
+        jMenu10.add(jMenuItem38);
+
+        jMenu6.add(jMenu10);
         jMenu6.add(jSeparator13);
 
         jMenuItem29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/wm_settings.gif"))); // NOI18N
@@ -818,7 +865,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
         );
 
         pack();
@@ -1250,6 +1297,29 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 createFormat(""));
         
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem39ActionPerformed
+        NumberOfLineDialog lineDialog = new NumberOfLineDialog(this, true);
+        int opt = lineDialog.showOpenDialog();
+        if(NumberOfLineDialog.OK_OPTION == opt){
+            JTextArea ta = lineDialog.getTextArea();
+            File file = lineDialog.getSelectedFile();
+            if(ta != null){
+                JScrollPane sp = new JScrollPane(ta);
+                sp.setViewportView(ta);
+                notesTabbedPane.addTab(file.getName(), sp);
+                int n = notesTabbedPane.getTabCount();
+                notesTabbedPane.setTabComponentAt(n - 1,
+                        new ButtonTabComponent(notesTabbedPane, textEditorList));
+                notesTabbedPane.setSelectedIndex(n - 1);
+                TextEditor ed = new TextEditor();
+                ed.setTextArea(ta);
+                ed.setIsNewFile(true);
+                ed.setFileName(file.getAbsolutePath());
+                textEditorList.add(ed);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem39ActionPerformed
     int pos;
     /**      */
     int count;
@@ -1770,6 +1840,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -1777,6 +1848,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
@@ -1803,6 +1875,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem30;
     private javax.swing.JMenuItem jMenuItem31;
+    private javax.swing.JMenuItem jMenuItem32;
+    private javax.swing.JMenuItem jMenuItem33;
+    private javax.swing.JMenuItem jMenuItem34;
+    private javax.swing.JMenuItem jMenuItem35;
+    private javax.swing.JMenuItem jMenuItem36;
+    private javax.swing.JMenuItem jMenuItem37;
+    private javax.swing.JMenuItem jMenuItem38;
+    private javax.swing.JMenuItem jMenuItem39;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
@@ -1825,6 +1905,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JToolBar.Separator jSeparator14;
     private javax.swing.JSeparator jSeparator15;
     private javax.swing.JToolBar.Separator jSeparator16;
+    private javax.swing.JSeparator jSeparator17;
+    private javax.swing.JSeparator jSeparator18;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
