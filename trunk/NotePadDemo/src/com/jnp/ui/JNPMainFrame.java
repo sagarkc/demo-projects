@@ -428,6 +428,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         notesTabbedPane.setBackground(new java.awt.Color(204, 204, 204));
         notesTabbedPane.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
         notesTabbedPane.setFocusTraversalPolicyProvider(true);
+        notesTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                notesTabbedPaneStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
@@ -1324,6 +1329,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
             }
         }
     }//GEN-LAST:event_jMenuItem39ActionPerformed
+
+    private void notesTabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_notesTabbedPaneStateChanged
+        int index = notesTabbedPane.getSelectedIndex();
+        if(index > -1){
+            TextEditor editor = textEditorList.get(index);
+            
+        }
+    }//GEN-LAST:event_notesTabbedPaneStateChanged
     int pos;
     /**      */
     int count;
