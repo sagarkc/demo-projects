@@ -1,8 +1,0 @@
-F:\WIN_APP\VS_2008\XmlSplitter\XmlSplitter\bin\Debug\XmlSplitter.exe
-F:\WIN_APP\VS_2008\XmlSplitter\XmlSplitter\bin\Debug\XmlSplitter.pdb
-F:\WIN_APP\VS_2008\XmlSplitter\XmlSplitter\obj\Debug\ResolveAssemblyReference.cache
-F:\WIN_APP\VS_2008\XmlSplitter\XmlSplitter\obj\Debug\XmlSplitter.XmlSplitterForm.resources
-F:\WIN_APP\VS_2008\XmlSplitter\XmlSplitter\obj\Debug\XmlSplitter.Properties.Resources.resources
-F:\WIN_APP\VS_2008\XmlSplitter\XmlSplitter\obj\Debug\XmlSplitter.csproj.GenerateResource.Cache
-F:\WIN_APP\VS_2008\XmlSplitter\XmlSplitter\obj\Debug\XmlSplitter.exe
-F:\WIN_APP\VS_2008\XmlSplitter\XmlSplitter\obj\Debug\XmlSplitter.pdb

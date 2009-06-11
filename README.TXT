@@ -1,0 +1,1 @@
+This a simple Notepad like the Windows one. Use the JavaNotepad shortcut to execuite it on windows. Or use the Note*.jar for other OS.
