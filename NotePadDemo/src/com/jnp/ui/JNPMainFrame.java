@@ -32,6 +32,8 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.beans.PropertyChangeEvent;
@@ -78,7 +80,7 @@ import org.jvnet.substance.skin.SubstanceOfficeBlue2007LookAndFeel;
  * @author Green Moon
  */
 public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
-        PropertyChangeListener, ActionListener {
+        PropertyChangeListener, ActionListener, KeyListener {
 
     private static NotePadContext context = NotePadContext.getInstance();
     public static final java.awt.Font DEFAULT_TEXT_FONT = new java.awt.Font(java.awt.Font.MONOSPACED,
@@ -164,7 +166,9 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         notesTabbedPane = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        dateTimeLabel = new javax.swing.JLabel();
+        numLockLabel = new javax.swing.JLabel();
+        insertLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -444,22 +448,32 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel2.setPreferredSize(new java.awt.Dimension(729, 25));
 
+        jLabel1.setText("Ready");
+
+        insertLabel.setText("INS");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 509, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 465, Short.MAX_VALUE)
+                .addComponent(insertLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(numLockLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(dateTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
-                .addComponent(jLabel2))
+                .addComponent(dateTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(numLockLabel)
+                .addComponent(insertLabel))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1331,11 +1345,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     }//GEN-LAST:event_jMenuItem39ActionPerformed
 
     private void notesTabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_notesTabbedPaneStateChanged
-        int index = notesTabbedPane.getSelectedIndex();
-        if(index > -1){
-            TextEditor editor = textEditorList.get(index);
-            
-        }
+//        int index = notesTabbedPane.getSelectedIndex();
+//        if(index > -1){
+//            TextEditor editor = textEditorList.get(index);
+//
+//        }
     }//GEN-LAST:event_notesTabbedPaneStateChanged
     int pos;
     /**      */
@@ -1733,7 +1747,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         textcomp.setFont(DEFAULT_TEXT_FONT);
         final UndoManager undo = new UndoManager();
         javax.swing.text.Document doc = textcomp.getDocument();
-
+        textcomp.addKeyListener(this);
         // Listen for undo and redo events
         doc.addUndoableEditListener(new UndoableEditListener() {
 
@@ -1840,6 +1854,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel dateTimeLabel;
+    private javax.swing.JLabel insertLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
@@ -1855,7 +1871,6 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
@@ -1936,6 +1951,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.ButtonGroup lnfButtonGroup;
     private javax.swing.JTabbedPane notesTabbedPane;
+    private javax.swing.JLabel numLockLabel;
     // End of variables declaration//GEN-END:variables
 
     public void stateChanged(ChangeEvent e) {
@@ -1992,6 +2008,38 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         } catch (Exception e) {
             return;
         }
+    }
+
+    public void keyTyped(KeyEvent e) {
+        try{
+            JTextArea ta = getSelectedTextArea();
+            if(e.getSource().equals(ta)){
+                int index = notesTabbedPane.getSelectedIndex();
+                TextEditor te = textEditorList.get(index);
+                te.setIsEdited(true);
+                notesTabbedPane.setTitleAt(index, "Edited");
+            }
+        }catch(UnsupportedOperationException use){
+            
+        }
+    }
+
+
+    public void keyPressed(KeyEvent e) {
+        try{
+            JTextArea ta = getSelectedTextArea();
+            if(e.getSource().equals(ta)){
+                if(KeyEvent.VK_INSERT == e.getKeyCode()){
+                    insertLabel.setText("INS");
+                }
+            }
+        }catch(UnsupportedOperationException use){
+
+        }
+    }
+
+    public void keyReleased(KeyEvent e) {
+        
     }
 
     private class PrintingTask extends SwingWorker<Object, Object> {
