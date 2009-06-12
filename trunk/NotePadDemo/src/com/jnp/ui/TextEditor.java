@@ -19,6 +19,8 @@ public class TextEditor {
     private String fileName;
     private boolean isEdited;
     private Font currentFont;
+    private boolean insertEnabled = true;
+    private boolean numberLocked = false;
 
     public String getFileName() {
         return fileName;
@@ -58,6 +60,22 @@ public class TextEditor {
 
     public void setCurrentFont(Font currentFont) {
         this.currentFont = currentFont;
+    }
+
+    public boolean isInsertEnabled() {
+        return insertEnabled;
+    }
+
+    public void setInsertEnabled(boolean insertEnabled) {
+        this.insertEnabled = insertEnabled;
+    }
+
+    public boolean isNumberLocked() {
+        return numberLocked;
+    }
+
+    public void setNumberLocked(boolean numberLocked) {
+        this.numberLocked = numberLocked;
     }
 
     
