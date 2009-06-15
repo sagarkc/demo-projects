@@ -145,7 +145,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
         lnfButtonGroup = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jToolBar1 = new javax.swing.JToolBar();
+        mainToolBar = new javax.swing.JToolBar();
         newFileButton = new javax.swing.JButton();
         openButton = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
@@ -168,7 +168,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jSeparator16 = new javax.swing.JToolBar.Separator();
         wrapToggleButton = new javax.swing.JToggleButton();
         notesTabbedPane = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
+        statusPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         dateTimeLabel = new javax.swing.JLabel();
         numLockLabel = new javax.swing.JLabel();
@@ -239,9 +239,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jRadioButtonMenuItem4 = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItem5 = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItem6 = new javax.swing.JRadioButtonMenuItem();
+        jSeparator20 = new javax.swing.JSeparator();
+        showToolbarCBMenuItem = new javax.swing.JCheckBoxMenuItem();
+        showStatusBarCBMenuItem = new javax.swing.JCheckBoxMenuItem();
         jMenu5 = new javax.swing.JMenu();
         helpIndexMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
+        jSeparator19 = new javax.swing.JSeparator();
+        updateMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -255,8 +260,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        jToolBar1.setFloatable(false);
-        jToolBar1.setRollover(true);
+        mainToolBar.setFloatable(false);
+        mainToolBar.setRollover(true);
 
         newFileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/new.gif"))); // NOI18N
         newFileButton.setToolTipText("New File");
@@ -268,7 +273,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 newFileButtonActionPerformed(evt);
             }
         });
-        jToolBar1.add(newFileButton);
+        mainToolBar.add(newFileButton);
 
         openButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/open.gif"))); // NOI18N
         openButton.setToolTipText("Open File");
@@ -280,8 +285,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 openButtonActionPerformed(evt);
             }
         });
-        jToolBar1.add(openButton);
-        jToolBar1.add(jSeparator4);
+        mainToolBar.add(openButton);
+        mainToolBar.add(jSeparator4);
 
         saveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/save.gif"))); // NOI18N
         saveButton.setToolTipText("Save");
@@ -293,7 +298,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 saveButtonActionPerformed(evt);
             }
         });
-        jToolBar1.add(saveButton);
+        mainToolBar.add(saveButton);
 
         saveAsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/saveas_edit.gif"))); // NOI18N
         saveAsButton.setToolTipText("Save As...");
@@ -305,7 +310,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 saveAsButtonActionPerformed(evt);
             }
         });
-        jToolBar1.add(saveAsButton);
+        mainToolBar.add(saveAsButton);
 
         saveAllButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/saveall.gif"))); // NOI18N
         saveAllButton.setToolTipText("Save All");
@@ -317,8 +322,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 saveAllButtonActionPerformed(evt);
             }
         });
-        jToolBar1.add(saveAllButton);
-        jToolBar1.add(jSeparator5);
+        mainToolBar.add(saveAllButton);
+        mainToolBar.add(jSeparator5);
 
         printButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/print.gif"))); // NOI18N
         printButton.setToolTipText("Print");
@@ -330,8 +335,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 printButtonActionPerformed(evt);
             }
         });
-        jToolBar1.add(printButton);
-        jToolBar1.add(jSeparator14);
+        mainToolBar.add(printButton);
+        mainToolBar.add(jSeparator14);
 
         undoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/undo.gif"))); // NOI18N
         undoButton.setToolTipText("Undo");
@@ -343,15 +348,15 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 undoButtonActionPerformed(evt);
             }
         });
-        jToolBar1.add(undoButton);
+        mainToolBar.add(undoButton);
 
         redoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/redo.gif"))); // NOI18N
         redoButton.setToolTipText("Redo");
         redoButton.setFocusable(false);
         redoButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         redoButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(redoButton);
-        jToolBar1.add(jSeparator9);
+        mainToolBar.add(redoButton);
+        mainToolBar.add(jSeparator9);
 
         cutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/cut.gif"))); // NOI18N
         cutButton.setToolTipText("Cut");
@@ -363,7 +368,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 cutButtonActionPerformed(evt);
             }
         });
-        jToolBar1.add(cutButton);
+        mainToolBar.add(cutButton);
 
         copyButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/copy.gif"))); // NOI18N
         copyButton.setToolTipText("Copy");
@@ -375,7 +380,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 copyButtonActionPerformed(evt);
             }
         });
-        jToolBar1.add(copyButton);
+        mainToolBar.add(copyButton);
 
         pasteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/paste.gif"))); // NOI18N
         pasteButton.setToolTipText("Paste");
@@ -387,8 +392,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 pasteButtonActionPerformed(evt);
             }
         });
-        jToolBar1.add(pasteButton);
-        jToolBar1.add(jSeparator10);
+        mainToolBar.add(pasteButton);
+        mainToolBar.add(jSeparator10);
 
         findButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/find.gif"))); // NOI18N
         findButton.setToolTipText("Find");
@@ -400,7 +405,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 findButtonActionPerformed(evt);
             }
         });
-        jToolBar1.add(findButton);
+        mainToolBar.add(findButton);
 
         findNextButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/findnext.gif"))); // NOI18N
         findNextButton.setToolTipText("Find Next");
@@ -413,7 +418,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 findNextButtonActionPerformed(evt);
             }
         });
-        jToolBar1.add(findNextButton);
+        mainToolBar.add(findNextButton);
 
         replaceButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/replacenext.gif"))); // NOI18N
         replaceButton.setToolTipText("Find / Replace");
@@ -425,8 +430,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 replaceButtonActionPerformed(evt);
             }
         });
-        jToolBar1.add(replaceButton);
-        jToolBar1.add(jSeparator16);
+        mainToolBar.add(replaceButton);
+        mainToolBar.add(jSeparator16);
 
         wrapToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/button-word-wrap.gif"))); // NOI18N
         wrapToggleButton.setToolTipText("Word Wrap");
@@ -438,12 +443,12 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 wrapToggleButtonActionPerformed(evt);
             }
         });
-        jToolBar1.add(wrapToggleButton);
+        mainToolBar.add(wrapToggleButton);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel1.add(jToolBar1, gridBagConstraints);
+        jPanel1.add(mainToolBar, gridBagConstraints);
 
         notesTabbedPane.setBackground(new java.awt.Color(204, 204, 204));
         notesTabbedPane.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -461,18 +466,18 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         gridBagConstraints.weighty = 1.0;
         jPanel1.add(notesTabbedPane, gridBagConstraints);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.setPreferredSize(new java.awt.Dimension(729, 25));
+        statusPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        statusPanel.setPreferredSize(new java.awt.Dimension(729, 25));
 
         jLabel1.setText("Ready");
 
         insertLabel.setText("INS");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
+        statusPanel.setLayout(statusPanelLayout);
+        statusPanelLayout.setHorizontalGroup(
+            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 465, Short.MAX_VALUE)
@@ -483,9 +488,9 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 .addComponent(dateTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        statusPanelLayout.setVerticalGroup(
+            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
                 .addComponent(dateTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(numLockLabel)
@@ -498,7 +503,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
-        jPanel1.add(jPanel2, gridBagConstraints);
+        jPanel1.add(statusPanel, gridBagConstraints);
 
         jMenu1.setText("File");
 
@@ -561,6 +566,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         });
         jMenu1.add(saveMenuItem);
 
+        saveAsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         saveAsMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/saveas_edit.gif"))); // NOI18N
         saveAsMenuItem.setText("Save As...");
         saveAsMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -888,6 +894,25 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jMenu8.add(jRadioButtonMenuItem6);
 
         jMenu4.add(jMenu8);
+        jMenu4.add(jSeparator20);
+
+        showToolbarCBMenuItem.setSelected(true);
+        showToolbarCBMenuItem.setText("Toolbar");
+        showToolbarCBMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showToolbarCBMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu4.add(showToolbarCBMenuItem);
+
+        showStatusBarCBMenuItem.setSelected(true);
+        showStatusBarCBMenuItem.setText("Status Bar");
+        showStatusBarCBMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showStatusBarCBMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu4.add(showStatusBarCBMenuItem);
 
         jMenuBar1.add(jMenu4);
 
@@ -902,6 +927,15 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         aboutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/about.gif"))); // NOI18N
         aboutMenuItem.setText("About Notepad");
         jMenu5.add(aboutMenuItem);
+        jMenu5.add(jSeparator19);
+
+        updateMenuItem.setText("Upate");
+        updateMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu5.add(updateMenuItem);
 
         jMenuBar1.add(jMenu5);
 
@@ -1400,6 +1434,18 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private void saveAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAllButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_saveAllButtonActionPerformed
+
+    private void updateMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateMenuItemActionPerformed
+
+    private void showToolbarCBMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showToolbarCBMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showToolbarCBMenuItemActionPerformed
+
+    private void showStatusBarCBMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showStatusBarCBMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showStatusBarCBMenuItemActionPerformed
 
     public boolean reload(int index){
         boolean reloaded = false;
@@ -2055,7 +2101,6 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem3;
@@ -2072,7 +2117,9 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JToolBar.Separator jSeparator16;
     private javax.swing.JSeparator jSeparator17;
     private javax.swing.JSeparator jSeparator18;
+    private javax.swing.JSeparator jSeparator19;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator20;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
@@ -2080,8 +2127,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JToolBar.Separator jSeparator9;
-    private javax.swing.JToolBar jToolBar1;
     private javax.swing.ButtonGroup lnfButtonGroup;
+    private javax.swing.JToolBar mainToolBar;
     private javax.swing.JButton newFileButton;
     private javax.swing.JMenuItem newMenuItem;
     private javax.swing.JTabbedPane notesTabbedPane;
@@ -2108,11 +2155,15 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JMenuItem selectAllMenuItem;
     private javax.swing.JMenuItem settingsMenuItem;
+    private javax.swing.JCheckBoxMenuItem showStatusBarCBMenuItem;
+    private javax.swing.JCheckBoxMenuItem showToolbarCBMenuItem;
     private javax.swing.JMenuItem splitTextFileMenuItem;
     private javax.swing.JMenuItem splitXmlMenuItem;
     private javax.swing.JMenu splitterMenu;
+    private javax.swing.JPanel statusPanel;
     private javax.swing.JButton undoButton;
     private javax.swing.JMenuItem undoMenuItem;
+    private javax.swing.JMenuItem updateMenuItem;
     private javax.swing.JCheckBoxMenuItem wrapCheckBoxMenuItem;
     private javax.swing.JToggleButton wrapToggleButton;
     private javax.swing.JMenuItem xml2csvMenuItem;
