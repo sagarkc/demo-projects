@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:view="com.gs.view.*">
-	
-	<view:WrapperBox width="100%" height="100%" backgroundColor="#247FAE">
-		
-	</view:WrapperBox>
-	<mx:Style source="assets/styleSheet/siteMainStyleSheet.css"/>
-</mx:Application>

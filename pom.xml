@@ -1,0 +1,97 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.gs.jnp</groupId>
+	<artifactId>java-notepad</artifactId>
+	<name>java-notepad</name>
+	<version>0.0.1-SNAPSHOT</version>
+	<description>Notepad in Java</description>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.fife.plaf</groupId>
+			<artifactId>office-lNf</artifactId>
+			<version>2.7</version>
+			<scope>system</scope>
+			<systemPath>${libs.dir}/OfficeLnFs_2.7.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.jvnet.substance</groupId>
+			<artifactId>substance-lNf</artifactId>
+			<version>2.7</version>
+			<scope>system</scope>
+			<systemPath>${libs.dir}/substance.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>de.muntjak.tinylookandfeel</groupId>
+			<artifactId>tiny-lNf</artifactId>
+			<version>2.7</version>
+			<scope>system</scope>
+			<systemPath>${libs.dir}/tinylaf.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.jdesktop</groupId>
+			<artifactId>beans-bindings</artifactId>
+			<version>1.2.1</version>
+			<scope>system</scope>
+			<systemPath>${libs.dir}/beansbinding-1.2.1.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.0.5</version>
+			<scope>system</scope>
+			<systemPath>${libs.dir}/itext-2.0.5.jar</systemPath>
+		</dependency>
+		
+	</dependencies>
+	
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0.10</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>com.gs.jnp.ui.JNPMainFrame</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<properties>
+		<libs.dir>E:/SVN_HOME/MyProjects/demo-projects/branches/libs/jnp</libs.dir>
+<!--		<libs.dir>F:/SVN_HOME/MAVEN_GUI/trunk/libs</libs.dir>-->
+	</properties>
+
+</project>
