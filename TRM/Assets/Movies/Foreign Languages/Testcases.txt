@@ -1,0 +1,69 @@
+//these are all test cases for checking API, if anyone want to add any more testcases can add.
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using NUnit.Framework;
+using Template;
+using AttendanceManagementSystem;
+using System.Data.SqlClient;
+using ConnectionString;
+using Users;
+
+[TestFixture]
+public class TestID
+{    
+    //"public int GetEmployee(String EmployeeId)" this method returns 1,if EmployeeId Exists in Database, else returns 0.
+    
+    [Test]
+    public void TestOfCorrectID()
+    {
+        AMS_Application ap = new AMS_Application();
+        Assert.AreEqual(1, ap.GetEmployee("A0005"));
+    }
+
+    [Test]
+    public void TestOfWrongID()
+    {
+        AMS_Application ap = new AMS_Application();
+        Assert.AreEqual(0, ap.GetEmployee("A00051"));
+    }
+    [Test]
+    public void TestOfCorrect6CharID()
+    {
+        AMS_Application ap = new AMS_Application();
+        Assert.AreEqual(1, ap.GetEmployee("INT010"));
+    }
+    [Test]
+    public void TestOfWrong6CharID()
+    {
+        AMS_Application ap = new AMS_Application();
+        Assert.AreEqual(0, ap.GetEmployee("INT01@"));
+    }
+    [Test]
+    public void TestOfGetLaptop()
+    {
+        //Laptop lptp1 = new Laptop();
+        Employee e = new Employee();
+        //lptp1.GetLaptop("a0005", "Srinivasan Thothathri", "TI6546", e);
+        //Assert.AreEqual("TI6546",lptp1.LAPTOPID);
+        //Assert.AreEqual(1,lptp1.LogStatus());        
+        Laptop laptopObj = new Laptop();
+        laptopObj.GetLaptop("a0005", "Srinivasan Thothathri", "TI6546", e);
+        laptopObj.RefreshLaptopFromReachWell("a0005", "Srinivasan Thothathri",e);
+        laptopObj.GetLaptop("a0005", "Srinivasan Thothathri", e);
+        laptopObj.LogStatus();
+        Assert.AreEqual(2,laptopObj.BUILDINGID);
+    }
+}
+
+
+
+
+
+        
+    
+    
+  
+
+

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet1" targetNamespace="http://tempuri.org/DataSet1.xsd" xmlns:mstns="http://tempuri.org/DataSet1.xsd" xmlns="http://tempuri.org/DataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="1" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="RMSConnectionString2" ConnectionStringObject="" IsAppSettingsProperty="True" Modifier="Assembly" Name="RMSConnectionString2 (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.RMSConnectionString2.ConnectionString" Provider="System.Data.SqlClient">
+          </Connection>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="RMSConnectionString" ConnectionStringObject="" IsAppSettingsProperty="True" Modifier="Assembly" Name="RMSConnectionString (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.RMSConnectionString.ConnectionString" Provider="System.Data.SqlClient">
+          </Connection>
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="CatagoryTableAdapter" GeneratorDataComponentClassName="CatagoryTableAdapter" Name="Catagory" UserDataComponentName="CatagoryTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="RMSConnectionString2 (Web.config)" DbObjectName="RMS.dbo.Catagory" DbObjectType="Table" GenerateMethods="Get" GenerateShortCommands="False" GeneratorGetMethodName="GetCatagoryName" GetMethodModifier="Public" GetMethodName="GetCatagoryName" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="False" UserGetMethodName="GetCatagoryName" UserSourceName="GetCatagoryName">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="True">
+                    <CommandText>select distinct CatagoryName from Catagory</CommandText>
+                    <Parameters>
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="CatagoryName" DataSetColumn="CatagoryName" />
+            </Mappings>
+            <Sources>
+            </Sources>
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SubcatagoryTableAdapter" GeneratorDataComponentClassName="SubcatagoryTableAdapter" Name="Subcatagory" UserDataComponentName="SubcatagoryTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="RMSConnectionString (Web.config)" DbObjectType="Unknown" GenerateMethods="Get" GenerateShortCommands="False" GeneratorGetMethodName="GetData" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="False" UserGetMethodName="GetData" UserSourceName="GetData">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="True">
+                    <CommandText>SELECT     Subcatagory.SubCatagoryId, Subcatagory.CatagoryId, Subcatagory.SubCatagoryName, Catagory.CatagoryId AS Expr1, Catagory.CatagoryName
+FROM         Subcatagory INNER JOIN
+                      Catagory ON Subcatagory.CatagoryId = Catagory.CatagoryId</CommandText>
+                    <Parameters>
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="SubCatagoryId" DataSetColumn="SubCatagoryId" />
+              <Mapping SourceColumn="CatagoryId" DataSetColumn="CatagoryId" />
+              <Mapping SourceColumn="SubCatagoryName" DataSetColumn="SubCatagoryName" />
+              <Mapping SourceColumn="Expr1" DataSetColumn="Expr1" />
+              <Mapping SourceColumn="CatagoryName" DataSetColumn="CatagoryName" />
+            </Mappings>
+            <Sources>
+              <DbSource ConnectionRef="RMSConnectionString (Web.config)" DbObjectType="Unknown" GenerateMethods="Get" GenerateShortCommands="True" GeneratorGetMethodName="GetCatagorySubcatagoryNames" GetMethodModifier="Public" GetMethodName="GetCatagorySubcatagoryNames" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="True" UserGetMethodName="GetCatagorySubcatagoryNames" UserSourceName="FillBy">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="True">
+                    <CommandText>SELECT     Catagory.CatagoryName, Subcatagory.SubCatagoryName
+FROM         Subcatagory INNER JOIN
+                      Catagory ON Subcatagory.CatagoryId = Catagory.CatagoryId
+WHERE     (Subcatagory.SubCatagoryName = @SubCatagoryName)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="True" AutogeneratedName="SubCatagoryName" ColumnName="SubCatagoryName" DataSourceName="RMS.dbo.Subcatagory" DataTypeServer="varchar(50)" DbType="AnsiString" Direction="Input" ParameterName="@SubCatagoryName" Precision="0" ProviderType="VarChar" Scale="0" Size="50" SourceColumn="SubCatagoryName" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="RMSConnectionString (Web.config)" DbObjectName="RMS.dbo.Subcatagory" DbObjectType="Table" GenerateMethods="Get" GenerateShortCommands="True" GeneratorGetMethodName="GetAllSubcatagoryNames" GeneratorSourceName="FillBy1" GetMethodModifier="Public" GetMethodName="GetAllSubcatagoryNames" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="True" UserGetMethodName="GetAllSubcatagoryNames" UserSourceName="FillBy1">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="True">
+                    <CommandText>SELECT     SubCatagoryName
+FROM         Subcatagory</CommandText>
+                    <Parameters>
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+              <DbSource ConnectionRef="RMSConnectionString2 (Web.config)" DbObjectName="RMS.dbo.Subcatagory" DbObjectType="Table" GenerateMethods="Get" GenerateShortCommands="True" GeneratorGetMethodName="GetSubCatagoryNames" GetMethodModifier="Public" GetMethodName="GetSubCatagoryNames" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="True" UserGetMethodName="GetSubCatagoryNames" UserSourceName="GetSubCatagoryNames1">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="True">
+                    <CommandText>SELECT     SubCatagoryName
+FROM         Subcatagory
+WHERE     (CatagoryId =
+                          (SELECT DISTINCT CatagoryId
+                            FROM          Catagory
+                            WHERE      (CatagoryName = @CatagoryName)))</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="True" AutogeneratedName="CatagoryName" ColumnName="" DataSourceName="" DataTypeServer="varchar(50)" DbType="AnsiString" Direction="Input" ParameterName="@CatagoryName" Precision="0" Scale="0" Size="50" SourceColumn="" SourceColumnNullMapping="False" SourceVersion="Current">
+                      </Parameter>
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </Sources>
+          </TableAdapter>
+        </Tables>
+        <Sources>
+        </Sources>
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="DataSet1" msprop:Generator_DataSetName="DataSet1">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Catagory" msprop:Generator_UserTableName="Catagory" msprop:Generator_RowDeletedName="CatagoryRowDeleted" msprop:Generator_RowChangedName="CatagoryRowChanged" msprop:Generator_RowClassName="CatagoryRow" msprop:Generator_RowChangingName="CatagoryRowChanging" msprop:Generator_RowEvArgName="CatagoryRowChangeEvent" msprop:Generator_RowEvHandlerName="CatagoryRowChangeEventHandler" msprop:Generator_TableClassName="CatagoryDataTable" msprop:Generator_TableVarName="tableCatagory" msprop:Generator_RowDeletingName="CatagoryRowDeleting" msprop:Generator_TablePropName="Catagory">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CatagoryName" msprop:Generator_UserColumnName="CatagoryName" msprop:Generator_ColumnVarNameInTable="columnCatagoryName" msprop:Generator_ColumnPropNameInRow="CatagoryName" msprop:Generator_ColumnPropNameInTable="CatagoryNameColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Subcatagory" msprop:Generator_UserTableName="Subcatagory" msprop:Generator_RowDeletedName="SubcatagoryRowDeleted" msprop:Generator_RowChangedName="SubcatagoryRowChanged" msprop:Generator_RowClassName="SubcatagoryRow" msprop:Generator_RowChangingName="SubcatagoryRowChanging" msprop:Generator_RowEvArgName="SubcatagoryRowChangeEvent" msprop:Generator_RowEvHandlerName="SubcatagoryRowChangeEventHandler" msprop:Generator_TableClassName="SubcatagoryDataTable" msprop:Generator_TableVarName="tableSubcatagory" msprop:Generator_RowDeletingName="SubcatagoryRowDeleting" msprop:Generator_TablePropName="Subcatagory">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SubCatagoryId" msprop:Generator_UserColumnName="SubCatagoryId" msprop:Generator_ColumnVarNameInTable="columnSubCatagoryId" msprop:Generator_ColumnPropNameInRow="SubCatagoryId" msprop:Generator_ColumnPropNameInTable="SubCatagoryIdColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CatagoryId" msprop:Generator_UserColumnName="CatagoryId" msprop:Generator_ColumnVarNameInTable="columnCatagoryId" msprop:Generator_ColumnPropNameInRow="CatagoryId" msprop:Generator_ColumnPropNameInTable="CatagoryIdColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="SubCatagoryName" msprop:Generator_UserColumnName="SubCatagoryName" msprop:Generator_ColumnVarNameInTable="columnSubCatagoryName" msprop:Generator_ColumnPropNameInRow="SubCatagoryName" msprop:Generator_ColumnPropNameInTable="SubCatagoryNameColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Expr1" msprop:Generator_UserColumnName="Expr1" msprop:Generator_ColumnPropNameInRow="Expr1" msprop:Generator_ColumnVarNameInTable="columnExpr1" msprop:Generator_ColumnPropNameInTable="Expr1Column" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CatagoryName" msprop:Generator_UserColumnName="CatagoryName" msprop:Generator_ColumnPropNameInRow="CatagoryName" msprop:Generator_ColumnVarNameInTable="columnCatagoryName" msprop:Generator_ColumnPropNameInTable="CatagoryNameColumn" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
