@@ -929,6 +929,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jMenu5.add(aboutMenuItem);
         jMenu5.add(jSeparator19);
 
+        updateMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/wn_updates48.gif"))); // NOI18N
         updateMenuItem.setText("Upate");
         updateMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

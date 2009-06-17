@@ -626,6 +626,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="updateMenuItem">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icons/wn_updates48.gif"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Upate"/>
               </Properties>
               <Events>
