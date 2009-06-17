@@ -792,6 +792,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         splitterMenu.setText("File Splitter");
 
         splitTextFileMenuItem.setText("Large Text File");
+        splitTextFileMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                splitTextFileMenuItemActionPerformed(evt);
+            }
+        });
         splitterMenu.add(splitTextFileMenuItem);
 
         splitXmlMenuItem.setText("Large XML File");
@@ -1447,6 +1452,10 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private void showStatusBarCBMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showStatusBarCBMenuItemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_showStatusBarCBMenuItemActionPerformed
+
+    private void splitTextFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_splitTextFileMenuItemActionPerformed
+        
+    }//GEN-LAST:event_splitTextFileMenuItemActionPerformed
 
     public boolean reload(int index){
         boolean reloaded = false;
