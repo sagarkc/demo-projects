@@ -1,1 +1,1 @@
-java -jar NotePadDemo.jar
+java -jar java-notepad-1.0-beta-1.jar
