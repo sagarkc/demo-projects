@@ -8,6 +8,7 @@ package com.jnp.utils;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.Serializable;
+import javax.swing.UIManager;
 
 /**
  *
@@ -31,5 +32,5 @@ public class NotePadContext implements Serializable{
     public Dimension frameSize;
     public Point frameLocation;
     public String windowState;
-
+    public String lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
 }

@@ -144,7 +144,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         java.awt.GridBagConstraints gridBagConstraints;
 
         lnfButtonGroup = new javax.swing.ButtonGroup();
-        jPanel1 = new javax.swing.JPanel();
+        mainPanel = new javax.swing.JPanel();
         mainToolBar = new javax.swing.JToolBar();
         newFileButton = new javax.swing.JButton();
         openButton = new javax.swing.JButton();
@@ -256,7 +256,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
             }
         });
 
-        jPanel1.setLayout(new java.awt.GridBagLayout());
+        mainPanel.setLayout(new java.awt.GridBagLayout());
 
         mainToolBar.setFloatable(false);
         mainToolBar.setRollover(true);
@@ -446,7 +446,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel1.add(mainToolBar, gridBagConstraints);
+        mainPanel.add(mainToolBar, gridBagConstraints);
 
         notesTabbedPane.setBackground(new java.awt.Color(204, 204, 204));
         notesTabbedPane.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
@@ -462,7 +462,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        jPanel1.add(notesTabbedPane, gridBagConstraints);
+        mainPanel.add(notesTabbedPane, gridBagConstraints);
 
         statusPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         statusPanel.setPreferredSize(new java.awt.Dimension(729, 25));
@@ -501,7 +501,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
-        jPanel1.add(statusPanel, gridBagConstraints);
+        mainPanel.add(statusPanel, gridBagConstraints);
 
         jMenu1.setText("File");
 
@@ -577,6 +577,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         saveAllMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         saveAllMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/saveall.gif"))); // NOI18N
         saveAllMenuItem.setText("Save All");
+        saveAllMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveAllMenuItemActionPerformed(evt);
+            }
+        });
         jMenu1.add(saveAllMenuItem);
         jMenu1.add(jSeparator1);
 
@@ -947,11 +952,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
         );
 
         pack();
@@ -1442,11 +1447,23 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     }//GEN-LAST:event_updateMenuItemActionPerformed
 
     private void showToolbarCBMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showToolbarCBMenuItemActionPerformed
-        // TODO add your handling code here:
+        if(showToolbarCBMenuItem.isSelected()){
+            mainToolBar.setVisible(true);
+        }
+        if(!showToolbarCBMenuItem.isSelected()){
+            mainToolBar.setVisible(false);
+        }
+        mainPanel.updateUI();
     }//GEN-LAST:event_showToolbarCBMenuItemActionPerformed
 
     private void showStatusBarCBMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showStatusBarCBMenuItemActionPerformed
-        // TODO add your handling code here:
+        if(showStatusBarCBMenuItem.isSelected()){
+            statusPanel.setVisible(true);
+        }
+        if(!showStatusBarCBMenuItem.isSelected()){
+            statusPanel.setVisible(false);
+        }
+        mainPanel.updateUI();
     }//GEN-LAST:event_showStatusBarCBMenuItemActionPerformed
 
     private void splitterMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_splitterMenuItemActionPerformed
@@ -1457,6 +1474,10 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private void xml2csvMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xml2csvMenuItemActionPerformed
         
     }//GEN-LAST:event_xml2csvMenuItemActionPerformed
+
+    private void saveAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAllMenuItemActionPerformed
+        
+    }//GEN-LAST:event_saveAllMenuItemActionPerformed
 
     public boolean reload(int index){
         boolean reloaded = false;
@@ -1735,21 +1756,20 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     }
 
     private void checkAndSaveFiles() {
-        int i = 0, count = notesTabbedPane.getTabCount();
-        for (; i < count; i++) {
-            TextEditor ed = textEditorList.get(i);
+        while(notesTabbedPane.getTabCount() > 0 ){
+            TextEditor ed = textEditorList.get(notesTabbedPane.getTabCount()-1);
             JTextArea ta = ed.getTextArea();
             if (ed.isIsNewFile() || ed.isIsEdited()) {
                 int opt = JOptionPane.showConfirmDialog(this,
                         "Do you want to save the file?",
                         "Save",
-                        JOptionPane.OK_CANCEL_OPTION);
-                if (opt == JOptionPane.OK_OPTION) {
-                    notesTabbedPane.setSelectedIndex(i);
+                        JOptionPane.YES_NO_OPTION);
+                if (opt == JOptionPane.YES_OPTION) {
+                    notesTabbedPane.setSelectedIndex(notesTabbedPane.getTabCount()-1);
                     saveFile();
                 }
-                notesTabbedPane.remove(i);
-                textEditorList.remove(i);
+                textEditorList.remove(notesTabbedPane.getTabCount()-1);
+                notesTabbedPane.remove(notesTabbedPane.getTabCount()-1);
             }
         }
     }
@@ -2111,7 +2131,6 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem3;
@@ -2139,6 +2158,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JToolBar.Separator jSeparator9;
     private javax.swing.ButtonGroup lnfButtonGroup;
+    private javax.swing.JPanel mainPanel;
     private javax.swing.JToolBar mainToolBar;
     private javax.swing.JButton newFileButton;
     private javax.swing.JMenuItem newMenuItem;
