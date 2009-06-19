@@ -431,26 +431,14 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
-            <Menu class="javax.swing.JMenu" name="splitterMenu">
+            <MenuItem class="javax.swing.JMenuItem" name="splitterMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="File Splitter"/>
+                <Property name="text" type="java.lang.String" value="Splitter"/>
               </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="splitTextFileMenuItem">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Large Text File"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="splitTextFileMenuItemActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="splitXmlMenuItem">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Large XML File"/>
-                  </Properties>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="splitterMenuItemActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JSeparator" name="jSeparator13">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="settingsMenuItem">

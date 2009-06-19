@@ -222,9 +222,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         excel2xmlMenuItem = new javax.swing.JMenuItem();
         jSeparator18 = new javax.swing.JSeparator();
         excel2csvMenuItem = new javax.swing.JMenuItem();
-        splitterMenu = new javax.swing.JMenu();
-        splitTextFileMenuItem = new javax.swing.JMenuItem();
-        splitXmlMenuItem = new javax.swing.JMenuItem();
+        splitterMenuItem = new javax.swing.JMenuItem();
         jSeparator13 = new javax.swing.JSeparator();
         settingsMenuItem = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -789,20 +787,13 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
         jMenu6.add(converterMenu);
 
-        splitterMenu.setText("File Splitter");
-
-        splitTextFileMenuItem.setText("Large Text File");
-        splitTextFileMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        splitterMenuItem.setText("Splitter");
+        splitterMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                splitTextFileMenuItemActionPerformed(evt);
+                splitterMenuItemActionPerformed(evt);
             }
         });
-        splitterMenu.add(splitTextFileMenuItem);
-
-        splitXmlMenuItem.setText("Large XML File");
-        splitterMenu.add(splitXmlMenuItem);
-
-        jMenu6.add(splitterMenu);
+        jMenu6.add(splitterMenuItem);
         jMenu6.add(jSeparator13);
 
         settingsMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/wm_settings.gif"))); // NOI18N
@@ -1453,9 +1444,10 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         // TODO add your handling code here:
     }//GEN-LAST:event_showStatusBarCBMenuItemActionPerformed
 
-    private void splitTextFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_splitTextFileMenuItemActionPerformed
-        
-    }//GEN-LAST:event_splitTextFileMenuItemActionPerformed
+    private void splitterMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_splitterMenuItemActionPerformed
+        FileSplitterDialog dialog = new FileSplitterDialog(this, false);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_splitterMenuItemActionPerformed
 
     public boolean reload(int index){
         boolean reloaded = false;
@@ -2167,9 +2159,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenuItem settingsMenuItem;
     private javax.swing.JCheckBoxMenuItem showStatusBarCBMenuItem;
     private javax.swing.JCheckBoxMenuItem showToolbarCBMenuItem;
-    private javax.swing.JMenuItem splitTextFileMenuItem;
-    private javax.swing.JMenuItem splitXmlMenuItem;
-    private javax.swing.JMenu splitterMenu;
+    private javax.swing.JMenuItem splitterMenuItem;
     private javax.swing.JPanel statusPanel;
     private javax.swing.JButton undoButton;
     private javax.swing.JMenuItem undoMenuItem;
