@@ -11,7 +11,22 @@
 
 package com.jnp.ui;
 
+import com.jnp.JnpConstants;
+import com.jnp.core.SplitterProperties;
+import com.jnp.core.TextSplitterProperties;
+import com.jnp.core.XmlSplitterProperties;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,12 +34,27 @@ import java.awt.BorderLayout;
  */
 public class FileSplitterDialog extends javax.swing.JDialog {
 
+    private TextFileSplitterPanel textFileSplitterPanel;
+    private XmlSplitterPanel xmlSplitterPanel;
+
     /** Creates new form FileSplitterDialog */
     public FileSplitterDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        splitProgressBar.setVisible(false);
+        textFileSplitterPanel = new TextFileSplitterPanel();
+        xmlSplitterPanel = new XmlSplitterPanel();
+        bringToCenter();
     }
 
+    private void bringToCenter() {
+        Dimension pd = getParent().getSize();
+        Dimension sz = this.getSize();
+        setLocation(new Point(
+                getParent().getLocation().x + (pd.width/2 - sz.width/2),
+                getParent().getLocation().y + (pd.height/2 - sz.height/2)
+            ));
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -38,16 +68,17 @@ public class FileSplitterDialog extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         fileTypeComboBox = new javax.swing.JComboBox();
         splitterPanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        splitButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
         splitProgressBar = new javax.swing.JProgressBar();
+        openFolderButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("File Splitter");
 
         jLabel1.setText("File Type ");
 
-        fileTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TEXT", "XML" }));
+        fileTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- Select --", "TEXT", "XML" }));
         fileTypeComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fileTypeComboBoxActionPerformed(evt);
@@ -58,11 +89,29 @@ public class FileSplitterDialog extends javax.swing.JDialog {
         splitterPanel.setAutoscrolls(true);
         splitterPanel.setLayout(new java.awt.BorderLayout());
 
-        jButton1.setText("Split");
+        splitButton.setText("Split");
+        splitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                splitButtonActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Cancel");
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
 
         splitProgressBar.setEnabled(false);
+        splitProgressBar.setIndeterminate(true);
+
+        openFolderButton.setText("Open Output Folder");
+        openFolderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openFolderButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -73,13 +122,15 @@ public class FileSplitterDialog extends javax.swing.JDialog {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(splitterPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
-                    .addComponent(splitProgressBar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
+                    .addComponent(splitterPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
+                    .addComponent(splitProgressBar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 507, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 317, Short.MAX_VALUE)
-                        .addComponent(jButton1))
-                    .addComponent(fileTypeComboBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cancelButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(openFolderButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
+                        .addComponent(splitButton))
+                    .addComponent(fileTypeComboBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -90,13 +141,14 @@ public class FileSplitterDialog extends javax.swing.JDialog {
                     .addComponent(jLabel1)
                     .addComponent(fileTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(splitterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                .addComponent(splitterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(splitProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(splitButton)
+                    .addComponent(cancelButton)
+                    .addComponent(openFolderButton))
                 .addContainerGap())
         );
 
@@ -117,41 +169,290 @@ public class FileSplitterDialog extends javax.swing.JDialog {
     private void fileTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileTypeComboBoxActionPerformed
         if(fileTypeComboBox.getSelectedItem().equals("TEXT")){
             splitterPanel.removeAll();
-            splitterPanel.add(new TextFileSplitterPanel(), BorderLayout.CENTER);
+            splitterPanel.add(textFileSplitterPanel, BorderLayout.CENTER);
             splitterPanel.updateUI();
-        }
-        if(fileTypeComboBox.getSelectedItem().equals("XML")){
+        } else if(fileTypeComboBox.getSelectedItem().equals("XML")){
             splitterPanel.removeAll();
-            splitterPanel.add(new XmlSplitterPanel(), BorderLayout.CENTER);
+            splitterPanel.add(xmlSplitterPanel, BorderLayout.CENTER);
+            splitterPanel.updateUI();
+        } else{
+            splitterPanel.removeAll();
             splitterPanel.updateUI();
         }
 }//GEN-LAST:event_fileTypeComboBoxActionPerformed
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                FileSplitterDialog dialog = new FileSplitterDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+    private void splitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_splitButtonActionPerformed
+        split();
+}//GEN-LAST:event_splitButtonActionPerformed
+
+    private void openFolderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFolderButtonActionPerformed
+        if(fileTypeComboBox.getSelectedItem().equals("TEXT")){
+            openBrowsingWindow(textFileSplitterPanel.getTextSplitterProperties()
+                    .getOutputDirName());
+        } else if(fileTypeComboBox.getSelectedItem().equals("XML")){
+
+        } else{
+            
+        }
+    }//GEN-LAST:event_openFolderButtonActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+
+    public void openBrowsingWindow(String dir)
+    {
+        if(dir == null || dir.equals(""))
+            return;
+        if (System.getProperty("os.name").startsWith("Windows"))
+        {
+            try {
+                Runtime.getRuntime().exec("explorer.exe " + dir);
+            } catch (IOException ex) {
+                Logger.getLogger(FileSplitterDialog.class.getName()).log(Level.SEVERE, null, ex);
             }
-        });
+        } else if (System.getProperty("os.name").indexOf("Linux") != -1)
+        {
+            JOptionPane.showMessageDialog(this, "Not implemented !!!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Unknown Operation !!!");
+        }
+    }
+
+    public void split(){
+        
+        if(fileTypeComboBox.getSelectedItem().equals("TEXT")){
+            final TextSplitterProperties textProperties = textFileSplitterPanel.getTextSplitterProperties();
+            if(textProperties != null){
+                Runnable tr = new Runnable() {
+
+                    public void run() {
+                        splitButton.setEnabled(false);
+                        cancelButton.setEnabled(false);
+                        openFolderButton.setEnabled(false);
+                        splitTextFile(textProperties);
+                        splitButton.setEnabled(true);
+                        cancelButton.setEnabled(true);
+                        openFolderButton.setEnabled(true);
+                    }
+                };
+                Thread t = new Thread(tr);
+                t.start();
+            }
+        } else if(fileTypeComboBox.getSelectedItem().equals("XML")){
+            XmlSplitterProperties xmlProperties = xmlSplitterPanel.getXmlSplitterProperties();
+            if(xmlProperties != null){
+                splitXmlFile(xmlProperties);
+            }
+        }
+        
+    }
+
+    private void splitTextFile(TextSplitterProperties textProperties) {
+        if(!textProperties.isValid()){
+            JOptionPane.showMessageDialog(this, "Error exists. Cannot start split process.");
+            return;
+        }
+        splitProgressBar.setVisible(true);
+        File dir = new File(textProperties.getOutputDirName());
+        if(!dir.exists()){
+            dir.mkdirs();
+        }
+        String fn = textProperties.getInputFileName()
+                .substring(0, textProperties.getInputFileName().lastIndexOf("."));
+        String ext = textProperties.getInputFileName()
+                .substring(textProperties.getInputFileName().lastIndexOf("."));
+        File f = new File(dir, fn + SplitterProperties.PART_SUFFIX
+                    + (SplitterProperties.PART_COUNT_START )
+                    + ext);
+
+        if(textProperties.getTotalNumberOfParts() != -1){
+            int avgSize = (int)(textProperties.getFileSizeInBytes()
+                    / textProperties.getTotalNumberOfParts()) + 1;
+            
+            char[] cbuf = new char[1]; // read one byte at a time
+            byte[] wb = new byte[1]; // write one byte at a time
+            BufferedWriter bw = null;
+            BufferedReader br = null;
+            int length = 0, i=0;
+            try{
+                br = new BufferedReader(new FileReader(
+                        new File(textProperties.getInputFilePath()+ "\\"+
+                            textProperties.getInputFileName())));
+                
+                bw = new BufferedWriter(new FileWriter(f));
+                int count = 0;
+                
+
+                while ((count = br.read(cbuf, 0, cbuf.length)) >= 0) {
+                    if(length >= avgSize){
+                        length = 0;
+                        i++;
+                        f = new File(dir, fn + SplitterProperties.PART_SUFFIX
+                            + (SplitterProperties.PART_COUNT_START + i)
+                            + ext);
+                        bw.close();
+                        bw = new BufferedWriter(new FileWriter(f));
+
+                    }
+                    bw.write(cbuf, 0, count);
+                    length += count;
+                }
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this,
+                        "Error exists. Cannot start split process.");
+                return;
+            }finally{
+                if(br != null){
+                    try {
+                        br.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(FileSplitterDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if(bw != null){
+                    try {
+                        bw.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(FileSplitterDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+                
+        }else if(textProperties.getMaximumLinesPerPart() != -1){
+            int lineCount = 0;
+            BufferedWriter bw = null;
+            BufferedReader br = null;
+            int i=0, maxLine = textProperties.getMaximumLinesPerPart();
+            try{
+                br = new BufferedReader(new FileReader(
+                        new File(textProperties.getInputFilePath()+ "\\"+
+                            textProperties.getInputFileName())));
+
+                bw = new BufferedWriter(new FileWriter(f));
+                String line = "";
+                while ((line = br.readLine()) != null) {
+                    if(lineCount >= maxLine){
+                        lineCount = 0;
+                        i++;
+                        f = new File(dir, fn + SplitterProperties.PART_SUFFIX
+                            + (SplitterProperties.PART_COUNT_START + i)
+                            + ext);
+                        bw.close();
+                        bw = new BufferedWriter(new FileWriter(f));
+
+                    }
+                    bw.write(line+"\n");
+                    lineCount ++;
+                }
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this,
+                        "Error exists. Cannot start split process.");
+                return;
+            }finally{
+                if(br != null){
+                    try {
+                        br.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(FileSplitterDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if(bw != null){
+                    try {
+                        bw.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(FileSplitterDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }else if(textProperties.getMaximumSizePerPart() != -1){
+
+            int avgSize = 0;
+
+            if(JnpConstants.BYTE_TEXT.equals(textProperties.getMaximumSizeUnit())){
+                avgSize = textProperties.getMaximumSizePerPart();
+            }else if(JnpConstants.KB_TEXT.equals(textProperties.getMaximumSizeUnit())){
+                avgSize = textProperties.getMaximumSizePerPart()
+                        * JnpConstants.KB.intValue();
+            }else if(JnpConstants.MB_TEXT.equals(textProperties.getMaximumSizeUnit())){
+                avgSize = textProperties.getMaximumSizePerPart()
+                        * JnpConstants.MB.intValue();
+            }else if(JnpConstants.GB_TEXT.equals(textProperties.getMaximumSizeUnit())){
+                avgSize = textProperties.getMaximumSizePerPart()
+                        * JnpConstants.GB.intValue();
+            }
+
+            char[] cbuf = new char[1]; // read one byte at a time
+            byte[] wb = new byte[1]; // write one byte at a time
+            BufferedWriter bw = null;
+            BufferedReader br = null;
+            int length = 0, i=0;
+            try{
+                br = new BufferedReader(new FileReader(
+                        new File(textProperties.getInputFilePath()+ "\\"+
+                            textProperties.getInputFileName())));
+
+                bw = new BufferedWriter(new FileWriter(f));
+                int count = 0;
+
+
+                while ((count = br.read(cbuf, 0, cbuf.length)) >= 0) {
+                    if(length >= avgSize){
+                        length = 0;
+                        i++;
+                        f = new File(dir, fn + SplitterProperties.PART_SUFFIX
+                            + (SplitterProperties.PART_COUNT_START + i)
+                            + ext);
+                        bw.close();
+                        bw = new BufferedWriter(new FileWriter(f));
+
+                    }
+                    bw.write(cbuf, 0, count);
+                    length += count;
+                }
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this,
+                        "Error exists. Cannot start split process.");
+                return;
+            }finally{
+                if(br != null){
+                    try {
+                        br.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(FileSplitterDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if(bw != null){
+                    try {
+                        bw.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(FileSplitterDialog.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+        splitProgressBar.setVisible(false);
+    }
+
+    private void splitXmlFile(XmlSplitterProperties xmlProperties) {
+        if(!xmlProperties.isValid()){
+            JOptionPane.showMessageDialog(this, "Error exists. Cannot start split process.");
+            return;
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cancelButton;
     private javax.swing.JComboBox fileTypeComboBox;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton openFolderButton;
+    private javax.swing.JButton splitButton;
     private javax.swing.JProgressBar splitProgressBar;
     private javax.swing.JPanel splitterPanel;
     // End of variables declaration//GEN-END:variables
+
+
 
 }

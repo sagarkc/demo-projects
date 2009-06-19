@@ -769,6 +769,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         converterMenu.setText("Convertre");
 
         xml2csvMenuItem.setText("XML to CSV");
+        xml2csvMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                xml2csvMenuItemActionPerformed(evt);
+            }
+        });
         converterMenu.add(xml2csvMenuItem);
 
         xml2excelMenuItem.setText("XML to Excel");
@@ -1448,6 +1453,10 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         FileSplitterDialog dialog = new FileSplitterDialog(this, false);
         dialog.setVisible(true);
     }//GEN-LAST:event_splitterMenuItemActionPerformed
+
+    private void xml2csvMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xml2csvMenuItemActionPerformed
+        
+    }//GEN-LAST:event_xml2csvMenuItemActionPerformed
 
     public boolean reload(int index){
         boolean reloaded = false;

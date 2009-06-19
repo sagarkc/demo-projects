@@ -11,6 +11,8 @@
 
 package com.jnp.ui;
 
+import com.jnp.core.XmlSplitterProperties;
+
 /**
  *
  * @author Green Moon
@@ -122,6 +124,13 @@ public class XmlSplitterPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
 }//GEN-LAST:event_inputFileButtonActionPerformed
 
+
+    public XmlSplitterProperties getXmlSplitterProperties(){
+        XmlSplitterProperties properties = new XmlSplitterProperties();
+
+
+        return properties;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton inputFileButton;

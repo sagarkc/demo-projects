@@ -404,6 +404,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="XML to CSV"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="xml2csvMenuItemActionPerformed"/>
+                  </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JMenuItem" name="xml2excelMenuItem">
                   <Properties>
