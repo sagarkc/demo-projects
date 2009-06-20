@@ -44,7 +44,6 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="splitterPanel" alignment="0" pref="507" max="32767" attributes="0"/>
-                      <Component id="splitProgressBar" alignment="0" pref="507" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -53,6 +52,7 @@
                           <Component id="splitButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="fileTypeComboBox" alignment="0" min="-2" pref="173" max="-2" attributes="0"/>
+                      <Component id="splitProgressBar" alignment="1" min="-2" pref="211" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -133,6 +133,8 @@
           <Properties>
             <Property name="enabled" type="boolean" value="false"/>
             <Property name="indeterminate" type="boolean" value="true"/>
+            <Property name="string" type="java.lang.String" value="Splitting... Please Wait..."/>
+            <Property name="stringPainted" type="boolean" value="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="openFolderButton">
