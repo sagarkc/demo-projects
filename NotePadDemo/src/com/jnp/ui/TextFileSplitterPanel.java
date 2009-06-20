@@ -111,7 +111,7 @@ public class TextFileSplitterPanel extends javax.swing.JPanel {
 
         jLabel2.setText("Size");
 
-        fileSizeTextField.setFont(new java.awt.Font("Verdana", 1, 12));
+        fileSizeTextField.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         fileSizeTextField.setForeground(new java.awt.Color(0, 0, 204));
         fileSizeTextField.setAutoscrolls(false);
         fileSizeTextField.setEnabled(false);
@@ -130,7 +130,7 @@ public class TextFileSplitterPanel extends javax.swing.JPanel {
             }
         });
 
-        fileSizeLabel.setFont(new java.awt.Font("Verdana", 1, 12));
+        fileSizeLabel.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         fileSizeLabel.setForeground(new java.awt.Color(0, 0, 204));
 
         buttonGroup1.add(noOfPartsRadioButton);
@@ -231,12 +231,12 @@ public class TextFileSplitterPanel extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(inputFileButton))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(totalLinesTextField, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(totalLinesTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
                                     .addComponent(fileSizeTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(fileSizeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                                .addGap(64, 64, 64)
                                 .addComponent(loadFileProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(opLabel)

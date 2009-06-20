@@ -12,6 +12,8 @@
 package com.jnp.ui;
 
 import com.jnp.core.XmlSplitterProperties;
+import java.io.File;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -22,6 +24,7 @@ public class XmlSplitterPanel extends javax.swing.JPanel {
     /** Creates new form XmlSplitterPanel */
     public XmlSplitterPanel() {
         initComponents();
+        loadFileProgressBar.setVisible(false);
     }
 
     /** This method is called from within the constructor to
@@ -36,17 +39,34 @@ public class XmlSplitterPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         inputFileTextField = new javax.swing.JTextField();
         inputFileButton = new javax.swing.JButton();
+        loadFileProgressBar = new javax.swing.JProgressBar();
+        fileSizeTextField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        sizeTextField = new javax.swing.JTextField();
+        fileSizeLabel = new javax.swing.JLabel();
+        totalLinesTextField = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        opLabel = new javax.swing.JLabel();
+        outputDirTextField = new javax.swing.JTextField();
+        browseOPDirButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        totalRecordsTextField = new javax.swing.JTextField();
 
         jLabel1.setText("Input File");
 
         inputFileTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inputFileTextFieldActionPerformed(evt);
+            }
+        });
+        inputFileTextField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                inputFileTextFieldPropertyChange(evt);
+            }
+        });
+        inputFileTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                inputFileTextFieldKeyTyped(evt);
             }
         });
 
@@ -57,62 +77,127 @@ public class XmlSplitterPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setText("Total No of Records");
+        loadFileProgressBar.setIndeterminate(true);
+        loadFileProgressBar.setString("Loading File");
+        loadFileProgressBar.setStringPainted(true);
 
-        sizeTextField.setAutoscrolls(false);
-        sizeTextField.setEnabled(false);
+        fileSizeTextField.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        fileSizeTextField.setForeground(new java.awt.Color(0, 0, 204));
+        fileSizeTextField.setAutoscrolls(false);
+        fileSizeTextField.setEnabled(false);
 
-        jLabel3.setText("No of Records per Part");
+        jLabel2.setText("Size");
+
+        fileSizeLabel.setFont(new java.awt.Font("Verdana", 1, 12));
+        fileSizeLabel.setForeground(new java.awt.Color(0, 0, 204));
+
+        totalLinesTextField.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        totalLinesTextField.setForeground(new java.awt.Color(0, 0, 204));
+        totalLinesTextField.setAutoscrolls(false);
+        totalLinesTextField.setEnabled(false);
+
+        jLabel5.setText("Total Lines");
+
+        opLabel.setText("Output Directory");
+        opLabel.setEnabled(false);
+
+        outputDirTextField.setAutoscrolls(false);
+        outputDirTextField.setEnabled(false);
+
+        browseOPDirButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/folder_open_file.png"))); // NOI18N
+        browseOPDirButton.setEnabled(false);
+        browseOPDirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                browseOPDirButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Total records");
+
+        totalRecordsTextField.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(inputFileTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(inputFileButton))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(totalLinesTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                                            .addComponent(fileSizeTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                                            .addComponent(totalRecordsTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(fileSizeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(94, 94, 94)
+                                        .addComponent(loadFileProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 438, Short.MAX_VALUE))
+                            .addComponent(jLabel3)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(inputFileTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                        .addContainerGap()
+                        .addComponent(opLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(inputFileButton))
-                    .addComponent(sizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(outputDirTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
+                        .addGap(6, 6, 6)
+                        .addComponent(browseOPDirButton)))
                 .addContainerGap())
-            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(116, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel5, opLabel});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(inputFileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(sizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(inputFileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(inputFileButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2)
+                                .addComponent(fileSizeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(fileSizeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(totalLinesTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(loadFileProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(totalRecordsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(opLabel)
+                            .addComponent(outputDirTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(1, 1, 1))
+                    .addComponent(browseOPDirButton))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -120,9 +205,52 @@ public class XmlSplitterPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
 }//GEN-LAST:event_inputFileTextFieldActionPerformed
 
+    private void inputFileTextFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_inputFileTextFieldPropertyChange
+
+}//GEN-LAST:event_inputFileTextFieldPropertyChange
+
+    private void inputFileTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputFileTextFieldKeyTyped
+
+}//GEN-LAST:event_inputFileTextFieldKeyTyped
+
     private void inputFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputFileButtonActionPerformed
-        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser(".");
+        chooser.setMultiSelectionEnabled(false);
+
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int opt = chooser.showOpenDialog(this);
+        if (opt == JFileChooser.APPROVE_OPTION) {
+            final File f = chooser.getSelectedFile();
+            //selectedFile = f;
+            inputFileTextField.setText(f.getAbsolutePath());
+            Runnable tr = new Runnable(){
+                public void run() {
+                    loadFileProgressBar.setVisible(true);
+                    //loadValuesFromFile(f);
+                    loadFileProgressBar.setVisible(false);
+                    opLabel.setEnabled(true);
+                    outputDirTextField.setEnabled(true);
+                    browseOPDirButton.setEnabled(true);
+                }
+            };
+            new Thread(tr).start();
+        }
 }//GEN-LAST:event_inputFileButtonActionPerformed
+
+    private void browseOPDirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseOPDirButtonActionPerformed
+        JFileChooser chooser = new JFileChooser(".");
+        chooser.setMultiSelectionEnabled(false);
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int opt = chooser.showOpenDialog(this);
+        if (opt == JFileChooser.APPROVE_OPTION) {
+            File f = chooser.getSelectedFile();
+            //selectedOutputDir = f;
+            outputDirTextField.setText(f.getAbsolutePath());
+            //noOfPartsRadioButton.setEnabled(true);
+            //noOfLinesRadioButton.setEnabled(true);
+            //maxSizePartRadioButton.setEnabled(true);
+        }
+}//GEN-LAST:event_browseOPDirButtonActionPerformed
 
 
     public XmlSplitterProperties getXmlSplitterProperties(){
@@ -133,14 +261,21 @@ public class XmlSplitterPanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton browseOPDirButton;
+    private javax.swing.JLabel fileSizeLabel;
+    private javax.swing.JTextField fileSizeTextField;
     private javax.swing.JButton inputFileButton;
     private javax.swing.JTextField inputFileTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField sizeTextField;
+    private javax.swing.JProgressBar loadFileProgressBar;
+    private javax.swing.JLabel opLabel;
+    private javax.swing.JTextField outputDirTextField;
+    private javax.swing.JTextField totalLinesTextField;
+    private javax.swing.JTextField totalRecordsTextField;
     // End of variables declaration//GEN-END:variables
 
 }
