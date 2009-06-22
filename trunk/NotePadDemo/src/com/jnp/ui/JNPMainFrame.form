@@ -400,6 +400,9 @@
             </Menu>
             <Menu class="javax.swing.JMenu" name="converterMenu">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icons/ico_converter.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Convertre"/>
               </Properties>
               <SubComponents>
@@ -439,6 +442,9 @@
             </Menu>
             <MenuItem class="javax.swing.JMenuItem" name="splitterMenuItem">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/icons/file_splitter_16x16.gif"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Splitter"/>
               </Properties>
               <Events>

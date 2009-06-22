@@ -771,6 +771,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
         jMenu6.add(exportAsMenu);
 
+        converterMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ico_converter.png"))); // NOI18N
         converterMenu.setText("Convertre");
 
         xml2csvMenuItem.setText("XML to CSV");
@@ -797,6 +798,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
         jMenu6.add(converterMenu);
 
+        splitterMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/file_splitter_16x16.gif"))); // NOI18N
         splitterMenuItem.setText("Splitter");
         splitterMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -984,11 +986,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 }//GEN-LAST:event_saveAsMenuItemActionPerformed
 
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
-        saveFile();
+        saveFile(notesTabbedPane.getSelectedIndex());
 }//GEN-LAST:event_saveMenuItemActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        saveFile();
+        saveFile(notesTabbedPane.getSelectedIndex());
 }//GEN-LAST:event_saveButtonActionPerformed
 
     private void saveAsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsButtonActionPerformed
@@ -1476,8 +1478,17 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     }//GEN-LAST:event_xml2csvMenuItemActionPerformed
 
     private void saveAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAllMenuItemActionPerformed
-        
+        saveAll();
     }//GEN-LAST:event_saveAllMenuItemActionPerformed
+
+    public void saveAll(){
+        while(notesTabbedPane.getTabCount() > 0 ){
+            boolean saved = saveFile(notesTabbedPane.getTabCount() - 1);
+            if(saved){
+                return;
+            }
+        }
+    }
 
     public boolean reload(int index){
         boolean reloaded = false;
@@ -1518,7 +1529,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                     int opt = JOptionPane.showConfirmDialog(this, "This file is modified.\nDo you want to save the changes ?",
                             "Save ...", JOptionPane.YES_NO_CANCEL_OPTION);
                     if(opt == JOptionPane.YES_OPTION)
-                        saveFile();
+                        saveFile(index);
                     else if(opt == JOptionPane.CANCEL_OPTION){
                         isCanceled = true;
                         return isCanceled;
@@ -1766,7 +1777,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                         JOptionPane.YES_NO_OPTION);
                 if (opt == JOptionPane.YES_OPTION) {
                     notesTabbedPane.setSelectedIndex(notesTabbedPane.getTabCount()-1);
-                    saveFile();
+                    saveFile(notesTabbedPane.getSelectedIndex());
                 }
                 textEditorList.remove(notesTabbedPane.getTabCount()-1);
                 notesTabbedPane.remove(notesTabbedPane.getTabCount()-1);
@@ -1774,11 +1785,10 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         }
     }
 
-    private boolean saveFile() {
+    private boolean saveFile(int index) {
         boolean saved = false;
-        int s = notesTabbedPane.getSelectedIndex();
-        if (s != -1) {
-            TextEditor ed = textEditorList.get(s);
+        if (index != -1) {
+            TextEditor ed = textEditorList.get(index);
             JTextArea ta = ed.getTextArea();
             String fileName = ed.getFileName();
             if (fileName != null && !fileName.equals("")) {
