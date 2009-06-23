@@ -169,10 +169,22 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         wrapToggleButton = new javax.swing.JToggleButton();
         notesTabbedPane = new javax.swing.JTabbedPane();
         statusPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        dateTimeLabel = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        currentStatusLabel = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        charCountLabel = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        lineNumberLabel = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        columnNumberLabel = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        capsLockLabel = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
         numLockLabel = new javax.swing.JLabel();
-        insertLabel = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        scrollLockLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         newMenuItem = new javax.swing.JMenuItem();
@@ -253,6 +265,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
             }
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                formKeyTyped(evt);
             }
         });
 
@@ -464,36 +481,92 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         gridBagConstraints.weighty = 1.0;
         mainPanel.add(notesTabbedPane, gridBagConstraints);
 
-        statusPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        statusPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
         statusPanel.setPreferredSize(new java.awt.Dimension(729, 25));
+        statusPanel.setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setText("Ready");
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
+        jPanel1.setMinimumSize(new java.awt.Dimension(55, 25));
+        jPanel1.setPreferredSize(new java.awt.Dimension(102, 240));
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
-        insertLabel.setText("INS");
+        currentStatusLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jPanel1.add(currentStatusLabel, java.awt.BorderLayout.CENTER);
 
-        javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
-        statusPanel.setLayout(statusPanelLayout);
-        statusPanelLayout.setHorizontalGroup(
-            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(statusPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 465, Short.MAX_VALUE)
-                .addComponent(insertLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(numLockLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(dateTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        statusPanelLayout.setVerticalGroup(
-            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)
-                .addComponent(dateTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(numLockLabel)
-                .addComponent(insertLabel))
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        statusPanel.add(jPanel1, gridBagConstraints);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
+        jPanel2.setMinimumSize(new java.awt.Dimension(55, 25));
+        jPanel2.setPreferredSize(new java.awt.Dimension(102, 240));
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        charCountLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel2.add(charCountLabel, java.awt.BorderLayout.CENTER);
+
+        statusPanel.add(jPanel2, new java.awt.GridBagConstraints());
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
+        jPanel3.setMinimumSize(new java.awt.Dimension(55, 25));
+        jPanel3.setPreferredSize(new java.awt.Dimension(102, 240));
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        lineNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel3.add(lineNumberLabel, java.awt.BorderLayout.CENTER);
+
+        statusPanel.add(jPanel3, new java.awt.GridBagConstraints());
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
+        jPanel4.setMinimumSize(new java.awt.Dimension(55, 25));
+        jPanel4.setPreferredSize(new java.awt.Dimension(102, 240));
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
+        columnNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel4.add(columnNumberLabel, java.awt.BorderLayout.CENTER);
+
+        statusPanel.add(jPanel4, new java.awt.GridBagConstraints());
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
+        jPanel5.setMinimumSize(new java.awt.Dimension(55, 25));
+        jPanel5.setPreferredSize(new java.awt.Dimension(102, 240));
+        jPanel5.setLayout(new java.awt.BorderLayout());
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel5.add(jLabel4, java.awt.BorderLayout.CENTER);
+
+        statusPanel.add(jPanel5, new java.awt.GridBagConstraints());
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
+        jPanel6.setMinimumSize(new java.awt.Dimension(55, 25));
+        jPanel6.setPreferredSize(new java.awt.Dimension(102, 240));
+        jPanel6.setLayout(new java.awt.BorderLayout());
+
+        capsLockLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel6.add(capsLockLabel, java.awt.BorderLayout.CENTER);
+
+        statusPanel.add(jPanel6, new java.awt.GridBagConstraints());
+
+        jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
+        jPanel7.setMinimumSize(new java.awt.Dimension(55, 25));
+        jPanel7.setPreferredSize(new java.awt.Dimension(102, 240));
+        jPanel7.setLayout(new java.awt.BorderLayout());
+
+        numLockLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel7.add(numLockLabel, java.awt.BorderLayout.CENTER);
+
+        statusPanel.add(jPanel7, new java.awt.GridBagConstraints());
+
+        jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
+        jPanel8.setMinimumSize(new java.awt.Dimension(55, 25));
+        jPanel8.setPreferredSize(new java.awt.Dimension(102, 240));
+        jPanel8.setLayout(new java.awt.BorderLayout());
+
+        scrollLockLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel8.add(scrollLockLabel, java.awt.BorderLayout.CENTER);
+
+        statusPanel.add(jPanel8, new java.awt.GridBagConstraints());
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -1481,6 +1554,10 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         saveAll();
     }//GEN-LAST:event_saveAllMenuItemActionPerformed
 
+    private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
+        currentStatusLabel.setText("C: "+evt.getKeyChar());
+    }//GEN-LAST:event_formKeyTyped
+
     public void saveAll(){
         while(notesTabbedPane.getTabCount() > 0 ){
             boolean saved = saveFile(notesTabbedPane.getTabCount() - 1);
@@ -2106,16 +2183,19 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JLabel capsLockLabel;
+    private javax.swing.JLabel charCountLabel;
     private javax.swing.JMenuItem choseFontMenuItem;
     private javax.swing.JMenuItem closeAllMenuItem;
     private javax.swing.JMenuItem closeMenuItem;
+    private javax.swing.JLabel columnNumberLabel;
     private javax.swing.JMenu converterMenu;
     private javax.swing.JButton copyButton;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem csv2xmlMenuItem;
+    private javax.swing.JLabel currentStatusLabel;
     private javax.swing.JButton cutButton;
     private javax.swing.JMenuItem cutMenuItem;
-    private javax.swing.JLabel dateTimeLabel;
     private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JMenuItem excel2csvMenuItem;
     private javax.swing.JMenuItem excel2xmlMenuItem;
@@ -2131,8 +2211,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenuItem findNextMenuItem;
     private javax.swing.JMenuItem gotoMenuItem;
     private javax.swing.JMenuItem helpIndexMenuItem;
-    private javax.swing.JLabel insertLabel;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -2141,6 +2220,14 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem3;
@@ -2167,6 +2254,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JToolBar.Separator jSeparator9;
+    private javax.swing.JLabel lineNumberLabel;
     private javax.swing.ButtonGroup lnfButtonGroup;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JToolBar mainToolBar;
@@ -2194,6 +2282,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JButton saveButton;
     private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JLabel scrollLockLabel;
     private javax.swing.JMenuItem selectAllMenuItem;
     private javax.swing.JMenuItem settingsMenuItem;
     private javax.swing.JCheckBoxMenuItem showStatusBarCBMenuItem;
