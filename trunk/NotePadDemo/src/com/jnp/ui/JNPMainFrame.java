@@ -10,6 +10,7 @@
  */
 package com.jnp.ui;
 
+import com.jnp.JnpConstants;
 import com.jnp.utils.FileRWUtil;
 import com.jnp.utils.NotePadContext;
 import com.lowagie.text.Chapter;
@@ -23,6 +24,7 @@ import com.lowagie.text.pdf.DefaultFontMapper;
 import com.lowagie.text.pdf.PdfWriter;
 import com.lowagie.text.rtf.RtfWriter2;
 import de.muntjak.tinylookandfeel.TinyLookAndFeel;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -52,6 +54,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -81,7 +84,7 @@ import org.jvnet.substance.skin.SubstanceOfficeBlue2007LookAndFeel;
  */
 public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         PropertyChangeListener, ActionListener, KeyListener {
-    public static final String NEW_FILE_NAME = "Untitled";
+    
     public static int NEW_FILE_COUNT = 1;
     public static java.util.List<String> OPEN_FILE_NAMES = new ArrayList<String>();
     private static NotePadContext context = NotePadContext.getInstance();
@@ -176,9 +179,9 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jPanel3 = new javax.swing.JPanel();
         lineNumberLabel = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        columnNumberLabel = new javax.swing.JLabel();
+        rowNumberLabel = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        columnNumberLabel = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         capsLockLabel = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
@@ -240,6 +243,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jMenu3 = new javax.swing.JMenu();
         wrapCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         choseFontMenuItem = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenu8 = new javax.swing.JMenu();
         jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
@@ -252,6 +256,9 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jSeparator20 = new javax.swing.JSeparator();
         showToolbarCBMenuItem = new javax.swing.JCheckBoxMenuItem();
         showStatusBarCBMenuItem = new javax.swing.JCheckBoxMenuItem();
+        showExplorerCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
+        jSeparator21 = new javax.swing.JSeparator();
+        showListExplorerCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         jMenu5 = new javax.swing.JMenu();
         helpIndexMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -499,7 +506,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         statusPanel.add(jPanel1, gridBagConstraints);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
-        jPanel2.setMinimumSize(new java.awt.Dimension(55, 25));
+        jPanel2.setMinimumSize(new java.awt.Dimension(100, 25));
         jPanel2.setPreferredSize(new java.awt.Dimension(102, 240));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
@@ -509,7 +516,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         statusPanel.add(jPanel2, new java.awt.GridBagConstraints());
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
-        jPanel3.setMinimumSize(new java.awt.Dimension(55, 25));
+        jPanel3.setMinimumSize(new java.awt.Dimension(100, 25));
         jPanel3.setPreferredSize(new java.awt.Dimension(102, 240));
         jPanel3.setLayout(new java.awt.BorderLayout());
 
@@ -519,27 +526,27 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         statusPanel.add(jPanel3, new java.awt.GridBagConstraints());
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
-        jPanel4.setMinimumSize(new java.awt.Dimension(55, 25));
+        jPanel4.setMinimumSize(new java.awt.Dimension(100, 25));
         jPanel4.setPreferredSize(new java.awt.Dimension(102, 240));
         jPanel4.setLayout(new java.awt.BorderLayout());
 
-        columnNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel4.add(columnNumberLabel, java.awt.BorderLayout.CENTER);
+        rowNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel4.add(rowNumberLabel, java.awt.BorderLayout.CENTER);
 
         statusPanel.add(jPanel4, new java.awt.GridBagConstraints());
 
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
-        jPanel5.setMinimumSize(new java.awt.Dimension(55, 25));
+        jPanel5.setMinimumSize(new java.awt.Dimension(100, 25));
         jPanel5.setPreferredSize(new java.awt.Dimension(102, 240));
         jPanel5.setLayout(new java.awt.BorderLayout());
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel5.add(jLabel4, java.awt.BorderLayout.CENTER);
+        columnNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel5.add(columnNumberLabel, java.awt.BorderLayout.CENTER);
 
         statusPanel.add(jPanel5, new java.awt.GridBagConstraints());
 
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
-        jPanel6.setMinimumSize(new java.awt.Dimension(55, 25));
+        jPanel6.setMinimumSize(new java.awt.Dimension(100, 25));
         jPanel6.setPreferredSize(new java.awt.Dimension(102, 240));
         jPanel6.setLayout(new java.awt.BorderLayout());
 
@@ -549,7 +556,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         statusPanel.add(jPanel6, new java.awt.GridBagConstraints());
 
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
-        jPanel7.setMinimumSize(new java.awt.Dimension(55, 25));
+        jPanel7.setMinimumSize(new java.awt.Dimension(100, 25));
         jPanel7.setPreferredSize(new java.awt.Dimension(102, 240));
         jPanel7.setLayout(new java.awt.BorderLayout());
 
@@ -559,7 +566,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         statusPanel.add(jPanel7, new java.awt.GridBagConstraints());
 
         jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
-        jPanel8.setMinimumSize(new java.awt.Dimension(55, 25));
+        jPanel8.setMinimumSize(new java.awt.Dimension(100, 25));
         jPanel8.setPreferredSize(new java.awt.Dimension(102, 240));
         jPanel8.setLayout(new java.awt.BorderLayout());
 
@@ -914,6 +921,9 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
         jMenuBar1.add(jMenu3);
 
+        jMenu7.setText("Insert");
+        jMenuBar1.add(jMenu7);
+
         jMenu4.setText("View");
 
         jMenu8.setText("Look N Feel");
@@ -995,6 +1005,13 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         });
         jMenu4.add(showStatusBarCBMenuItem);
 
+        showExplorerCheckBoxMenuItem.setText("Explorer");
+        jMenu4.add(showExplorerCheckBoxMenuItem);
+        jMenu4.add(jSeparator21);
+
+        showListExplorerCheckBoxMenuItem.setText("ListExplorer");
+        jMenu4.add(showListExplorerCheckBoxMenuItem);
+
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Help");
@@ -1027,11 +1044,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 729, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
         );
 
         pack();
@@ -1924,52 +1941,6 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
             for (File file : files) {
                 OPEN_FILE_NAMES.add(file.getAbsolutePath());
                 JTextArea ta = readFile(file);
-                ta.addKeyListener(this);
-                ta.setMargin(new java.awt.Insets(2, 2, 2, 2));
-                final UndoManager undo = new UndoManager();
-                javax.swing.text.Document doc = ta.getDocument();
-
-                // Listen for undo and redo events
-                doc.addUndoableEditListener(new UndoableEditListener() {
-
-                    public void undoableEditHappened(UndoableEditEvent evt) {
-                        undo.addEdit(evt.getEdit());
-                    }
-                });
-
-                // Create an undo action and add it to the text component
-                ta.getActionMap().put("Undo",
-                        new AbstractAction("Undo") {
-
-                            public void actionPerformed(ActionEvent evt) {
-                                try {
-                                    if (undo.canUndo()) {
-                                        undo.undo();
-                                    }
-                                } catch (CannotUndoException e) {
-                                }
-                            }
-                        });
-
-                // Bind the undo action to ctl-Z
-                ta.getInputMap().put(KeyStroke.getKeyStroke("control Z"), "Undo");
-
-                // Create a redo action and add it to the text component
-                ta.getActionMap().put("Redo",
-                        new AbstractAction("Redo") {
-
-                            public void actionPerformed(ActionEvent evt) {
-                                try {
-                                    if (undo.canRedo()) {
-                                        undo.redo();
-                                    }
-                                } catch (CannotRedoException e) {
-                                }
-                            }
-                        });
-
-                // Bind the redo action to ctl-Y
-                ta.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "Redo");
                 JScrollPane sp = new JScrollPane(ta);
                 sp.setViewportView(ta);
                 notesTabbedPane.addTab(file.getName(), sp);
@@ -2007,8 +1978,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     }
 
     private JTextArea readFile(File f) {
-        JTextArea ta = new JTextArea(10, 8);
-        ta.setFont(DEFAULT_TEXT_FONT);
+        JTextArea ta = createNewTexArea();
+        
         if (f.exists()) {
             BufferedReader br = null;
             try {
@@ -2069,58 +2040,12 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     private void addNewFile() {
         JScrollPane sp = new JScrollPane();
-        JTextArea textcomp = new JTextArea(5, 8);
-        textcomp.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        textcomp.setFont(DEFAULT_TEXT_FONT);
-        final UndoManager undo = new UndoManager();
-        javax.swing.text.Document doc = textcomp.getDocument();
-        textcomp.addKeyListener(this);
-        // Listen for undo and redo events
-        doc.addUndoableEditListener(new UndoableEditListener() {
-
-            public void undoableEditHappened(UndoableEditEvent evt) {
-                undo.addEdit(evt.getEdit());
-            }
-        });
-
-        // Create an undo action and add it to the text component
-        textcomp.getActionMap().put("Undo",
-                new AbstractAction("Undo") {
-
-                    public void actionPerformed(ActionEvent evt) {
-                        try {
-                            if (undo.canUndo()) {
-                                undo.undo();
-                            }
-                        } catch (CannotUndoException e) {
-                        }
-                    }
-                });
-
-        // Bind the undo action to ctl-Z
-        textcomp.getInputMap().put(KeyStroke.getKeyStroke("control Z"), "Undo");
-
-        // Create a redo action and add it to the text component
-        textcomp.getActionMap().put("Redo",
-                new AbstractAction("Redo") {
-
-                    public void actionPerformed(ActionEvent evt) {
-                        try {
-                            if (undo.canRedo()) {
-                                undo.redo();
-                            }
-                        } catch (CannotRedoException e) {
-                        }
-                    }
-                });
-
-        // Bind the redo action to ctl-Y
-        textcomp.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "Redo");
+        JTextArea textcomp = createNewTexArea();
         //sta.addPropertyChangeListener("TEXT", list);
         sp.add(textcomp);
         sp.setViewportView(textcomp);
 
-        notesTabbedPane.addTab( NEW_FILE_NAME + "_" + NEW_FILE_COUNT, sp);
+        notesTabbedPane.addTab( JnpConstants.NEW_FILE_NAME + NEW_FILE_COUNT, sp);
         int n = notesTabbedPane.getTabCount();
         notesTabbedPane.setTabComponentAt(n - 1,
                 new ButtonTabComponent(notesTabbedPane, textEditorList));
@@ -2128,7 +2053,11 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         TextEditor ed = new TextEditor();
         ed.setTextArea(textcomp);
         ed.setIsNewFile(true);
+        ed.setNewFileCount(NEW_FILE_COUNT);
+        ed.setFileName(null);
+        
         textEditorList.add(n - 1, ed);
+        ed.setIsEdited(false);
         NEW_FILE_COUNT ++;
     }
 
@@ -2181,6 +2110,73 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         this.selectedTextArea = selectedTextArea;
     }
 
+    private JTextArea createNewTexArea(){
+        JTextArea textArea = new JTextArea(5, 8);
+        LineNumberedBorder lineNumberedBorder = new LineNumberedBorder(LineNumberedBorder.LEFT_SIDE,
+					LineNumberedBorder.RIGHT_JUSTIFY);
+        textArea.setFont(DEFAULT_TEXT_FONT);
+        textArea.setBorder(
+                BorderFactory.createCompoundBorder(
+                  BorderFactory.createEmptyBorder(1, 1, 1, 1),
+                  BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(Color.GRAY, 1),
+                    BorderFactory.createCompoundBorder(
+                        lineNumberedBorder, BorderFactory.createCompoundBorder(
+                            BorderFactory.createLineBorder(Color.GRAY, 1),
+                            BorderFactory.createEmptyBorder(0, 8, 0, 2)
+                  ))
+                  )
+                  )
+                  );
+
+
+        final UndoManager undo = new UndoManager();
+        javax.swing.text.Document doc = textArea.getDocument();
+        textArea.addKeyListener(this);
+        // Listen for undo and redo events
+        doc.addUndoableEditListener(new UndoableEditListener() {
+
+            public void undoableEditHappened(UndoableEditEvent evt) {
+                undo.addEdit(evt.getEdit());
+            }
+        });
+
+        // Create an undo action and add it to the text component
+        textArea.getActionMap().put("Undo",
+                new AbstractAction("Undo") {
+
+                    public void actionPerformed(ActionEvent evt) {
+                        try {
+                            if (undo.canUndo()) {
+                                undo.undo();
+                            }
+                        } catch (CannotUndoException e) {
+                        }
+                    }
+                });
+
+        // Bind the undo action to ctl-Z
+        textArea.getInputMap().put(KeyStroke.getKeyStroke("control Z"), "Undo");
+
+        // Create a redo action and add it to the text component
+        textArea.getActionMap().put("Redo",
+                new AbstractAction("Redo") {
+
+                    public void actionPerformed(ActionEvent evt) {
+                        try {
+                            if (undo.canRedo()) {
+                                undo.redo();
+                            }
+                        } catch (CannotRedoException e) {
+                        }
+                    }
+                });
+
+        // Bind the redo action to ctl-Y
+        textArea.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "Redo");
+        return textArea;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JLabel capsLockLabel;
@@ -2211,13 +2207,13 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenuItem findNextMenuItem;
     private javax.swing.JMenuItem gotoMenuItem;
     private javax.swing.JMenuItem helpIndexMenuItem;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -2247,6 +2243,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JSeparator jSeparator19;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator20;
+    private javax.swing.JSeparator jSeparator21;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
@@ -2276,6 +2273,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenuItem reloadMenuItem;
     private javax.swing.JButton replaceButton;
     private javax.swing.JMenuItem replaceMenuItem;
+    private javax.swing.JLabel rowNumberLabel;
     private javax.swing.JButton saveAllButton;
     private javax.swing.JMenuItem saveAllMenuItem;
     private javax.swing.JButton saveAsButton;
@@ -2285,6 +2283,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JLabel scrollLockLabel;
     private javax.swing.JMenuItem selectAllMenuItem;
     private javax.swing.JMenuItem settingsMenuItem;
+    private javax.swing.JCheckBoxMenuItem showExplorerCheckBoxMenuItem;
+    private javax.swing.JCheckBoxMenuItem showListExplorerCheckBoxMenuItem;
     private javax.swing.JCheckBoxMenuItem showStatusBarCBMenuItem;
     private javax.swing.JCheckBoxMenuItem showToolbarCBMenuItem;
     private javax.swing.JMenuItem splitterMenuItem;
@@ -2360,17 +2360,39 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
             if(e.getSource().equals(ta)){
                 int index = notesTabbedPane.getSelectedIndex();
                 TextEditor te = textEditorList.get(index);
-                te.setIsEdited(true);
-                notesTabbedPane.setTitleAt(index, "Edited");
+                if(!e.isActionKey()){
+                    te.setIsEdited(true);
+                    notesTabbedPane.setTitleAt(index,
+                            te.getFileTitle() + " * ");
+
+                    te.getTextArea().getCaretPosition();
+                }
+                lineNumberLabel.setText("L: "+te.getTextArea().getLineCount());
             }
         }catch(UnsupportedOperationException use){
-            
+
         }
     }
 
 
     public void keyPressed(KeyEvent e) {
-        
+        try{
+            JTextArea ta = getSelectedTextArea();
+            if(e.getSource().equals(ta)){
+                int index = notesTabbedPane.getSelectedIndex();
+                TextEditor te = textEditorList.get(index);
+                if(!e.isActionKey()){
+                    te.setIsEdited(true);
+                    notesTabbedPane.setTitleAt(index,
+                            te.getFileTitle() + " * ");
+                }
+                lineNumberLabel.setText("L: "+te.getTextArea().getLineCount());
+                //columnNumberLabel.setText("C: " + te.getTextArea().getDocument().getLength());
+                columnNumberLabel.setText("C: " + te.getTextArea().getCaretPosition());
+            }
+        }catch(UnsupportedOperationException use){
+
+        }
     }
 
     public void keyReleased(KeyEvent e) {

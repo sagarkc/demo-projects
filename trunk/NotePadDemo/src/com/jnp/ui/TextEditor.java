@@ -5,6 +5,7 @@
 
 package com.jnp.ui;
 
+import com.jnp.JnpConstants;
 import java.awt.Font;
 import javax.swing.JTextArea;
 
@@ -21,15 +22,46 @@ public class TextEditor {
     private Font currentFont;
     private boolean insertEnabled = true;
     private boolean numberLocked = false;
+    private String fileTitle, fileExtension;
+    private int newFileCount = -1;
 
     public String getFileName() {
         return fileName;
     }
 
     public void setFileName(String fileName) {
+        if(null == fileName || fileName.equals("")){
+            fileName = JnpConstants.NEW_FILE_NAME + newFileCount;
+            this.fileTitle = fileName;
+            this.fileExtension = "";
+        }else{
+            this.fileTitle = fileName.substring(
+                    fileName.lastIndexOf(System.getProperty("file.separator"))+1);
+            this.fileExtension = fileName.substring(
+                    fileName.lastIndexOf(".")+1);
+        }
         this.fileName = fileName;
+
     }
 
+    public int getNewFileCount() {
+        return newFileCount;
+    }
+
+    public void setNewFileCount(int currentFileCount) {
+        this.newFileCount = currentFileCount;
+    }
+
+    
+    public String getFileExtension() {
+        return fileExtension;
+    }
+
+    public String getFileTitle() {
+        return fileTitle;
+    }
+
+    
     public boolean isIsEdited() {
         return isEdited;
     }

@@ -24,4 +24,6 @@ public interface JnpConstants {
     public static final String KB_TEXT = "KB";
     public static final String MB_TEXT = "MB";
     public static final String INVALID_SIZE_TEXT = "INVALID_SIZE_TEXT";
+
+    public static final String NEW_FILE_NAME = "Untitled_";
 }
