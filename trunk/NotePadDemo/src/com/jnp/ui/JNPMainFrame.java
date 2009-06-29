@@ -98,6 +98,33 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         initComponents();
         setFrameProperty();
         addNewFile();
+        setKeySetup();
+    }
+
+    public void setKeySetup(){
+        Toolkit tool = Toolkit.getDefaultToolkit();
+        try{
+            // number lock
+            if(tool.getLockingKeyState(KeyEvent.VK_NUM_LOCK)){
+                numLockLabel.setText("NUM");
+            }else{
+                numLockLabel.setText("");
+            }
+            // caps lock
+            if(tool.getLockingKeyState(KeyEvent.VK_CAPS_LOCK)){
+                capsLockLabel.setText("CAPS");
+            }else{
+                capsLockLabel.setText("");
+            }
+            // scroll lock
+            if(tool.getLockingKeyState(KeyEvent.VK_SCROLL_LOCK)){
+                scrollLockLabel.setText("SCROLL");
+            }else{
+                scrollLockLabel.setText("");
+            }
+        }catch(Exception e){
+
+        }
     }
 
     private void loadSavedContext() {
@@ -134,6 +161,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         if (context.frameSize != null) {
             setSize(context.frameSize);
         }
+        addKeyListener(this);
     }
 
     /** This method is called from within the constructor to
@@ -179,9 +207,9 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jPanel3 = new javax.swing.JPanel();
         lineNumberLabel = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        rowNumberLabel = new javax.swing.JLabel();
+        insertLabel = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        columnNumberLabel = new javax.swing.JLabel();
+        editorTextPropertyLabel = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         capsLockLabel = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
@@ -506,7 +534,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         statusPanel.add(jPanel1, gridBagConstraints);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
-        jPanel2.setMinimumSize(new java.awt.Dimension(100, 25));
+        jPanel2.setMinimumSize(new java.awt.Dimension(50, 25));
         jPanel2.setPreferredSize(new java.awt.Dimension(102, 240));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
@@ -516,7 +544,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         statusPanel.add(jPanel2, new java.awt.GridBagConstraints());
 
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
-        jPanel3.setMinimumSize(new java.awt.Dimension(100, 25));
+        jPanel3.setMinimumSize(new java.awt.Dimension(50, 25));
         jPanel3.setPreferredSize(new java.awt.Dimension(102, 240));
         jPanel3.setLayout(new java.awt.BorderLayout());
 
@@ -526,27 +554,28 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         statusPanel.add(jPanel3, new java.awt.GridBagConstraints());
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
-        jPanel4.setMinimumSize(new java.awt.Dimension(100, 25));
+        jPanel4.setMinimumSize(new java.awt.Dimension(50, 25));
         jPanel4.setPreferredSize(new java.awt.Dimension(102, 240));
         jPanel4.setLayout(new java.awt.BorderLayout());
 
-        rowNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel4.add(rowNumberLabel, java.awt.BorderLayout.CENTER);
+        insertLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        insertLabel.setText("INS");
+        jPanel4.add(insertLabel, java.awt.BorderLayout.CENTER);
 
         statusPanel.add(jPanel4, new java.awt.GridBagConstraints());
 
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
-        jPanel5.setMinimumSize(new java.awt.Dimension(100, 25));
+        jPanel5.setMinimumSize(new java.awt.Dimension(200, 25));
         jPanel5.setPreferredSize(new java.awt.Dimension(102, 240));
         jPanel5.setLayout(new java.awt.BorderLayout());
 
-        columnNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel5.add(columnNumberLabel, java.awt.BorderLayout.CENTER);
+        editorTextPropertyLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel5.add(editorTextPropertyLabel, java.awt.BorderLayout.CENTER);
 
         statusPanel.add(jPanel5, new java.awt.GridBagConstraints());
 
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
-        jPanel6.setMinimumSize(new java.awt.Dimension(100, 25));
+        jPanel6.setMinimumSize(new java.awt.Dimension(50, 25));
         jPanel6.setPreferredSize(new java.awt.Dimension(102, 240));
         jPanel6.setLayout(new java.awt.BorderLayout());
 
@@ -556,7 +585,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         statusPanel.add(jPanel6, new java.awt.GridBagConstraints());
 
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
-        jPanel7.setMinimumSize(new java.awt.Dimension(100, 25));
+        jPanel7.setMinimumSize(new java.awt.Dimension(50, 25));
         jPanel7.setPreferredSize(new java.awt.Dimension(102, 240));
         jPanel7.setLayout(new java.awt.BorderLayout());
 
@@ -566,7 +595,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         statusPanel.add(jPanel7, new java.awt.GridBagConstraints());
 
         jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
-        jPanel8.setMinimumSize(new java.awt.Dimension(100, 25));
+        jPanel8.setMinimumSize(new java.awt.Dimension(50, 25));
         jPanel8.setPreferredSize(new java.awt.Dimension(102, 240));
         jPanel8.setLayout(new java.awt.BorderLayout());
 
@@ -1044,7 +1073,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 729, Short.MAX_VALUE)
+            .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 757, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1509,12 +1538,27 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 }//GEN-LAST:event_openNlinesMenuItemActionPerformed
 
     private void notesTabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_notesTabbedPaneStateChanged
-//        int index = notesTabbedPane.getSelectedIndex();
-//        if(index > -1){
-//            TextEditor editor = textEditorList.get(index);
-//
-//        }
+        int index = notesTabbedPane.getSelectedIndex();
+        if(index > -1){
+            if(evt.getSource().equals(notesTabbedPane))
+                updateOthrComponentsByTabChange(index);
+        }
     }//GEN-LAST:event_notesTabbedPaneStateChanged
+
+    public void updateOthrComponentsByTabChange(int index){
+        if(textEditorList.size() < index + 1){
+            return;
+        }
+        TextEditor editor = textEditorList.get(index);
+        if(editor != null){
+            setTitle("NotePad - [" + editor.getFileTitle() + " * ]");
+            if(editor.isInsertEnabled()){
+                insertLabel.setText("INS");
+            }else{
+                insertLabel.setText("OVR");
+            }
+        }
+    }
 
     private void closeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeMenuItemActionPerformed
         int index = notesTabbedPane.getSelectedIndex();
@@ -2055,7 +2099,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         ed.setIsNewFile(true);
         ed.setNewFileCount(NEW_FILE_COUNT);
         ed.setFileName(null);
-        
+        ed.setInsertEnabled(true);
         textEditorList.add(n - 1, ed);
         ed.setIsEdited(false);
         NEW_FILE_COUNT ++;
@@ -2184,7 +2228,6 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenuItem choseFontMenuItem;
     private javax.swing.JMenuItem closeAllMenuItem;
     private javax.swing.JMenuItem closeMenuItem;
-    private javax.swing.JLabel columnNumberLabel;
     private javax.swing.JMenu converterMenu;
     private javax.swing.JButton copyButton;
     private javax.swing.JMenuItem copyMenuItem;
@@ -2193,6 +2236,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JButton cutButton;
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
+    private javax.swing.JLabel editorTextPropertyLabel;
     private javax.swing.JMenuItem excel2csvMenuItem;
     private javax.swing.JMenuItem excel2xmlMenuItem;
     private javax.swing.JMenuItem exitMenuItem;
@@ -2207,6 +2251,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenuItem findNextMenuItem;
     private javax.swing.JMenuItem gotoMenuItem;
     private javax.swing.JMenuItem helpIndexMenuItem;
+    private javax.swing.JLabel insertLabel;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -2273,7 +2318,6 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JMenuItem reloadMenuItem;
     private javax.swing.JButton replaceButton;
     private javax.swing.JMenuItem replaceMenuItem;
-    private javax.swing.JLabel rowNumberLabel;
     private javax.swing.JButton saveAllButton;
     private javax.swing.JMenuItem saveAllMenuItem;
     private javax.swing.JButton saveAsButton;
@@ -2377,18 +2421,31 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
 
     public void keyPressed(KeyEvent e) {
         try{
+            setKeySetup();            
             JTextArea ta = getSelectedTextArea();
             if(e.getSource().equals(ta)){
                 int index = notesTabbedPane.getSelectedIndex();
                 TextEditor te = textEditorList.get(index);
-                if(!e.isActionKey()){
+                if(!e.isActionKey() && KeyEvent.VK_INSERT != e.getKeyCode()
+                        && (KeyEvent.VK_CONTROL + KeyEvent.VK_N) != e.getKeyCode()){
                     te.setIsEdited(true);
                     notesTabbedPane.setTitleAt(index,
                             te.getFileTitle() + " * ");
+                    setTitle("NotePad - [" + te.getFileTitle() + " * ]");
                 }
-                lineNumberLabel.setText("L: "+te.getTextArea().getLineCount());
+                // Insert
+                if(KeyEvent.VK_INSERT == e.getKeyCode()){
+                    if(te.isInsertEnabled()){
+                        insertLabel.setText("OVR");
+                        te.setInsertEnabled(false);
+                    }else{
+                        insertLabel.setText("INS");
+                        te.setInsertEnabled(true);
+                    }
+                }
+                //lineNumberLabel.setText("L: "+te.getTextArea().getLineCount());
                 //columnNumberLabel.setText("C: " + te.getTextArea().getDocument().getLength());
-                columnNumberLabel.setText("C: " + te.getTextArea().getCaretPosition());
+                //editorTextPropertyLabel.setText("C: " + te.getTextArea().getCaretPosition());
             }
         }catch(UnsupportedOperationException use){
 
