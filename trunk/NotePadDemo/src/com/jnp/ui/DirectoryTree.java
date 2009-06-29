@@ -45,14 +45,13 @@ import javax.swing.tree.TreeSelectionModel;
  */
 public class DirectoryTree extends JTree implements JnpConstants {
 
-	// private static MavenGUIContext context = MavenGUIContext.getInstance();
-
+	
 	private final ImageIcon ICON_COMPUTER = new ImageIcon(
             DirectoryTree.class.getResource(IMAGE_PATH + "My_PC.png"));
 	private final ImageIcon ICON_DISK = new ImageIcon(
             DirectoryTree.class.getResource(IMAGE_PATH + "CD-DVD_Drive.png"));
 	private final ImageIcon ICON_FOLDER_CLOSED = new ImageIcon(
-            DirectoryTree.class.getResource(IMAGE_PATH + "Folder_open.gif"));
+            DirectoryTree.class.getResource(IMAGE_PATH + "icon_folder_closed_16.png"));
 	private final ImageIcon ICON_FOLDER_OPENED = new ImageIcon(
             DirectoryTree.class.getResource(IMAGE_PATH + "Folder_open.gif"));
 	private final ImageIcon ICON_EXPAND = new ImageIcon(
@@ -66,6 +65,12 @@ public class DirectoryTree extends JTree implements JnpConstants {
         //
 		initComponents();
 	}
+
+
+    public DefaultTreeModel getTreeModel() {
+        return defaultTreeModel;
+    }
+
 
 	private void initComponents() {
 
@@ -86,8 +91,9 @@ public class DirectoryTree extends JTree implements JnpConstants {
 		putClientProperty("JTree.lineStyle", "Angled");
 		TreeCellRenderer renderer = new IconCellRenderer();
 		setCellRenderer(renderer);
-		addTreeExpansionListener(new DirExpansionListener());
-		addTreeSelectionListener(new DirSelectionListener());
+		//addTreeExpansionListener(new DirExpansionListener());
+		//addTreeSelectionListener(new DirSelectionListener());
+        
 		getSelectionModel().setSelectionMode(
 				TreeSelectionModel.SINGLE_TREE_SELECTION);
 		setShowsRootHandles(true);
@@ -170,6 +176,9 @@ public class DirectoryTree extends JTree implements JnpConstants {
 	protected Action treeAction;
 	protected TreePath clickedPath;
 
+    
+/*
+    
 	class DirExpansionListener implements TreeExpansionListener {
 		public void treeExpanded(TreeExpansionEvent event) {
 			final DefaultMutableTreeNode node = getTreeNode(event.getPath());
@@ -196,7 +205,7 @@ public class DirectoryTree extends JTree implements JnpConstants {
 			}
 		}
 	}
-
+*/
 	private static String selectedPath = "";
 
 }
