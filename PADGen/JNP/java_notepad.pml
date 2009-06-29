@@ -4,9 +4,9 @@
 	<CompanyName />
 	<Program_Info>
 		<Program_Name>Java Notepad</Program_Name>
-		<Program_Version>beta_1.0.0</Program_Version>
+		<Program_Version>beta-1.0.3</Program_Version>
 		<Program_Release_Month>06</Program_Release_Month>
-		<Program_Release_Day>11</Program_Release_Day>
+		<Program_Release_Day>28</Program_Release_Day>
 		<Program_Release_Year>2009</Program_Release_Year>
 		<Program_Cost_Dollars />
 		<Program_Cost_Other_Code />
@@ -16,7 +16,7 @@
 		<Program_Install_Support>No Install Support</Program_Install_Support>
 		<Program_OS_Support>Win 3.1x,Win95,Win98,WinME,WinNT 3.x,WinNT 4.x,Windows2000,WinXP,Windows2003,Windows Vista Starter,Windows Vista Home Basic,Windows Vista Home Premium,Windows Vista Business,Windows Vista Enterprise,Windows Vista Ultimate,Windows Vista Home Basic x64,Windows Vista Home Premium x64,Windows Vista Business x64,Windows Vista Enterprise x64,Windows Vista Ultimate x64,Unix,Linux,Linux Gnome,Linux GPL,Linux Open Source,Mac OS X</Program_OS_Support>
 		<Program_Language>English</Program_Language>
-		<Program_Change_Info />
+		<Program_Change_Info>Some Isses are fixed.</Program_Change_Info>
 		<Program_Specific_Category>Utilities</Program_Specific_Category>
 		<Program_Category_Class>System Utilities::Text/Document Editors</Program_Category_Class>
 		<Program_System_Requirements>JDK 1.6</Program_System_Requirements>
@@ -62,7 +62,7 @@ Use it and send me feedback : sabuj.das@gmail.com</Char_Desc_2000>
 			<Application_XML_File_URL>http://greenmoonsite1983.1stfreehosting.com/javanotepad/bete_1_0_0/javanotepad_pad.xml</Application_XML_File_URL>
 		</Application_URLs>
 		<Download_URLs>
-			<Primary_Download_URL>http://greenmoonsite1983.1stfreehosting.com/javanotepad/bete_1_0_0/Notepad-Beta%201.0.0.zip</Primary_Download_URL>
+			<Primary_Download_URL>http://greenmoonsite1983.1stfreehosting.com/javanotepad/1_0_beta_3/java-notepad-1.0-beta-3.zip</Primary_Download_URL>
 			<Secondary_Download_URL />
 			<Additional_Download_URL_1 />
 			<Additional_Download_URL_2 />
