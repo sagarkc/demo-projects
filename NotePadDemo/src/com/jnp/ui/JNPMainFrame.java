@@ -102,7 +102,7 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         setKeySetup();
         // ********************************
 
-        MiniExplorerPanel mep = new MiniExplorerPanel();
+        MiniExplorerPanel mep = new MiniExplorerPanel(this);
         leftPanelTabbedPane.addTab("Explorer", mep);
         //mainSplitPane.getLeftComponent().setVisible(true);
         ListExplorerPanel lep = new ListExplorerPanel();
@@ -1999,7 +1999,26 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         return saved;
     }
 
-    private void openFile() {
+    public void openFile(String fileName) {
+        File file = new File(fileName);
+        OPEN_FILE_NAMES.add(file.getAbsolutePath());
+        JTextArea ta = readFile(file);
+        JScrollPane sp = new JScrollPane(ta);
+        sp.setViewportView(ta);
+        notesTabbedPane.addTab(file.getName(), sp);
+        int n = notesTabbedPane.getTabCount();
+        notesTabbedPane.setTabComponentAt(n - 1,
+                new ButtonTabComponent(notesTabbedPane, textEditorList));
+        notesTabbedPane.setSelectedIndex(n - 1);
+        TextEditor ed = new TextEditor();
+        ed.setTextArea(ta);
+        ed.setIsNewFile(false);
+        ed.setFileName(file.getAbsolutePath());
+        ed.setIsEdited(false);
+        textEditorList.add(ed);
+    }
+
+    public void openFile() {
         JFileChooser chooser = new JFileChooser(".");
         chooser.setMultiSelectionEnabled(true);
 
