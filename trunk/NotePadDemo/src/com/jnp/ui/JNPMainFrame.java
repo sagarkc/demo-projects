@@ -96,9 +96,19 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     public JNPMainFrame() {
         loadSavedContext();
         initComponents();
+        //mainSplitPane.getLeftComponent().setVisible(false);
         setFrameProperty();
         addNewFile();
         setKeySetup();
+        // ********************************
+
+        MiniExplorerPanel mep = new MiniExplorerPanel();
+        leftPanelTabbedPane.addTab("Explorer", mep);
+        //mainSplitPane.getLeftComponent().setVisible(true);
+        ListExplorerPanel lep = new ListExplorerPanel();
+        leftPanelTabbedPane.addTab("List Explorer", lep);
+
+        // ********************************
     }
 
     public void setKeySetup(){
@@ -198,7 +208,10 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         replaceButton = new javax.swing.JButton();
         jSeparator16 = new javax.swing.JToolBar.Separator();
         wrapToggleButton = new javax.swing.JToggleButton();
+        mainSplitPane = new javax.swing.JSplitPane();
         notesTabbedPane = new javax.swing.JTabbedPane();
+        lentComponentPanel = new javax.swing.JPanel();
+        leftPanelTabbedPane = new javax.swing.JTabbedPane();
         statusPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         currentStatusLabel = new javax.swing.JLabel();
@@ -500,6 +513,9 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         mainPanel.add(mainToolBar, gridBagConstraints);
 
+        mainSplitPane.setContinuousLayout(true);
+        mainSplitPane.setOneTouchExpandable(true);
+
         notesTabbedPane.setBackground(new java.awt.Color(204, 204, 204));
         notesTabbedPane.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
         notesTabbedPane.setFocusTraversalPolicyProvider(true);
@@ -508,13 +524,22 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
                 notesTabbedPaneStateChanged(evt);
             }
         });
+        mainSplitPane.setRightComponent(notesTabbedPane);
+
+        lentComponentPanel.setLayout(new java.awt.BorderLayout());
+
+        leftPanelTabbedPane.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
+        lentComponentPanel.add(leftPanelTabbedPane, java.awt.BorderLayout.CENTER);
+
+        mainSplitPane.setLeftComponent(lentComponentPanel);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        mainPanel.add(notesTabbedPane, gridBagConstraints);
+        mainPanel.add(mainSplitPane, gridBagConstraints);
 
         statusPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
         statusPanel.setPreferredSize(new java.awt.Dimension(729, 25));
@@ -2296,9 +2321,12 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JToolBar.Separator jSeparator9;
+    private javax.swing.JTabbedPane leftPanelTabbedPane;
+    private javax.swing.JPanel lentComponentPanel;
     private javax.swing.JLabel lineNumberLabel;
     private javax.swing.ButtonGroup lnfButtonGroup;
     private javax.swing.JPanel mainPanel;
+    private javax.swing.JSplitPane mainSplitPane;
     private javax.swing.JToolBar mainToolBar;
     private javax.swing.JButton newFileButton;
     private javax.swing.JMenuItem newMenuItem;
