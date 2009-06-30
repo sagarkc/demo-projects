@@ -11,6 +11,11 @@
 
 package com.jnp.ui;
 
+import java.awt.Dimension;
+import java.awt.Point;
+import java.io.File;
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author Green Moon
@@ -21,6 +26,17 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
     public Xml2CsvConverterDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        bringToCenter();
+        converterProgressBar.setVisible(false);
+    }
+
+    private void bringToCenter() {
+        Dimension pd = getParent().getSize();
+        Dimension sz = this.getSize();
+        setLocation(new Point(
+                getParent().getLocation().x + (pd.width/2 - sz.width/2),
+                getParent().getLocation().y + (pd.height/2 - sz.height/2)
+            ));
     }
 
     /** This method is called from within the constructor to
@@ -32,19 +48,251 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        inputXmlFileTextField = new javax.swing.JTextField();
+        inputXmlFileButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        inputXsltFileTextField = new javax.swing.JTextField();
+        inputXsltFileButton = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel3 = new javax.swing.JLabel();
+        storeInSameRadioButton = new javax.swing.JRadioButton();
+        storeInRadioButton = new javax.swing.JRadioButton();
+        outputDirTextField = new javax.swing.JTextField();
+        outputDirButton = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        keepDefaultNameRadioButton = new javax.swing.JRadioButton();
+        renameToRadioButton = new javax.swing.JRadioButton();
+        defaultNameLabel = new javax.swing.JLabel();
+        newOutFileNameTextField = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        converterProgressBar = new javax.swing.JProgressBar();
+        startButton = new javax.swing.JButton();
+        cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("XML 2 CSV");
+
+        jLabel1.setText("Input XML File");
+
+        inputXmlFileTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputXmlFileTextFieldActionPerformed(evt);
+            }
+        });
+        inputXmlFileTextField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                inputXmlFileTextFieldPropertyChange(evt);
+            }
+        });
+        inputXmlFileTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                inputXmlFileTextFieldKeyTyped(evt);
+            }
+        });
+
+        inputXmlFileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/folder_open_file.png"))); // NOI18N
+        inputXmlFileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputXmlFileButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Input XSLT File");
+
+        inputXsltFileTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputXsltFileTextFieldActionPerformed(evt);
+            }
+        });
+        inputXsltFileTextField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                inputXsltFileTextFieldPropertyChange(evt);
+            }
+        });
+        inputXsltFileTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                inputXsltFileTextFieldKeyTyped(evt);
+            }
+        });
+
+        inputXsltFileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/folder_open_file.png"))); // NOI18N
+        inputXsltFileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inputXsltFileButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Output Location");
+
+        buttonGroup1.add(storeInSameRadioButton);
+        storeInSameRadioButton.setSelected(true);
+        storeInSameRadioButton.setText("Store in the same location as the input xml file.");
+
+        buttonGroup1.add(storeInRadioButton);
+        storeInRadioButton.setText("Store in");
+
+        outputDirTextField.setEnabled(false);
+        outputDirTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                outputDirTextFieldActionPerformed(evt);
+            }
+        });
+        outputDirTextField.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                outputDirTextFieldPropertyChange(evt);
+            }
+        });
+        outputDirTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                outputDirTextFieldKeyTyped(evt);
+            }
+        });
+
+        outputDirButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/folder_open_file.png"))); // NOI18N
+        outputDirButton.setEnabled(false);
+        outputDirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                outputDirButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Output File Name");
+
+        buttonGroup2.add(keepDefaultNameRadioButton);
+        keepDefaultNameRadioButton.setSelected(true);
+        keepDefaultNameRadioButton.setText("Keep default Name");
+
+        buttonGroup2.add(renameToRadioButton);
+        renameToRadioButton.setText("Rename to");
+
+        defaultNameLabel.setText("jLabel5");
+
+        newOutFileNameTextField.setText("jTextField1");
+        newOutFileNameTextField.setEnabled(false);
+
+        jLabel6.setText(".csv");
+
+        converterProgressBar.setIndeterminate(true);
+        converterProgressBar.setString("Please wait...");
+        converterProgressBar.setStringPainted(true);
+
+        startButton.setText("Start");
+
+        cancelButton.setText("Cancel");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 529, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputXsltFileTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+                    .addComponent(inputXmlFileTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(inputXmlFileButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(inputXsltFileButton, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
+            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(storeInRadioButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(outputDirTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(outputDirButton))
+                    .addComponent(storeInSameRadioButton))
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(keepDefaultNameRadioButton)
+                    .addComponent(renameToRadioButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(newOutFileNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6))
+                    .addComponent(defaultNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
+                .addContainerGap(53, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(353, Short.MAX_VALUE)
+                .addComponent(converterProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cancelButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 367, Short.MAX_VALUE)
+                .addComponent(startButton)
+                .addContainerGap())
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4});
+
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 375, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(inputXmlFileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inputXmlFileButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(inputXsltFileTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inputXsltFileButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(storeInSameRadioButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(storeInRadioButton)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(outputDirTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(outputDirButton)))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(keepDefaultNameRadioButton)
+                    .addComponent(defaultNameLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(renameToRadioButton)
+                    .addComponent(newOutFileNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(converterProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(startButton)
+                    .addComponent(cancelButton))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -60,6 +308,69 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void inputXmlFileTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputXmlFileTextFieldActionPerformed
+        // TODO add your handling code here:
+}//GEN-LAST:event_inputXmlFileTextFieldActionPerformed
+
+    private void inputXmlFileTextFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_inputXmlFileTextFieldPropertyChange
+
+}//GEN-LAST:event_inputXmlFileTextFieldPropertyChange
+
+    private void inputXmlFileTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputXmlFileTextFieldKeyTyped
+
+}//GEN-LAST:event_inputXmlFileTextFieldKeyTyped
+
+    private void inputXmlFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputXmlFileButtonActionPerformed
+        JFileChooser chooser = new JFileChooser(".");
+        chooser.setMultiSelectionEnabled(false);
+
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int opt = chooser.showOpenDialog(this);
+        if (opt == JFileChooser.APPROVE_OPTION) {
+            final File f = chooser.getSelectedFile();
+            //selectedFile = f;
+            inputXmlFileTextField.setText(f.getAbsolutePath());
+            Runnable tr = new Runnable(){
+                public void run() {
+                    
+                }
+            };
+            new Thread(tr).start();
+        }
+}//GEN-LAST:event_inputXmlFileButtonActionPerformed
+
+    private void inputXsltFileTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputXsltFileTextFieldActionPerformed
+        // TODO add your handling code here:
+}//GEN-LAST:event_inputXsltFileTextFieldActionPerformed
+
+    private void inputXsltFileTextFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_inputXsltFileTextFieldPropertyChange
+        // TODO add your handling code here:
+}//GEN-LAST:event_inputXsltFileTextFieldPropertyChange
+
+    private void inputXsltFileTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputXsltFileTextFieldKeyTyped
+        // TODO add your handling code here:
+}//GEN-LAST:event_inputXsltFileTextFieldKeyTyped
+
+    private void inputXsltFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputXsltFileButtonActionPerformed
+        // TODO add your handling code here:
+}//GEN-LAST:event_inputXsltFileButtonActionPerformed
+
+    private void outputDirTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputDirTextFieldActionPerformed
+        // TODO add your handling code here:
+}//GEN-LAST:event_outputDirTextFieldActionPerformed
+
+    private void outputDirTextFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_outputDirTextFieldPropertyChange
+        // TODO add your handling code here:
+}//GEN-LAST:event_outputDirTextFieldPropertyChange
+
+    private void outputDirTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_outputDirTextFieldKeyTyped
+        // TODO add your handling code here:
+}//GEN-LAST:event_outputDirTextFieldKeyTyped
+
+    private void outputDirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputDirButtonActionPerformed
+        // TODO add your handling code here:
+}//GEN-LAST:event_outputDirButtonActionPerformed
 
     /**
     * @param args the command line arguments
@@ -79,7 +390,31 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JButton cancelButton;
+    private javax.swing.JProgressBar converterProgressBar;
+    private javax.swing.JLabel defaultNameLabel;
+    private javax.swing.JButton inputXmlFileButton;
+    private javax.swing.JTextField inputXmlFileTextField;
+    private javax.swing.JButton inputXsltFileButton;
+    private javax.swing.JTextField inputXsltFileTextField;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JRadioButton keepDefaultNameRadioButton;
+    private javax.swing.JTextField newOutFileNameTextField;
+    private javax.swing.JButton outputDirButton;
+    private javax.swing.JTextField outputDirTextField;
+    private javax.swing.JRadioButton renameToRadioButton;
+    private javax.swing.JButton startButton;
+    private javax.swing.JRadioButton storeInRadioButton;
+    private javax.swing.JRadioButton storeInSameRadioButton;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -1633,7 +1633,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     }//GEN-LAST:event_splitterMenuItemActionPerformed
 
     private void xml2csvMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xml2csvMenuItemActionPerformed
-        
+        Xml2CsvConverterDialog dialog = new Xml2CsvConverterDialog(this, true);
+        dialog.setVisible(true);
     }//GEN-LAST:event_xml2csvMenuItemActionPerformed
 
     private void saveAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAllMenuItemActionPerformed
