@@ -579,6 +579,28 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonMenuItem6ActionPerformed"/>
                   </Events>
                 </MenuItem>
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jRadioButtonMenuItem8">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="lnfButtonGroup"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Skin LnF"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonMenuItem8ActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jRadioButtonMenuItem7">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="lnfButtonGroup"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Visual Studio 2005"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonMenuItem7ActionPerformed"/>
+                  </Events>
+                </MenuItem>
               </SubComponents>
             </Menu>
             <MenuItem class="javax.swing.JSeparator" name="jSeparator20">

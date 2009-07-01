@@ -28,4 +28,8 @@ public interface JnpConstants {
     public static final String NEW_FILE_NAME = "Untitled_";
 
     public static final String IMAGE_PATH = "/icons/";
+
+    String CURRENT_OS_NAME = System.getProperty("os.name");
+
+    String OS_WINDOWS = "windows";
 }

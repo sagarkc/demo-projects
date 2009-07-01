@@ -100,7 +100,11 @@
               </Group>
               <Component id="jSeparator2" alignment="1" pref="509" max="32767" attributes="0"/>
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="353" max="32767" attributes="0"/>
+                  <EmptySpace pref="117" max="32767" attributes="0"/>
+                  <Component id="exploreButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="openInNpButton" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="converterProgressBar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -162,7 +166,11 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="converterProgressBar" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="converterProgressBar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="openInNpButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="exploreButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="startButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -286,13 +294,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="defaultNameLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel5"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="newOutFileNameTextField">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jTextField1"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
         </Component>
@@ -314,10 +318,23 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Start"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="cancelButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancel"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="openInNpButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Open in Notepad"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="exploreButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="View In Explorer"/>
           </Properties>
         </Component>
       </SubComponents>

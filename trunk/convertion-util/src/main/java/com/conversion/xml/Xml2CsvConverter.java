@@ -25,7 +25,11 @@ public class Xml2CsvConverter {
             "-XSL", xsltfFile,
             "-TEXT", outputCsvFile
         };
-        xalanConverter(args);
+        try{
+        	xalanConverter(args);
+        }catch(Exception ex){
+        	return false;
+        }
         return true;
     }
 
@@ -36,7 +40,7 @@ public class Xml2CsvConverter {
     }
 
     public static void main(String[] a){
-        
+        //con
     }
 
 }

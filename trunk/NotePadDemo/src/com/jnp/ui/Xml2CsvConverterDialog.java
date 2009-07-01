@@ -11,10 +11,13 @@
 
 package com.jnp.ui;
 
+import com.jnp.JnpConstants;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileView;
 
 /**
  *
@@ -26,8 +29,10 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
     public Xml2CsvConverterDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        bringToCenter();
+        //bringToCenter();
         converterProgressBar.setVisible(false);
+        exploreButton.setVisible(false);
+        openInNpButton.setVisible(false);
     }
 
     private void bringToCenter() {
@@ -73,6 +78,8 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
         converterProgressBar = new javax.swing.JProgressBar();
         startButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        openInNpButton = new javax.swing.JButton();
+        exploreButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("XML 2 CSV");
@@ -170,9 +177,6 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
         buttonGroup2.add(renameToRadioButton);
         renameToRadioButton.setText("Rename to");
 
-        defaultNameLabel.setText("jLabel5");
-
-        newOutFileNameTextField.setText("jTextField1");
         newOutFileNameTextField.setEnabled(false);
 
         jLabel6.setText(".csv");
@@ -182,8 +186,17 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
         converterProgressBar.setStringPainted(true);
 
         startButton.setText("Start");
+        startButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startButtonActionPerformed(evt);
+            }
+        });
 
         cancelButton.setText("Cancel");
+
+        openInNpButton.setText("Open in Notepad");
+
+        exploreButton.setText("View In Explorer");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -234,7 +247,11 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
                 .addContainerGap(53, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(353, Short.MAX_VALUE)
+                .addContainerGap(117, Short.MAX_VALUE)
+                .addComponent(exploreButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(openInNpButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(converterProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -287,7 +304,10 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(converterProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(converterProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(openInNpButton)
+                    .addComponent(exploreButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(startButton)
@@ -324,24 +344,33 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
     private void inputXmlFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputXmlFileButtonActionPerformed
         JFileChooser chooser = new JFileChooser(".");
         chooser.setMultiSelectionEnabled(false);
-
+        FileFilter filter = new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                String name = f.getName();
+                if(name.toLowerCase().endsWith(".xml")){
+                    return true;
+                }
+                return false;
+            }
+            @Override
+            public String getDescription() {
+                return "XML Files only (*.xml)";
+            }
+        };
+        chooser.setFileFilter(filter);
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int opt = chooser.showOpenDialog(this);
         if (opt == JFileChooser.APPROVE_OPTION) {
             final File f = chooser.getSelectedFile();
             //selectedFile = f;
             inputXmlFileTextField.setText(f.getAbsolutePath());
-            Runnable tr = new Runnable(){
-                public void run() {
-                    
-                }
-            };
-            new Thread(tr).start();
+            defaultNameLabel.setText(f.getName() + ".csv");
         }
 }//GEN-LAST:event_inputXmlFileButtonActionPerformed
 
     private void inputXsltFileTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputXsltFileTextFieldActionPerformed
-        // TODO add your handling code here:
+        
 }//GEN-LAST:event_inputXsltFileTextFieldActionPerformed
 
     private void inputXsltFileTextFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_inputXsltFileTextFieldPropertyChange
@@ -353,7 +382,30 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
 }//GEN-LAST:event_inputXsltFileTextFieldKeyTyped
 
     private void inputXsltFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputXsltFileButtonActionPerformed
-        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser(".");
+        chooser.setMultiSelectionEnabled(false);
+        FileFilter filter = new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                String name = f.getName();
+                if(name.toLowerCase().endsWith(".xsl")){
+                    return true;
+                }
+                return false;
+            }
+            @Override
+            public String getDescription() {
+                return "XML Stylesheets only (*.xsl)";
+            }
+        };
+        chooser.setFileFilter(filter);
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int opt = chooser.showOpenDialog(this);
+        if (opt == JFileChooser.APPROVE_OPTION) {
+            final File f = chooser.getSelectedFile();
+            //selectedFile = f;
+            inputXsltFileTextField.setText(f.getAbsolutePath());
+        }
 }//GEN-LAST:event_inputXsltFileButtonActionPerformed
 
     private void outputDirTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputDirTextFieldActionPerformed
@@ -371,6 +423,14 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
     private void outputDirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputDirButtonActionPerformed
         // TODO add your handling code here:
 }//GEN-LAST:event_outputDirButtonActionPerformed
+
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
+        if(JnpConstants.CURRENT_OS_NAME.toLowerCase().contains(JnpConstants.OS_WINDOWS)){
+            exploreButton.setVisible(true);
+        }
+        converterProgressBar.setVisible(true);
+        openInNpButton.setVisible(true);
+    }//GEN-LAST:event_startButtonActionPerformed
 
     /**
     * @param args the command line arguments
@@ -395,6 +455,7 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
     private javax.swing.JButton cancelButton;
     private javax.swing.JProgressBar converterProgressBar;
     private javax.swing.JLabel defaultNameLabel;
+    private javax.swing.JButton exploreButton;
     private javax.swing.JButton inputXmlFileButton;
     private javax.swing.JTextField inputXmlFileTextField;
     private javax.swing.JButton inputXsltFileButton;
@@ -409,6 +470,7 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JRadioButton keepDefaultNameRadioButton;
     private javax.swing.JTextField newOutFileNameTextField;
+    private javax.swing.JButton openInNpButton;
     private javax.swing.JButton outputDirButton;
     private javax.swing.JTextField outputDirTextField;
     private javax.swing.JRadioButton renameToRadioButton;
