@@ -13,6 +13,7 @@ package com.jnp.ui;
 import com.jnp.JnpConstants;
 import com.jnp.utils.FileRWUtil;
 import com.jnp.utils.NotePadContext;
+import com.l2fprod.gui.plaf.skin.SkinLookAndFeel;
 import com.lowagie.text.Chapter;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
@@ -74,6 +75,7 @@ import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
 import org.fife.plaf.Office2003.Office2003LookAndFeel;
+import org.fife.plaf.VisualStudio2005.VisualStudio2005LookAndFeel;
 import org.jvnet.substance.skin.SubstanceBusinessBlueSteelLookAndFeel;
 import org.jvnet.substance.skin.SubstanceMistAquaLookAndFeel;
 import org.jvnet.substance.skin.SubstanceOfficeBlue2007LookAndFeel;
@@ -294,6 +296,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         jRadioButtonMenuItem4 = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItem5 = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItem6 = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem8 = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem7 = new javax.swing.JRadioButtonMenuItem();
         jSeparator20 = new javax.swing.JSeparator();
         showToolbarCBMenuItem = new javax.swing.JCheckBoxMenuItem();
         showStatusBarCBMenuItem = new javax.swing.JCheckBoxMenuItem();
@@ -1038,6 +1042,24 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
         });
         jMenu8.add(jRadioButtonMenuItem6);
 
+        lnfButtonGroup.add(jRadioButtonMenuItem8);
+        jRadioButtonMenuItem8.setText("Skin LnF");
+        jRadioButtonMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jRadioButtonMenuItem8);
+
+        lnfButtonGroup.add(jRadioButtonMenuItem7);
+        jRadioButtonMenuItem7.setText("Visual Studio 2005");
+        jRadioButtonMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jRadioButtonMenuItem7);
+
         jMenu4.add(jMenu8);
         jMenu4.add(jSeparator20);
 
@@ -1644,6 +1666,40 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
         currentStatusLabel.setText("C: "+evt.getKeyChar());
     }//GEN-LAST:event_formKeyTyped
+
+    private void jRadioButtonMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem8ActionPerformed
+        if (jRadioButtonMenuItem8.isSelected()) {
+            try {
+                UIManager.setLookAndFeel(SkinLookAndFeel.class.getCanonicalName());
+                SwingUtilities.updateComponentTreeUI(this);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jRadioButtonMenuItem8ActionPerformed
+
+    private void jRadioButtonMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem7ActionPerformed
+        if (jRadioButtonMenuItem7.isSelected()) {
+            try {
+                UIManager.setLookAndFeel(VisualStudio2005LookAndFeel.class.getCanonicalName());
+                SwingUtilities.updateComponentTreeUI(this);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(JNPMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jRadioButtonMenuItem7ActionPerformed
 
     public void saveAll(){
         while(notesTabbedPane.getTabCount() > 0 ){
@@ -2320,6 +2376,8 @@ public class JNPMainFrame extends javax.swing.JFrame implements ChangeListener,
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem4;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem5;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem6;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem7;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
