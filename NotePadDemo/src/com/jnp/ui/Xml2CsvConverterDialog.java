@@ -25,11 +25,16 @@ import javax.swing.filechooser.FileView;
  */
 public class Xml2CsvConverterDialog extends javax.swing.JDialog {
 
+    private String inputXmlFileFullName = "";
+    private String inputXslFileFullName = "";
+    private String outputCsvFileFullName = "";
+    private String defaultCsvFileName;
+
     /** Creates new form Xml2CsvConverterDialog */
     public Xml2CsvConverterDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        //bringToCenter();
+        bringToCenter();
         converterProgressBar.setVisible(false);
         exploreButton.setVisible(false);
         openInNpButton.setVisible(false);
@@ -139,9 +144,19 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
         buttonGroup1.add(storeInSameRadioButton);
         storeInSameRadioButton.setSelected(true);
         storeInSameRadioButton.setText("Store in the same location as the input xml file.");
+        storeInSameRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                storeInSameRadioButtonActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(storeInRadioButton);
         storeInRadioButton.setText("Store in");
+        storeInRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                storeInRadioButtonActionPerformed(evt);
+            }
+        });
 
         outputDirTextField.setEnabled(false);
         outputDirTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -173,9 +188,19 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
         buttonGroup2.add(keepDefaultNameRadioButton);
         keepDefaultNameRadioButton.setSelected(true);
         keepDefaultNameRadioButton.setText("Keep default Name");
+        keepDefaultNameRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                keepDefaultNameRadioButtonActionPerformed(evt);
+            }
+        });
 
         buttonGroup2.add(renameToRadioButton);
         renameToRadioButton.setText("Rename to");
+        renameToRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                renameToRadioButtonActionPerformed(evt);
+            }
+        });
 
         newOutFileNameTextField.setEnabled(false);
 
@@ -365,7 +390,9 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
             final File f = chooser.getSelectedFile();
             //selectedFile = f;
             inputXmlFileTextField.setText(f.getAbsolutePath());
+            inputXmlFileFullName = f.getAbsolutePath();
             defaultNameLabel.setText(f.getName() + ".csv");
+            defaultCsvFileName = f.getName() + ".csv";
         }
 }//GEN-LAST:event_inputXmlFileButtonActionPerformed
 
@@ -399,12 +426,14 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
             }
         };
         chooser.setFileFilter(filter);
+        //chooser.setFileView(new JnpFileView());
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int opt = chooser.showOpenDialog(this);
         if (opt == JFileChooser.APPROVE_OPTION) {
             final File f = chooser.getSelectedFile();
             //selectedFile = f;
             inputXsltFileTextField.setText(f.getAbsolutePath());
+            inputXslFileFullName = f.getAbsolutePath();
         }
 }//GEN-LAST:event_inputXsltFileButtonActionPerformed
 
@@ -421,7 +450,21 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
 }//GEN-LAST:event_outputDirTextFieldKeyTyped
 
     private void outputDirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputDirButtonActionPerformed
-        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser(".");
+        chooser.setMultiSelectionEnabled(false);
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int opt = chooser.showOpenDialog(this);
+        if (opt == JFileChooser.APPROVE_OPTION) {
+            final File f = chooser.getSelectedFile();
+            //selectedFile = f;
+            outputDirTextField.setText(f.getAbsolutePath());
+            outputCsvFileFullName = f.getAbsolutePath();
+            if(keepDefaultNameRadioButton.isSelected()){
+                outputCsvFileFullName += f.separator + defaultCsvFileName;
+            }else{
+                outputCsvFileFullName += f.separator + newOutFileNameTextField.getText();
+            }
+        }
 }//GEN-LAST:event_outputDirButtonActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
@@ -431,6 +474,46 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
         converterProgressBar.setVisible(true);
         openInNpButton.setVisible(true);
     }//GEN-LAST:event_startButtonActionPerformed
+
+    private void storeInSameRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeInSameRadioButtonActionPerformed
+        if(!storeInSameRadioButton.isSelected()){
+            outputDirTextField.setEnabled(true);
+            outputDirButton.setEnabled(true);
+        }else{
+            outputDirTextField.setEnabled(false);
+            outputDirButton.setEnabled(false);
+        }
+    }//GEN-LAST:event_storeInSameRadioButtonActionPerformed
+
+    private void storeInRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeInRadioButtonActionPerformed
+        if(storeInRadioButton.isSelected()){
+            outputDirTextField.setEnabled(true);
+            outputDirButton.setEnabled(true);
+        }else{
+            outputDirTextField.setEnabled(false);
+            outputDirButton.setEnabled(false);
+        }
+    }//GEN-LAST:event_storeInRadioButtonActionPerformed
+
+    private void keepDefaultNameRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keepDefaultNameRadioButtonActionPerformed
+        if(keepDefaultNameRadioButton.isSelected()){
+            defaultNameLabel.setText(defaultCsvFileName);
+            newOutFileNameTextField.setEnabled(false);
+        }else{
+            defaultNameLabel.setText("");
+            newOutFileNameTextField.setEnabled(true);
+        }
+    }//GEN-LAST:event_keepDefaultNameRadioButtonActionPerformed
+
+    private void renameToRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameToRadioButtonActionPerformed
+        if(!renameToRadioButton.isSelected()){
+            defaultNameLabel.setText(defaultCsvFileName);
+            newOutFileNameTextField.setEnabled(false);
+        }else{
+            defaultNameLabel.setText("");
+            newOutFileNameTextField.setEnabled(true);
+        }
+    }//GEN-LAST:event_renameToRadioButtonActionPerformed
 
     /**
     * @param args the command line arguments
