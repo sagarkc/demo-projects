@@ -11,6 +11,7 @@
 
 package com.jnp.ui;
 
+import com.conversion.xml.Xml2CsvConverter;
 import com.jnp.JnpConstants;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -38,6 +39,9 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
         converterProgressBar.setVisible(false);
         exploreButton.setVisible(false);
         openInNpButton.setVisible(false);
+        if(JnpConstants.CURRENT_OS_NAME.toLowerCase().contains(JnpConstants.OS_WINDOWS)){
+            exploreButton.setVisible(true);
+        }
     }
 
     private void bringToCenter() {
@@ -468,11 +472,33 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
 }//GEN-LAST:event_outputDirButtonActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        if(JnpConstants.CURRENT_OS_NAME.toLowerCase().contains(JnpConstants.OS_WINDOWS)){
-            exploreButton.setVisible(true);
-        }
-        converterProgressBar.setVisible(true);
+        
         openInNpButton.setVisible(true);
+        Runnable r = new Runnable(){
+            public void run() {
+                converterProgressBar.setVisible(true);
+                inputXmlFileFullName = inputXmlFileTextField.getText();
+                inputXslFileFullName = inputXsltFileTextField.getText();
+                String outputDir = "";
+                if(storeInSameRadioButton.isSelected()){
+                    outputCsvFileFullName = inputXmlFileFullName.substring(
+                            inputXmlFileFullName.lastIndexOf(
+                            System.getProperty("file.separator")));
+
+                }else{
+                    outputDir = outputDirTextField.getText();
+                }
+
+                if(keepDefaultNameRadioButton.isSelected()){
+                    outputDir += System.getProperty("file.separator") + defaultCsvFileName;
+                }else{
+                    outputDir += System.getProperty("file.separator") + newOutFileNameTextField.getText();
+                }
+                Xml2CsvConverter.convertXml2Csv(inputXmlFileFullName, inputXslFileFullName, outputDir);
+                converterProgressBar.setVisible(false);
+            }
+        };
+        new Thread(r).start();
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void storeInSameRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_storeInSameRadioButtonActionPerformed

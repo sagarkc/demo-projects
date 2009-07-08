@@ -23,7 +23,7 @@ public class Xml2CsvConverter {
         {
             "-IN", inputXmlFile,
             "-XSL", xsltfFile,
-            "-TEXT", outputCsvFile
+            "-OUT", outputCsvFile
         };
         try{
         	xalanConverter(args);
