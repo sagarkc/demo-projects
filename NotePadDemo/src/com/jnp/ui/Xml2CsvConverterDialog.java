@@ -373,20 +373,8 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
     private void inputXmlFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputXmlFileButtonActionPerformed
         JFileChooser chooser = new JFileChooser(".");
         chooser.setMultiSelectionEnabled(false);
-        FileFilter filter = new FileFilter() {
-            @Override
-            public boolean accept(File f) {
-                String name = f.getName();
-                if(name.toLowerCase().endsWith(".xml")){
-                    return true;
-                }
-                return false;
-            }
-            @Override
-            public String getDescription() {
-                return "XML Files only (*.xml)";
-            }
-        };
+        ExtensionFileFilter filter = new ExtensionFileFilter(
+                new String[] {"XML"}, "XML Files");
         chooser.setFileFilter(filter);
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int opt = chooser.showOpenDialog(this);
@@ -415,20 +403,8 @@ public class Xml2CsvConverterDialog extends javax.swing.JDialog {
     private void inputXsltFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputXsltFileButtonActionPerformed
         JFileChooser chooser = new JFileChooser(".");
         chooser.setMultiSelectionEnabled(false);
-        FileFilter filter = new FileFilter() {
-            @Override
-            public boolean accept(File f) {
-                String name = f.getName();
-                if(name.toLowerCase().endsWith(".xsl")){
-                    return true;
-                }
-                return false;
-            }
-            @Override
-            public String getDescription() {
-                return "XML Stylesheets only (*.xsl)";
-            }
-        };
+        ExtensionFileFilter filter = new ExtensionFileFilter(
+                new String[] {"XSL"}, "XML Stylesheets only (*.xsl)");
         chooser.setFileFilter(filter);
         //chooser.setFileView(new JnpFileView());
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
