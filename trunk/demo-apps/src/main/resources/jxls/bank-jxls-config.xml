@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workbook>
+	<worksheet name="Mortgage POS">
+		<section startRow="0" endRow="1" /> 
+		<loop startRow="2" endRow="2" items="bankVoList" var="bankVo"
+			varType="com.gs.demo.jxls.vo.MtgBankVo">
+			<section startRow="2" endRow="2">
+				<mapping row="2" col="0" nullAllowed="false">bankVo.bankId</mapping>
+				<mapping row="2" col="1" nullAllowed="true">bankVo.employeeId</mapping>
+				<mapping row="2" col="2" nullAllowed="true">bankVo.empManagerId</mapping>
+			</section>
+			<loopbreakcondition>
+				<rowcheck offset="0">
+					<cellcheck offset="0"></cellcheck>
+				</rowcheck>
+			</loopbreakcondition>
+		</loop>
+	</worksheet>
+</workbook>
