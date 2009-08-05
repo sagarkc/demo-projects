@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workbook>
+	<worksheet name="WORK_SHEET_NAME">
+		<section startRow="EXCLUDE_START_ROW_NUMBER" endRow="EXCLUDE_END_ROW_NUMBER" />
+		<loop startRow="START_ROW_NUMBER" endRow="END_ROW_NUMBER" items="ITEMS_MAP_KEY"
+			var="currentObject" varType="CURRENT_CLASS_NAME">
+			<section startRow="START_ROW_NUMBER" endRow="END_ROW_NUMBER">
+				<mapping row="START_ROW_NUMBER" col="CURRENT_COLUMN_NUMBER"
+					nullAllowed="false">currentObject.CURRENT_FIELD_NAME</mapping>
+			</section>
+			<loopbreakcondition>
+				<rowcheck offset="ROW_CHECK_OFFSET">
+					<cellcheck offset="COLUMN_CHECK_OFFSET">COLUMN_CHECK_VALUE</cellcheck>
+				</rowcheck>
+			</loopbreakcondition>
+		</loop>
+	</worksheet>
+</workbook>
