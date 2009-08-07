@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workbook>
+	<worksheet name="WORK_SHEET_NAME">
+		<section startRow="0" endRow="0" /> 
+		<loop startRow="1" endRow="1" items="ddvVoList" var="currentObject"
+			varType="com.gs.demo.jxls.vo.DDValsVO">
+			<section startRow="2" endRow="2">
+				<mapping row="2" col="0" nullAllowed="false">currentObject.code</mapping>
+				<mapping row="2" col="1" nullAllowed="false">currentObject.value</mapping>
+			</section>
+			<loopbreakcondition>
+				<rowcheck offset="0">
+					<cellcheck offset="0"></cellcheck>
+				</rowcheck>
+			</loopbreakcondition>
+		</loop>
+	</worksheet>
+</workbook>
