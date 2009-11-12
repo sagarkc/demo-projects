@@ -41,29 +41,29 @@ public class PaginatedTablePanel extends javax.swing.JPanel {
         showActionsToolbarCheckBox = new javax.swing.JCheckBox();
         nextPageLabel = new javax.swing.JLabel();
         tablePanel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        targetTable = new javax.swing.JTable();
-        actionsPanel = new javax.swing.JPanel();
         actionsToolBar = new javax.swing.JToolBar();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        addNewRecordButton = new javax.swing.JButton();
+        editRecordButton = new javax.swing.JButton();
+        deleteRecordButton = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        exportAsLabel = new javax.swing.JLabel();
+        exportTypeComboBox = new javax.swing.JComboBox();
+        exportButton = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
+        jButton1 = new javax.swing.JButton();
+        targetTableScrollPane = new javax.swing.JScrollPane();
+        targetTable = new javax.swing.JTable();
         bottomNavigationPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        totaPageslLabel = new javax.swing.JLabel();
         pagerPanel = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        firstPageLinkLabel = new javax.swing.JLabel();
+        secondPageLinkLabel = new javax.swing.JLabel();
+        thirdPageLinkLabel = new javax.swing.JLabel();
+        fourthPageLinkLabel = new javax.swing.JLabel();
+        fifthPageLinkLabel = new javax.swing.JLabel();
+        gotoPageLabel = new javax.swing.JLabel();
+        gotoPageTextField = new javax.swing.JTextField();
+        goButtonLabel = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
 
@@ -132,6 +132,55 @@ public class PaginatedTablePanel extends javax.swing.JPanel {
 
         tablePanel.setLayout(new java.awt.GridBagLayout());
 
+        actionsToolBar.setFloatable(false);
+        actionsToolBar.setRollover(true);
+
+        addNewRecordButton.setText("Add");
+        addNewRecordButton.setFocusable(false);
+        addNewRecordButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        addNewRecordButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        actionsToolBar.add(addNewRecordButton);
+
+        editRecordButton.setText("Edit");
+        editRecordButton.setFocusable(false);
+        editRecordButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        editRecordButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        actionsToolBar.add(editRecordButton);
+
+        deleteRecordButton.setText("Delete");
+        deleteRecordButton.setFocusable(false);
+        deleteRecordButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        deleteRecordButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        actionsToolBar.add(deleteRecordButton);
+        actionsToolBar.add(jSeparator1);
+
+        exportAsLabel.setText("Export As..");
+        actionsToolBar.add(exportAsLabel);
+
+        exportTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        exportTypeComboBox.setMaximumSize(new java.awt.Dimension(100, 18));
+        exportTypeComboBox.setMinimumSize(new java.awt.Dimension(50, 18));
+        exportTypeComboBox.setPreferredSize(new java.awt.Dimension(50, 18));
+        actionsToolBar.add(exportTypeComboBox);
+
+        exportButton.setText("Export");
+        exportButton.setFocusable(false);
+        exportButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        exportButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        actionsToolBar.add(exportButton);
+        actionsToolBar.add(jSeparator2);
+
+        jButton1.setText("Filter");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        actionsToolBar.add(jButton1);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        tablePanel.add(actionsToolBar, gridBagConstraints);
+
         targetTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -143,7 +192,7 @@ public class PaginatedTablePanel extends javax.swing.JPanel {
 
             }
         ));
-        jScrollPane1.setViewportView(targetTable);
+        targetTableScrollPane.setViewportView(targetTable);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -151,74 +200,7 @@ public class PaginatedTablePanel extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        tablePanel.add(jScrollPane1, gridBagConstraints);
-
-        actionsPanel.setMinimumSize(new java.awt.Dimension(100, 30));
-        actionsPanel.setPreferredSize(new java.awt.Dimension(100, 30));
-        actionsPanel.setLayout(new java.awt.GridBagLayout());
-
-        actionsToolBar.setFloatable(false);
-        actionsToolBar.setRollover(true);
-
-        jButton2.setText("jButton2");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        actionsToolBar.add(jButton2);
-
-        jButton3.setText("jButton3");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        actionsToolBar.add(jButton3);
-
-        jButton4.setText("jButton4");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        actionsToolBar.add(jButton4);
-
-        jButton5.setText("jButton5");
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        actionsToolBar.add(jButton5);
-
-        jButton6.setText("jButton6");
-        jButton6.setFocusable(false);
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        actionsToolBar.add(jButton6);
-
-        jButton7.setText("jButton7");
-        jButton7.setFocusable(false);
-        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        actionsToolBar.add(jButton7);
-
-        jButton8.setText("jButton8");
-        jButton8.setFocusable(false);
-        jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        actionsToolBar.add(jButton8);
-
-        jButton9.setText("jButton9");
-        jButton9.setFocusable(false);
-        jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        actionsToolBar.add(jButton9);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        actionsPanel.add(actionsToolBar, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
-        gridBagConstraints.weightx = 1.0;
-        tablePanel.add(actionsPanel, gridBagConstraints);
+        tablePanel.add(targetTableScrollPane, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -232,37 +214,37 @@ public class PaginatedTablePanel extends javax.swing.JPanel {
         bottomNavigationPanel.setPreferredSize(new java.awt.Dimension(710, 35));
         bottomNavigationPanel.setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setText("999 pages found");
+        totaPageslLabel.setText("999 pages found");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        bottomNavigationPanel.add(jLabel1, gridBagConstraints);
+        bottomNavigationPanel.add(totaPageslLabel, gridBagConstraints);
 
         pagerPanel.setLayout(new java.awt.GridBagLayout());
 
-        jLabel4.setText("jLabel4");
+        firstPageLinkLabel.setText("jLabel4");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        pagerPanel.add(jLabel4, gridBagConstraints);
+        pagerPanel.add(firstPageLinkLabel, gridBagConstraints);
 
-        jLabel5.setText("jLabel5");
+        secondPageLinkLabel.setText("jLabel5");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        pagerPanel.add(jLabel5, gridBagConstraints);
+        pagerPanel.add(secondPageLinkLabel, gridBagConstraints);
 
-        jLabel6.setText("jLabel6");
+        thirdPageLinkLabel.setText("jLabel6");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        pagerPanel.add(jLabel6, gridBagConstraints);
+        pagerPanel.add(thirdPageLinkLabel, gridBagConstraints);
 
-        jLabel7.setText("jLabel7");
+        fourthPageLinkLabel.setText("jLabel7");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        pagerPanel.add(jLabel7, gridBagConstraints);
+        pagerPanel.add(fourthPageLinkLabel, gridBagConstraints);
 
-        jLabel8.setText("jLabel8");
+        fifthPageLinkLabel.setText("jLabel8");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        pagerPanel.add(jLabel8, gridBagConstraints);
+        pagerPanel.add(fifthPageLinkLabel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
@@ -271,22 +253,22 @@ public class PaginatedTablePanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(2, 2, 2, 2);
         bottomNavigationPanel.add(pagerPanel, gridBagConstraints);
 
-        jLabel2.setText("Go To ");
+        gotoPageLabel.setText("Go To ");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        bottomNavigationPanel.add(jLabel2, gridBagConstraints);
+        bottomNavigationPanel.add(gotoPageLabel, gridBagConstraints);
 
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField1.setMinimumSize(new java.awt.Dimension(60, 20));
-        jTextField1.setPreferredSize(new java.awt.Dimension(60, 20));
+        gotoPageTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        gotoPageTextField.setMinimumSize(new java.awt.Dimension(60, 20));
+        gotoPageTextField.setPreferredSize(new java.awt.Dimension(60, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        bottomNavigationPanel.add(jTextField1, gridBagConstraints);
+        bottomNavigationPanel.add(gotoPageTextField, gridBagConstraints);
 
-        jLabel3.setText(">>");
+        goButtonLabel.setText(">>");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
-        bottomNavigationPanel.add(jLabel3, gridBagConstraints);
+        bottomNavigationPanel.add(goButtonLabel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -299,38 +281,38 @@ public class PaginatedTablePanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel actionsPanel;
     private javax.swing.JToolBar actionsToolBar;
+    private javax.swing.JButton addNewRecordButton;
     private javax.swing.JPanel bottomNavigationPanel;
+    private javax.swing.JButton deleteRecordButton;
+    private javax.swing.JButton editRecordButton;
+    private javax.swing.JLabel exportAsLabel;
+    private javax.swing.JButton exportButton;
+    private javax.swing.JComboBox exportTypeComboBox;
+    private javax.swing.JLabel fifthPageLinkLabel;
+    private javax.swing.JLabel firstPageLinkLabel;
+    private javax.swing.JLabel fourthPageLinkLabel;
+    private javax.swing.JLabel goButtonLabel;
+    private javax.swing.JLabel gotoPageLabel;
+    private javax.swing.JTextField gotoPageTextField;
     private javax.swing.JLabel hiddenLabel_01;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JLabel nextPageLabel;
     private javax.swing.JPanel pagerPanel;
     private javax.swing.JLabel previousPageLabel;
     private javax.swing.JButton refreshButton;
     private javax.swing.JLabel rowsPerPageLabel;
     private javax.swing.JTextField rowsPerPageTextField;
+    private javax.swing.JLabel secondPageLinkLabel;
     private javax.swing.JCheckBox showActionsToolbarCheckBox;
     private javax.swing.JPanel tablePanel;
     private javax.swing.JTable targetTable;
+    private javax.swing.JScrollPane targetTableScrollPane;
+    private javax.swing.JLabel thirdPageLinkLabel;
     private javax.swing.JPanel topNavigationPanel;
+    private javax.swing.JLabel totaPageslLabel;
     // End of variables declaration//GEN-END:variables
 
 }
