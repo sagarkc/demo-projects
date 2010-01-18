@@ -3,7 +3,7 @@ Archiver-Version: Plexus Archiver
 Created-By: Apache Maven
 Built-By: sabuj.das
 Build-Jdk: 1.5.0_06
-Main-Class: com.gs.oracle.Launcher
+Main-Class: com.gs.readingpad.ReadingPadLauncher
 Class-Path: libs/tinylaf.jar libs/OfficeLnFs_2.7.jar
 mode: Development
 url: http://maven.apache.org
