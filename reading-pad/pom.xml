@@ -7,16 +7,16 @@
 	<name>Reading Pad</name>
 	<packaging>jar</packaging>
 	<description>Short Reading Pad</description>
-	
+
 	<!-- Common dependency -->
 	<dependencies>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.15</version>
+			<version>1.2.14</version>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -47,15 +47,13 @@
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
 					<archive>
-						<!--<manifest>
-							<mainClass>com.gs.oracle.Launcher</mainClass>
+						<!--
+							<manifest> <mainClass>com.gs.oracle.Launcher</mainClass>
 							<packageName>com.mycompany.app</packageName>
-							<addClasspath>true</addClasspath>
-						</manifest>
-						<manifestEntries>
-						  <mode>development</mode>
-						  <url>http://maven.apache.org</url>
-						</manifestEntries> -->
+							<addClasspath>true</addClasspath> </manifest> <manifestEntries>
+							<mode>development</mode> <url>http://maven.apache.org</url>
+							</manifestEntries>
+						-->
 						<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
 				</configuration>
