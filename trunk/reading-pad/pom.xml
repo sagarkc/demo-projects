@@ -47,9 +47,16 @@
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
 					<archive>
-						<manifest>
+						<!--<manifest>
 							<mainClass>com.gs.oracle.Launcher</mainClass>
+							<packageName>com.mycompany.app</packageName>
+							<addClasspath>true</addClasspath>
 						</manifest>
+						<manifestEntries>
+						  <mode>development</mode>
+						  <url>http://maven.apache.org</url>
+						</manifestEntries> -->
+						<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
 				</configuration>
 				<executions>
