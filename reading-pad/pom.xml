@@ -41,7 +41,12 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-	</dependencies>
+		<!--<dependency>
+			<artifactId>derby</artifactId>
+			<groupId>org.apache.derby</groupId>
+			<version>10.5.3.0</version>
+		</dependency>
+	--></dependencies>
 
 	<build>
 		<plugins>
