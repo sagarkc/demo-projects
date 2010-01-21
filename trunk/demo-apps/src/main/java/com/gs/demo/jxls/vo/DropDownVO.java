@@ -72,9 +72,9 @@ public class DropDownVO {
 	
 	@Override
 	public String toString() {
-		return "\"" + formatToColumnName(getDROP_DOWN_TYPE()) 
-		+ "\", \"" + getDESCRIPTION() + "\", \""
-		+ getACTIVE_IND() + "\", \"" + getADMIN_MANAGED_IND() + "\"";
+		return "\'" + formatToColumnName(getDROP_DOWN_TYPE()) 
+		+ "\', \'" + getDESCRIPTION() + "\', \'"
+		+ getACTIVE_IND() + "\', \'" + getADMIN_MANAGED_IND() + "\'";
 	}
 
 	/* (non-Javadoc)
