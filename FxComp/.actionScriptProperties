@@ -9,6 +9,7 @@
 </compiler>
 <applications>
 <application path="FxComp.as"/>
+<application path="ComponentTest.mxml"/>
 </applications>
 <modules/>
 <buildCSSFiles/>

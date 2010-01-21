@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <flexLibProperties version="1">
 <includeClasses>
+<classEntry path="com.gs.fx.vo.PaginationVO"/>
 <classEntry path="com.gs.fx.control.NumberInput"/>
+<classEntry path="com.gs.fx.control.PaginationBox"/>
 </includeClasses>
 <includeResources/>
 <namespaceManifests/>
