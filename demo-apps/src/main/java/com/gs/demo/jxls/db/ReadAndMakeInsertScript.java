@@ -22,6 +22,7 @@ import net.sf.jxls.reader.ReaderBuilder;
 import net.sf.jxls.reader.XLSReadStatus;
 import net.sf.jxls.reader.XLSReader;
 
+import com.gs.demo.jxls.mapping.Worksheet;
 import com.gs.demo.jxls.vo.DDValsVO;
 import com.gs.demo.jxls.vo.DropDownVO;
 
@@ -35,7 +36,7 @@ public class ReadAndMakeInsertScript {
 	private static final List<String> WORK_SHEET_NAMES = new ArrayList<String>();
 	
 	static{
-		WORK_SHEET_NAMES.add("Flow Type");
+		/*WORK_SHEET_NAMES.add("Flow Type");
 		WORK_SHEET_NAMES.add("Suffix");
 		WORK_SHEET_NAMES.add("Prefix");
 		//WORK_SHEET_NAMES.add("APO FPO State");
@@ -115,11 +116,11 @@ public class ReadAndMakeInsertScript {
 		WORK_SHEET_NAMES.add("Action");
 		WORK_SHEET_NAMES.add("Alert Priority Type");
 		WORK_SHEET_NAMES.add("Alert Disp Type");
-		WORK_SHEET_NAMES.add("jiont type");
+		WORK_SHEET_NAMES.add("jiont type");*/
 		};
 	
 	private static final String INSERT_DDVAL_PART_1 = "INSERT INTO TM_ADM_MSTR_DROP_DOWN_VALS " +
-			"(CODE, DISPLAY_VALUE, DROP_DOWN_TYPE, ACTIVE_IND) VALUES ( ";
+			"(CODE, DISPLAY_VALUE, DISPLAY_ORDER, DROP_DOWN_TYPE, ACTIVE_IND) VALUES ( ";
 	private static final String INSERT_DDVAL_PART_2 = " ) ;";
 	
 	private static final String INSERT_DD_PART_1 = "INSERT INTO TM_ADM_MSTR_DROP_DOWNS " +
@@ -143,13 +144,14 @@ public class ReadAndMakeInsertScript {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		/*BufferedReader br = null;
+		BufferedReader br = null;
 		try{
 			br = new BufferedReader(new FileReader(
 					ReadAndMakeInsertScript.class.getResource("/files/sheets.txt").getFile()));
 			String line = "";
 			while((line = br.readLine()) != null){
-				System.out.println("WORK_SHEET_NAMES.add(\""+ line +"\");");
+				//System.out.println("WORK_SHEET_NAMES.add(\""+ line +"\");");
+				WORK_SHEET_NAMES.add(line);
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -162,7 +164,7 @@ public class ReadAndMakeInsertScript {
 					e.printStackTrace();
 				}
 			}
-		}*/
+		}
 		
 		try{
 			
@@ -188,9 +190,10 @@ public class ReadAndMakeInsertScript {
 	
 	public static void formInsertScriptForDDs(List<DropDownVO> list) {
 		for (DropDownVO valsVO : list) {
-			/*String q = "'" + formatToColumnName(valsVO.getDROP_DOWN_TYPE()) 
-			+ "', '" + valsVO.getDESCRIPTION() + "', '"
-			+ valsVO.getACTIVE_IND() + "', '" + valsVO.getADMIN_MANAGED_IND() + "'";*/
+			System.out.println("\t\tpublic static const " + 
+					formatToColumnName(valsVO.getDROP_DOWN_TYPE()) 
+					+ ":String = \"" + 
+					formatToColumnName(valsVO.getDROP_DOWN_TYPE()) + "\";");
 			QUERY_BUFFER.append("\n" + INSERT_DD_PART_1 + valsVO.toString() + INSERT_DD_PART_2);
 		}
 	}
@@ -201,9 +204,13 @@ public class ReadAndMakeInsertScript {
 	
 	public static void formInsertScriptForDDVals(List<DDValsVO> list, String sheetName) {
 		for (DDValsVO valsVO : list) {
-			QUERY_BUFFER.append("\n" + INSERT_DDVAL_PART_1 + valsVO.toString() 
-					+ ", \"" + formatToColumnName(sheetName) + "\", \"Y\" " 
-					+ INSERT_DDVAL_PART_2);
+			// ignore --select--
+			if(!DROP_DOWN_SELECT.equals(valsVO.getCode())){
+				if((null != valsVO.getCode() && !"".equals(valsVO.getCode())))
+					QUERY_BUFFER.append("\n" + INSERT_DDVAL_PART_1 + valsVO.toString() 
+						+ ", '" + formatToColumnName(sheetName) + "', 'Y' " 
+						+ INSERT_DDVAL_PART_2);
+			}
 		}
 	}
 
@@ -327,6 +334,7 @@ public class ReadAndMakeInsertScript {
 	}
 	
 	public static void writeScript(String txt){
+		System.out.println("Generated query file >>> D:\\POS_RnD\\scripts.sql");
 		BufferedWriter br = null;
 		try{
 			br = new BufferedWriter(new FileWriter("D:\\POS_RnD\\scripts.sql"));

@@ -61,17 +61,21 @@ public class PaginatedTablePanel extends javax.swing.JPanel {
         thirdPageLinkLabel = new javax.swing.JLabel();
         fourthPageLinkLabel = new javax.swing.JLabel();
         fifthPageLinkLabel = new javax.swing.JLabel();
+        goToFirstPageLinkLabel = new javax.swing.JLabel();
+        goToPreviousPageLabel = new javax.swing.JLabel();
+        goToNextPageLinkLabel = new javax.swing.JLabel();
+        goToLastPageLinkLabel = new javax.swing.JLabel();
         gotoPageLabel = new javax.swing.JLabel();
         gotoPageTextField = new javax.swing.JTextField();
         goButtonLabel = new javax.swing.JLabel();
 
         setLayout(new java.awt.GridBagLayout());
 
-        topNavigationPanel.setMinimumSize(new java.awt.Dimension(100, 35));
-        topNavigationPanel.setPreferredSize(new java.awt.Dimension(710, 35));
+        topNavigationPanel.setMinimumSize(new java.awt.Dimension(100, 30));
+        topNavigationPanel.setPreferredSize(new java.awt.Dimension(710, 30));
         topNavigationPanel.setLayout(new java.awt.GridBagLayout());
 
-        previousPageLabel.setFont(new java.awt.Font("Tahoma", 1, 11));
+        previousPageLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         previousPageLabel.setForeground(new java.awt.Color(0, 0, 255));
         previousPageLabel.setText("Prev");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -210,8 +214,8 @@ public class PaginatedTablePanel extends javax.swing.JPanel {
         gridBagConstraints.weighty = 1.0;
         add(tablePanel, gridBagConstraints);
 
-        bottomNavigationPanel.setMinimumSize(new java.awt.Dimension(100, 35));
-        bottomNavigationPanel.setPreferredSize(new java.awt.Dimension(710, 35));
+        bottomNavigationPanel.setMinimumSize(new java.awt.Dimension(100, 30));
+        bottomNavigationPanel.setPreferredSize(new java.awt.Dimension(710, 30));
         bottomNavigationPanel.setLayout(new java.awt.GridBagLayout());
 
         totaPageslLabel.setText("999 pages found");
@@ -221,30 +225,68 @@ public class PaginatedTablePanel extends javax.swing.JPanel {
 
         pagerPanel.setLayout(new java.awt.GridBagLayout());
 
-        firstPageLinkLabel.setText("jLabel4");
+        firstPageLinkLabel.setText("1");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
         pagerPanel.add(firstPageLinkLabel, gridBagConstraints);
 
-        secondPageLinkLabel.setText("jLabel5");
+        secondPageLinkLabel.setText("2");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
         pagerPanel.add(secondPageLinkLabel, gridBagConstraints);
 
-        thirdPageLinkLabel.setText("jLabel6");
+        thirdPageLinkLabel.setText("3");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        gridBagConstraints.gridx = 4;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
         pagerPanel.add(thirdPageLinkLabel, gridBagConstraints);
 
-        fourthPageLinkLabel.setText("jLabel7");
+        fourthPageLinkLabel.setText("4");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
         pagerPanel.add(fourthPageLinkLabel, gridBagConstraints);
 
-        fifthPageLinkLabel.setText("jLabel8");
+        fifthPageLinkLabel.setText("5");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 2);
+        gridBagConstraints.gridx = 6;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 4, 0, 4);
         pagerPanel.add(fifthPageLinkLabel, gridBagConstraints);
+
+        goToFirstPageLinkLabel.setText("<<");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 6);
+        pagerPanel.add(goToFirstPageLinkLabel, gridBagConstraints);
+
+        goToPreviousPageLabel.setText("<");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 2, 0, 6);
+        pagerPanel.add(goToPreviousPageLabel, gridBagConstraints);
+
+        goToNextPageLinkLabel.setText(">");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 7;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 2);
+        pagerPanel.add(goToNextPageLinkLabel, gridBagConstraints);
+
+        goToLastPageLinkLabel.setText(">>");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 8;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 6, 0, 2);
+        pagerPanel.add(goToLastPageLinkLabel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
@@ -293,6 +335,10 @@ public class PaginatedTablePanel extends javax.swing.JPanel {
     private javax.swing.JLabel firstPageLinkLabel;
     private javax.swing.JLabel fourthPageLinkLabel;
     private javax.swing.JLabel goButtonLabel;
+    private javax.swing.JLabel goToFirstPageLinkLabel;
+    private javax.swing.JLabel goToLastPageLinkLabel;
+    private javax.swing.JLabel goToNextPageLinkLabel;
+    private javax.swing.JLabel goToPreviousPageLabel;
     private javax.swing.JLabel gotoPageLabel;
     private javax.swing.JTextField gotoPageTextField;
     private javax.swing.JLabel hiddenLabel_01;

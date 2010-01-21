@@ -23,5 +23,11 @@ public class ReadingPadLauncher {
 	
 	public static void main(String[] args) {
 		logger.info("Launching Reading Pad.");
+		loadStartupContext();
+	}
+
+	private static void loadStartupContext() {
+		logger.info("Loading Start-up Context.");
+		
 	}
 }

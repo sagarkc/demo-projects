@@ -10,7 +10,7 @@ public class DDValsVO implements Serializable {
 	 */
 	private static final long serialVersionUID = -324774491827941391L;
 	
-	private String code, value;
+	private String code, value, displayOrder;
 
 	/**
 	 * @return the code
@@ -40,11 +40,13 @@ public class DDValsVO implements Serializable {
 		this.value = value;
 	}
 	
+	
 	@Override
 	public String toString() {
-		return "\"" + 
+		return "\'" + 
 			formatToColumnName(((null != code) ? code.trim() : ""))
-		+ "\", \"" + ((null != value) ? value.trim() : "") + "\"";
+		+ "\', \'" + ((null != value) ? value.trim() : "") 
+		+ "\', \'" + ((null != displayOrder) ? displayOrder.trim() : "") + "\'";
 	}
 	public static String formatToColumnName(String txt){
 		return txt.toUpperCase().replaceAll(" ", "_").replaceAll("-", "");
@@ -78,6 +80,20 @@ public class DDValsVO implements Serializable {
 		} else if (!code.equals(other.code))
 			return false;
 		return true;
+	}
+
+	/**
+	 * @return the displayOrder
+	 */
+	public String getDisplayOrder() {
+		return displayOrder;
+	}
+
+	/**
+	 * @param displayOrder the displayOrder to set
+	 */
+	public void setDisplayOrder(String displayOrder) {
+		this.displayOrder = displayOrder;
 	}
 	
 	
