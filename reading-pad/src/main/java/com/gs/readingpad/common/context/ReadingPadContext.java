@@ -24,5 +24,15 @@ public class ReadingPadContext implements Serializable{
 	 */
 	private static final long serialVersionUID = -7250024455131560416L;
 
+	private static ReadingPadContext instance;
 	
+	private ReadingPadContext() {
+		
+	}
+	
+	public static ReadingPadContext getInstance(){
+		if(instance == null)
+			instance = new ReadingPadContext();
+		return instance;
+	}
 }
