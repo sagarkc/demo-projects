@@ -10,6 +10,6 @@
 	<artifactId>rm-web</artifactId>
 	<name>Resource Manager - WEB</name>
 	<version>${release.version}</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	
 </project>
