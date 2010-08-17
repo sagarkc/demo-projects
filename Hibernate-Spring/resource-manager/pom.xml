@@ -27,18 +27,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
+			<artifactId>spring-aop</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
@@ -48,12 +37,12 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
+			<artifactId>spring-beans</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-jms</artifactId>
+			<artifactId>spring-context</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
@@ -63,33 +52,23 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
+			<artifactId>spring-jms</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>3.0.1.RELEASE</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring</artifactId>
-			<version>${spring.version}</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>3.0.1.RELEASE</version>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.ws</groupId>
-			<artifactId>spring-oxm</artifactId>
-			<version>${spring.ws.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.ws</groupId>
-			<artifactId>spring-xml</artifactId>
-			<version>${spring.ws.version}</version>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>3.0.1.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>opensymphony</groupId>
@@ -127,7 +106,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate</artifactId>
-			<version>3.2.3.ga</version>
+			<version>${hibernate.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>asm</groupId>
@@ -166,17 +145,17 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-annotations</artifactId>
-			<version>3.3.0.ga</version>
+			<version>3.4.0.GA</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>3.0.0.ga</version>
+			<version>4.0.2.GA</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>3.3.1.ga</version>
+			<version>3.4.0.GA</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
@@ -211,22 +190,11 @@
 			<artifactId>cxf-rt-bindings-http</artifactId>
 			<version>${cxf-version}</version>
 		</dependency>
+		<dependency>
 			<groupId>xerces</groupId>
 			<artifactId>xerces</artifactId>
 			<version>2.4.0</version>
 		</dependency>
-		<dependency>
-			<groupId>org.jboss.cache</groupId>
-			<artifactId>jbosscache-core</artifactId>
-			<version>2.1.1.GA</version>			
-		</dependency>
-
-		<dependency>
-			<groupId>c8-sdk-java5</groupId>
-			<artifactId>c8-sdk-java5</artifactId>
-			<version>c8-sdk-java5</version>
-		</dependency>
-		
 		<dependency>
 			<groupId>commons-collections</groupId>
 			<artifactId>commons-collections</artifactId>
@@ -253,39 +221,6 @@
 			<version>3.0.1</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>org.apache.activemq</groupId>
-			<artifactId>activemq-core</artifactId>
-			<version>5.1.0</version>
-			<scope>provided</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.activemq</groupId>
-					<artifactId>activemq-web-demo</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>  
-  
-  <!-- Dependency for WebService Call. For Penson OAO WebService Integration -->
-		<dependency>
-			<groupId>org.apache.axis2</groupId>
-			<artifactId>axis2</artifactId>
-			<version>1.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.ws.commons.axiom</groupId>
-			<artifactId>axiom-api</artifactId>
-			<version>1.2.5</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.axis2</groupId>
-			<artifactId>axis2-adb</artifactId>
-			<version>1.3</version>
-		</dependency>
  	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -350,16 +285,14 @@
 	</build>
 		
 	<properties>
-		<project.title>DBEX</project.title>
-		<release.version>1.0-BETA-0.1</release.version>
+		<project.title>ResourceManager</project.title>
+		<release.version>1.0</release.version>
 		<jdk.version>1.5</jdk.version>
 		
-		<cxf-version>2.0.5-incubator</cxf-version>
-		<spring.version>2.5.4</spring.version>
-		<spring.ws.version>1.0.0</spring.ws.version>
-		<quartz.version>1.6.0</quartz.version>
-		<hibernate.version>3.2.0.ga</hibernate.version>
-		<struts.version>2.0.6</struts.version>
+		<cxf-version>2.2.9</cxf-version>
+		<spring.version>3.0.0.RELEASE</spring.version>
+		<hibernate.version>3.2.6.ga</hibernate.version>
+		
 		<project.web.dir>./web/target</project.web.dir>
 		<project.target.dir>./target</project.target.dir>
 		<project.report.dir>${project.target.dir}</project.report.dir>
@@ -367,5 +300,8 @@
 		<env>dev</env>
 		<maven.test.skip>true</maven.test.skip>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
+		
+		<!-- Context Root Properties-->
+		<web.context.root>/rm</web.context.root>
 	</properties>
 </project>
