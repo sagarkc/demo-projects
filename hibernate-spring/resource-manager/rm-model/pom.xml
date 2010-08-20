@@ -1,0 +1,13 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>resource-manager</artifactId>
+		<groupId>com.gs.rm</groupId>
+		<version>${release.version}</version>
+	</parent>
+	<groupId>com.gs.rm</groupId>
+	<artifactId>rm-model</artifactId>
+	<version>${release.version}</version>
+	<name>Resource Manager - Model</name>
+</project>
