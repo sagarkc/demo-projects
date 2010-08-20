@@ -1,0 +1,51 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+		<artifactId>resource-manager</artifactId>
+		<groupId>com.gs.rm</groupId>
+		<version>${release.version}</version>
+    </parent>
+    <artifactId>web-application</artifactId>
+    <packaging>pom</packaging>
+    <name>Flex Loan Application</name>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<configuration>
+							<tasks>
+								<taskdef resource="flexTasks.tasks" />
+								<mxmlc file="${basedir}/../src/ResourceManagerApp.mxml" 
+									   output="target/swf/ResourceManagerApp.swf"
+									   link-report="target/report.xml" 
+									   context-root="${web.context.root}"
+									   warnings="false"
+									   incremental="true"
+								>
+									<source-path path-element="${FLEX_HOME}/frameworks"/>
+									<compiler.library-path dir="${FLEX_HOME}/frameworks" append="true">
+										<include name="libs" />
+									</compiler.library-path>
+									<compiler.source-path path-element="${basedir}/../common/src"/>
+									<compiler.source-path path-element="${basedir}/src"/>
+								</mxmlc>
+								
+								<!-- Copy -->
+								<copy file="src/ScreenStatus.xml" todir="target/swf" overwrite="true"/>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>	
+</project>
