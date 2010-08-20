@@ -7,6 +7,10 @@
 	<packaging>pom</packaging>
 	<name>Resource Manager</name>
 
+	<prerequisites>
+		<maven>2.0.8</maven>
+	</prerequisites>
+	
 	<modules>
 		<module>rm-common</module>
 		<module>rm-model</module>
@@ -16,6 +20,70 @@
 		<module>rm-webapps</module>
 	</modules>
 
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>rm-common</module>
+				<module>rm-model</module>
+				<module>rm-vo</module>
+				<module>rm-service</module>
+				<module>rm-web</module>
+				<module>rm-webapps</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>all-java-modules</id>
+			<modules>
+				<module>rm-common</module>
+				<module>rm-model</module>
+				<module>rm-vo</module>
+				<module>rm-service</module>
+				<module>rm-webapps</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>only-flex</id>
+			<modules>
+				<module>rm-webapps</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>dev</id>
+			<properties>
+				<web.context.root>/rm_dev</web.context.root>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<web.context.root>/rm</web.context.root>
+			</properties>
+		</profile>
+		<profile>
+			<id>site</id>
+			<modules>
+			</modules>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-site-plugin</artifactId>
+							<configuration>
+								<siteDirectory>site</siteDirectory>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
+	</profiles>
+	
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

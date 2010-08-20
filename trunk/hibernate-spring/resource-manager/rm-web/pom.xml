@@ -25,4 +25,89 @@
 	<build>
 		<finalName>rm-web-${release.version}</finalName>
 	</build>
+	
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
+
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<!-- Coping SWF and  assets-->
+							<execution>
+								<id>defaultcopy</id>
+								<phase>test</phase>
+								<configuration>
+									<tasks>
+										<!-- Copy SWF and HTML Files-->
+										<copy todir="target/${artifactId}-${project.version}/swf/"
+											overwrite="false" failonerror="true" includeEmptyDirs="false">
+											<fileset dir="../rm-webapps/rm-flex/application/target/swf">
+												<include name="**/*.swf" />
+												<include name="**/*.xml" />
+											</fileset>
+											<fileset dir="../rm-webapps/rm-flex/admin/target/swf/">
+												<include name="**/*.swf" />
+											</fileset>
+											<fileset dir="../rm-webapps/rm-flex/test/target/swf">
+												<include name="**/*.swf" />
+											</fileset>
+										</copy>
+										<!-- Copy assets-->
+										<copy todir="target/${artifactId}-${project.version}/swf/assets"
+											overwrite="false" failonerror="true" includeEmptyDirs="false">
+											<fileset dir="../rm-webapps/rm-flex/mainapp/src/assets">
+											</fileset>
+										</copy>
+										<!-- Copy SWF and HTML to exploded war -->
+										<copy todir="${project.build.directory}/exploded${web.context.root}.war/swf/assets"
+											overwrite="true" failonerror="true" includeEmptyDirs="false">
+											<fileset dir="../rm-webapps/rm-flex/mainapp/src/assets">
+											</fileset>
+										</copy>
+										<copy todir="${project.build.directory}/exploded${web.context.root}.war/swf"
+											overwrite="true" failonerror="true" includeEmptyDirs="false">
+											<fileset dir="../rm-webapps/rm-flex/application/target/swf">
+												<include name="**/*.swf" />
+												<include name="**/*.xml" />
+											</fileset>
+											<fileset dir="../rm-webapps/rm-flex/admin/target/swf">
+												<include name="**/*.swf" />
+											</fileset>
+										</copy>
+									</tasks>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<configuration>
+							<webappDirectory>${project.build.directory}/exploded${web.context.root}.war</webappDirectory>
+						</configuration>
+					</plugin>
+					
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>no-flex</id>
+		</profile>		
+	</profiles>
 </project>
