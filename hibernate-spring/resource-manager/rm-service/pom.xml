@@ -10,4 +10,7 @@
 	<artifactId>rm-service</artifactId>
 	<version>${release.version}</version>
 	<name>Resource Manager - Service</name>
+	<dependencies>
+		
+	</dependencies>
 </project>
