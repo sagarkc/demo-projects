@@ -6,8 +6,9 @@
 		<groupId>com.gs.rm</groupId>
 		<version>${release.version}</version>
 	</parent>
-	<groupId>com.gs.rm</groupId>
 	<artifactId>rm-common</artifactId>
 	<version>${release.version}</version>
 	<name>Resource Manager - Common</name>
+	<packaging>jar</packaging>
+	
 </project>
