@@ -10,7 +10,7 @@
 	<groupId>com.gs.rm</groupId>
 	<artifactId>rm-flexapps</artifactId>
 	<version>${release.version}</version>
-	<packaging>swf</packaging>
+	<packaging>pom</packaging>
 	<name>Resource Manager - FlexApps</name>
 
 	<properties>
