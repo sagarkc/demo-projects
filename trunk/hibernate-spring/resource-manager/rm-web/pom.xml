@@ -21,6 +21,27 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.gs.rm</groupId>
+			<artifactId>rm-common</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gs.rm</groupId>
+			<artifactId>rm-model</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gs.rm</groupId>
+			<artifactId>rm-vo</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gs.rm</groupId>
+			<artifactId>rm-service</artifactId>
+			<version>${release.version}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>rm-web-${release.version}</finalName>

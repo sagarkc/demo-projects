@@ -10,6 +10,14 @@
 	<version>${release.version}</version>
 	<name>Resource Manager - Model</name>
 	<packaging>jar</packaging>
-	
-	
+
+	<dependencies>
+		<dependency>
+			<groupId>com.gs.rm</groupId>
+			<artifactId>rm-common</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+	</dependencies>
+
+
 </project>
