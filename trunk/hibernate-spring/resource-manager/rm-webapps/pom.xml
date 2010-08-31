@@ -17,6 +17,31 @@
 		<module>rm-flexapps</module>
 	</modules>
 	
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>rm-javaapps</module>
+				<module>rm-flexapps</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>all-java-modules</id>
+			<modules>
+				<module>rm-javaapps</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>only-flex</id>
+			<modules>
+				<module>rm-flexapps</module>
+			</modules>
+		</profile>
+	</profiles>
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.gs.rm</groupId>
