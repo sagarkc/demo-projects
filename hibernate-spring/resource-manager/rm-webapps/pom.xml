@@ -7,10 +7,16 @@
 		<version>${release.version}</version>
 	</parent>
 	<groupId>com.gs.rm</groupId>
-	<artifactId>rm-service</artifactId>
+	<artifactId>rm-webapps</artifactId>
 	<version>${release.version}</version>
-	<name>Resource Manager - Service</name>
-
+	<name>Resource Manager - WebApps</name>
+	<packaging>pom</packaging>
+	
+	<modules>
+		<module>rm-javaapps</module>
+		<module>rm-flexapps</module>
+	</modules>
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.gs.rm</groupId>
@@ -25,11 +31,6 @@
 		<dependency>
 			<groupId>com.gs.rm</groupId>
 			<artifactId>rm-vo</artifactId>
-			<version>${release.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.gs.rm</groupId>
-			<artifactId>rm-dao</artifactId>
 			<version>${release.version}</version>
 		</dependency>
 	</dependencies>

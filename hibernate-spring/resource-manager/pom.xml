@@ -15,9 +15,10 @@
 		<module>rm-common</module>
 		<module>rm-model</module>
 		<module>rm-vo</module>
+		<module>rm-dao</module>
 		<module>rm-service</module>
 		<module>rm-web</module>
-		
+		<module>rm-webapps</module>
 	</modules>
 
 	<profiles>
@@ -30,6 +31,7 @@
 				<module>rm-common</module>
 				<module>rm-model</module>
 				<module>rm-vo</module>
+				<module>rm-dao</module>
 				<module>rm-service</module>
 				<module>rm-web</module>
 				
@@ -41,6 +43,7 @@
 				<module>rm-common</module>
 				<module>rm-model</module>
 				<module>rm-vo</module>
+				<module>rm-dao</module>
 				<module>rm-service</module>
 				<module>rm-webapps</module>
 			</modules>
