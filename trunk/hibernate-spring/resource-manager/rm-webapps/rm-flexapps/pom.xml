@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>rm-webapps</artifactId>
+		<groupId>com.gs.rm</groupId>
+		<version>${release.version}</version>
+	</parent>
+	<groupId>com.gs.rm</groupId>
+	<artifactId>rm-flexapps</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>swf</packaging>
+	<name>Resource Manager - FlexApps</name>
+
+	<properties>
+		<flex.home>/usr/local/flex/current</flex.home>
+	</properties>
+	<build>
+		<sourceDirectory>src/main/flex</sourceDirectory>
+		<defaultGoal>install</defaultGoal>
+		<plugins>
+			<plugin>
+				<groupId>net.israfil.mojo</groupId>
+				<artifactId>maven-flex2-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<flexHome>${flex.home}</flexHome>
+					<useNetwork>true</useNetwork>
+					<main>Main.mxml</main>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

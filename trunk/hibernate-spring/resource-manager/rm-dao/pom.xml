@@ -7,9 +7,9 @@
 		<version>${release.version}</version>
 	</parent>
 	<groupId>com.gs.rm</groupId>
-	<artifactId>rm-service</artifactId>
+	<artifactId>rm-dao</artifactId>
 	<version>${release.version}</version>
-	<name>Resource Manager - Service</name>
+	<name>Resource Manager - DAO</name>
 
 	<dependencies>
 		<dependency>
@@ -25,11 +25,6 @@
 		<dependency>
 			<groupId>com.gs.rm</groupId>
 			<artifactId>rm-vo</artifactId>
-			<version>${release.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.gs.rm</groupId>
-			<artifactId>rm-dao</artifactId>
 			<version>${release.version}</version>
 		</dependency>
 	</dependencies>
