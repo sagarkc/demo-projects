@@ -34,7 +34,7 @@
 				<module>rm-dao</module>
 				<module>rm-service</module>
 				<module>rm-web</module>
-				
+				<module>rm-webapps</module>
 			</modules>
 		</profile>
 		<profile>

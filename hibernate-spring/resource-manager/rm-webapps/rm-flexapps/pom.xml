@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>com.gs.rm</groupId>
 	<artifactId>rm-flexapps</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>${release.version}</version>
 	<packaging>swf</packaging>
 	<name>Resource Manager - FlexApps</name>
 
@@ -18,18 +18,45 @@
 	</properties>
 	<build>
 		<sourceDirectory>src/main/flex</sourceDirectory>
-		<defaultGoal>install</defaultGoal>
+		
 		<plugins>
+			
 			<plugin>
-				<groupId>net.israfil.mojo</groupId>
-				<artifactId>maven-flex2-plugin</artifactId>
-				<extensions>true</extensions>
-				<configuration>
-					<flexHome>${flex.home}</flexHome>
-					<useNetwork>true</useNetwork>
-					<main>Main.mxml</main>
-				</configuration>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<configuration>
+							<tasks>
+								<taskdef resource="flexTasks.tasks" />
+								<mxmlc file="../mainapp/src/MortgagePOSApp.mxml" 
+									   output="target/swf/MortgagePOSApp.swf"
+									   link-report="target/report.xml" 
+									   context-root="${web.context.root}"
+									   warnings="false"
+									   services="../../javawebapp/appwar/src/main/webapp/WEB-INF/flex/services-config.xml"
+									   incremental="true"
+								>
+									<source-path path-element="${FLEX_HOME}/frameworks"/>
+									<compiler.library-path dir="${FLEX_HOME}/frameworks" append="true">
+										<include name="libs" />
+									</compiler.library-path>
+									<compiler.source-path path-element="../mainapp/src"/>
+									<compiler.source-path path-element="../common/src"/>
+									<compiler.source-path path-element="src"/>
+								</mxmlc>
+								
+								<!-- Copy -->
+								<copy file="src/ScreenStatus.xml" todir="target/swf" overwrite="true"/>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
+		
 		</plugins>
 	</build>
 </project>
