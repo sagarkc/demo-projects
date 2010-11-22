@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.gs.wsdlc</groupId>
+	<artifactId>wsdlc</artifactId>
+	<packaging>pom</packaging>
+	<version>${release.version}</version>
+	<name>WSDL Complete</name>
+
+	<modules>
+		<module>wsdlc-common</module>
+		<module>wsdlc-bod</module>
+		<module>wsdlc-model</module>
+		<module>wsdlc-services</module>
+		<module>wsdlc-application</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>1.2.14</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging-api</artifactId>
+				<version>1.1</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>1.1.1</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.gs.utils</groupId>
+				<artifactId>gs-utils</artifactId>
+				<version>1.0.02.2010</version>
+			</dependency>
+			<dependency>
+				<groupId>wsdl4j</groupId>
+				<artifactId>wsdl4j</artifactId>
+				<version>1.6.2</version>
+			</dependency>
+			<dependency>
+				<groupId>axis</groupId>
+				<artifactId>axis</artifactId>
+				<version>1.4</version>
+			</dependency>
+		</dependencies>
+		
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.gs.utils</groupId>
+			<artifactId>gs-utils</artifactId>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>					
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+		</plugins>
+	</build>
+
+	<reporting>
+	  <plugins>
+		<plugin>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>findbugs-maven-plugin</artifactId>
+			<version>2.0.1</version>
+			<configuration>
+				<failOnError>false</failOnError>
+				<effort>Max</effort>
+				<findbugsXmlOutput>true</findbugsXmlOutput>
+				<xmlOutput>true</xmlOutput>
+				<debug>false</debug>
+				<findbugsXmlOutputDirectory>${findbugs.output.directory}\${artifactId}</findbugsXmlOutputDirectory>
+				<outputDirectory>${findbugs.output.directory}\${artifactId}</outputDirectory>
+				<xmlOutputDirectory>${findbugs.output.directory}\${artifactId}</xmlOutputDirectory>
+				<excludeFilterFile>findbugs-exclusion-filter.xml</excludeFilterFile>
+			</configuration>
+		</plugin>
+	  </plugins>
+	</reporting>
+
+	
+	<properties>
+		<project.title>WSDLC</project.title>
+		<project.home>D:/SVN_HOME/demo-projects/trunk/wsdl-complete</project.home>
+		<release.version>1.0-BETA-1</release.version>
+		<setup.dir>D:/SVN_HOME/demo-projects/trunk/wsdl-complete/wsdlc-setup</setup.dir>
+		<libs.dir>D:/SVN_HOME/demo-projects/trunk/wsdl-complete/wsdlc-setup/libs</libs.dir>
+		<release.dir>D:/SVN_HOME/demo-projects/trunk/wsdl-complete/wsdlc-release</release.dir>
+		<jdk.version>1.6</jdk.version>
+		<maven.test.skip>true</maven.test.skip>
+		
+		<reporting.output.directory>D:/SVN_HOME/demo-projects/trunk/wsdl-complete/wsdlc-reportings</reporting.output.directory>
+		<findbugs.output.directory>${reporting.output.directory}/findbugs</findbugs.output.directory>
+	</properties>
+
+</project>
+
