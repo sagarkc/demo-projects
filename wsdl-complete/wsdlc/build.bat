@@ -1,7 +1,7 @@
 echo off
 cls
-set M2=D:\TOOLS\M2_Branch
-set JAVA_HOME=D:\TOOLS\Java\jdk1.6.0_21
+set M2_HOME=D:\TOOLS\maven-2.2.1
+set JAVA_HOME=D:\TOOLS\Java\jdk1.6.0_22
 set Path=%Path%;%M2_HOME%\bin;%JAVA_HOME%
 set MAVEN_OPTS=-Xmx1024m -Xms512m
 
@@ -9,7 +9,7 @@ set MAVEN_OPTS=-Xmx1024m -Xms512m
 @if "%1" == "ecl" goto eclipse
 @if "%1" == "findbugs" goto findbugs
 
-@echo Building JCR Application.
+@echo Building WSDLC Application.
 @echo.
 call mvn install
 goto end
