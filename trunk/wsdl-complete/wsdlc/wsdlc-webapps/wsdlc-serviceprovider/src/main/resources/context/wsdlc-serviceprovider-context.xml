@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:flex="http://www.springframework.org/schema/flex" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/flex 
+ 		http://www.springframework.org/schema/flex/spring-flex-1.0.xsd"
+	default-autowire="byName">
+	
+	<bean id="dbexFlexExceptionTranslator"
+		class="com.gs.dbex.serviceprovider.flex.exception.DbexFlexExceptionTranslator">
+	</bean>
+
+	<flex:message-broker>
+		<flex:exception-translator ref="dbexFlexExceptionTranslator" />
+	</flex:message-broker>
+
+	<bean id="dbexUserDelegate" class="com.gs.dbex.serviceprovider.DbexUserDelegate">
+		<flex:remoting-destination />
+		<property name="dbexUserService" ref="dbexUserService"></property>
+	</bean>
+	
+	<bean id="databaseConnectionDelegate" class="com.gs.dbex.serviceprovider.DatabaseConnectionDelegate">
+		<flex:remoting-destination />
+		<property name="databaseConnectionService" ref="databaseConnectionService"></property>
+		<property name="databaseMetadataService" ref="databaseMetadataService"></property>
+	</bean>
+
+	<bean id="queryRunnerDelegate"
+		class="com.gs.dbex.serviceprovider.QueryRunnerDelegate">
+		<flex:remoting-destination />
+		<property name="queryExecutionService" ref="queryExecutionService"></property>
+	</bean>
+
+	<!-- Services -->
+
+</beans>

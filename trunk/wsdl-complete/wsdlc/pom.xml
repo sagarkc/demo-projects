@@ -13,6 +13,7 @@
 		<module>wsdlc-model</module>
 		<module>wsdlc-services</module>
 		<module>wsdlc-application</module>
+		<module>wsdlc-webapps</module>
 	</modules>
 
 	<dependencyManagement>
@@ -121,7 +122,7 @@
 	<properties>
 		<project.title>WSDLC</project.title>
 		<project.home>D:/SVN_HOME/demo-projects/trunk/wsdl-complete</project.home>
-		<release.version>1.0-BETA-1</release.version>
+		<release.version>1.0.01</release.version>
 		<setup.dir>D:/SVN_HOME/demo-projects/trunk/wsdl-complete/wsdlc-setup</setup.dir>
 		<libs.dir>D:/SVN_HOME/demo-projects/trunk/wsdl-complete/wsdlc-setup/libs</libs.dir>
 		<release.dir>D:/SVN_HOME/demo-projects/trunk/wsdl-complete/wsdlc-release</release.dir>
@@ -130,6 +131,10 @@
 		
 		<reporting.output.directory>D:/SVN_HOME/demo-projects/trunk/wsdl-complete/wsdlc-reportings</reporting.output.directory>
 		<findbugs.output.directory>${reporting.output.directory}/findbugs</findbugs.output.directory>
+		
+		<spring-version>3.0.0.RELEASE</spring-version>
+		
+		<web.context.root>/wsdlc</web.context.root>
 	</properties>
 
 </project>

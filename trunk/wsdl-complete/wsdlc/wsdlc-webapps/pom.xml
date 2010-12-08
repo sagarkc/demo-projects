@@ -1,0 +1,47 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>wsdlc</artifactId>
+		<groupId>com.gs.wsdlc</groupId>
+		<version>${release.version}</version>
+	</parent>
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.gs.wsdlc</groupId>
+	<artifactId>wsdlc-webapps</artifactId>
+	<name>WSDL Complete - webapps</name>
+	<version>${release.version}</version>
+	<packaging>pom</packaging>
+
+	
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>wsdlc-serviceprovider</module>
+				<module>wsdlc-fx</module>
+				<module>wsdlc-web</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>web-app</id>
+			<modules>
+				<module>wsdlc-serviceprovider</module>
+				<module>wsdlc-fx</module>
+				<module>wsdlc-web</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>only-fx</id>
+			<modules>
+				<module>wsdlc-fx</module>
+			</modules>
+		</profile>
+	</profiles>
+	
+</project>
