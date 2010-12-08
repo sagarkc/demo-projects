@@ -9,6 +9,6 @@
 	<groupId>com.gs.wsdlc</groupId>
 	<artifactId>wsdlc-common</artifactId>
 	<version>${release.version}</version>
-	<name>WSDL Complete - Common</name>
+	<name>WSDLC - Common</name>
 
 </project>

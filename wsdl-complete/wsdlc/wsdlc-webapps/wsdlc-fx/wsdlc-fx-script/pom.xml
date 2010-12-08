@@ -8,14 +8,10 @@
 		<version>${release.version}</version>
 	</parent>
 	<groupId>com.gs.wsdlc</groupId>
-	<artifactId>wsdlc-fx</artifactId>
+	<artifactId>wsdlc-fx-script</artifactId>
 	<version>${release.version}</version>
-	<packaging>pom</packaging>
-	<name>WSDLC - JavaFX</name>
+	<packaging>jar</packaging>
+	<name>WSDLC - JavaFX - Script</name>
 
-	<modules>
-		<module>wsdlc-fx-script</module>
-		<module>wsdlc-fx-design</module>
-	</modules>
 	
 </project>

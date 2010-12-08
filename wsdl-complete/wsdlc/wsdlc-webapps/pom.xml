@@ -9,7 +9,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gs.wsdlc</groupId>
 	<artifactId>wsdlc-webapps</artifactId>
-	<name>WSDL Complete - webapps</name>
+	<name>WSDLC - WebApps</name>
 	<version>${release.version}</version>
 	<packaging>pom</packaging>
 
