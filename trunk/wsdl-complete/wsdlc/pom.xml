@@ -5,7 +5,7 @@
 	<artifactId>wsdlc</artifactId>
 	<packaging>pom</packaging>
 	<version>${release.version}</version>
-	<name>WSDL Complete</name>
+	<name>WSDLC</name>
 
 	<modules>
 		<module>wsdlc-common</module>

@@ -9,7 +9,7 @@
 	<groupId>com.gs.wsdlc</groupId>
 	<artifactId>wsdlc-application</artifactId>
 	<version>${release.version}</version>
-	<name>WSDL Complete - Application</name>
+	<name>WSDLC - Application</name>
 
 	<dependencies>
 		<dependency>

@@ -12,7 +12,7 @@
 	<artifactId>wsdlc-web</artifactId>
 	<version>${release.version}</version>
 	<packaging>war</packaging>
-	<name>wsdlc - Web</name>
+	<name>WSDLC - Web</name>
 
 	<dependencies>
 		<dependency>
