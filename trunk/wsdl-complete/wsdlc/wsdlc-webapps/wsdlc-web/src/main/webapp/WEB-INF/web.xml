@@ -7,7 +7,7 @@
 
 	<context-param>
 		<param-name>log4jConfigLocation</param-name>
-		<param-value>classpath:wsdlc-web/wsdlc-log4j.xml</param-value>
+		<param-value>classpath:wsdlc-log4j.xml</param-value>
 	</context-param>
 
 	<context-param>
@@ -42,25 +42,13 @@
 			org.apache.cxf.transport.servlet.CXFServlet
 	    </servlet-class>
 	</servlet>
-
-<!-- The front controller of this Spring Web application, responsible 
-		for handling all application requests -->
-	<servlet>
-		<servlet-name>FlexServlet</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>FlexServlet</servlet-name>
-		<url-pattern>/app/fmb/*</url-pattern>
-	</servlet-mapping>
-
-	
 	<servlet-mapping>
 		<servlet-name>CXFServlet</servlet-name>
 		<url-pattern>/services/*</url-pattern>
 	</servlet-mapping>
+
+<!-- The front controller of this Spring Web application, responsible 
+		for handling all application requests -->
 
 <!-- User-defined Servlets  -->
 	

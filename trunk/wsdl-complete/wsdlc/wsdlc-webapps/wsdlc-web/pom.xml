@@ -166,7 +166,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<build>
-				
+				<finalName>wsdlc</finalName>
 				<plugins>
 					
 					<plugin>

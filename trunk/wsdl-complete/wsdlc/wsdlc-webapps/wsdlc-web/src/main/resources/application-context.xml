@@ -5,16 +5,16 @@
            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
 	default-autowire="byName">
 
-	<import resource="dbex-web/context/application-properties-context.xml" />
-	<import resource="application-flex-context.xml"/>
+	<!--<import resource="wsdlc-web/context/application-properties-context.xml" />
 	<import resource="application-aop-context.xml"/>
 	<import resource="application-sessionfactory-context.xml"/> 
-	<import resource="application-query-context.xml"/> 
 
-	<import resource="context/dbex-serviceprovider-context.xml" />
-	<import resource="context/dbex-service-context.xml" />
-	<import resource="context/dbex-service-web-context.xml" />
-	<import resource="context/dbex-historyMgr-web-context.xml" />
-	<import resource="context/dbex-integration-context.xml" />
+	<import resource="context/wsdlc-serviceprovider-context.xml" />
+	<import resource="context/wsdlc-service-context.xml" />
+	<import resource="context/wsdlc-service-web-context.xml" />
+	<import resource="context/wsdlc-historyMgr-web-context.xml" />
+	<import resource="context/wsdlc-integration-context.xml" />
+
+-->
 
 </beans>
