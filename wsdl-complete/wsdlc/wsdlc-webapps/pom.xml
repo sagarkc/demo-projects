@@ -22,7 +22,6 @@
 			</activation>
 			<modules>
 				<module>wsdlc-serviceprovider</module>
-				<module>wsdlc-fx</module>
 				<module>wsdlc-web</module>
 			</modules>
 		</profile>
@@ -31,17 +30,10 @@
 			<id>web-app</id>
 			<modules>
 				<module>wsdlc-serviceprovider</module>
-				<module>wsdlc-fx</module>
 				<module>wsdlc-web</module>
 			</modules>
 		</profile>
 		
-		<profile>
-			<id>only-fx</id>
-			<modules>
-				<module>wsdlc-fx</module>
-			</modules>
-		</profile>
 	</profiles>
 	
 </project>
