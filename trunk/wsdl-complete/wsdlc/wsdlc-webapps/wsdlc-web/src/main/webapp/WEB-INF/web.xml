@@ -7,7 +7,7 @@
 
 	<context-param>
 		<param-name>log4jConfigLocation</param-name>
-		<param-value>classpath:dbex-web/dbex-log4j.xml</param-value>
+		<param-value>classpath:wsdlc-web/wsdlc-log4j.xml</param-value>
 	</context-param>
 
 	<context-param>
@@ -63,15 +63,7 @@
 	</servlet-mapping>
 
 <!-- User-defined Servlets  -->
-	<servlet>
-		<servlet-name>DbexFileServlet</servlet-name>
-		<display-name>File Servlet</display-name>
-		<servlet-class>com.gs.dbex.web.DbexFileServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>DbexFileServlet</servlet-name>
-		<url-pattern>/app/DbexFileServlet</url-pattern>
-	</servlet-mapping>
+	
 
 <!-- Session Info  -->
 	<session-config>
@@ -80,7 +72,6 @@
 
 <!-- Welcome files  -->
 	<welcome-file-list>
-		<welcome-file>/swf/DbexMainApp</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 	
