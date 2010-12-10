@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<installation version="1.0">
+    <info>
+        <appname>Book Reader</appname>
+        <appversion>1.0-beta-01</appversion>
+        <authors>
+            <author email="sabuj.das@gmail.com" name="Sabuj Das"/>
+        </authors>
+        <url>http://code.google.com/p/demo-projects/</url>
+        <uninstaller name="Rpad-Uninstaller.jar" write="yes"/>
+        <javaversion>1.6</javaversion>
+        <requiresjdk>yes</requiresjdk>
+        <writeinstallationinformation>yes</writeinstallationinformation>
+        <run-privileged condition="izpack.windowsinstall.vista|izpack.windowsinstall.7"/>
+    </info>
+    <guiprefs height="480" resizable="no" width="640">
+        <laf name="substance">
+            <param name="variant" value="business-blue"/>
+            <os family="windows"/>
+            <os family="unix"/>
+            <os family="mac"/>
+        </laf>
+        <modifier key="useFlags" value="yes"/>
+        <modifier key="langDisplayType" value="default"/>
+    </guiprefs>
+    <locale>
+        <langpack iso3="eng"/>
+    </locale>
+	
+	<variables>
+		<variable name="PROJECT_NAME" value="Reading-Pad"/>
+		<variable name="RELEASE_VERSION" value="1.0-beta-01"/>
+		<variable name="PROJECT_HOME" value="D:\SVN_HOME\demo-projects\trunk\reading-pad"/>
+		<variable name="INSTALLER_HOME" value="D:\SVN_HOME\demo-projects\trunk\reading-pad\installer-target"/>
+		<variable name="INSTALLER_DOC_HOME" value="D:\SVN_HOME\demo-projects\trunk\reading-pad\rpad-installer"/>
+	</variables>
+
+	
+    <resources>
+        <res id="HTMLHelloPanel.info" parse="yes" src="docs\rpad-info.html"/>
+        <res id="shortcutSpec.xml" src="Install-rpad_shortcutSpec.xml"/>
+        <res id="Unix_shortcutSpec.xml" src="Install-rpad_Unix_shortcutSpec.xml"/>
+        <res id="installer.langsel.img" src="docs\images\book_reader_128x128.png"/>
+    </resources>
+    <panels>
+        <panel classname="HTMLHelloPanel"/>
+        <panel classname="PacksPanel"/>
+        <panel classname="TargetPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="ShortcutPanel"/>
+        <panel classname="FinishPanel"/>
+    </panels>
+    <variables>
+        <variable name="DesktopShortcutCheckboxEnabled" value="true"/>
+    </variables>
+    <packs>
+        <pack name="Core" preselected="yes" required="yes">
+            <description/>
+            <file override="update"
+                src="..\..\rpad-release\Reading-Pad_$RELEASE_VERSION" targetdir="$INSTALL_PATH/"/>
+            <executable
+                class="com.gs.dbex.launcher.DatabaseExplorerLauncher"
+                failure="abort" keep="false" stage="never"
+                targetfile="$INSTALL_PATH/$PROJECT_NAME-$RELEASE_VERSION/rpad-launcher.jar" type="jar"/>
+        </pack>
+        <pack name="DOCS" preselected="yes" required="yes">
+            <description/>
+            <file override="update"
+                src="\docs" targetdir="$INSTALL_PATH/"/>
+        </pack>
+    </packs>
+    <native name="ShellLink.dll" type="izpack"/>
+    <native name="ShellLink_x64.dll" type="izpack"/>
+</installation>

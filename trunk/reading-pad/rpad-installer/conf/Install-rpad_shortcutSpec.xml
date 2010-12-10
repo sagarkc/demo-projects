@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<shortcuts>
+    <skipIfNotSupported/>
+    <programGroup defaultName="BookReader" location="applications"/>
+    <shortcut applications="no" desktop="yes"
+        iconFile="$INSTALL_PATH/docs/images/book_reader.ico" iconIndex="0"
+        initialState="noShow" name="Book Reader" programGroup="no"
+        startMenu="yes" startup="no" target="$INSTALL_PATH/"/>
+</shortcuts>
