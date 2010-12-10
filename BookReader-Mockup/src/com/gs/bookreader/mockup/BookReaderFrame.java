@@ -317,7 +317,9 @@ public class BookReaderFrame extends javax.swing.JFrame {
 
         jMenu1.setText("File");
 
-        jMenuItem1.setText("Open");
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/open_book_folder_16x16.png"))); // NOI18N
+        jMenuItem1.setText("Open Book");
         jMenu1.add(jMenuItem1);
 
         jMenuBar1.add(jMenu1);
