@@ -90,17 +90,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<dependencies>
-					<dependency>
-						<groupId>com.adobe.flexant</groupId>
-						<artifactId>flex-ant</artifactId>
-						<version>022607</version>
-						<!--<version>3.1.0</version>-->
-					</dependency>
-				</dependencies>
-			</plugin>
 			
 		</plugins>
 	</build>
@@ -146,7 +135,8 @@
 		<findbugs.output.directory>${reporting.output.directory}/findbugs</findbugs.output.directory>
 		<api.doc.output.directory>${reporting.output.directory}/api-docs</api.doc.output.directory>
 		
-		<staging.dir>${project.home}/rpad-staging</staging.dir>
+		<staging.dir>${project.home}/rpad-installer/conf</staging.dir>
+		<installer.target.dir>${project.home}/rpad-installer/target</installer.target.dir>
 		<izpack-standalone.version>4.3.1</izpack-standalone.version>
 	</properties>
 </project>
