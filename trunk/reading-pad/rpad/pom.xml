@@ -11,6 +11,8 @@
 	
 	<modules>
 		<module>rpad-common</module>
+		<module>rpad-bod</module>
+		<module>rpad-codec</module>
 		<module>rpad-resources</module>
 		<module>rpad-model</module>
 		<module>rpad-compiler</module>

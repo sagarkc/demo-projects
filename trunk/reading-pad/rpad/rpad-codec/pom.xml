@@ -7,8 +7,8 @@
 		<version>${release.version}</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>rpad-compiler</artifactId>
-	<name>ReadingPad - Compiler</name>
+	<artifactId>rpad-codec</artifactId>
+	<name>ReadingPad - Codec</name>
 	<version>${release.version}</version>
 	<packaging>jar</packaging>
 	
@@ -16,16 +16,6 @@
 		<dependency>
 			<groupId>com.gs.rpad</groupId>
 			<artifactId>rpad-common</artifactId>
-			<version>${release.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.gs.rpad</groupId>
-			<artifactId>rpad-codec</artifactId>
-			<version>${release.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.gs.rpad</groupId>
-			<artifactId>rpad-model</artifactId>
 			<version>${release.version}</version>
 		</dependency>
 		<dependency>
