@@ -31,17 +31,59 @@ package com.gs.rpad.codec.pdb.model;
 import java.io.Serializable;
 
 /**
+ * <h3 ><span>PDB Record Header</span></h3>
+ * <p>
+ * For every record, there is an eight byte record header, containing:
+ * </p>
+ * <table class="wikitable" border="1">
+ * <tbody>
+ * <tr>
+ * <th>name</th>
  * 
- *
+ * <th>type</th>
+ * <th>size</th>
+ * <th>notes</th>
+ * </tr>
+ * <tr>
+ * <td>offset</td>
+ * <td>integer</td>
+ * <td>4 bytes</td>
+ * <td>Byte number in the PDB file (counting from zero), where the record is
+ * located</td>
+ * </tr>
+ * 
+ * <tr>
+ * <td>attributes</td>
+ * <td>byte</td>
+ * <td>1 byte</td>
+ * <td>Attributes of the record (delete/dirty/busy/secret/category)</td>
+ * </tr>
+ * <tr>
+ * <td>UniqueID</td>
+ * <td>integer</td>
+ * <td>3 bytes</td>
+ * 
+ * <td>Always 0</td>
+ * </tr>
+ * </tbody>
+ * </table>
+ * 
+ * 
  */
-public class PDBRecordHeader implements Serializable, Comparable<PDBRecordHeader> {
+public class PDBRecordHeader implements Serializable,
+		Comparable<PDBRecordHeader> {
 
-	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5860967037568891994L;
+
+	public static final int RECORD_HEDER_LENGTH = 8;
+
 	private Integer offset;
 	private byte attributes;
 	private Integer uniqueID;
-	
-	
+
 	/**
 	 * 
 	 */
@@ -49,36 +91,29 @@ public class PDBRecordHeader implements Serializable, Comparable<PDBRecordHeader
 		// TODO Auto-generated constructor stub
 	}
 
-
 	public Integer getOffset() {
 		return offset;
 	}
-
 
 	public void setOffset(Integer offset) {
 		this.offset = offset;
 	}
 
-
 	public byte getAttributes() {
 		return attributes;
 	}
-
 
 	public void setAttributes(byte attributes) {
 		this.attributes = attributes;
 	}
 
-
 	public Integer getUniqueID() {
 		return uniqueID;
 	}
 
-
 	public void setUniqueID(Integer uniqueID) {
 		this.uniqueID = uniqueID;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -88,7 +123,6 @@ public class PDBRecordHeader implements Serializable, Comparable<PDBRecordHeader
 				+ ((uniqueID == null) ? 0 : uniqueID.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -111,13 +145,15 @@ public class PDBRecordHeader implements Serializable, Comparable<PDBRecordHeader
 		}
 		return true;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
 	public int compareTo(PDBRecordHeader o) {
 		return uniqueID.compareTo(o.uniqueID);
 	}
-	
+
 }

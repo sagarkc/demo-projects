@@ -211,6 +211,12 @@ public class PDBHeader implements Serializable {
 		numRecords = new RawData<Short>(0x4C, "num_records", 2);
 	}
 
+	/**
+	 * Read the Header from a byte[] array.
+	 * @param headerData byte[]
+	 * @return {@link PDBHeader}
+	 * @throws IOException
+	 */
 	public PDBHeader readPDBHeader(byte[] headerData) throws IOException{
 		int length = 0;
 		byte[] data = Arrays.copyOfRange(headerData, name.getOffset(), (name.getOffset() + name.getSize()));
