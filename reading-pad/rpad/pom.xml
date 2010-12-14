@@ -8,7 +8,7 @@
 	<packaging>pom</packaging>
 	<description>Short Reading Pad</description>
 
-	
+	<!--
 	<modules>
 		<module>rpad-common</module>
 		<module>rpad-bod</module>
@@ -20,10 +20,89 @@
 		<module>rpad-service</module>
 		<module>rpad-historyManager</module>
 		<module>rpad-application</module>
+		<module>rpad-mobility</module>
 		<module>rpad-launcher</module>
+		<module>rpad-webapps</module>
 	</modules>
-	
-	
+	-->
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>rpad-common</module>
+				<module>rpad-bod</module>
+				<module>rpad-codec</module>
+				<module>rpad-resources</module>
+				<module>rpad-model</module>
+				<module>rpad-compiler</module>
+				<module>rpad-remoting</module>
+				<module>rpad-service</module>
+				<module>rpad-historyManager</module>
+				<module>rpad-application</module>
+				<module>rpad-mobility</module>
+				<module>rpad-launcher</module>
+				<module>rpad-webapps</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>desktop-app</id>
+			<modules>
+				<module>rpad-common</module>
+				<module>rpad-bod</module>
+				<module>rpad-codec</module>
+				<module>rpad-resources</module>
+				<module>rpad-model</module>
+				<module>rpad-compiler</module>
+				<module>rpad-remoting</module>
+				<module>rpad-service</module>
+				<module>rpad-historyManager</module>
+				<module>rpad-application</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>mobile-app</id>
+			<modules>
+				<module>rpad-common</module>
+				<module>rpad-bod</module>
+				<module>rpad-codec</module>
+				<module>rpad-resources</module>
+				<module>rpad-model</module>
+				<module>rpad-compiler</module>
+				<module>rpad-remoting</module>
+				<module>rpad-service</module>
+				<module>rpad-historyManager</module>
+				<module>rpad-mobility</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>web-app</id>
+			<modules>
+				<module>rpad-common</module>
+				<module>rpad-bod</module>
+				<module>rpad-codec</module>
+				<module>rpad-resources</module>
+				<module>rpad-model</module>
+				<module>rpad-compiler</module>
+				<module>rpad-remoting</module>
+				<module>rpad-service</module>
+				<module>rpad-historyManager</module>
+				<module>rpad-application</module>
+				<module>rpad-webapps</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>only-flex</id>
+			<modules>
+				<module>rpad-webapps</module>
+			</modules>
+		</profile>
+		
+		
+		
+	</profiles>
 	
 	<!-- Common dependency -->
 	<dependencyManagement>
@@ -124,6 +203,7 @@
 		<setup.dir>${project.home}/rpad-setup</setup.dir>
 		<libs.dir>${project.home}/rpad-setup/libs</libs.dir>
 		<release.dir>${project.home}/rpad-release</release.dir>
+		<spring-version>3.0.0.RELEASE</spring-version>
 		
 		<jdk.version>1.6</jdk.version>
 		
@@ -140,5 +220,7 @@
 		<staging.dir>${project.home}/rpad-installer/conf</staging.dir>
 		<installer.target.dir>${project.home}/rpad-installer/target</installer.target.dir>
 		<izpack-standalone.version>4.3.1</izpack-standalone.version>
+		
+		<web.context.root>/rpad</web.context.root>
 	</properties>
 </project>

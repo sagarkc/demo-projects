@@ -12,9 +12,34 @@
 	<version>${release.version}</version>
 	<packaging>pom</packaging>
 
-	<modules>
-		<module>rpad-serviceprovider</module>
-		<module>rpad-flex</module>
-		<module>rpad-web</module>
-	</modules>
+	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>rpad-serviceprovider</module>
+				<module>rpad-flex</module>
+				<module>rpad-web</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>web-app</id>
+			<modules>
+				<module>rpad-serviceprovider</module>
+				<module>rpad-flex</module>
+				<module>rpad-web</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>only-flex</id>
+			<modules>
+				<module>rpad-flex</module>
+			</modules>
+		</profile>
+	</profiles>
+	
 </project>
