@@ -14,6 +14,15 @@ set MAVEN_OPTS=-Xmx1024m -Xms512m
 @if "%1" == "fb" goto findbugs
 @if "%1" == "s" goto site
 
+@if "%1" == "C" goto clean
+@if "%1" == "E" goto eclipse
+@if "%1" == "D" goto desktop
+@if "%1" == "M" goto mobility
+@if "%1" == "W" goto web
+@if "%1" == "F" goto flex
+@if "%1" == "FB" goto findbugs
+@if "%1" == "S" goto site
+
 @echo Building ReadingPad Application.
 @echo.
 call mvn install

@@ -89,7 +89,6 @@
 				<module>rpad-remoting</module>
 				<module>rpad-service</module>
 				<module>rpad-historyManager</module>
-				<module>rpad-application</module>
 				<module>rpad-webapps</module>
 			</modules>
 		</profile>
