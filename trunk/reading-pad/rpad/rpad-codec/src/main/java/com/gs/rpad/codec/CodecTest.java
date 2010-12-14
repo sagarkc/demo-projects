@@ -31,9 +31,16 @@ package com.gs.rpad.codec;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import com.gs.rpad.codec.pdb.model.PDBFile;
 import com.gs.rpad.codec.pdb.model.PDBHeader;
+import com.gs.rpad.codec.pdb.model.PDBRecord;
+import com.gs.rpad.codec.pdb.model.PDBRecordHeader;
 import com.gs.utils.io.IOUtil;
+import com.gs.utils.text.ConversionUtil;
 
 /**
  * 
@@ -48,14 +55,31 @@ public class CodecTest {
 		String fileName = "D:/temp/The Wheel of Time/00 New Spring.prc";
 		BufferedInputStream inputStream = null;
 		PDBHeader header = new PDBHeader();
+		PDBFile pdbFile = new PDBFile();
+		byte[] full = null;
+		List<byte[]> a = new ArrayList<byte[]>();
 		try {
-			inputStream = new BufferedInputStream(new FileInputStream(new File(fileName)));
-			byte[] headerByte = new byte[PDBHeader.HEADER_LENGTH];
-			int length = inputStream.read(headerByte, 0, PDBHeader.HEADER_LENGTH);
 			
+			inputStream = new BufferedInputStream(new FileInputStream(new File(fileName)));
+			/*byte[] buffer = new byte[1024];
+			int count=0;
+			while((count = inputStream.read(buffer, 0, 1024)) > 0){
+				full = new byte[count];
+				full = Arrays.copyOf(buffer, count);
+				a.add(full);
+			}*/
+			byte[] headerByte = new byte[PDBHeader.HEADER_LENGTH];
+			byte[] recordHeaderByte = new byte[PDBRecordHeader.RECORD_HEDER_LENGTH];
+			
+			int length = inputStream.read(headerByte, 0, PDBHeader.HEADER_LENGTH);
 			header.readPDBHeader(headerByte);
+			pdbFile.setHeader(header);
 			if(header.getNumRecords() != null){
-				
+				length = inputStream.read(recordHeaderByte, 0, recordHeaderByte.length);
+				PDBRecordHeader recordHeader = new PDBRecordHeader();
+				recordHeader.setOffset(ConversionUtil.byteArrayToInt(Arrays.copyOfRange(recordHeaderByte, 0, 4)));
+				recordHeader.setAttributes(recordHeaderByte[4]);
+				recordHeader.setOffset(ConversionUtil.byteArrayToInt(Arrays.copyOfRange(recordHeaderByte, 6, 8)));
 			}
 			
 		} catch (Exception e) {

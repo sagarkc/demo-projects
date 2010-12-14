@@ -31,14 +31,22 @@ package com.gs.rpad.codec.pdb.model;
 import java.io.Serializable;
 
 /**
+ * <h3><span>PDB Records</span></h3>
+ * <p>
+ * The usual order is AppInfoArea, SortInfoArea and records, sequentially.
+ * </p>
  * 
- *
  */
 public class PDBRecord implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4584216452137473582L;
+
 	private PDBRecordHeader recordHeader;
 	private byte[] data;
-	
+
 	/**
 	 * 
 	 */
@@ -61,6 +69,5 @@ public class PDBRecord implements Serializable {
 	public void setData(byte[] data) {
 		this.data = data;
 	}
-	
-	
+
 }
