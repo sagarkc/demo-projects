@@ -29,11 +29,14 @@
 package com.gs.rpad.codec;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
@@ -98,29 +101,108 @@ public class CodecTest {
 		}
 		
 		if(null != prcFile){
+			FileChannel channel = null;
+			BufferedWriter writer = null;
 			try {
-				FileChannel channel = (new RandomAccessFile(prcFile.getOriginalFile(), "r"))
+				channel = (new RandomAccessFile(prcFile.getOriginalFile(), "r"))
 						.getChannel();
-				ByteBuffer dst = ByteBuffer.allocate(5);
-				
+				ByteBuffer dst = null;
+				writer = new BufferedWriter(new FileWriter("d:\\data.txt"));
 				for(int i=0; i < prcFile.getResourceHeaders().size(); i++){
 					PRCResourceHeader rh_i = prcFile.getResourceHeaders().get(i);
 					PRCResourceHeader rh_next = prcFile.getResourceHeaders().get(i+1);
+					if(rh_i.getResourceDataOffset().longValue() - rh_i.getResourceDataOffset().longValue() < 0)
+						continue;
+					if(rh_i.getResourceDataOffset().longValue() == 0 
+							&& rh_next.getResourceDataOffset().longValue() == 0)
+						continue;
+					
+						
+					
+					dst = ByteBuffer.allocate((int)(rh_next.getResourceDataOffset().longValue() - rh_i.getResourceDataOffset().longValue()));
 					channel.position(rh_i.getResourceDataOffset());
 					channel.read(dst, rh_next.getResourceDataOffset() -1 );
+					writer.write(rh_i.toString() + "\n");
+					writer.write(printArray(dst.array()) + "\n");
+					dst = null;
 				}
-				System.out.println(dst);
+				channel.close();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} finally{
+				try {
+					channel.close();
+					writer.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
-			
+			System.out.println("Done.............................");
 		}
+		
+		/*try {
+			inputStream = new BufferedInputStream(new FileInputStream(new File(fileName)));
+			byte[] dataBytes = new byte[1];
+			int count = 0, i =0;
+			
+			while((count = inputStream.read(dataBytes, 0, dataBytes.length)) > 0){
+				System.out.println( (i++ +1) + " : " + ConversionUtil.byteArrayToInt(dataBytes) +  " > " + 
+						ConversionUtil.getHexString(dataBytes));
+				if(i == 77)
+					break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			IOUtil.close(inputStream);
+		}*/
 	}
 	
-
+	private static String printArray(byte[] b){
+		StringBuffer buffer = new StringBuffer("{ ");
+		for (int i = 0; i < b.length; i++) {
+			buffer.append(b[i]);
+			if(i < b.length-1){
+				buffer.append(", ");
+			}
+		}
+		buffer.append(" }");
+		return buffer.toString();
+	}
+	
+	public static String toBinaryString(byte[] dataBytes){
+		StringBuffer buffer = new StringBuffer();
+		BigInteger bigInteger = new BigInteger(dataBytes);
+		String bin = bigInteger.toString(2);
+		
+		if( (8 - bin.length()) > 0){
+			for(int i=0; i< 8 - bin.length(); i++){
+				buffer.append("0");
+			}
+		}
+		buffer.append(bin);
+		return buffer.toString();
+	}
+	
+	public static String getBinaryString(byte[] bytes){
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < bytes.length; i++) {
+			buffer.append(Integer.toBinaryString(bytes[i]));
+			if(i < bytes.length - 1){
+				buffer.append(" | ");
+			}
+		}
+		
+		return buffer.toString();
+	}
+	
+	
+	
 
 }

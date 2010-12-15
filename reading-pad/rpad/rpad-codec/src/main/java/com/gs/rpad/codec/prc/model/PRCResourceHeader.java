@@ -31,6 +31,8 @@ package com.gs.rpad.codec.prc.model;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import com.gs.utils.collection.CollectionUtils;
+import com.gs.utils.exception.UtilityException;
 import com.gs.utils.text.ConversionUtil;
 import com.gs.utils.text.StringUtil;
 
@@ -49,7 +51,9 @@ public class PRCResourceHeader implements Serializable {
 	
 	private String resourceName;
 	private Integer resourceId;
-	private Integer resourceDataOffset;
+	private Long resourceDataOffset;
+	
+	private byte[] data;
 	
 	/**
 	 * 
@@ -89,35 +93,56 @@ public class PRCResourceHeader implements Serializable {
 	/**
 	 * @return the resourceDataOffset
 	 */
-	public Integer getResourceDataOffset() {
+	public Long getResourceDataOffset() {
 		return resourceDataOffset;
 	}
 
 	/**
 	 * @param resourceDataOffset the resourceDataOffset to set
 	 */
-	public void setResourceDataOffset(Integer resourceDataOffset) {
+	public void setResourceDataOffset(Long resourceDataOffset) {
 		this.resourceDataOffset = resourceDataOffset;
 	}
 	
-	public void populateResourceHeader(byte[] resourceHeaderData){
-		byte[] data = Arrays.copyOfRange(resourceHeaderData, 0, 4);
+	public void populateResourceHeader(byte[] resourceHeaderData) throws UtilityException{
+		this.data = resourceHeaderData;
+		byte[] data = CollectionUtils.sliceBytes(resourceHeaderData, 0, 4);
 		if(null != data){
-			setResourceName(StringUtil.convertToString(data));
+			setResourceName(StringUtil.convertToString(data, false));
 		}
-		data = Arrays.copyOfRange(resourceHeaderData, 4, 6);
+		data = CollectionUtils.sliceBytes(resourceHeaderData, 4, 2);
 		if(null != data){
 			setResourceId(ConversionUtil.byteArrayToInt(data));
 		}
-		data = Arrays.copyOfRange(resourceHeaderData, 6, 10);
+		data = CollectionUtils.sliceBytes(resourceHeaderData, 6, 4);
 		if(null != data){
-			setResourceDataOffset(ConversionUtil.byteArrayToInt(data));
-			if(getResourceDataOffset() < 0){
-				System.out.println(Integer.toBinaryString(data[0]) 
-						+ " | " + Integer.toBinaryString(data[1]) + " | "
-						+ " | " + Integer.toBinaryString(data[2]) + " | "
-						+ " | " + Integer.toBinaryString(data[3]));
+			setResourceDataOffset(ConversionUtil.byteArrayToLong(data));
+			if(getResourceDataOffset()  < 0){
+				System.out.println(
+						"Header \t:: " + printArray(resourceHeaderData)
+						+ "\nOffset \t:: " + printArray(data));
 			}
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "PRCResourceHeader [\n\tresourceId=" + resourceId
+				+ ", \n\tresourceDataOffset=" + resourceDataOffset + ", \n\tdata="
+				+ Arrays.toString(data) + "\n]";
+	}
+
+	private String printArray(byte[] b){
+		StringBuffer buffer = new StringBuffer("{ ");
+		for (int i = 0; i < b.length; i++) {
+			buffer.append(b[i]);
+			if(i < b.length-1){
+				buffer.append(", ");
+			}
+		}
+		buffer.append(" }");
+		return buffer.toString();
+	}
+	
+	
 }

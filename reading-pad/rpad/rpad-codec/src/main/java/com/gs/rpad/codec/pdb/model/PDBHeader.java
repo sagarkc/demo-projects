@@ -36,6 +36,7 @@ import java.util.Date;
 
 import com.gs.rpad.codec.model.RawData;
 import com.gs.utils.collection.CollectionUtils;
+import com.gs.utils.exception.UtilityException;
 import com.gs.utils.io.FileRWUtil;
 import com.gs.utils.io.IOUtil;
 import com.gs.utils.text.ConversionUtil;
@@ -229,116 +230,103 @@ public class PDBHeader implements Serializable {
 	 * @param headerData byte[]
 	 * @return {@link PDBHeader}
 	 * @throws IOException
+	 * @throws UtilityException 
 	 */
-	public void readHeader(byte[] headerData) throws IOException{
+	public void readHeader(byte[] headerData) throws IOException, UtilityException{
 		int length = 0;
-		byte[] data = Arrays.copyOfRange(headerData, name.getOffset(), (name.getOffset() + name.getSize()));
+		byte[] data = CollectionUtils.sliceBytes(headerData, name.getOffset(), name.getSize());
 		name.setData(data);
-		System.out.println(getBinaryString(data));
 		if(null != data){
 			name.setValue(StringUtil.convertToString(data));
 		}
 		length += name.getSize();
 		
-		data = Arrays.copyOfRange(headerData, fileAttributes.getOffset(), (fileAttributes.getOffset() + fileAttributes.getSize()));
+		data = CollectionUtils.sliceBytes(headerData, fileAttributes.getOffset(), fileAttributes.getSize());
 		fileAttributes.setData(data);
-		System.out.println(getBinaryString(data));
 		if(null != data){
 			fileAttributes.setValue(ConversionUtil.byteArrayToShort(data));
 		}
 		length += fileAttributes.getSize();
 		
-		data = Arrays.copyOfRange(headerData, version.getOffset(), (version.getOffset() + version.getSize()));
+		data = CollectionUtils.sliceBytes(headerData, version.getOffset(), version.getSize());
 		version.setData(data);
-		System.out.println(getBinaryString(data));
 		if(null != data){
 			version.setValue(ConversionUtil.byteArrayToShort(data));
 		}
 		length += version.getSize();
 		
-		data = Arrays.copyOfRange(headerData, creationTime.getOffset(), (creationTime.getOffset() + creationTime.getSize()));
+		data = CollectionUtils.sliceBytes(headerData, creationTime.getOffset(), creationTime.getSize());
 		creationTime.setData(data);
-		System.out.println(getBinaryString(data));
 		if(null != data){
 			//creationTime.setValue(ConversionUtil.convertToDate(data));
 		}
 		length += creationTime.getSize();
 		
-		data = Arrays.copyOfRange(headerData, modificationTime.getOffset(), (modificationTime.getOffset() + modificationTime.getSize()));
+		data = CollectionUtils.sliceBytes(headerData, modificationTime.getOffset(), modificationTime.getSize());
 		modificationTime.setData(data);
-		System.out.println(getBinaryString(data));
 		if(null != data){
 			//modificationTime.setValue(ConversionUtil.convertToDate(data));
 		}
 		length += modificationTime.getSize();
 		
-		data = Arrays.copyOfRange(headerData, backupTime.getOffset(), (backupTime.getOffset() + backupTime.getSize()));
+		data = CollectionUtils.sliceBytes(headerData, backupTime.getOffset(), backupTime.getSize());
 		backupTime.setData(data);
-		System.out.println(getBinaryString(data));
 		if(null != data){
 			//backupTime.setValue(ConversionUtil.convertToDate(data));
 		}
 		length += backupTime.getSize();
 		
-		data = Arrays.copyOfRange(headerData, modificationNumber.getOffset(), (modificationNumber.getOffset() + modificationNumber.getSize()));
+		data = CollectionUtils.sliceBytes(headerData, modificationNumber.getOffset(), modificationNumber.getSize());
 		modificationNumber.setData(data);
-		System.out.println(getBinaryString(data));
 		if(null != data){
 			modificationNumber.setValue(ConversionUtil.byteArrayToInt(data));
 		}
 		length += modificationNumber.getSize();
 		
-		data = Arrays.copyOfRange(headerData, appInfo.getOffset(), (appInfo.getOffset() + appInfo.getSize()));
+		data = CollectionUtils.sliceBytes(headerData, appInfo.getOffset(), appInfo.getSize());
 		appInfo.setData(data);
-		System.out.println(getBinaryString(data));
 		if(null != data){
 			appInfo.setValue(ConversionUtil.byteArrayToInt(data));
 		}
 		length += appInfo.getSize();
 		
-		data = Arrays.copyOfRange(headerData, sortInfo.getOffset(), (sortInfo.getOffset() + sortInfo.getSize()));
+		data = CollectionUtils.sliceBytes(headerData, sortInfo.getOffset(), sortInfo.getSize());
 		sortInfo.setData(data);
-		System.out.println(getBinaryString(data));
 		if(null != data){
 			sortInfo.setValue(ConversionUtil.byteArrayToInt(data));
 		}
 		length += sortInfo.getSize();
 		
-		data = Arrays.copyOfRange(headerData, type.getOffset(), (type.getOffset() + type.getSize()));
+		data = CollectionUtils.sliceBytes(headerData, type.getOffset(), type.getSize());
 		type.setData(data);
-		System.out.println(getBinaryString(data));
 		if(null != data){
 			type.setValue(ConversionUtil.byteArrayToInt(data));
 		}
 		length += type.getSize();
 		
-		data = Arrays.copyOfRange(headerData, creator.getOffset(), (creator.getOffset() + creator.getSize()));
+		data = CollectionUtils.sliceBytes(headerData, creator.getOffset(), creator.getSize());
 		creator.setData(data);
-		System.out.println(getBinaryString(data));
 		if(null != data){
 			creator.setValue(ConversionUtil.byteArrayToInt(data));
 		}
 		length += creator.getSize();
 		
-		data = Arrays.copyOfRange(headerData, uniqueIdSeed.getOffset(), (uniqueIdSeed.getOffset() + uniqueIdSeed.getSize()));
+		data = CollectionUtils.sliceBytes(headerData, uniqueIdSeed.getOffset(), uniqueIdSeed.getSize());
 		uniqueIdSeed.setData(data);
-		System.out.println(getBinaryString(data));
 		if(null != data){
 			uniqueIdSeed.setValue(ConversionUtil.byteArrayToInt(data));
 		}
 		length += uniqueIdSeed.getSize();
 		
-		data = Arrays.copyOfRange(headerData, nextRecordList.getOffset(), (nextRecordList.getOffset() + nextRecordList.getSize()));
+		data = CollectionUtils.sliceBytes(headerData, nextRecordList.getOffset(), nextRecordList.getSize());
 		nextRecordList.setData(data);
-		System.out.println(getBinaryString(data));
 		if(null != data){
 			nextRecordList.setValue(ConversionUtil.byteArrayToInt(data));
 		}
 		length += nextRecordList.getSize();
 		
-		data = Arrays.copyOfRange(headerData, numRecords.getOffset(), (numRecords.getOffset() + numRecords.getSize()));
+		data = CollectionUtils.sliceBytes(headerData, numRecords.getOffset(), numRecords.getSize());
 		numRecords.setData(data);
-		System.out.println(getBinaryString(data));
 		if(null != data){
 			numRecords.setValue(ConversionUtil.byteArrayToShort(data));
 		}
