@@ -151,7 +151,8 @@ import com.gs.utils.text.StringUtil;
  * 
  * </tbody>
  * </table>
- * 
+ * <br/>
+ * @author Sabuj Das
  */
 public class PDBHeader implements Serializable {
 
@@ -160,7 +161,7 @@ public class PDBHeader implements Serializable {
 	 */
 	private static final long serialVersionUID = -3124191904377163276L;
 	
-	public static final int HEADER_LENGTH = 78;
+	public static final int LENGTH = 78;
 	
 	private RawData<String> name;
 	private RawData<Short> fileAttributes;
@@ -210,6 +211,18 @@ public class PDBHeader implements Serializable {
 		nextRecordList = new RawData<Integer>(0x48, "next_record_list", 4);
 		numRecords = new RawData<Short>(0x4C, "num_records", 2);
 	}
+	
+	public String getBinaryString(byte[] bytes){
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < bytes.length; i++) {
+			buffer.append(Byte.toString(bytes[i]));
+			if(i < bytes.length - 1){
+				buffer.append(" | ");
+			}
+		}
+		
+		return buffer.toString();
+	}
 
 	/**
 	 * Read the Header from a byte[] array.
@@ -217,10 +230,11 @@ public class PDBHeader implements Serializable {
 	 * @return {@link PDBHeader}
 	 * @throws IOException
 	 */
-	public PDBHeader readPDBHeader(byte[] headerData) throws IOException{
+	public void readHeader(byte[] headerData) throws IOException{
 		int length = 0;
 		byte[] data = Arrays.copyOfRange(headerData, name.getOffset(), (name.getOffset() + name.getSize()));
 		name.setData(data);
+		System.out.println(getBinaryString(data));
 		if(null != data){
 			name.setValue(StringUtil.convertToString(data));
 		}
@@ -228,6 +242,7 @@ public class PDBHeader implements Serializable {
 		
 		data = Arrays.copyOfRange(headerData, fileAttributes.getOffset(), (fileAttributes.getOffset() + fileAttributes.getSize()));
 		fileAttributes.setData(data);
+		System.out.println(getBinaryString(data));
 		if(null != data){
 			fileAttributes.setValue(ConversionUtil.byteArrayToShort(data));
 		}
@@ -235,6 +250,7 @@ public class PDBHeader implements Serializable {
 		
 		data = Arrays.copyOfRange(headerData, version.getOffset(), (version.getOffset() + version.getSize()));
 		version.setData(data);
+		System.out.println(getBinaryString(data));
 		if(null != data){
 			version.setValue(ConversionUtil.byteArrayToShort(data));
 		}
@@ -242,6 +258,7 @@ public class PDBHeader implements Serializable {
 		
 		data = Arrays.copyOfRange(headerData, creationTime.getOffset(), (creationTime.getOffset() + creationTime.getSize()));
 		creationTime.setData(data);
+		System.out.println(getBinaryString(data));
 		if(null != data){
 			//creationTime.setValue(ConversionUtil.convertToDate(data));
 		}
@@ -249,6 +266,7 @@ public class PDBHeader implements Serializable {
 		
 		data = Arrays.copyOfRange(headerData, modificationTime.getOffset(), (modificationTime.getOffset() + modificationTime.getSize()));
 		modificationTime.setData(data);
+		System.out.println(getBinaryString(data));
 		if(null != data){
 			//modificationTime.setValue(ConversionUtil.convertToDate(data));
 		}
@@ -256,6 +274,7 @@ public class PDBHeader implements Serializable {
 		
 		data = Arrays.copyOfRange(headerData, backupTime.getOffset(), (backupTime.getOffset() + backupTime.getSize()));
 		backupTime.setData(data);
+		System.out.println(getBinaryString(data));
 		if(null != data){
 			//backupTime.setValue(ConversionUtil.convertToDate(data));
 		}
@@ -263,6 +282,7 @@ public class PDBHeader implements Serializable {
 		
 		data = Arrays.copyOfRange(headerData, modificationNumber.getOffset(), (modificationNumber.getOffset() + modificationNumber.getSize()));
 		modificationNumber.setData(data);
+		System.out.println(getBinaryString(data));
 		if(null != data){
 			modificationNumber.setValue(ConversionUtil.byteArrayToInt(data));
 		}
@@ -270,6 +290,7 @@ public class PDBHeader implements Serializable {
 		
 		data = Arrays.copyOfRange(headerData, appInfo.getOffset(), (appInfo.getOffset() + appInfo.getSize()));
 		appInfo.setData(data);
+		System.out.println(getBinaryString(data));
 		if(null != data){
 			appInfo.setValue(ConversionUtil.byteArrayToInt(data));
 		}
@@ -277,6 +298,7 @@ public class PDBHeader implements Serializable {
 		
 		data = Arrays.copyOfRange(headerData, sortInfo.getOffset(), (sortInfo.getOffset() + sortInfo.getSize()));
 		sortInfo.setData(data);
+		System.out.println(getBinaryString(data));
 		if(null != data){
 			sortInfo.setValue(ConversionUtil.byteArrayToInt(data));
 		}
@@ -284,6 +306,7 @@ public class PDBHeader implements Serializable {
 		
 		data = Arrays.copyOfRange(headerData, type.getOffset(), (type.getOffset() + type.getSize()));
 		type.setData(data);
+		System.out.println(getBinaryString(data));
 		if(null != data){
 			type.setValue(ConversionUtil.byteArrayToInt(data));
 		}
@@ -291,6 +314,7 @@ public class PDBHeader implements Serializable {
 		
 		data = Arrays.copyOfRange(headerData, creator.getOffset(), (creator.getOffset() + creator.getSize()));
 		creator.setData(data);
+		System.out.println(getBinaryString(data));
 		if(null != data){
 			creator.setValue(ConversionUtil.byteArrayToInt(data));
 		}
@@ -298,6 +322,7 @@ public class PDBHeader implements Serializable {
 		
 		data = Arrays.copyOfRange(headerData, uniqueIdSeed.getOffset(), (uniqueIdSeed.getOffset() + uniqueIdSeed.getSize()));
 		uniqueIdSeed.setData(data);
+		System.out.println(getBinaryString(data));
 		if(null != data){
 			uniqueIdSeed.setValue(ConversionUtil.byteArrayToInt(data));
 		}
@@ -305,6 +330,7 @@ public class PDBHeader implements Serializable {
 		
 		data = Arrays.copyOfRange(headerData, nextRecordList.getOffset(), (nextRecordList.getOffset() + nextRecordList.getSize()));
 		nextRecordList.setData(data);
+		System.out.println(getBinaryString(data));
 		if(null != data){
 			nextRecordList.setValue(ConversionUtil.byteArrayToInt(data));
 		}
@@ -312,12 +338,12 @@ public class PDBHeader implements Serializable {
 		
 		data = Arrays.copyOfRange(headerData, numRecords.getOffset(), (numRecords.getOffset() + numRecords.getSize()));
 		numRecords.setData(data);
+		System.out.println(getBinaryString(data));
 		if(null != data){
 			numRecords.setValue(ConversionUtil.byteArrayToShort(data));
 		}
 		length += numRecords.getSize();
 		
-		return this;
 	}
 
 	public RawData<String> getName() {
