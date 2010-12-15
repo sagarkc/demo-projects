@@ -31,14 +31,24 @@ package com.gs.rpad.codec;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import com.gs.rpad.codec.pdb.model.PDBFile;
 import com.gs.rpad.codec.pdb.model.PDBHeader;
 import com.gs.rpad.codec.pdb.model.PDBRecord;
 import com.gs.rpad.codec.pdb.model.PDBRecordHeader;
+import com.gs.rpad.codec.prc.io.PrcFile;
+import com.gs.rpad.codec.prc.model.PRCHeader;
+import com.gs.rpad.codec.prc.model.PRCResourceHeader;
+import com.gs.utils.common.FieldSpecificComparator;
 import com.gs.utils.io.IOUtil;
 import com.gs.utils.text.ConversionUtil;
 
@@ -54,50 +64,61 @@ public class CodecTest {
 	public static void main(String[] args) {
 		String fileName = "D:/temp/The Wheel of Time/00 New Spring.prc";
 		BufferedInputStream inputStream = null;
-		PDBHeader header = new PDBHeader();
-		PDBFile pdbFile = new PDBFile();
-		byte[] full = null;
-		List<byte[]> a = new ArrayList<byte[]>();
+		
+		PrcFile prcFile = null;
+		
 		try {
-			
+			prcFile = new PrcFile(fileName);
 			inputStream = new BufferedInputStream(new FileInputStream(new File(fileName)));
-			/*byte[] buffer = new byte[1024];
-			int count=0;
-			while((count = inputStream.read(buffer, 0, 1024)) > 0){
-				full = new byte[count];
-				full = Arrays.copyOf(buffer, count);
-				a.add(full);
-			}*/
-			byte[] headerByte = new byte[PDBHeader.HEADER_LENGTH];
-			byte[] recordHeaderByte = new byte[PDBRecordHeader.RECORD_HEDER_LENGTH];
-			
-			int length = inputStream.read(headerByte, 0, PDBHeader.HEADER_LENGTH);
-			header.readPDBHeader(headerByte);
-			pdbFile.setHeader(header);
+			byte[] headerByte = new byte[PDBHeader.LENGTH];
+			byte[] recordHeaderByte = new byte[PRCResourceHeader.LENGTH];
+			List<PRCResourceHeader> prcHeaders = new ArrayList<PRCResourceHeader>();
+			int length = inputStream.read(headerByte, 0, PRCHeader.LENGTH);
+			PRCHeader header = new PRCHeader();
+			header.readHeader(headerByte);
+			prcFile.setHeader(header);
 			if(header.getNumRecords() != null){
-				length = inputStream.read(recordHeaderByte, 0, recordHeaderByte.length);
-				PDBRecordHeader recordHeader = new PDBRecordHeader();
-				recordHeader.setOffset(ConversionUtil.byteArrayToInt(Arrays.copyOfRange(recordHeaderByte, 0, 4)));
-				recordHeader.setAttributes(recordHeaderByte[4]);
-				recordHeader.setOffset(ConversionUtil.byteArrayToInt(Arrays.copyOfRange(recordHeaderByte, 6, 8)));
+				for(short i=0; i < header.getNumRecords().getValue(); i++){
+					PRCResourceHeader recordHeader = new PRCResourceHeader();
+					length = inputStream.read(recordHeaderByte, 0, recordHeaderByte.length);
+					recordHeader.populateResourceHeader(recordHeaderByte);
+					prcHeaders.add(recordHeader);
+				}
+				
 			}
-			
+			FieldSpecificComparator<PRCResourceHeader, Integer> c1
+				= new FieldSpecificComparator<PRCResourceHeader, Integer>("resourceDataOffset");
+			Collections.sort(prcHeaders, c1);
+			prcFile.setResourceHeaders(prcHeaders);
+			System.out.println("Headers : " + prcHeaders.size());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{
 			IOUtil.close(inputStream);
 		}
 		
-		byte[] b = new byte[PDBHeader.HEADER_LENGTH];
-		try {
-			inputStream = new BufferedInputStream(new FileInputStream(new File(fileName)));
-			inputStream.read(b, 0, PDBHeader.HEADER_LENGTH);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally{
-			IOUtil.close(inputStream);
+		if(null != prcFile){
+			try {
+				FileChannel channel = (new RandomAccessFile(prcFile.getOriginalFile(), "r"))
+						.getChannel();
+				ByteBuffer dst = ByteBuffer.allocate(5);
+				
+				for(int i=0; i < prcFile.getResourceHeaders().size(); i++){
+					PRCResourceHeader rh_i = prcFile.getResourceHeaders().get(i);
+					PRCResourceHeader rh_next = prcFile.getResourceHeaders().get(i+1);
+					channel.position(rh_i.getResourceDataOffset());
+					channel.read(dst, rh_next.getResourceDataOffset() -1 );
+				}
+				System.out.println(dst);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
-		System.out.println(b);
 	}
 	
 
