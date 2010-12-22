@@ -65,14 +65,15 @@ public class CodecTest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String fileName = "D:/temp/The Wheel of Time/00 New Spring.prc";
+		String fileName = "D:/temp/The Wheel of Time/xx The Strike at Shayol Ghul.prc";
 		BufferedInputStream inputStream = null;
 		
 		PrcFile prcFile = null;
-		
+		long fileSize = 0;
 		try {
 			prcFile = new PrcFile(fileName);
 			inputStream = new BufferedInputStream(new FileInputStream(new File(fileName)));
+			fileSize = inputStream.available();
 			byte[] headerByte = new byte[PDBHeader.LENGTH];
 			byte[] recordHeaderByte = new byte[PRCResourceHeader.LENGTH];
 			List<PRCResourceHeader> prcHeaders = new ArrayList<PRCResourceHeader>();
@@ -85,7 +86,8 @@ public class CodecTest {
 					PRCResourceHeader recordHeader = new PRCResourceHeader();
 					length = inputStream.read(recordHeaderByte, 0, recordHeaderByte.length);
 					recordHeader.populateResourceHeader(recordHeaderByte);
-					prcHeaders.add(recordHeader);
+					if(recordHeader.getResourceDataOffset() <= fileSize)
+						prcHeaders.add(recordHeader);
 				}
 				
 			}
@@ -106,25 +108,40 @@ public class CodecTest {
 			try {
 				channel = (new RandomAccessFile(prcFile.getOriginalFile(), "r"))
 						.getChannel();
+				long startPos = PRCHeader.LENGTH
+						+ (PRCResourceHeader.LENGTH * prcFile.getHeader().getNumRecords().getValue())
+						+ 1;
 				ByteBuffer dst = null;
 				writer = new BufferedWriter(new FileWriter("d:\\data.txt"));
 				for(int i=0; i < prcFile.getResourceHeaders().size(); i++){
-					PRCResourceHeader rh_i = prcFile.getResourceHeaders().get(i);
-					PRCResourceHeader rh_next = prcFile.getResourceHeaders().get(i+1);
-					if(rh_i.getResourceDataOffset().longValue() - rh_i.getResourceDataOffset().longValue() < 0)
-						continue;
-					if(rh_i.getResourceDataOffset().longValue() == 0 
-							&& rh_next.getResourceDataOffset().longValue() == 0)
-						continue;
-					
+					if(i == prcFile.getResourceHeaders().size()-1 ){
+						PRCResourceHeader rh_i = prcFile.getResourceHeaders().get(i);
+						dst = ByteBuffer.allocate((int)(fileSize - rh_i.getResourceDataOffset().longValue()));
+						channel.position(startPos + rh_i.getResourceDataOffset());
+						channel.read(dst, startPos + rh_i.getResourceDataOffset() );
+						writer.write(rh_i.toString() + "\n");
+						writer.write(printArray(dst.array()) + "\n");
+						dst = null;
+					}
+					else {
+						PRCResourceHeader rh_i = prcFile.getResourceHeaders().get(i);
+						PRCResourceHeader rh_next = prcFile.getResourceHeaders().get(i+1);
+						if(rh_i.getResourceDataOffset().longValue() - rh_i.getResourceDataOffset().longValue() < 0)
+							continue;
+						if(rh_i.getResourceDataOffset().longValue() == 0 
+								&& rh_next.getResourceDataOffset().longValue() == 0)
+							continue;
 						
+							
+						
+						dst = ByteBuffer.allocate((int)((rh_next.getResourceDataOffset().longValue() - 1) - rh_i.getResourceDataOffset().longValue()));
+						channel.position(startPos + rh_i.getResourceDataOffset());
+						channel.read(dst, startPos + rh_i.getResourceDataOffset() );
+						writer.write(rh_i.toString() + "\n");
+						writer.write(printArray(dst.array()) + "\n");
+						dst = null;
+					}
 					
-					dst = ByteBuffer.allocate((int)(rh_next.getResourceDataOffset().longValue() - rh_i.getResourceDataOffset().longValue()));
-					channel.position(rh_i.getResourceDataOffset());
-					channel.read(dst, rh_next.getResourceDataOffset() -1 );
-					writer.write(rh_i.toString() + "\n");
-					writer.write(printArray(dst.array()) + "\n");
-					dst = null;
 				}
 				channel.close();
 			} catch (FileNotFoundException e) {
@@ -166,8 +183,9 @@ public class CodecTest {
 	
 	private static String printArray(byte[] b){
 		StringBuffer buffer = new StringBuffer("{ ");
+		
 		for (int i = 0; i < b.length; i++) {
-			buffer.append(b[i]);
+			buffer.append((int)b[i]);
 			if(i < b.length-1){
 				buffer.append(", ");
 			}
