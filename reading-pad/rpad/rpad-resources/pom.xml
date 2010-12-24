@@ -11,8 +11,13 @@
 	<name>ReadingPad - Common Resources</name>
 	<version>${release.version}</version>
 	<packaging>jar</packaging>
-	
+
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring-version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.gs.rpad</groupId>
 			<artifactId>rpad-common</artifactId>
