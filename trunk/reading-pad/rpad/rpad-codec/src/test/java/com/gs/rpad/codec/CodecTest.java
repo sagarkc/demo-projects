@@ -51,6 +51,7 @@ import com.gs.rpad.codec.pdb.model.PDBRecordHeader;
 import com.gs.rpad.codec.prc.io.PrcFile;
 import com.gs.rpad.codec.prc.model.PRCHeader;
 import com.gs.rpad.codec.prc.model.PRCResourceHeader;
+import com.gs.utils.collection.CollectionUtils;
 import com.gs.utils.common.FieldSpecificComparator;
 import com.gs.utils.io.IOUtil;
 import com.gs.utils.text.ConversionUtil;
@@ -61,11 +62,47 @@ import com.gs.utils.text.ConversionUtil;
  */
 public class CodecTest {
 
+	public static void main(String[] args) {
+		String fileName = "temp/01 The Eye Of The World.prc";
+		BufferedInputStream inputStream = null;
+		BufferedWriter writer = null;
+		try {
+			inputStream = new BufferedInputStream(new FileInputStream(new File(fileName)));
+			writer = new BufferedWriter(new FileWriter("d:\\prc-data.txt"));
+			
+			writer.write("Header:\n");
+			byte[] header = new byte[78];
+			inputStream.read(header, 0, header.length);
+			writer.write(ConversionUtil.getHexString(header));
+			
+			writer.write("\nResource Headers:\n");
+			byte[] rsHeaders = new byte[4570];
+			inputStream.read(rsHeaders, 0, rsHeaders.length);
+			
+			for(int i=0, j=1; i < 4570; j++){
+				byte[] temp = new byte[10];
+				for(int k=0; k<10; k++){
+					if(k*j < 4570){
+						temp[k] = rsHeaders[i++]; 
+					}
+				}
+				writer.write("RS_" + j + "\t : " +   ConversionUtil.getHexString(temp)+"\n");
+			}
+		} catch (Exception e){
+			e.printStackTrace();
+		} finally{
+			IOUtil.close(inputStream);
+			IOUtil.close(writer);
+		}
+		
+	}
+	
+	
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		String fileName = "D:/temp/The Wheel of Time/xx The Strike at Shayol Ghul.prc";
+	public static void readPrc(String[] args) {
+		String fileName = "temp/01 The Eye Of The World.prc";
 		BufferedInputStream inputStream = null;
 		
 		PrcFile prcFile = null;

@@ -164,6 +164,9 @@ public class PDBHeader implements Serializable {
 	
 	public static final int LENGTH = 78;
 	
+	/**
+	 * The name field is zero terminated and is usually zero padded. 
+	 */
 	private RawData<String> name;
 	private RawData<Short> fileAttributes;
 	private RawData<Short> version;
@@ -175,8 +178,8 @@ public class PDBHeader implements Serializable {
 	private RawData<Integer> modificationNumber;
 	private RawData<Integer> appInfo;
 	private RawData<Integer> sortInfo;
-	private RawData<Integer> type;
-	private RawData<Integer> creator;
+	private RawData<String> type;
+	private RawData<String> creator;
 	private RawData<Integer> uniqueIdSeed;
 	private RawData<Integer> nextRecordList;
 	private RawData<Short> numRecords;
@@ -206,8 +209,8 @@ public class PDBHeader implements Serializable {
 		modificationNumber = new RawData<Integer>(0x30, "modification number", 4);
 		appInfo = new RawData<Integer>(0x34, "app_info", 4);
 		sortInfo = new RawData<Integer>(0x38, "sort_info", 4);
-		type = new RawData<Integer>(0x3C, "type", 4);
-		creator = new RawData<Integer>(0x40, "creator", 4);
+		type = new RawData<String>(0x3C, "type", 4);
+		creator = new RawData<String>(0x40, "creator", 4);
 		uniqueIdSeed = new RawData<Integer>(0x44, "unique_id_seed", 4);
 		nextRecordList = new RawData<Integer>(0x48, "next_record_list", 4);
 		numRecords = new RawData<Short>(0x4C, "num_records", 2);
@@ -300,14 +303,14 @@ public class PDBHeader implements Serializable {
 		data = CollectionUtils.sliceBytes(headerData, type.getOffset(), type.getSize());
 		type.setData(data);
 		if(null != data){
-			type.setValue(ConversionUtil.byteArrayToInt(data));
+			type.setValue(StringUtil.convertToString(data));
 		}
 		length += type.getSize();
 		
 		data = CollectionUtils.sliceBytes(headerData, creator.getOffset(), creator.getSize());
 		creator.setData(data);
 		if(null != data){
-			creator.setValue(ConversionUtil.byteArrayToInt(data));
+			creator.setValue(StringUtil.convertToString(data));
 		}
 		length += creator.getSize();
 		
@@ -424,22 +427,22 @@ public class PDBHeader implements Serializable {
 	}
 
 
-	public RawData<Integer> getType() {
+	public RawData<String> getType() {
 		return type;
 	}
 
 
-	public void setType(RawData<Integer> type) {
+	public void setType(RawData<String> type) {
 		this.type = type;
 	}
 
 
-	public RawData<Integer> getCreator() {
+	public RawData<String> getCreator() {
 		return creator;
 	}
 
 
-	public void setCreator(RawData<Integer> creator) {
+	public void setCreator(RawData<String> creator) {
 		this.creator = creator;
 	}
 
