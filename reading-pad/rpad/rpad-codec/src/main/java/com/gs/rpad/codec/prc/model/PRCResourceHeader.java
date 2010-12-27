@@ -29,6 +29,7 @@
 package com.gs.rpad.codec.prc.model;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 import com.gs.utils.collection.CollectionUtils;
@@ -127,9 +128,14 @@ public class PRCResourceHeader implements Serializable {
 
 	@Override
 	public String toString() {
-		return "PRCResourceHeader [\n\tresourceId=" + resourceId
-				+ ", \n\tresourceDataOffset=" + resourceDataOffset + ", \n\tdata="
-				+ Arrays.toString(data) + "\n]";
+		try {
+			return "PRCResourceHeader [\n\tresourceId=" + resourceId
+					+ ", \n\tresourceDataOffset=" + resourceDataOffset + ", \n\tdata="
+					+ ConversionUtil.getHexString(data) + "\n]";
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 
 	private String printArray(byte[] b){

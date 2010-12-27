@@ -66,6 +66,45 @@ public class CodecTest {
 		String fileName = "temp/01 The Eye Of The World.prc";
 		BufferedInputStream inputStream = null;
 		BufferedWriter writer = null;
+		PrcFile prcFile = null;
+		long fileSize = 0;
+		try {
+			prcFile = new PrcFile(fileName);
+			writer = new BufferedWriter(new FileWriter("d:\\prc-data.txt"));
+			inputStream = new BufferedInputStream(new FileInputStream(new File(fileName)));
+			fileSize = inputStream.available();
+			byte[] headerByte = new byte[PDBHeader.LENGTH];
+			byte[] recordHeaderByte = new byte[PRCResourceHeader.LENGTH];
+			List<PRCResourceHeader> prcHeaders = new ArrayList<PRCResourceHeader>();
+			int length = inputStream.read(headerByte, 0, PRCHeader.LENGTH);
+			PRCHeader header = new PRCHeader();
+			header.readHeader(headerByte);
+			writer.write("Header:\n");
+			writer.write("Name:\t" + header.getName().getValue() + "\n"
+					+ "Num Rec:\t" + header.getNumRecords().getValue() + "\n");
+			prcFile.setHeader(header);
+			if(header.getNumRecords() != null){
+				for(short i=0; i < header.getNumRecords().getValue(); i++){
+					PRCResourceHeader recordHeader = new PRCResourceHeader();
+					length = inputStream.read(recordHeaderByte, 0, recordHeaderByte.length);
+					recordHeader.populateResourceHeader(recordHeaderByte);
+					writer.write("\n#"+ (i+1) + "\t" + recordHeader.toString());
+				}
+			}
+			
+			System.out.println("Headers : " + prcHeaders.size());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			IOUtil.close(inputStream);
+			IOUtil.close(writer);
+		}
+	}
+	
+	public static void testHeader(String[] args) {
+		String fileName = "temp/01 The Eye Of The World.prc";
+		BufferedInputStream inputStream = null;
+		BufferedWriter writer = null;
 		try {
 			inputStream = new BufferedInputStream(new FileInputStream(new File(fileName)));
 			writer = new BufferedWriter(new FileWriter("d:\\prc-data.txt"));
