@@ -129,9 +129,10 @@ public class PRCResourceHeader implements Serializable {
 	@Override
 	public String toString() {
 		try {
-			return "PRCResourceHeader [\n\tresourceId=" + resourceId
-					+ ", \n\tresourceDataOffset=" + resourceDataOffset + ", \n\tdata="
-					+ ConversionUtil.getHexString(data) + "\n]";
+			return "PRCResourceHeader [" +
+					"\n\tresourceId=" + resourceId + ", " +
+					"\n\tresourceDataOffset=" + resourceDataOffset + "[ 0x" + Long.toHexString(resourceDataOffset) + " ], " +
+					"\n\tdata=" + ConversionUtil.getHexString(data) + "\n]";
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

@@ -70,9 +70,11 @@ public class CodecTest {
 		long fileSize = 0;
 		try {
 			prcFile = new PrcFile(fileName);
-			writer = new BufferedWriter(new FileWriter("d:\\prc-data.txt"));
+			writer = new BufferedWriter(new FileWriter("d:\\temp\\rpad\\prc-data.txt"));
 			inputStream = new BufferedInputStream(new FileInputStream(new File(fileName)));
+			
 			fileSize = inputStream.available();
+			writer.write("File size " + fileSize + " bytes\n\n");
 			byte[] headerByte = new byte[PDBHeader.LENGTH];
 			byte[] recordHeaderByte = new byte[PRCResourceHeader.LENGTH];
 			List<PRCResourceHeader> prcHeaders = new ArrayList<PRCResourceHeader>();
@@ -99,6 +101,7 @@ public class CodecTest {
 			IOUtil.close(inputStream);
 			IOUtil.close(writer);
 		}
+		testHeader(args);
 	}
 	
 	public static void testHeader(String[] args) {
@@ -107,7 +110,7 @@ public class CodecTest {
 		BufferedWriter writer = null;
 		try {
 			inputStream = new BufferedInputStream(new FileInputStream(new File(fileName)));
-			writer = new BufferedWriter(new FileWriter("d:\\prc-data.txt"));
+			writer = new BufferedWriter(new FileWriter("d:\\temp\\rpad\\prc-header-data.txt"));
 			
 			writer.write("Header:\n");
 			byte[] header = new byte[78];
