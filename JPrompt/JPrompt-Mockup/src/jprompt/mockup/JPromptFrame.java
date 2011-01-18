@@ -48,8 +48,15 @@ public class JPromptFrame extends javax.swing.JFrame {
         saveAsMenuItem = new javax.swing.JMenuItem();
         saveAllMenuItem = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        restartMenuItem = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        refreshMenuItem = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        closeAllMenuItem = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
         exitMenuItem = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridBagLayout());
@@ -135,6 +142,21 @@ public class JPromptFrame extends javax.swing.JFrame {
         fileMenu.add(saveAllMenuItem);
         fileMenu.add(jSeparator2);
 
+        restartMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
+        restartMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/system-restart.png"))); // NOI18N
+        restartMenuItem.setText("Restart");
+        fileMenu.add(restartMenuItem);
+        fileMenu.add(jSeparator5);
+
+        refreshMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
+        refreshMenuItem.setText("Refresh");
+        fileMenu.add(refreshMenuItem);
+        fileMenu.add(jSeparator3);
+
+        closeAllMenuItem.setText("Close All...");
+        fileMenu.add(closeAllMenuItem);
+        fileMenu.add(jSeparator4);
+
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit.gif"))); // NOI18N
         exitMenuItem.setText("Exit");
@@ -144,6 +166,9 @@ public class JPromptFrame extends javax.swing.JFrame {
 
         jMenu1.setText("Tools");
         jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("View");
+        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -167,19 +192,26 @@ public class JPromptFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToolBar actionToolBar;
+    private javax.swing.JMenuItem closeAllMenuItem;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JMenuItem newPromptMenuItem;
     private javax.swing.JMenuItem openCmdFileMenuItem;
     private javax.swing.JDesktopPane promptDesktopPane;
     private javax.swing.JPanel promptMainPanel;
+    private javax.swing.JMenuItem refreshMenuItem;
+    private javax.swing.JMenuItem restartMenuItem;
     private javax.swing.JMenuItem saveAllMenuItem;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
