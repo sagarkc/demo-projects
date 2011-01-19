@@ -10,6 +10,30 @@ import java.util.Map;
 
 public final class ProcessBuilderFactory {
 
+	
+	private static ProcessBuilderFactory factory;
+	
+	private ProcessBuilderFactory() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public static Process buildProcess(){
+		return null;
+	}
+	
+	public static Process buildProcess(String exeName){
+		return buildProcess(new File(exeName));
+	}
+	
+	public static Process buildProcess(File exeFile){
+		return null;
+	}
+	
+	
+	
+	
+	
+	
 	public static void main(String args[]) throws InterruptedException,
 			IOException {
 		String line;
@@ -35,7 +59,6 @@ public final class ProcessBuilderFactory {
 
 		System.out.println("Directory : " + System.getenv("temp"));
 		final Process process = builder.start();
-		
 		InputStream is = process.getInputStream();
 		InputStreamReader isr = new InputStreamReader(is);
 		BufferedReader br = new BufferedReader(isr);
