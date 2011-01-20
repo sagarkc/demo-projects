@@ -32,14 +32,82 @@ public class JPromptMainFrame extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
-        jToolBar2 = new javax.swing.JToolBar();
-        jButton2 = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        actionToolBar = new javax.swing.JToolBar();
+        newConsoleButton = new javax.swing.JButton();
+        openCommandButton = new javax.swing.JButton();
+        jSeparator15 = new javax.swing.JToolBar.Separator();
+        copyButton = new javax.swing.JButton();
+        pasteButton = new javax.swing.JButton();
+        clearScreenButton = new javax.swing.JButton();
+        jSeparator16 = new javax.swing.JToolBar.Separator();
+        findButton = new javax.swing.JButton();
+        promptDesktopPane = new javax.swing.JDesktopPane();
+        statusToolBar = new javax.swing.JToolBar();
+        jLabel1 = new javax.swing.JLabel();
+        quickLaunchButton = new javax.swing.JButton();
+        jSeparator9 = new javax.swing.JToolBar.Separator();
+        jLabel2 = new javax.swing.JLabel();
+        minimizedConcolesButton = new javax.swing.JButton();
+        jSeparator10 = new javax.swing.JToolBar.Separator();
+        jLabel3 = new javax.swing.JLabel();
+        quickRunTextField = new javax.swing.JTextField();
+        runInNewConsoleCheckBox = new javax.swing.JCheckBox();
+        jSeparator11 = new javax.swing.JToolBar.Separator();
+        lineInfoLabel = new javax.swing.JLabel();
+        jSeparator12 = new javax.swing.JToolBar.Separator();
+        numLockLabel = new javax.swing.JLabel();
+        jSeparator13 = new javax.swing.JToolBar.Separator();
+        capsLockLabel = new javax.swing.JLabel();
+        jSeparator14 = new javax.swing.JToolBar.Separator();
+        sysTimeLabel = new javax.swing.JLabel();
+        promptFrameMenuBar = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        newPromptMenuItem = new javax.swing.JMenuItem();
+        openCommandFileMenuItem = new javax.swing.JMenuItem();
+        jSeparator17 = new javax.swing.JPopupMenu.Separator();
+        closeMenuItem = new javax.swing.JMenuItem();
+        closeAllMenuItem = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        saveMenuItem = new javax.swing.JMenuItem();
+        saveAsMenuItem = new javax.swing.JMenuItem();
+        saveAllMenuItem = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        openLogFolderMenuItem = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        exitMenuItem = new javax.swing.JMenuItem();
+        editMenu = new javax.swing.JMenu();
+        cutMenuItem = new javax.swing.JMenuItem();
+        copyMenuItem = new javax.swing.JMenuItem();
+        pasteMenuItem = new javax.swing.JMenuItem();
+        deleteMenuItem = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        selectAllMenuItem = new javax.swing.JMenuItem();
+        clearScreenMenuItem = new javax.swing.JMenuItem();
+        searchMenu = new javax.swing.JMenu();
+        findMenuItem = new javax.swing.JMenuItem();
+        findReplaceMenuItem = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        findInAllConsolesMenuItem = new javax.swing.JMenuItem();
+        toolsMenu = new javax.swing.JMenu();
+        runCommandMenuItem = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        startPauseMenuItem = new javax.swing.JMenuItem();
+        stopMenuItem = new javax.swing.JMenuItem();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
+        startPauseAllMenuItem = new javax.swing.JMenuItem();
+        stopAllMenuItem = new javax.swing.JMenuItem();
+        jSeparator8 = new javax.swing.JPopupMenu.Separator();
+        settingsMenuItem = new javax.swing.JMenuItem();
+        viewMenu = new javax.swing.JMenu();
+        showToolbarCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
+        showStatusbarCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
+        jSeparator18 = new javax.swing.JPopupMenu.Separator();
+        showEnvVarsMenuItem = new javax.swing.JMenuItem();
+        helpMenu = new javax.swing.JMenu();
+        helpMenuItem = new javax.swing.JMenuItem();
+        aboutMenuItem = new javax.swing.JMenuItem();
+
+        FormListener formListener = new FormListener();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("jprompt/mockup/Bundle"); // NOI18N
@@ -47,42 +115,186 @@ public class JPromptMainFrame extends javax.swing.JFrame {
         setName("Form"); // NOI18N
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        jToolBar1.setRollover(true);
-        jToolBar1.setName("jToolBar1"); // NOI18N
+        actionToolBar.setFloatable(false);
+        actionToolBar.setRollover(true);
+        actionToolBar.setName("actionToolBar"); // NOI18N
 
-        jButton1.setText(bundle.getString("JPromptMainFrame.jButton1.text")); // NOI18N
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
+        newConsoleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new-prompt.png"))); // NOI18N
+        newConsoleButton.setText(bundle.getString("JPromptMainFrame.newConsoleButton.text")); // NOI18N
+        newConsoleButton.setFocusable(false);
+        newConsoleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        newConsoleButton.setName("newConsoleButton"); // NOI18N
+        newConsoleButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        newConsoleButton.addActionListener(formListener);
+        actionToolBar.add(newConsoleButton);
+
+        openCommandButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/folderopen.png"))); // NOI18N
+        openCommandButton.setText(bundle.getString("JPromptMainFrame.openCommandButton.text")); // NOI18N
+        openCommandButton.setFocusable(false);
+        openCommandButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        openCommandButton.setName("openCommandButton"); // NOI18N
+        openCommandButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        openCommandButton.addActionListener(formListener);
+        actionToolBar.add(openCommandButton);
+
+        jSeparator15.setName("jSeparator15"); // NOI18N
+        actionToolBar.add(jSeparator15);
+
+        copyButton.setText(bundle.getString("JPromptMainFrame.copyButton.text")); // NOI18N
+        copyButton.setFocusable(false);
+        copyButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        copyButton.setName("copyButton"); // NOI18N
+        copyButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        copyButton.addActionListener(formListener);
+        actionToolBar.add(copyButton);
+
+        pasteButton.setText(bundle.getString("JPromptMainFrame.pasteButton.text")); // NOI18N
+        pasteButton.setFocusable(false);
+        pasteButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        pasteButton.setName("pasteButton"); // NOI18N
+        pasteButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        pasteButton.addActionListener(formListener);
+        actionToolBar.add(pasteButton);
+
+        clearScreenButton.setText(bundle.getString("JPromptMainFrame.clearScreenButton.text")); // NOI18N
+        clearScreenButton.setFocusable(false);
+        clearScreenButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        clearScreenButton.setName("clearScreenButton"); // NOI18N
+        clearScreenButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        clearScreenButton.addActionListener(formListener);
+        actionToolBar.add(clearScreenButton);
+
+        jSeparator16.setName("jSeparator16"); // NOI18N
+        actionToolBar.add(jSeparator16);
+
+        findButton.setText(bundle.getString("JPromptMainFrame.findButton.text")); // NOI18N
+        findButton.setFocusable(false);
+        findButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        findButton.setName("findButton"); // NOI18N
+        findButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        findButton.addActionListener(formListener);
+        actionToolBar.add(findButton);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 0);
-        getContentPane().add(jToolBar1, gridBagConstraints);
+        getContentPane().add(actionToolBar, gridBagConstraints);
 
-        jDesktopPane1.setBackground(java.awt.SystemColor.activeCaption);
-        jDesktopPane1.setName("jDesktopPane1"); // NOI18N
+        promptDesktopPane.setBackground(java.awt.SystemColor.activeCaption);
+        promptDesktopPane.setMinimumSize(new java.awt.Dimension(640, 380));
+        promptDesktopPane.setName("promptDesktopPane"); // NOI18N
+        promptDesktopPane.setPreferredSize(new java.awt.Dimension(640, 380));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        getContentPane().add(jDesktopPane1, gridBagConstraints);
+        getContentPane().add(promptDesktopPane, gridBagConstraints);
 
-        jToolBar2.setRollover(true);
-        jToolBar2.setName("jToolBar2"); // NOI18N
+        statusToolBar.setFloatable(false);
+        statusToolBar.setRollover(true);
+        statusToolBar.setName("statusToolBar"); // NOI18N
 
-        jButton2.setText(bundle.getString("JPromptMainFrame.jButton2.text")); // NOI18N
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setName("jButton2"); // NOI18N
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar2.add(jButton2);
+        jLabel1.setText(bundle.getString("JPromptMainFrame.jLabel1.text")); // NOI18N
+        jLabel1.setName("jLabel1"); // NOI18N
+        statusToolBar.add(jLabel1);
+
+        quickLaunchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/folderopen.png"))); // NOI18N
+        quickLaunchButton.setText(bundle.getString("JPromptMainFrame.quickLaunchButton.text")); // NOI18N
+        quickLaunchButton.setFocusable(false);
+        quickLaunchButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        quickLaunchButton.setName("quickLaunchButton"); // NOI18N
+        quickLaunchButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        quickLaunchButton.addActionListener(formListener);
+        statusToolBar.add(quickLaunchButton);
+
+        jSeparator9.setName("jSeparator9"); // NOI18N
+        statusToolBar.add(jSeparator9);
+
+        jLabel2.setText(bundle.getString("JPromptMainFrame.jLabel2.text")); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
+        statusToolBar.add(jLabel2);
+
+        minimizedConcolesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/folderopen.png"))); // NOI18N
+        minimizedConcolesButton.setText(bundle.getString("JPromptMainFrame.minimizedConcolesButton.text")); // NOI18N
+        minimizedConcolesButton.setFocusable(false);
+        minimizedConcolesButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        minimizedConcolesButton.setName("minimizedConcolesButton"); // NOI18N
+        minimizedConcolesButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        minimizedConcolesButton.addActionListener(formListener);
+        statusToolBar.add(minimizedConcolesButton);
+
+        jSeparator10.setName("jSeparator10"); // NOI18N
+        statusToolBar.add(jSeparator10);
+
+        jLabel3.setText(bundle.getString("JPromptMainFrame.jLabel3.text")); // NOI18N
+        jLabel3.setName("jLabel3"); // NOI18N
+        statusToolBar.add(jLabel3);
+
+        quickRunTextField.setText(bundle.getString("JPromptMainFrame.quickRunTextField.text")); // NOI18N
+        quickRunTextField.setMinimumSize(new java.awt.Dimension(80, 20));
+        quickRunTextField.setName("quickRunTextField"); // NOI18N
+        quickRunTextField.setPreferredSize(new java.awt.Dimension(80, 20));
+        quickRunTextField.addActionListener(formListener);
+        quickRunTextField.addKeyListener(formListener);
+        statusToolBar.add(quickRunTextField);
+
+        runInNewConsoleCheckBox.setSelected(true);
+        runInNewConsoleCheckBox.setText(bundle.getString("JPromptMainFrame.runInNewConsoleCheckBox.text")); // NOI18N
+        runInNewConsoleCheckBox.setFocusable(false);
+        runInNewConsoleCheckBox.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        runInNewConsoleCheckBox.setName("runInNewConsoleCheckBox"); // NOI18N
+        runInNewConsoleCheckBox.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        runInNewConsoleCheckBox.addActionListener(formListener);
+        statusToolBar.add(runInNewConsoleCheckBox);
+
+        jSeparator11.setName("jSeparator11"); // NOI18N
+        statusToolBar.add(jSeparator11);
+
+        lineInfoLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lineInfoLabel.setText(bundle.getString("JPromptMainFrame.lineInfoLabel.text")); // NOI18N
+        lineInfoLabel.setMaximumSize(new java.awt.Dimension(80, 14));
+        lineInfoLabel.setMinimumSize(new java.awt.Dimension(80, 14));
+        lineInfoLabel.setName("lineInfoLabel"); // NOI18N
+        lineInfoLabel.setPreferredSize(new java.awt.Dimension(80, 14));
+        statusToolBar.add(lineInfoLabel);
+
+        jSeparator12.setName("jSeparator12"); // NOI18N
+        statusToolBar.add(jSeparator12);
+
+        numLockLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        numLockLabel.setText(bundle.getString("JPromptMainFrame.numLockLabel.text")); // NOI18N
+        numLockLabel.setMaximumSize(new java.awt.Dimension(35, 14));
+        numLockLabel.setMinimumSize(new java.awt.Dimension(35, 14));
+        numLockLabel.setName("numLockLabel"); // NOI18N
+        numLockLabel.setPreferredSize(new java.awt.Dimension(35, 14));
+        statusToolBar.add(numLockLabel);
+
+        jSeparator13.setName("jSeparator13"); // NOI18N
+        statusToolBar.add(jSeparator13);
+
+        capsLockLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        capsLockLabel.setText(bundle.getString("JPromptMainFrame.capsLockLabel.text")); // NOI18N
+        capsLockLabel.setMaximumSize(new java.awt.Dimension(35, 14));
+        capsLockLabel.setMinimumSize(new java.awt.Dimension(35, 14));
+        capsLockLabel.setName("capsLockLabel"); // NOI18N
+        capsLockLabel.setPreferredSize(new java.awt.Dimension(35, 14));
+        statusToolBar.add(capsLockLabel);
+
+        jSeparator14.setName("jSeparator14"); // NOI18N
+        statusToolBar.add(jSeparator14);
+
+        sysTimeLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        sysTimeLabel.setText(bundle.getString("JPromptMainFrame.sysTimeLabel.text")); // NOI18N
+        sysTimeLabel.setMaximumSize(new java.awt.Dimension(80, 14));
+        sysTimeLabel.setMinimumSize(new java.awt.Dimension(80, 14));
+        sysTimeLabel.setName("sysTimeLabel"); // NOI18N
+        sysTimeLabel.setPreferredSize(new java.awt.Dimension(80, 14));
+        sysTimeLabel.addMouseListener(formListener);
+        statusToolBar.add(sysTimeLabel);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -91,22 +303,574 @@ public class JPromptMainFrame extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(2, 0, 0, 0);
-        getContentPane().add(jToolBar2, gridBagConstraints);
+        getContentPane().add(statusToolBar, gridBagConstraints);
 
-        jMenuBar1.setName("jMenuBar1"); // NOI18N
+        promptFrameMenuBar.setName("promptFrameMenuBar"); // NOI18N
 
-        jMenu1.setText(bundle.getString("JPromptMainFrame.jMenu1.text")); // NOI18N
-        jMenu1.setName("jMenu1"); // NOI18N
-        jMenuBar1.add(jMenu1);
+        fileMenu.setText(bundle.getString("JPromptMainFrame.fileMenu.text")); // NOI18N
+        fileMenu.setName("fileMenu"); // NOI18N
 
-        jMenu2.setText(bundle.getString("JPromptMainFrame.jMenu2.text")); // NOI18N
-        jMenu2.setName("jMenu2"); // NOI18N
-        jMenuBar1.add(jMenu2);
+        newPromptMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        newPromptMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new-prompt.png"))); // NOI18N
+        newPromptMenuItem.setText(bundle.getString("JPromptMainFrame.newPromptMenuItem.text")); // NOI18N
+        newPromptMenuItem.setName("newPromptMenuItem"); // NOI18N
+        newPromptMenuItem.addActionListener(formListener);
+        fileMenu.add(newPromptMenuItem);
 
-        setJMenuBar(jMenuBar1);
+        openCommandFileMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        openCommandFileMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/folderopen.png"))); // NOI18N
+        openCommandFileMenuItem.setText(bundle.getString("JPromptMainFrame.openCommandFileMenuItem.text")); // NOI18N
+        openCommandFileMenuItem.setName("openCommandFileMenuItem"); // NOI18N
+        openCommandFileMenuItem.addActionListener(formListener);
+        fileMenu.add(openCommandFileMenuItem);
+
+        jSeparator17.setName("jSeparator17"); // NOI18N
+        fileMenu.add(jSeparator17);
+
+        closeMenuItem.setText(bundle.getString("JPromptMainFrame.closeMenuItem.text")); // NOI18N
+        closeMenuItem.setName("closeMenuItem"); // NOI18N
+        closeMenuItem.addActionListener(formListener);
+        fileMenu.add(closeMenuItem);
+
+        closeAllMenuItem.setText(bundle.getString("JPromptMainFrame.closeAllMenuItem.text")); // NOI18N
+        closeAllMenuItem.setName("closeAllMenuItem"); // NOI18N
+        closeAllMenuItem.addActionListener(formListener);
+        fileMenu.add(closeAllMenuItem);
+
+        jSeparator2.setName("jSeparator2"); // NOI18N
+        fileMenu.add(jSeparator2);
+
+        saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        saveMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_edit.gif"))); // NOI18N
+        saveMenuItem.setText(bundle.getString("JPromptMainFrame.saveMenuItem.text")); // NOI18N
+        saveMenuItem.setName("saveMenuItem"); // NOI18N
+        saveMenuItem.addActionListener(formListener);
+        fileMenu.add(saveMenuItem);
+
+        saveAsMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/saveas_edit.gif"))); // NOI18N
+        saveAsMenuItem.setText(bundle.getString("JPromptMainFrame.saveAsMenuItem.text")); // NOI18N
+        saveAsMenuItem.setName("saveAsMenuItem"); // NOI18N
+        saveAsMenuItem.addActionListener(formListener);
+        fileMenu.add(saveAsMenuItem);
+
+        saveAllMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        saveAllMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/saveall_edit.gif"))); // NOI18N
+        saveAllMenuItem.setText(bundle.getString("JPromptMainFrame.saveAllMenuItem.text")); // NOI18N
+        saveAllMenuItem.setName("saveAllMenuItem"); // NOI18N
+        saveAllMenuItem.addActionListener(formListener);
+        fileMenu.add(saveAllMenuItem);
+
+        jSeparator3.setName("jSeparator3"); // NOI18N
+        fileMenu.add(jSeparator3);
+
+        openLogFolderMenuItem.setText(bundle.getString("JPromptMainFrame.openLogFolderMenuItem.text")); // NOI18N
+        openLogFolderMenuItem.setName("openLogFolderMenuItem"); // NOI18N
+        openLogFolderMenuItem.addActionListener(formListener);
+        fileMenu.add(openLogFolderMenuItem);
+
+        jSeparator4.setName("jSeparator4"); // NOI18N
+        fileMenu.add(jSeparator4);
+
+        exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit.gif"))); // NOI18N
+        exitMenuItem.setText(bundle.getString("JPromptMainFrame.exitMenuItem.text")); // NOI18N
+        exitMenuItem.setName("exitMenuItem"); // NOI18N
+        exitMenuItem.addActionListener(formListener);
+        fileMenu.add(exitMenuItem);
+
+        promptFrameMenuBar.add(fileMenu);
+
+        editMenu.setText(bundle.getString("JPromptMainFrame.editMenu.text")); // NOI18N
+        editMenu.setName("editMenu"); // NOI18N
+
+        cutMenuItem.setText(bundle.getString("JPromptMainFrame.cutMenuItem.text")); // NOI18N
+        cutMenuItem.setName("cutMenuItem"); // NOI18N
+        cutMenuItem.addActionListener(formListener);
+        editMenu.add(cutMenuItem);
+
+        copyMenuItem.setText(bundle.getString("JPromptMainFrame.copyMenuItem.text")); // NOI18N
+        copyMenuItem.setName("copyMenuItem"); // NOI18N
+        copyMenuItem.addActionListener(formListener);
+        editMenu.add(copyMenuItem);
+
+        pasteMenuItem.setText(bundle.getString("JPromptMainFrame.pasteMenuItem.text")); // NOI18N
+        pasteMenuItem.setName("pasteMenuItem"); // NOI18N
+        pasteMenuItem.addActionListener(formListener);
+        editMenu.add(pasteMenuItem);
+
+        deleteMenuItem.setText(bundle.getString("JPromptMainFrame.deleteMenuItem.text")); // NOI18N
+        deleteMenuItem.setName("deleteMenuItem"); // NOI18N
+        deleteMenuItem.addActionListener(formListener);
+        editMenu.add(deleteMenuItem);
+
+        jSeparator1.setName("jSeparator1"); // NOI18N
+        editMenu.add(jSeparator1);
+
+        selectAllMenuItem.setText(bundle.getString("JPromptMainFrame.selectAllMenuItem.text")); // NOI18N
+        selectAllMenuItem.setName("selectAllMenuItem"); // NOI18N
+        selectAllMenuItem.addActionListener(formListener);
+        editMenu.add(selectAllMenuItem);
+
+        clearScreenMenuItem.setText(bundle.getString("JPromptMainFrame.clearScreenMenuItem.text")); // NOI18N
+        clearScreenMenuItem.setName("clearScreenMenuItem"); // NOI18N
+        clearScreenMenuItem.addActionListener(formListener);
+        editMenu.add(clearScreenMenuItem);
+
+        promptFrameMenuBar.add(editMenu);
+
+        searchMenu.setText(bundle.getString("JPromptMainFrame.searchMenu.text")); // NOI18N
+        searchMenu.setName("searchMenu"); // NOI18N
+
+        findMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
+        findMenuItem.setText(bundle.getString("JPromptMainFrame.findMenuItem.text")); // NOI18N
+        findMenuItem.setName("findMenuItem"); // NOI18N
+        findMenuItem.addActionListener(formListener);
+        searchMenu.add(findMenuItem);
+
+        findReplaceMenuItem.setText(bundle.getString("JPromptMainFrame.findReplaceMenuItem.text")); // NOI18N
+        findReplaceMenuItem.setName("findReplaceMenuItem"); // NOI18N
+        findReplaceMenuItem.addActionListener(formListener);
+        searchMenu.add(findReplaceMenuItem);
+
+        jSeparator5.setName("jSeparator5"); // NOI18N
+        searchMenu.add(jSeparator5);
+
+        findInAllConsolesMenuItem.setText(bundle.getString("JPromptMainFrame.findInAllConsolesMenuItem.text")); // NOI18N
+        findInAllConsolesMenuItem.setName("findInAllConsolesMenuItem"); // NOI18N
+        findInAllConsolesMenuItem.addActionListener(formListener);
+        searchMenu.add(findInAllConsolesMenuItem);
+
+        promptFrameMenuBar.add(searchMenu);
+
+        toolsMenu.setText(bundle.getString("JPromptMainFrame.toolsMenu.text")); // NOI18N
+        toolsMenu.setName("toolsMenu"); // NOI18N
+
+        runCommandMenuItem.setText(bundle.getString("JPromptMainFrame.runCommandMenuItem.text")); // NOI18N
+        runCommandMenuItem.setName("runCommandMenuItem"); // NOI18N
+        runCommandMenuItem.addActionListener(formListener);
+        toolsMenu.add(runCommandMenuItem);
+
+        jSeparator6.setName("jSeparator6"); // NOI18N
+        toolsMenu.add(jSeparator6);
+
+        startPauseMenuItem.setText(bundle.getString("JPromptMainFrame.startPauseMenuItem.text")); // NOI18N
+        startPauseMenuItem.setName("startPauseMenuItem"); // NOI18N
+        startPauseMenuItem.addActionListener(formListener);
+        toolsMenu.add(startPauseMenuItem);
+
+        stopMenuItem.setText(bundle.getString("JPromptMainFrame.stopMenuItem.text")); // NOI18N
+        stopMenuItem.setName("stopMenuItem"); // NOI18N
+        stopMenuItem.addActionListener(formListener);
+        toolsMenu.add(stopMenuItem);
+
+        jSeparator7.setName("jSeparator7"); // NOI18N
+        toolsMenu.add(jSeparator7);
+
+        startPauseAllMenuItem.setText(bundle.getString("JPromptMainFrame.startPauseAllMenuItem.text")); // NOI18N
+        startPauseAllMenuItem.setName("startPauseAllMenuItem"); // NOI18N
+        startPauseAllMenuItem.addActionListener(formListener);
+        toolsMenu.add(startPauseAllMenuItem);
+
+        stopAllMenuItem.setText(bundle.getString("JPromptMainFrame.stopAllMenuItem.text")); // NOI18N
+        stopAllMenuItem.setName("stopAllMenuItem"); // NOI18N
+        stopAllMenuItem.addActionListener(formListener);
+        toolsMenu.add(stopAllMenuItem);
+
+        jSeparator8.setName("jSeparator8"); // NOI18N
+        toolsMenu.add(jSeparator8);
+
+        settingsMenuItem.setText(bundle.getString("JPromptMainFrame.settingsMenuItem.text")); // NOI18N
+        settingsMenuItem.setName("settingsMenuItem"); // NOI18N
+        settingsMenuItem.addActionListener(formListener);
+        toolsMenu.add(settingsMenuItem);
+
+        promptFrameMenuBar.add(toolsMenu);
+
+        viewMenu.setText(bundle.getString("JPromptMainFrame.viewMenu.text")); // NOI18N
+        viewMenu.setName("viewMenu"); // NOI18N
+
+        showToolbarCheckBoxMenuItem.setSelected(true);
+        showToolbarCheckBoxMenuItem.setText(bundle.getString("JPromptMainFrame.showToolbarCheckBoxMenuItem.text")); // NOI18N
+        showToolbarCheckBoxMenuItem.setName("showToolbarCheckBoxMenuItem"); // NOI18N
+        showToolbarCheckBoxMenuItem.addActionListener(formListener);
+        viewMenu.add(showToolbarCheckBoxMenuItem);
+
+        showStatusbarCheckBoxMenuItem.setSelected(true);
+        showStatusbarCheckBoxMenuItem.setText(bundle.getString("JPromptMainFrame.showStatusbarCheckBoxMenuItem.text")); // NOI18N
+        showStatusbarCheckBoxMenuItem.setName("showStatusbarCheckBoxMenuItem"); // NOI18N
+        showStatusbarCheckBoxMenuItem.addActionListener(formListener);
+        viewMenu.add(showStatusbarCheckBoxMenuItem);
+
+        jSeparator18.setName("jSeparator18"); // NOI18N
+        viewMenu.add(jSeparator18);
+
+        showEnvVarsMenuItem.setText(bundle.getString("JPromptMainFrame.showEnvVarsMenuItem.text")); // NOI18N
+        showEnvVarsMenuItem.setName("showEnvVarsMenuItem"); // NOI18N
+        showEnvVarsMenuItem.addActionListener(formListener);
+        viewMenu.add(showEnvVarsMenuItem);
+
+        promptFrameMenuBar.add(viewMenu);
+
+        helpMenu.setText(bundle.getString("JPromptMainFrame.helpMenu.text")); // NOI18N
+        helpMenu.setName("helpMenu"); // NOI18N
+
+        helpMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        helpMenuItem.setText(bundle.getString("JPromptMainFrame.helpMenuItem.text")); // NOI18N
+        helpMenuItem.setName("helpMenuItem"); // NOI18N
+        helpMenuItem.addActionListener(formListener);
+        helpMenu.add(helpMenuItem);
+
+        aboutMenuItem.setText(bundle.getString("JPromptMainFrame.aboutMenuItem.text")); // NOI18N
+        aboutMenuItem.setName("aboutMenuItem"); // NOI18N
+        aboutMenuItem.addActionListener(formListener);
+        helpMenu.add(aboutMenuItem);
+
+        promptFrameMenuBar.add(helpMenu);
+
+        setJMenuBar(promptFrameMenuBar);
 
         pack();
+    }
+
+    // Code for dispatching events from components to event handlers.
+
+    private class FormListener implements java.awt.event.ActionListener, java.awt.event.KeyListener, java.awt.event.MouseListener {
+        FormListener() {}
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            if (evt.getSource() == newPromptMenuItem) {
+                JPromptMainFrame.this.newPromptMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == openCommandFileMenuItem) {
+                JPromptMainFrame.this.openCommandFileMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == closeMenuItem) {
+                JPromptMainFrame.this.closeMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == closeAllMenuItem) {
+                JPromptMainFrame.this.closeAllMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveMenuItem) {
+                JPromptMainFrame.this.saveMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveAsMenuItem) {
+                JPromptMainFrame.this.saveAsMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveAllMenuItem) {
+                JPromptMainFrame.this.saveAllMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == openLogFolderMenuItem) {
+                JPromptMainFrame.this.openLogFolderMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == exitMenuItem) {
+                JPromptMainFrame.this.exitMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == newConsoleButton) {
+                JPromptMainFrame.this.newConsoleButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == openCommandButton) {
+                JPromptMainFrame.this.openCommandButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == copyButton) {
+                JPromptMainFrame.this.copyButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == pasteButton) {
+                JPromptMainFrame.this.pasteButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == clearScreenButton) {
+                JPromptMainFrame.this.clearScreenButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == findButton) {
+                JPromptMainFrame.this.findButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == quickLaunchButton) {
+                JPromptMainFrame.this.quickLaunchButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == minimizedConcolesButton) {
+                JPromptMainFrame.this.minimizedConcolesButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == quickRunTextField) {
+                JPromptMainFrame.this.quickRunTextFieldActionPerformed(evt);
+            }
+            else if (evt.getSource() == runInNewConsoleCheckBox) {
+                JPromptMainFrame.this.runInNewConsoleCheckBoxActionPerformed(evt);
+            }
+            else if (evt.getSource() == cutMenuItem) {
+                JPromptMainFrame.this.cutMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == copyMenuItem) {
+                JPromptMainFrame.this.copyMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == pasteMenuItem) {
+                JPromptMainFrame.this.pasteMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == deleteMenuItem) {
+                JPromptMainFrame.this.deleteMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == selectAllMenuItem) {
+                JPromptMainFrame.this.selectAllMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == clearScreenMenuItem) {
+                JPromptMainFrame.this.clearScreenMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == findMenuItem) {
+                JPromptMainFrame.this.findMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == findReplaceMenuItem) {
+                JPromptMainFrame.this.findReplaceMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == findInAllConsolesMenuItem) {
+                JPromptMainFrame.this.findInAllConsolesMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == runCommandMenuItem) {
+                JPromptMainFrame.this.runCommandMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == startPauseMenuItem) {
+                JPromptMainFrame.this.startPauseMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == stopMenuItem) {
+                JPromptMainFrame.this.stopMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == startPauseAllMenuItem) {
+                JPromptMainFrame.this.startPauseAllMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == stopAllMenuItem) {
+                JPromptMainFrame.this.stopAllMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == settingsMenuItem) {
+                JPromptMainFrame.this.settingsMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == helpMenuItem) {
+                JPromptMainFrame.this.helpMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == aboutMenuItem) {
+                JPromptMainFrame.this.aboutMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == showToolbarCheckBoxMenuItem) {
+                JPromptMainFrame.this.showToolbarCheckBoxMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == showStatusbarCheckBoxMenuItem) {
+                JPromptMainFrame.this.showStatusbarCheckBoxMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == showEnvVarsMenuItem) {
+                JPromptMainFrame.this.showEnvVarsMenuItemActionPerformed(evt);
+            }
+        }
+
+        public void keyPressed(java.awt.event.KeyEvent evt) {
+            if (evt.getSource() == quickRunTextField) {
+                JPromptMainFrame.this.quickRunTextFieldKeyPressed(evt);
+            }
+        }
+
+        public void keyReleased(java.awt.event.KeyEvent evt) {
+            if (evt.getSource() == quickRunTextField) {
+                JPromptMainFrame.this.quickRunTextFieldKeyReleased(evt);
+            }
+        }
+
+        public void keyTyped(java.awt.event.KeyEvent evt) {
+            if (evt.getSource() == quickRunTextField) {
+                JPromptMainFrame.this.quickRunTextFieldKeyTyped(evt);
+            }
+        }
+
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+        }
+
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+            if (evt.getSource() == sysTimeLabel) {
+                JPromptMainFrame.this.sysTimeLabelMouseEntered(evt);
+            }
+        }
+
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+            if (evt.getSource() == sysTimeLabel) {
+                JPromptMainFrame.this.sysTimeLabelMouseExited(evt);
+            }
+        }
+
+        public void mousePressed(java.awt.event.MouseEvent evt) {
+        }
+
+        public void mouseReleased(java.awt.event.MouseEvent evt) {
+        }
     }// </editor-fold>//GEN-END:initComponents
+
+    private void newPromptMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPromptMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newPromptMenuItemActionPerformed
+
+    private void openCommandFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openCommandFileMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_openCommandFileMenuItemActionPerformed
+
+    private void closeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_closeMenuItemActionPerformed
+
+    private void closeAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeAllMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_closeAllMenuItemActionPerformed
+
+    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveMenuItemActionPerformed
+
+    private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveAsMenuItemActionPerformed
+
+    private void saveAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAllMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveAllMenuItemActionPerformed
+
+    private void openLogFolderMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openLogFolderMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_openLogFolderMenuItemActionPerformed
+
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_exitMenuItemActionPerformed
+
+    private void newConsoleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newConsoleButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newConsoleButtonActionPerformed
+
+    private void openCommandButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openCommandButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_openCommandButtonActionPerformed
+
+    private void copyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_copyButtonActionPerformed
+
+    private void pasteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pasteButtonActionPerformed
+
+    private void clearScreenButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearScreenButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_clearScreenButtonActionPerformed
+
+    private void findButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_findButtonActionPerformed
+
+    private void quickLaunchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quickLaunchButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quickLaunchButtonActionPerformed
+
+    private void minimizedConcolesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizedConcolesButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_minimizedConcolesButtonActionPerformed
+
+    private void quickRunTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quickRunTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quickRunTextFieldActionPerformed
+
+    private void quickRunTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quickRunTextFieldKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quickRunTextFieldKeyPressed
+
+    private void quickRunTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quickRunTextFieldKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quickRunTextFieldKeyReleased
+
+    private void quickRunTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_quickRunTextFieldKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quickRunTextFieldKeyTyped
+
+    private void runInNewConsoleCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runInNewConsoleCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_runInNewConsoleCheckBoxActionPerformed
+
+    private void sysTimeLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sysTimeLabelMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sysTimeLabelMouseEntered
+
+    private void sysTimeLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sysTimeLabelMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sysTimeLabelMouseExited
+
+    private void cutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cutMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cutMenuItemActionPerformed
+
+    private void copyMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_copyMenuItemActionPerformed
+
+    private void pasteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasteMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pasteMenuItemActionPerformed
+
+    private void deleteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteMenuItemActionPerformed
+
+    private void selectAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectAllMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_selectAllMenuItemActionPerformed
+
+    private void clearScreenMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearScreenMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_clearScreenMenuItemActionPerformed
+
+    private void findMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_findMenuItemActionPerformed
+
+    private void findReplaceMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findReplaceMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_findReplaceMenuItemActionPerformed
+
+    private void findInAllConsolesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findInAllConsolesMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_findInAllConsolesMenuItemActionPerformed
+
+    private void runCommandMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runCommandMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_runCommandMenuItemActionPerformed
+
+    private void startPauseMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startPauseMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_startPauseMenuItemActionPerformed
+
+    private void stopMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stopMenuItemActionPerformed
+
+    private void startPauseAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startPauseAllMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_startPauseAllMenuItemActionPerformed
+
+    private void stopAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopAllMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_stopAllMenuItemActionPerformed
+
+    private void settingsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_settingsMenuItemActionPerformed
+
+    private void helpMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_helpMenuItemActionPerformed
+
+    private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_aboutMenuItemActionPerformed
+
+    private void showToolbarCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showToolbarCheckBoxMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showToolbarCheckBoxMenuItemActionPerformed
+
+    private void showStatusbarCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showStatusbarCheckBoxMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showStatusbarCheckBoxMenuItemActionPerformed
+
+    private void showEnvVarsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showEnvVarsMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showEnvVarsMenuItemActionPerformed
 
     /**
     * @param args the command line arguments
@@ -120,14 +884,80 @@ public class JPromptMainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JDesktopPane jDesktopPane1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JToolBar jToolBar2;
+    private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JToolBar actionToolBar;
+    private javax.swing.JLabel capsLockLabel;
+    private javax.swing.JButton clearScreenButton;
+    private javax.swing.JMenuItem clearScreenMenuItem;
+    private javax.swing.JMenuItem closeAllMenuItem;
+    private javax.swing.JMenuItem closeMenuItem;
+    private javax.swing.JButton copyButton;
+    private javax.swing.JMenuItem copyMenuItem;
+    private javax.swing.JMenuItem cutMenuItem;
+    private javax.swing.JMenuItem deleteMenuItem;
+    private javax.swing.JMenu editMenu;
+    private javax.swing.JMenuItem exitMenuItem;
+    private javax.swing.JMenu fileMenu;
+    private javax.swing.JButton findButton;
+    private javax.swing.JMenuItem findInAllConsolesMenuItem;
+    private javax.swing.JMenuItem findMenuItem;
+    private javax.swing.JMenuItem findReplaceMenuItem;
+    private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem helpMenuItem;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator10;
+    private javax.swing.JToolBar.Separator jSeparator11;
+    private javax.swing.JToolBar.Separator jSeparator12;
+    private javax.swing.JToolBar.Separator jSeparator13;
+    private javax.swing.JToolBar.Separator jSeparator14;
+    private javax.swing.JToolBar.Separator jSeparator15;
+    private javax.swing.JToolBar.Separator jSeparator16;
+    private javax.swing.JPopupMenu.Separator jSeparator17;
+    private javax.swing.JPopupMenu.Separator jSeparator18;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
+    private javax.swing.JPopupMenu.Separator jSeparator8;
+    private javax.swing.JToolBar.Separator jSeparator9;
+    private javax.swing.JLabel lineInfoLabel;
+    private javax.swing.JButton minimizedConcolesButton;
+    private javax.swing.JButton newConsoleButton;
+    private javax.swing.JMenuItem newPromptMenuItem;
+    private javax.swing.JLabel numLockLabel;
+    private javax.swing.JButton openCommandButton;
+    private javax.swing.JMenuItem openCommandFileMenuItem;
+    private javax.swing.JMenuItem openLogFolderMenuItem;
+    private javax.swing.JButton pasteButton;
+    private javax.swing.JMenuItem pasteMenuItem;
+    private javax.swing.JDesktopPane promptDesktopPane;
+    private javax.swing.JMenuBar promptFrameMenuBar;
+    private javax.swing.JButton quickLaunchButton;
+    private javax.swing.JTextField quickRunTextField;
+    private javax.swing.JMenuItem runCommandMenuItem;
+    private javax.swing.JCheckBox runInNewConsoleCheckBox;
+    private javax.swing.JMenuItem saveAllMenuItem;
+    private javax.swing.JMenuItem saveAsMenuItem;
+    private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JMenu searchMenu;
+    private javax.swing.JMenuItem selectAllMenuItem;
+    private javax.swing.JMenuItem settingsMenuItem;
+    private javax.swing.JMenuItem showEnvVarsMenuItem;
+    private javax.swing.JCheckBoxMenuItem showStatusbarCheckBoxMenuItem;
+    private javax.swing.JCheckBoxMenuItem showToolbarCheckBoxMenuItem;
+    private javax.swing.JMenuItem startPauseAllMenuItem;
+    private javax.swing.JMenuItem startPauseMenuItem;
+    private javax.swing.JToolBar statusToolBar;
+    private javax.swing.JMenuItem stopAllMenuItem;
+    private javax.swing.JMenuItem stopMenuItem;
+    private javax.swing.JLabel sysTimeLabel;
+    private javax.swing.JMenu toolsMenu;
+    private javax.swing.JMenu viewMenu;
     // End of variables declaration//GEN-END:variables
 
 }
