@@ -1,21 +1,34 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/*
- * CommandEditorInternalFrame.java
- *
- * Created on Jan 20, 2011, 8:13:00 PM
- */
 
-package jprompt.mockup;
+package com.gs.jprompt.app.form;
 
-/**
- *
- * @author 50120C1509
- */
-public class CommandEditorInternalFrame extends javax.swing.JInternalFrame {
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.util.ResourceBundle;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JEditorPane;
+import javax.swing.JInternalFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
+import javax.swing.SwingConstants;
+import javax.swing.event.InternalFrameEvent;
+import javax.swing.event.InternalFrameListener;
+
+import com.gs.jprompt.common.JPromptContext;
+
+
+public class CommandEditorInternalFrame extends JInternalFrame {
 
     /** Creates new form CommandEditorInternalFrame */
     public CommandEditorInternalFrame() {
@@ -30,19 +43,19 @@ public class CommandEditorInternalFrame extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
+        GridBagConstraints gridBagConstraints;
 
-        cmdEditToolBar = new javax.swing.JToolBar();
-        openButton = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JToolBar.Separator();
-        saveButton = new javax.swing.JButton();
-        saveAsButton = new javax.swing.JButton();
-        jSeparator2 = new javax.swing.JToolBar.Separator();
-        runButton = new javax.swing.JButton();
-        jSeparator3 = new javax.swing.JToolBar.Separator();
-        lineWrapToggleButton = new javax.swing.JToggleButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        commandEditorPane = new javax.swing.JEditorPane();
+        cmdEditToolBar = new JToolBar();
+        openButton = new JButton();
+        jSeparator1 = new JToolBar.Separator();
+        saveButton = new JButton();
+        saveAsButton = new JButton();
+        jSeparator2 = new JToolBar.Separator();
+        runButton = new JButton();
+        jSeparator3 = new JToolBar.Separator();
+        lineWrapToggleButton = new JToggleButton();
+        jScrollPane1 = new JScrollPane();
+        commandEditorPane = new JEditorPane();
 
         FormListener formListener = new FormListener();
 
@@ -50,76 +63,76 @@ public class CommandEditorInternalFrame extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("jprompt/mockup/Bundle"); // NOI18N
+        ResourceBundle bundle = JPromptContext.getContext().getResourceBundle(); // NOI18N
         setTitle(bundle.getString("CommandEditorInternalFrame.title")); // NOI18N
-        setMinimumSize(new java.awt.Dimension(463, 246));
+        setMinimumSize(new Dimension(463, 246));
         setName("Form"); // NOI18N
         addInternalFrameListener(formListener);
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        getContentPane().setLayout(new GridBagLayout());
 
         cmdEditToolBar.setFloatable(false);
         cmdEditToolBar.setRollover(true);
         cmdEditToolBar.setName("cmdEditToolBar"); // NOI18N
 
-        openButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/folderopen.png"))); // NOI18N
+        openButton.setIcon(new ImageIcon(getClass().getResource("/images/folderopen.png"))); // NOI18N
         openButton.setText(bundle.getString("CommandEditorInternalFrame.openButton.text")); // NOI18N
         openButton.setFocusable(false);
-        openButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        openButton.setHorizontalTextPosition(SwingConstants.CENTER);
         openButton.setName("openButton"); // NOI18N
-        openButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        openButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         openButton.addActionListener(formListener);
         cmdEditToolBar.add(openButton);
 
         jSeparator1.setName("jSeparator1"); // NOI18N
         cmdEditToolBar.add(jSeparator1);
 
-        saveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_edit.gif"))); // NOI18N
+        saveButton.setIcon(new ImageIcon(getClass().getResource("/images/save_edit.gif"))); // NOI18N
         saveButton.setText(bundle.getString("CommandEditorInternalFrame.saveButton.text")); // NOI18N
         saveButton.setFocusable(false);
-        saveButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        saveButton.setHorizontalTextPosition(SwingConstants.CENTER);
         saveButton.setName("saveButton"); // NOI18N
-        saveButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        saveButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         saveButton.addActionListener(formListener);
         cmdEditToolBar.add(saveButton);
 
-        saveAsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/saveas_edit.gif"))); // NOI18N
+        saveAsButton.setIcon(new ImageIcon(getClass().getResource("/images/saveas_edit.gif"))); // NOI18N
         saveAsButton.setText(bundle.getString("CommandEditorInternalFrame.saveAsButton.text")); // NOI18N
         saveAsButton.setFocusable(false);
-        saveAsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        saveAsButton.setHorizontalTextPosition(SwingConstants.CENTER);
         saveAsButton.setName("saveAsButton"); // NOI18N
-        saveAsButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        saveAsButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         saveAsButton.addActionListener(formListener);
         cmdEditToolBar.add(saveAsButton);
 
         jSeparator2.setName("jSeparator2"); // NOI18N
         cmdEditToolBar.add(jSeparator2);
 
-        runButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new-prompt.png"))); // NOI18N
+        runButton.setIcon(new ImageIcon(getClass().getResource("/images/new-prompt.png"))); // NOI18N
         runButton.setText(bundle.getString("CommandEditorInternalFrame.runButton.text")); // NOI18N
         runButton.setFocusable(false);
-        runButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        runButton.setHorizontalTextPosition(SwingConstants.CENTER);
         runButton.setName("runButton"); // NOI18N
-        runButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        runButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         runButton.addActionListener(formListener);
         cmdEditToolBar.add(runButton);
 
         jSeparator3.setName("jSeparator3"); // NOI18N
         cmdEditToolBar.add(jSeparator3);
 
-        lineWrapToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/system-restart.png"))); // NOI18N
+        lineWrapToggleButton.setIcon(new ImageIcon(getClass().getResource("/images/system-restart.png"))); // NOI18N
         lineWrapToggleButton.setText(bundle.getString("CommandEditorInternalFrame.lineWrapToggleButton.text")); // NOI18N
         lineWrapToggleButton.setFocusable(false);
-        lineWrapToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lineWrapToggleButton.setHorizontalTextPosition(SwingConstants.CENTER);
         lineWrapToggleButton.setName("lineWrapToggleButton"); // NOI18N
-        lineWrapToggleButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        lineWrapToggleButton.setVerticalTextPosition(SwingConstants.BOTTOM);
         lineWrapToggleButton.addActionListener(formListener);
         cmdEditToolBar.add(lineWrapToggleButton);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 0);
+        gridBagConstraints.insets = new Insets(0, 0, 2, 0);
         getContentPane().add(cmdEditToolBar, gridBagConstraints);
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
@@ -131,10 +144,10 @@ public class CommandEditorInternalFrame extends javax.swing.JInternalFrame {
         commandEditorPane.addKeyListener(formListener);
         jScrollPane1.setViewportView(commandEditorPane);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         getContentPane().add(jScrollPane1, gridBagConstraints);
@@ -144,9 +157,9 @@ public class CommandEditorInternalFrame extends javax.swing.JInternalFrame {
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements java.awt.event.ActionListener, java.awt.event.KeyListener, java.awt.event.MouseMotionListener, javax.swing.event.InternalFrameListener {
+    private class FormListener implements ActionListener, KeyListener, MouseMotionListener, InternalFrameListener {
         FormListener() {}
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
+        public void actionPerformed(ActionEvent evt) {
             if (evt.getSource() == openButton) {
                 CommandEditorInternalFrame.this.openButtonActionPerformed(evt);
             }
@@ -164,153 +177,153 @@ public class CommandEditorInternalFrame extends javax.swing.JInternalFrame {
             }
         }
 
-        public void keyPressed(java.awt.event.KeyEvent evt) {
+        public void keyPressed(KeyEvent evt) {
             if (evt.getSource() == commandEditorPane) {
                 CommandEditorInternalFrame.this.commandEditorPaneKeyPressed(evt);
             }
         }
 
-        public void keyReleased(java.awt.event.KeyEvent evt) {
+        public void keyReleased(KeyEvent evt) {
             if (evt.getSource() == commandEditorPane) {
                 CommandEditorInternalFrame.this.commandEditorPaneKeyReleased(evt);
             }
         }
 
-        public void keyTyped(java.awt.event.KeyEvent evt) {
+        public void keyTyped(KeyEvent evt) {
             if (evt.getSource() == commandEditorPane) {
                 CommandEditorInternalFrame.this.commandEditorPaneKeyTyped(evt);
             }
         }
 
-        public void mouseDragged(java.awt.event.MouseEvent evt) {
+        public void mouseDragged(MouseEvent evt) {
             if (evt.getSource() == commandEditorPane) {
                 CommandEditorInternalFrame.this.commandEditorPaneMouseDragged(evt);
             }
         }
 
-        public void mouseMoved(java.awt.event.MouseEvent evt) {
+        public void mouseMoved(MouseEvent evt) {
         }
 
-        public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+        public void internalFrameActivated(InternalFrameEvent evt) {
             if (evt.getSource() == CommandEditorInternalFrame.this) {
                 CommandEditorInternalFrame.this.formInternalFrameActivated(evt);
             }
         }
 
-        public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+        public void internalFrameClosed(InternalFrameEvent evt) {
             if (evt.getSource() == CommandEditorInternalFrame.this) {
                 CommandEditorInternalFrame.this.formInternalFrameClosed(evt);
             }
         }
 
-        public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+        public void internalFrameClosing(InternalFrameEvent evt) {
             if (evt.getSource() == CommandEditorInternalFrame.this) {
                 CommandEditorInternalFrame.this.formInternalFrameClosing(evt);
             }
         }
 
-        public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+        public void internalFrameDeactivated(InternalFrameEvent evt) {
             if (evt.getSource() == CommandEditorInternalFrame.this) {
                 CommandEditorInternalFrame.this.formInternalFrameDeactivated(evt);
             }
         }
 
-        public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+        public void internalFrameDeiconified(InternalFrameEvent evt) {
             if (evt.getSource() == CommandEditorInternalFrame.this) {
                 CommandEditorInternalFrame.this.formInternalFrameDeiconified(evt);
             }
         }
 
-        public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+        public void internalFrameIconified(InternalFrameEvent evt) {
             if (evt.getSource() == CommandEditorInternalFrame.this) {
                 CommandEditorInternalFrame.this.formInternalFrameIconified(evt);
             }
         }
 
-        public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+        public void internalFrameOpened(InternalFrameEvent evt) {
             if (evt.getSource() == CommandEditorInternalFrame.this) {
                 CommandEditorInternalFrame.this.formInternalFrameOpened(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
 
-    private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
+    private void openButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_openButtonActionPerformed
 
-    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+    private void saveButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_saveButtonActionPerformed
 
-    private void saveAsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsButtonActionPerformed
+    private void saveAsButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_saveAsButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_saveAsButtonActionPerformed
 
-    private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runButtonActionPerformed
+    private void runButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_runButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_runButtonActionPerformed
 
-    private void lineWrapToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lineWrapToggleButtonActionPerformed
+    private void lineWrapToggleButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_lineWrapToggleButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_lineWrapToggleButtonActionPerformed
 
-    private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
+    private void formInternalFrameActivated(InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
         // TODO add your handling code here:
     }//GEN-LAST:event_formInternalFrameActivated
 
-    private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
+    private void formInternalFrameClosed(InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
         // TODO add your handling code here:
     }//GEN-LAST:event_formInternalFrameClosed
 
-    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+    private void formInternalFrameClosing(InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
         // TODO add your handling code here:
     }//GEN-LAST:event_formInternalFrameClosing
 
-    private void formInternalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameDeactivated
+    private void formInternalFrameDeactivated(InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameDeactivated
         // TODO add your handling code here:
     }//GEN-LAST:event_formInternalFrameDeactivated
 
-    private void formInternalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameDeiconified
+    private void formInternalFrameDeiconified(InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameDeiconified
         // TODO add your handling code here:
     }//GEN-LAST:event_formInternalFrameDeiconified
 
-    private void formInternalFrameIconified(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameIconified
+    private void formInternalFrameIconified(InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameIconified
         // TODO add your handling code here:
     }//GEN-LAST:event_formInternalFrameIconified
 
-    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+    private void formInternalFrameOpened(InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         // TODO add your handling code here:
     }//GEN-LAST:event_formInternalFrameOpened
 
-    private void commandEditorPaneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_commandEditorPaneKeyPressed
+    private void commandEditorPaneKeyPressed(KeyEvent evt) {//GEN-FIRST:event_commandEditorPaneKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_commandEditorPaneKeyPressed
 
-    private void commandEditorPaneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_commandEditorPaneKeyReleased
+    private void commandEditorPaneKeyReleased(KeyEvent evt) {//GEN-FIRST:event_commandEditorPaneKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_commandEditorPaneKeyReleased
 
-    private void commandEditorPaneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_commandEditorPaneKeyTyped
+    private void commandEditorPaneKeyTyped(KeyEvent evt) {//GEN-FIRST:event_commandEditorPaneKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_commandEditorPaneKeyTyped
 
-    private void commandEditorPaneMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_commandEditorPaneMouseDragged
+    private void commandEditorPaneMouseDragged(MouseEvent evt) {//GEN-FIRST:event_commandEditorPaneMouseDragged
         // TODO add your handling code here:
     }//GEN-LAST:event_commandEditorPaneMouseDragged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToolBar cmdEditToolBar;
-    private javax.swing.JEditorPane commandEditorPane;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToolBar.Separator jSeparator1;
-    private javax.swing.JToolBar.Separator jSeparator2;
-    private javax.swing.JToolBar.Separator jSeparator3;
-    private javax.swing.JToggleButton lineWrapToggleButton;
-    private javax.swing.JButton openButton;
-    private javax.swing.JButton runButton;
-    private javax.swing.JButton saveAsButton;
-    private javax.swing.JButton saveButton;
+    private JToolBar cmdEditToolBar;
+    private JEditorPane commandEditorPane;
+    private JScrollPane jScrollPane1;
+    private JToolBar.Separator jSeparator1;
+    private JToolBar.Separator jSeparator2;
+    private JToolBar.Separator jSeparator3;
+    private JToggleButton lineWrapToggleButton;
+    private JButton openButton;
+    private JButton runButton;
+    private JButton saveAsButton;
+    private JButton saveButton;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -44,6 +44,7 @@ public final class ProcessBuilderFactory {
 		String osName = System.getProperty("os.name");
 		System.out.println(osName);
 		String[] cmd = new String[3];
+		System.out.println("" + System.currentTimeMillis());
 		if (osName.equals("Windows NT") || osName.equals("Windows XP")) {
 			cmd[0] = "cmd.exe";
 		} else {
@@ -58,7 +59,9 @@ public final class ProcessBuilderFactory {
 		builder.directory(new File("D:\\"));
 
 		System.out.println("Directory : " + System.getenv("temp"));
+		
 		final Process process = builder.start();
+		System.out.println("" + System.currentTimeMillis());
 		InputStream is = process.getInputStream();
 		InputStreamReader isr = new InputStreamReader(is);
 		BufferedReader br = new BufferedReader(isr);
