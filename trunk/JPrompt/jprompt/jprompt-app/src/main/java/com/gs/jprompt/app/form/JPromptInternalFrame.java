@@ -31,8 +31,12 @@ import javax.swing.event.CaretListener;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
+import com.gs.jprompt.common.JPromptContext;
+
 public class JPromptInternalFrame extends JInternalFrame {
 
+	private static final JPromptContext CONTEXT = JPromptContext.getContext();
+	
     public JPromptInternalFrame() {
         initComponents();
     }
@@ -71,8 +75,7 @@ public class JPromptInternalFrame extends JInternalFrame {
 
         promptAreaPopupMenu.setName("promptAreaPopupMenu"); // NOI18N
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/gs/jprompt/app/form/Bundle"); // NOI18N
-        refreshMenuItem.setText(bundle.getString("JPromptInternalFrame.refreshMenuItem.text")); // NOI18N
+        refreshMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptInternalFrame.refreshMenuItem.text")); // NOI18N
         refreshMenuItem.setName("refreshMenuItem"); // NOI18N
         refreshMenuItem.addActionListener(formListener);
         promptAreaPopupMenu.add(refreshMenuItem);
@@ -80,12 +83,12 @@ public class JPromptInternalFrame extends JInternalFrame {
         jSeparator4.setName("jSeparator4"); // NOI18N
         promptAreaPopupMenu.add(jSeparator4);
 
-        copyMenuItem.setText(bundle.getString("JPromptInternalFrame.copyMenuItem.text")); // NOI18N
+        copyMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptInternalFrame.copyMenuItem.text")); // NOI18N
         copyMenuItem.setName("copyMenuItem"); // NOI18N
         copyMenuItem.addActionListener(formListener);
         promptAreaPopupMenu.add(copyMenuItem);
 
-        saveMenuItem.setText(bundle.getString("JPromptInternalFrame.saveMenuItem.text")); // NOI18N
+        saveMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptInternalFrame.saveMenuItem.text")); // NOI18N
         saveMenuItem.setName("saveMenuItem"); // NOI18N
         saveMenuItem.addActionListener(formListener);
         promptAreaPopupMenu.add(saveMenuItem);
@@ -93,7 +96,7 @@ public class JPromptInternalFrame extends JInternalFrame {
         jSeparator5.setName("jSeparator5"); // NOI18N
         promptAreaPopupMenu.add(jSeparator5);
 
-        clearMenuItem.setText(bundle.getString("JPromptInternalFrame.clearMenuItem.text")); // NOI18N
+        clearMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptInternalFrame.clearMenuItem.text")); // NOI18N
         clearMenuItem.setName("clearMenuItem"); // NOI18N
         clearMenuItem.addActionListener(formListener);
         promptAreaPopupMenu.add(clearMenuItem);
@@ -101,12 +104,12 @@ public class JPromptInternalFrame extends JInternalFrame {
         jSeparator6.setName("jSeparator6"); // NOI18N
         promptAreaPopupMenu.add(jSeparator6);
 
-        startPauseMenuItem.setText(bundle.getString("JPromptInternalFrame.startPauseMenuItem.text")); // NOI18N
+        startPauseMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptInternalFrame.startPauseMenuItem.text")); // NOI18N
         startPauseMenuItem.setName("startPauseMenuItem"); // NOI18N
         startPauseMenuItem.addActionListener(formListener);
         promptAreaPopupMenu.add(startPauseMenuItem);
 
-        stopMenuItem.setText(bundle.getString("JPromptInternalFrame.stopMenuItem.text")); // NOI18N
+        stopMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptInternalFrame.stopMenuItem.text")); // NOI18N
         stopMenuItem.setName("stopMenuItem"); // NOI18N
         stopMenuItem.addActionListener(formListener);
         promptAreaPopupMenu.add(stopMenuItem);
@@ -115,7 +118,7 @@ public class JPromptInternalFrame extends JInternalFrame {
         promptAreaPopupMenu.add(jSeparator7);
 
         showToolbarCheckBoxMenuItem.setSelected(true);
-        showToolbarCheckBoxMenuItem.setText(bundle.getString("JPromptInternalFrame.showToolbarCheckBoxMenuItem.text")); // NOI18N
+        showToolbarCheckBoxMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptInternalFrame.showToolbarCheckBoxMenuItem.text")); // NOI18N
         showToolbarCheckBoxMenuItem.setName("showToolbarCheckBoxMenuItem"); // NOI18N
         showToolbarCheckBoxMenuItem.addActionListener(formListener);
         promptAreaPopupMenu.add(showToolbarCheckBoxMenuItem);
@@ -124,7 +127,7 @@ public class JPromptInternalFrame extends JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle(bundle.getString("JPromptInternalFrame.title")); // NOI18N
+        setTitle(CONTEXT.getResourceBundle().getString("JPromptInternalFrame.title")); // NOI18N
         setName("Form"); // NOI18N
         addInternalFrameListener(formListener);
         addFocusListener(formListener);
@@ -134,7 +137,7 @@ public class JPromptInternalFrame extends JInternalFrame {
         promptToolBar.setRollover(true);
         promptToolBar.setName("promptToolBar"); // NOI18N
 
-        refreshButton.setText(bundle.getString("JPromptInternalFrame.refreshButton.text")); // NOI18N
+        refreshButton.setText(CONTEXT.getResourceBundle().getString("JPromptInternalFrame.refreshButton.text")); // NOI18N
         refreshButton.setFocusable(false);
         refreshButton.setHorizontalTextPosition(SwingConstants.CENTER);
         refreshButton.setName("refreshButton"); // NOI18N
@@ -145,7 +148,7 @@ public class JPromptInternalFrame extends JInternalFrame {
         jSeparator1.setName("jSeparator1"); // NOI18N
         promptToolBar.add(jSeparator1);
 
-        copyButton.setText(bundle.getString("JPromptInternalFrame.copyButton.text")); // NOI18N
+        copyButton.setText(CONTEXT.getResourceBundle().getString("JPromptInternalFrame.copyButton.text")); // NOI18N
         copyButton.setFocusable(false);
         copyButton.setHorizontalTextPosition(SwingConstants.CENTER);
         copyButton.setName("copyButton"); // NOI18N
@@ -153,7 +156,7 @@ public class JPromptInternalFrame extends JInternalFrame {
         copyButton.addActionListener(formListener);
         promptToolBar.add(copyButton);
 
-        saveButton.setText(bundle.getString("JPromptInternalFrame.saveButton.text")); // NOI18N
+        saveButton.setText(CONTEXT.getResourceBundle().getString("JPromptInternalFrame.saveButton.text")); // NOI18N
         saveButton.setIcon(new ImageIcon(getClass().getResource("/images/save_edit.gif"))); // NOI18N
         saveButton.setFocusable(false);
         saveButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -165,7 +168,7 @@ public class JPromptInternalFrame extends JInternalFrame {
         jSeparator2.setName("jSeparator2"); // NOI18N
         promptToolBar.add(jSeparator2);
 
-        clearButton.setText(bundle.getString("JPromptInternalFrame.clearButton.text")); // NOI18N
+        clearButton.setText(CONTEXT.getResourceBundle().getString("JPromptInternalFrame.clearButton.text")); // NOI18N
         clearButton.setFocusable(false);
         clearButton.setHorizontalTextPosition(SwingConstants.CENTER);
         clearButton.setName("clearButton"); // NOI18N
@@ -176,7 +179,7 @@ public class JPromptInternalFrame extends JInternalFrame {
         jSeparator3.setName("jSeparator3"); // NOI18N
         promptToolBar.add(jSeparator3);
 
-        startPauseButton.setText(bundle.getString("JPromptInternalFrame.startPauseButton.text")); // NOI18N
+        startPauseButton.setText(CONTEXT.getResourceBundle().getString("JPromptInternalFrame.startPauseButton.text")); // NOI18N
         startPauseButton.setFocusable(false);
         startPauseButton.setHorizontalTextPosition(SwingConstants.CENTER);
         startPauseButton.setName("startPauseButton"); // NOI18N
@@ -184,7 +187,7 @@ public class JPromptInternalFrame extends JInternalFrame {
         startPauseButton.addActionListener(formListener);
         promptToolBar.add(startPauseButton);
 
-        stopButton.setText(bundle.getString("JPromptInternalFrame.stopButton.text")); // NOI18N
+        stopButton.setText(CONTEXT.getResourceBundle().getString("JPromptInternalFrame.stopButton.text")); // NOI18N
         stopButton.setFocusable(false);
         stopButton.setHorizontalTextPosition(SwingConstants.CENTER);
         stopButton.setName("stopButton"); // NOI18N
