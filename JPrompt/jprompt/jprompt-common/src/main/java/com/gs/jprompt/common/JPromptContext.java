@@ -23,10 +23,12 @@ public final class JPromptContext {
 		try{
 			Font digital7mono = Font.createFont(Font.TRUETYPE_FONT, 
 					getClass().getResourceAsStream("/fonts/digital-7-mono.ttf"));
+			digital_7_mono = digital7mono.deriveFont(Font.PLAIN, 16);
 			
-			
-			
-			digital_7_mono = digital7mono.deriveFont(Font.PLAIN, 16);//new Font(digital7mono.getName(), Font.PLAIN, 14);
+			Font vera = Font.createFont(Font.TRUETYPE_FONT, 
+					getClass().getResourceAsStream("/fonts/VeraMono.ttf"));
+			veraMono = vera.deriveFont(Font.PLAIN, 12);
+			defaultEditorFont = vera.deriveFont(Font.PLAIN, 12);
 		}catch(Exception ex){
 			logger.error("Cannot initialize Fonts", ex);
 			ex.printStackTrace();
@@ -63,19 +65,21 @@ public final class JPromptContext {
 		return resourceBundle;
 	}
 	
-	public Font digital_7_mono;
-	
-	public static void main(String[] args) throws Exception {
-	    File f = new File("fonts/digital-7-mono.ttf");
-	    FileInputStream in = new FileInputStream(f);
-	    Font dynamicFont = Font.createFont(Font.TRUETYPE_FONT, in);
-	    Font dynamicFont32Pt = dynamicFont.deriveFont(32f);
+	private Font digital_7_mono;
+	public Font getDigital_7_mono() {
+		return digital_7_mono;
+	}
 
-	    JLabel testLabel = new JLabel(dynamicFont.getName());
-	    testLabel.setFont(dynamicFont32Pt);
-	    JFrame frame = new JFrame("Font Loading Demo");
-	    frame.getContentPane().add(testLabel);
-	    frame.pack();
-	    frame.setVisible(true);
-	  }
+	public Font veraMono;
+	
+	private Font defaultEditorFont;
+	public Font getDefaultEditorFont() {
+		return defaultEditorFont;
+	}
+	
+	public String consoleStartupDirectory = "D:\\";
+	
+	public final char PROMPT_CHAR = '>';
+	
+	
 }

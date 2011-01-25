@@ -40,7 +40,7 @@ import com.gs.jprompt.common.JPromptContext;
  */
 public class JPromptMainFrame extends JFrame {
 
-	private static final JPromptContext CONTEXT = JPromptContext.getContext();
+	private static final JPromptContext context = JPromptContext.getContext();
 	
 	
     /** Creates new form JPromptMainFrame */
@@ -131,7 +131,7 @@ public class JPromptMainFrame extends JFrame {
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
-        setTitle(CONTEXT.getResourceBundle().getString("JPromptMainFrame.title")); // NOI18N
+        setTitle(context.getResourceBundle().getString("JPromptMainFrame.title")); // NOI18N
         setName("Form"); // NOI18N
         getContentPane().setLayout(new GridBagLayout());
 
@@ -140,7 +140,7 @@ public class JPromptMainFrame extends JFrame {
         actionToolBar.setName("actionToolBar"); // NOI18N
 
         newConsoleButton.setIcon(new ImageIcon(getClass().getResource("/images/new-prompt.png"))); // NOI18N
-        newConsoleButton.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.newConsoleButton.text")); // NOI18N
+        newConsoleButton.setText(context.getResourceBundle().getString("JPromptMainFrame.newConsoleButton.text")); // NOI18N
         newConsoleButton.setFocusable(false);
         newConsoleButton.setHorizontalTextPosition(SwingConstants.CENTER);
         newConsoleButton.setName("newConsoleButton"); // NOI18N
@@ -149,7 +149,7 @@ public class JPromptMainFrame extends JFrame {
         actionToolBar.add(newConsoleButton);
 
         openCommandButton.setIcon(new ImageIcon(getClass().getResource("/images/folderopen.png"))); // NOI18N
-        openCommandButton.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.openCommandButton.text")); // NOI18N
+        openCommandButton.setText(context.getResourceBundle().getString("JPromptMainFrame.openCommandButton.text")); // NOI18N
         openCommandButton.setFocusable(false);
         openCommandButton.setHorizontalTextPosition(SwingConstants.CENTER);
         openCommandButton.setName("openCommandButton"); // NOI18N
@@ -160,7 +160,7 @@ public class JPromptMainFrame extends JFrame {
         jSeparator15.setName("jSeparator15"); // NOI18N
         actionToolBar.add(jSeparator15);
 
-        copyButton.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.copyButton.text")); // NOI18N
+        copyButton.setText(context.getResourceBundle().getString("JPromptMainFrame.copyButton.text")); // NOI18N
         copyButton.setFocusable(false);
         copyButton.setHorizontalTextPosition(SwingConstants.CENTER);
         copyButton.setName("copyButton"); // NOI18N
@@ -168,7 +168,7 @@ public class JPromptMainFrame extends JFrame {
         copyButton.addActionListener(formListener);
         actionToolBar.add(copyButton);
 
-        pasteButton.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.pasteButton.text")); // NOI18N
+        pasteButton.setText(context.getResourceBundle().getString("JPromptMainFrame.pasteButton.text")); // NOI18N
         pasteButton.setFocusable(false);
         pasteButton.setHorizontalTextPosition(SwingConstants.CENTER);
         pasteButton.setName("pasteButton"); // NOI18N
@@ -176,7 +176,7 @@ public class JPromptMainFrame extends JFrame {
         pasteButton.addActionListener(formListener);
         actionToolBar.add(pasteButton);
 
-        clearScreenButton.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.clearScreenButton.text")); // NOI18N
+        clearScreenButton.setText(context.getResourceBundle().getString("JPromptMainFrame.clearScreenButton.text")); // NOI18N
         clearScreenButton.setFocusable(false);
         clearScreenButton.setHorizontalTextPosition(SwingConstants.CENTER);
         clearScreenButton.setName("clearScreenButton"); // NOI18N
@@ -187,7 +187,7 @@ public class JPromptMainFrame extends JFrame {
         jSeparator16.setName("jSeparator16"); // NOI18N
         actionToolBar.add(jSeparator16);
 
-        findButton.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.findButton.text")); // NOI18N
+        findButton.setText(context.getResourceBundle().getString("JPromptMainFrame.findButton.text")); // NOI18N
         findButton.setFocusable(false);
         findButton.setHorizontalTextPosition(SwingConstants.CENTER);
         findButton.setName("findButton"); // NOI18N
@@ -218,12 +218,12 @@ public class JPromptMainFrame extends JFrame {
         statusToolBar.setRollover(true);
         statusToolBar.setName("statusToolBar"); // NOI18N
 
-        jLabel1.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.jLabel1.text")); // NOI18N
+        jLabel1.setText(context.getResourceBundle().getString("JPromptMainFrame.jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
         statusToolBar.add(jLabel1);
 
         quickLaunchButton.setIcon(new ImageIcon(getClass().getResource("/images/folderopen.png"))); // NOI18N
-        quickLaunchButton.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.quickLaunchButton.text")); // NOI18N
+        quickLaunchButton.setText(context.getResourceBundle().getString("JPromptMainFrame.quickLaunchButton.text")); // NOI18N
         quickLaunchButton.setFocusable(false);
         quickLaunchButton.setHorizontalTextPosition(SwingConstants.CENTER);
         quickLaunchButton.setName("quickLaunchButton"); // NOI18N
@@ -234,12 +234,12 @@ public class JPromptMainFrame extends JFrame {
         jSeparator9.setName("jSeparator9"); // NOI18N
         statusToolBar.add(jSeparator9);
 
-        jLabel2.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.jLabel2.text")); // NOI18N
+        jLabel2.setText(context.getResourceBundle().getString("JPromptMainFrame.jLabel2.text")); // NOI18N
         jLabel2.setName("jLabel2"); // NOI18N
         statusToolBar.add(jLabel2);
 
         minimizedConcolesButton.setIcon(new ImageIcon(getClass().getResource("/images/folderopen.png"))); // NOI18N
-        minimizedConcolesButton.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.minimizedConcolesButton.text")); // NOI18N
+        minimizedConcolesButton.setText(context.getResourceBundle().getString("JPromptMainFrame.minimizedConcolesButton.text")); // NOI18N
         minimizedConcolesButton.setFocusable(false);
         minimizedConcolesButton.setHorizontalTextPosition(SwingConstants.CENTER);
         minimizedConcolesButton.setName("minimizedConcolesButton"); // NOI18N
@@ -250,11 +250,11 @@ public class JPromptMainFrame extends JFrame {
         jSeparator10.setName("jSeparator10"); // NOI18N
         statusToolBar.add(jSeparator10);
 
-        jLabel3.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.jLabel3.text")); // NOI18N
+        jLabel3.setText(context.getResourceBundle().getString("JPromptMainFrame.jLabel3.text")); // NOI18N
         jLabel3.setName("jLabel3"); // NOI18N
         statusToolBar.add(jLabel3);
 
-        quickRunTextField.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.quickRunTextField.text")); // NOI18N
+        quickRunTextField.setText(context.getResourceBundle().getString("JPromptMainFrame.quickRunTextField.text")); // NOI18N
         quickRunTextField.setMinimumSize(new Dimension(80, 20));
         quickRunTextField.setName("quickRunTextField"); // NOI18N
         quickRunTextField.setPreferredSize(new Dimension(80, 20));
@@ -263,7 +263,7 @@ public class JPromptMainFrame extends JFrame {
         statusToolBar.add(quickRunTextField);
 
         runInNewConsoleCheckBox.setSelected(true);
-        runInNewConsoleCheckBox.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.runInNewConsoleCheckBox.text")); // NOI18N
+        runInNewConsoleCheckBox.setText(context.getResourceBundle().getString("JPromptMainFrame.runInNewConsoleCheckBox.text")); // NOI18N
         runInNewConsoleCheckBox.setFocusable(false);
         runInNewConsoleCheckBox.setHorizontalTextPosition(SwingConstants.RIGHT);
         runInNewConsoleCheckBox.setName("runInNewConsoleCheckBox"); // NOI18N
@@ -275,7 +275,7 @@ public class JPromptMainFrame extends JFrame {
         statusToolBar.add(jSeparator11);
 
         lineInfoLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        lineInfoLabel.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.lineInfoLabel.text")); // NOI18N
+        lineInfoLabel.setText(context.getResourceBundle().getString("JPromptMainFrame.lineInfoLabel.text")); // NOI18N
         lineInfoLabel.setMaximumSize(new Dimension(80, 14));
         lineInfoLabel.setMinimumSize(new Dimension(80, 14));
         lineInfoLabel.setName("lineInfoLabel"); // NOI18N
@@ -286,7 +286,7 @@ public class JPromptMainFrame extends JFrame {
         statusToolBar.add(jSeparator12);
 
         numLockLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        numLockLabel.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.numLockLabel.text")); // NOI18N
+        numLockLabel.setText(context.getResourceBundle().getString("JPromptMainFrame.numLockLabel.text")); // NOI18N
         numLockLabel.setMaximumSize(new Dimension(35, 14));
         numLockLabel.setMinimumSize(new Dimension(35, 14));
         numLockLabel.setName("numLockLabel"); // NOI18N
@@ -297,7 +297,7 @@ public class JPromptMainFrame extends JFrame {
         statusToolBar.add(jSeparator13);
 
         capsLockLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        capsLockLabel.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.capsLockLabel.text")); // NOI18N
+        capsLockLabel.setText(context.getResourceBundle().getString("JPromptMainFrame.capsLockLabel.text")); // NOI18N
         capsLockLabel.setMaximumSize(new Dimension(35, 14));
         capsLockLabel.setMinimumSize(new Dimension(35, 14));
         capsLockLabel.setName("capsLockLabel"); // NOI18N
@@ -308,13 +308,13 @@ public class JPromptMainFrame extends JFrame {
         statusToolBar.add(jSeparator14);
 
         sysTimeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        sysTimeLabel.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.sysTimeLabel.text")); // NOI18N
+        sysTimeLabel.setText(context.getResourceBundle().getString("JPromptMainFrame.sysTimeLabel.text")); // NOI18N
         sysTimeLabel.setMaximumSize(new Dimension(80, 14));
         sysTimeLabel.setMinimumSize(new Dimension(80, 14));
         sysTimeLabel.setName("sysTimeLabel"); // NOI18N
         sysTimeLabel.setPreferredSize(new Dimension(80, 14));
         sysTimeLabel.addMouseListener(formListener);
-        sysTimeLabel.setFont(CONTEXT.digital_7_mono);
+        sysTimeLabel.setFont(context.getDigital_7_mono());
         statusToolBar.add(sysTimeLabel);
 
         gridBagConstraints = new GridBagConstraints();
@@ -328,19 +328,19 @@ public class JPromptMainFrame extends JFrame {
 
         promptFrameMenuBar.setName("promptFrameMenuBar"); // NOI18N
 
-        fileMenu.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.fileMenu.text")); // NOI18N
+        fileMenu.setText(context.getResourceBundle().getString("JPromptMainFrame.fileMenu.text")); // NOI18N
         fileMenu.setName("fileMenu"); // NOI18N
 
         newPromptMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
         newPromptMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/new-prompt.png"))); // NOI18N
-        newPromptMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.newPromptMenuItem.text")); // NOI18N
+        newPromptMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.newPromptMenuItem.text")); // NOI18N
         newPromptMenuItem.setName("newPromptMenuItem"); // NOI18N
         newPromptMenuItem.addActionListener(formListener);
         fileMenu.add(newPromptMenuItem);
 
         openCommandFileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
         openCommandFileMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/folderopen.png"))); // NOI18N
-        openCommandFileMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.openCommandFileMenuItem.text")); // NOI18N
+        openCommandFileMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.openCommandFileMenuItem.text")); // NOI18N
         openCommandFileMenuItem.setName("openCommandFileMenuItem"); // NOI18N
         openCommandFileMenuItem.addActionListener(formListener);
         fileMenu.add(openCommandFileMenuItem);
@@ -348,12 +348,12 @@ public class JPromptMainFrame extends JFrame {
         jSeparator17.setName("jSeparator17"); // NOI18N
         fileMenu.add(jSeparator17);
 
-        closeMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.closeMenuItem.text")); // NOI18N
+        closeMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.closeMenuItem.text")); // NOI18N
         closeMenuItem.setName("closeMenuItem"); // NOI18N
         closeMenuItem.addActionListener(formListener);
         fileMenu.add(closeMenuItem);
 
-        closeAllMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.closeAllMenuItem.text")); // NOI18N
+        closeAllMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.closeAllMenuItem.text")); // NOI18N
         closeAllMenuItem.setName("closeAllMenuItem"); // NOI18N
         closeAllMenuItem.addActionListener(formListener);
         fileMenu.add(closeAllMenuItem);
@@ -363,20 +363,20 @@ public class JPromptMainFrame extends JFrame {
 
         saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
         saveMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/save_edit.gif"))); // NOI18N
-        saveMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.saveMenuItem.text")); // NOI18N
+        saveMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.saveMenuItem.text")); // NOI18N
         saveMenuItem.setName("saveMenuItem"); // NOI18N
         saveMenuItem.addActionListener(formListener);
         fileMenu.add(saveMenuItem);
 
         saveAsMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/saveas_edit.gif"))); // NOI18N
-        saveAsMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.saveAsMenuItem.text")); // NOI18N
+        saveAsMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.saveAsMenuItem.text")); // NOI18N
         saveAsMenuItem.setName("saveAsMenuItem"); // NOI18N
         saveAsMenuItem.addActionListener(formListener);
         fileMenu.add(saveAsMenuItem);
 
         saveAllMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.SHIFT_MASK | InputEvent.CTRL_MASK));
         saveAllMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/saveall_edit.gif"))); // NOI18N
-        saveAllMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.saveAllMenuItem.text")); // NOI18N
+        saveAllMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.saveAllMenuItem.text")); // NOI18N
         saveAllMenuItem.setName("saveAllMenuItem"); // NOI18N
         saveAllMenuItem.addActionListener(formListener);
         fileMenu.add(saveAllMenuItem);
@@ -384,7 +384,7 @@ public class JPromptMainFrame extends JFrame {
         jSeparator3.setName("jSeparator3"); // NOI18N
         fileMenu.add(jSeparator3);
 
-        openLogFolderMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.openLogFolderMenuItem.text")); // NOI18N
+        openLogFolderMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.openLogFolderMenuItem.text")); // NOI18N
         openLogFolderMenuItem.setName("openLogFolderMenuItem"); // NOI18N
         openLogFolderMenuItem.addActionListener(formListener);
         fileMenu.add(openLogFolderMenuItem);
@@ -394,32 +394,32 @@ public class JPromptMainFrame extends JFrame {
 
         exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F4, InputEvent.ALT_MASK));
         exitMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/exit.gif"))); // NOI18N
-        exitMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.exitMenuItem.text")); // NOI18N
+        exitMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.exitMenuItem.text")); // NOI18N
         exitMenuItem.setName("exitMenuItem"); // NOI18N
         exitMenuItem.addActionListener(formListener);
         fileMenu.add(exitMenuItem);
 
         promptFrameMenuBar.add(fileMenu);
 
-        editMenu.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.editMenu.text")); // NOI18N
+        editMenu.setText(context.getResourceBundle().getString("JPromptMainFrame.editMenu.text")); // NOI18N
         editMenu.setName("editMenu"); // NOI18N
 
-        cutMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.cutMenuItem.text")); // NOI18N
+        cutMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.cutMenuItem.text")); // NOI18N
         cutMenuItem.setName("cutMenuItem"); // NOI18N
         cutMenuItem.addActionListener(formListener);
         editMenu.add(cutMenuItem);
 
-        copyMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.copyMenuItem.text")); // NOI18N
+        copyMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.copyMenuItem.text")); // NOI18N
         copyMenuItem.setName("copyMenuItem"); // NOI18N
         copyMenuItem.addActionListener(formListener);
         editMenu.add(copyMenuItem);
 
-        pasteMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.pasteMenuItem.text")); // NOI18N
+        pasteMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.pasteMenuItem.text")); // NOI18N
         pasteMenuItem.setName("pasteMenuItem"); // NOI18N
         pasteMenuItem.addActionListener(formListener);
         editMenu.add(pasteMenuItem);
 
-        deleteMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.deleteMenuItem.text")); // NOI18N
+        deleteMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.deleteMenuItem.text")); // NOI18N
         deleteMenuItem.setName("deleteMenuItem"); // NOI18N
         deleteMenuItem.addActionListener(formListener);
         editMenu.add(deleteMenuItem);
@@ -427,28 +427,28 @@ public class JPromptMainFrame extends JFrame {
         jSeparator1.setName("jSeparator1"); // NOI18N
         editMenu.add(jSeparator1);
 
-        selectAllMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.selectAllMenuItem.text")); // NOI18N
+        selectAllMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.selectAllMenuItem.text")); // NOI18N
         selectAllMenuItem.setName("selectAllMenuItem"); // NOI18N
         selectAllMenuItem.addActionListener(formListener);
         editMenu.add(selectAllMenuItem);
 
-        clearScreenMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.clearScreenMenuItem.text")); // NOI18N
+        clearScreenMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.clearScreenMenuItem.text")); // NOI18N
         clearScreenMenuItem.setName("clearScreenMenuItem"); // NOI18N
         clearScreenMenuItem.addActionListener(formListener);
         editMenu.add(clearScreenMenuItem);
 
         promptFrameMenuBar.add(editMenu);
 
-        searchMenu.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.searchMenu.text")); // NOI18N
+        searchMenu.setText(context.getResourceBundle().getString("JPromptMainFrame.searchMenu.text")); // NOI18N
         searchMenu.setName("searchMenu"); // NOI18N
 
         findMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.CTRL_MASK));
-        findMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.findMenuItem.text")); // NOI18N
+        findMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.findMenuItem.text")); // NOI18N
         findMenuItem.setName("findMenuItem"); // NOI18N
         findMenuItem.addActionListener(formListener);
         searchMenu.add(findMenuItem);
 
-        findReplaceMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.findReplaceMenuItem.text")); // NOI18N
+        findReplaceMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.findReplaceMenuItem.text")); // NOI18N
         findReplaceMenuItem.setName("findReplaceMenuItem"); // NOI18N
         findReplaceMenuItem.addActionListener(formListener);
         searchMenu.add(findReplaceMenuItem);
@@ -456,17 +456,17 @@ public class JPromptMainFrame extends JFrame {
         jSeparator5.setName("jSeparator5"); // NOI18N
         searchMenu.add(jSeparator5);
 
-        findInAllConsolesMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.findInAllConsolesMenuItem.text")); // NOI18N
+        findInAllConsolesMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.findInAllConsolesMenuItem.text")); // NOI18N
         findInAllConsolesMenuItem.setName("findInAllConsolesMenuItem"); // NOI18N
         findInAllConsolesMenuItem.addActionListener(formListener);
         searchMenu.add(findInAllConsolesMenuItem);
 
         promptFrameMenuBar.add(searchMenu);
 
-        toolsMenu.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.toolsMenu.text")); // NOI18N
+        toolsMenu.setText(context.getResourceBundle().getString("JPromptMainFrame.toolsMenu.text")); // NOI18N
         toolsMenu.setName("toolsMenu"); // NOI18N
 
-        runCommandMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.runCommandMenuItem.text")); // NOI18N
+        runCommandMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.runCommandMenuItem.text")); // NOI18N
         runCommandMenuItem.setName("runCommandMenuItem"); // NOI18N
         runCommandMenuItem.addActionListener(formListener);
         toolsMenu.add(runCommandMenuItem);
@@ -474,12 +474,12 @@ public class JPromptMainFrame extends JFrame {
         jSeparator6.setName("jSeparator6"); // NOI18N
         toolsMenu.add(jSeparator6);
 
-        startPauseMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.startPauseMenuItem.text")); // NOI18N
+        startPauseMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.startPauseMenuItem.text")); // NOI18N
         startPauseMenuItem.setName("startPauseMenuItem"); // NOI18N
         startPauseMenuItem.addActionListener(formListener);
         toolsMenu.add(startPauseMenuItem);
 
-        stopMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.stopMenuItem.text")); // NOI18N
+        stopMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.stopMenuItem.text")); // NOI18N
         stopMenuItem.setName("stopMenuItem"); // NOI18N
         stopMenuItem.addActionListener(formListener);
         toolsMenu.add(stopMenuItem);
@@ -487,12 +487,12 @@ public class JPromptMainFrame extends JFrame {
         jSeparator7.setName("jSeparator7"); // NOI18N
         toolsMenu.add(jSeparator7);
 
-        startPauseAllMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.startPauseAllMenuItem.text")); // NOI18N
+        startPauseAllMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.startPauseAllMenuItem.text")); // NOI18N
         startPauseAllMenuItem.setName("startPauseAllMenuItem"); // NOI18N
         startPauseAllMenuItem.addActionListener(formListener);
         toolsMenu.add(startPauseAllMenuItem);
 
-        stopAllMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.stopAllMenuItem.text")); // NOI18N
+        stopAllMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.stopAllMenuItem.text")); // NOI18N
         stopAllMenuItem.setName("stopAllMenuItem"); // NOI18N
         stopAllMenuItem.addActionListener(formListener);
         toolsMenu.add(stopAllMenuItem);
@@ -500,24 +500,24 @@ public class JPromptMainFrame extends JFrame {
         jSeparator8.setName("jSeparator8"); // NOI18N
         toolsMenu.add(jSeparator8);
 
-        settingsMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.settingsMenuItem.text")); // NOI18N
+        settingsMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.settingsMenuItem.text")); // NOI18N
         settingsMenuItem.setName("settingsMenuItem"); // NOI18N
         settingsMenuItem.addActionListener(formListener);
         toolsMenu.add(settingsMenuItem);
 
         promptFrameMenuBar.add(toolsMenu);
 
-        viewMenu.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.viewMenu.text")); // NOI18N
+        viewMenu.setText(context.getResourceBundle().getString("JPromptMainFrame.viewMenu.text")); // NOI18N
         viewMenu.setName("viewMenu"); // NOI18N
 
         showToolbarCheckBoxMenuItem.setSelected(true);
-        showToolbarCheckBoxMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.showToolbarCheckBoxMenuItem.text")); // NOI18N
+        showToolbarCheckBoxMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.showToolbarCheckBoxMenuItem.text")); // NOI18N
         showToolbarCheckBoxMenuItem.setName("showToolbarCheckBoxMenuItem"); // NOI18N
         showToolbarCheckBoxMenuItem.addActionListener(formListener);
         viewMenu.add(showToolbarCheckBoxMenuItem);
 
         showStatusbarCheckBoxMenuItem.setSelected(true);
-        showStatusbarCheckBoxMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.showStatusbarCheckBoxMenuItem.text")); // NOI18N
+        showStatusbarCheckBoxMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.showStatusbarCheckBoxMenuItem.text")); // NOI18N
         showStatusbarCheckBoxMenuItem.setName("showStatusbarCheckBoxMenuItem"); // NOI18N
         showStatusbarCheckBoxMenuItem.addActionListener(formListener);
         viewMenu.add(showStatusbarCheckBoxMenuItem);
@@ -525,23 +525,23 @@ public class JPromptMainFrame extends JFrame {
         jSeparator18.setName("jSeparator18"); // NOI18N
         viewMenu.add(jSeparator18);
 
-        showEnvVarsMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.showEnvVarsMenuItem.text")); // NOI18N
+        showEnvVarsMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.showEnvVarsMenuItem.text")); // NOI18N
         showEnvVarsMenuItem.setName("showEnvVarsMenuItem"); // NOI18N
         showEnvVarsMenuItem.addActionListener(formListener);
         viewMenu.add(showEnvVarsMenuItem);
 
         promptFrameMenuBar.add(viewMenu);
 
-        helpMenu.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.helpMenu.text")); // NOI18N
+        helpMenu.setText(context.getResourceBundle().getString("JPromptMainFrame.helpMenu.text")); // NOI18N
         helpMenu.setName("helpMenu"); // NOI18N
 
         helpMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
-        helpMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.helpMenuItem.text")); // NOI18N
+        helpMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.helpMenuItem.text")); // NOI18N
         helpMenuItem.setName("helpMenuItem"); // NOI18N
         helpMenuItem.addActionListener(formListener);
         helpMenu.add(helpMenuItem);
 
-        aboutMenuItem.setText(CONTEXT.getResourceBundle().getString("JPromptMainFrame.aboutMenuItem.text")); // NOI18N
+        aboutMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.aboutMenuItem.text")); // NOI18N
         aboutMenuItem.setName("aboutMenuItem"); // NOI18N
         aboutMenuItem.addActionListener(formListener);
         helpMenu.add(aboutMenuItem);
@@ -718,7 +718,7 @@ public class JPromptMainFrame extends JFrame {
     }
 
     private void newPromptMenuItemActionPerformed(ActionEvent evt) {
-        JPromptInternalFrame f = new JPromptInternalFrame();
+        JPromptInternalFrame f = new JPromptInternalFrame(this);
         f.setVisible(true);
         promptDesktopPane.add(f);
     }
@@ -899,6 +899,7 @@ public class JPromptMainFrame extends JFrame {
     * @param args the command line arguments
     */
     public static void main(String args[]) {
+    	
         EventQueue.invokeLater(new Runnable() {
             public void run() {
             	try {
