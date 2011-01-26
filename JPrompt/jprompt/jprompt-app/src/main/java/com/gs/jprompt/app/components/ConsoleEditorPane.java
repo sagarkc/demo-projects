@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
@@ -16,18 +17,18 @@ import javax.swing.text.Caret;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.DocumentFilter.FilterBypass;
 
+import org.apache.log4j.Logger;
+
+import com.gs.jprompt.common.JPromptConstants;
 import com.gs.jprompt.common.JPromptContext;
+import com.gs.utils.text.StringUtil;
 
 /**
  * The requirement to mark parts of your text area content as read-only can be
- * done using DocumentFilter. 
- * In short: 
- * - get the Document from your JTextArea 
+ * done using DocumentFilter. In short: - get the Document from your JTextArea
  * -cast it to AbstractDocument (this cast is safe unless the JTextArea has a
- * custom document) 
- * - create a custom DocumentFilter subclass and instantiate it
- * (perhaps an anonymous inner class will do) 
- * - call setDocumentFilter on the
+ * custom document) - create a custom DocumentFilter subclass and instantiate it
+ * (perhaps an anonymous inner class will do) - call setDocumentFilter on the
  * document
  * 
  * The custom DocumentFilter is where the hard work is done. Override
@@ -53,89 +54,106 @@ public class ConsoleEditorPane extends JEditorPane implements KeyListener,
 	 * 
 	 */
 	private static final long serialVersionUID = 7905965721433569980L;
+	private static final Logger logger = Logger
+			.getLogger(ConsoleEditorPane.class);
 
 	private static final JPromptContext context = JPromptContext.getContext();
 
 	private JFrame parentFrame;
-	
+
 	private String prompt;
 	private File workingDirectory;
-	private char promptCharacter;
+	private char promptCharacter = JPromptConstants.DEFAULT_PROMPT_CHAR;
 
-	private DocumentFilter documentFilter = new DocumentFilter(){
+	private int promptLength;
+	private int endPromptOffset;
+	private int promptLine;
 
-		
-		public void remove(FilterBypass fb, int offset, int length)
-				throws BadLocationException {
-			// TODO Auto-generated method stub
-			super.remove(fb, offset, length);
-		}
-
-		
-		public void insertString(FilterBypass fb, int offset, String string,
-				AttributeSet attr) throws BadLocationException {
-			// TODO Auto-generated method stub
-			super.insertString(fb, offset, string, attr);
-		}
-
-		
-		public void replace(FilterBypass fb, int offset, int length,
-				String text, AttributeSet attrs) throws BadLocationException {
-			// TODO Auto-generated method stub
-			super.replace(fb, offset, length, text, attrs);
-		}
-		
-	};
-
-	/**
-	 * @param parentFrame
-	 */
 	public ConsoleEditorPane(JFrame parentFrame) {
+		this(parentFrame, new File("."));
+	}
+
+	public ConsoleEditorPane(JFrame parentFrame, File workingDirectory) {
+		this(parentFrame, workingDirectory, null);
+	}
+
+	public ConsoleEditorPane(JFrame parentFrame, File workingDirectory,
+			String prompt) {
 		this.parentFrame = parentFrame;
-		
+		if (!StringUtil.hasValidContent(prompt)) {
+			prompt = JPromptConstants.DEFAULT_PROMPT;
+			if (workingDirectory.exists()) {
+				try {
+					prompt = workingDirectory.getCanonicalPath();
+				} catch (IOException e) {
+					logger.error("The working directory not found. Setting it to the user.home directory.");
+					workingDirectory = new File(JPromptConstants.USER_DIR);
+					prompt = workingDirectory.getAbsolutePath();
+				}
+			} else {
+				logger.error("The working directory not found. Setting it to the user.home directory.");
+				workingDirectory = new File(JPromptConstants.USER_DIR);
+				prompt = workingDirectory.getAbsolutePath();
+			}
+		}
+		this.workingDirectory = workingDirectory;
+		this.prompt = prompt;
 		initComponents();
 	}
-	
+
 	private void initComponents() {
 		setFont(context.getDefaultEditorFont());
-		setText(getPrompt() + getPromptCharacter()) ;
+		setText(getPrompt() + getPromptCharacter());
+		promptLength = prompt.length() + 1;
+		endPromptOffset = promptLength - 1;
+		
 	}
+
 	/**
 	 * @return the prompt
 	 */
 	public String getPrompt() {
 		return prompt;
 	}
+
 	/**
-	 * @param prompt the prompt to set
+	 * @param prompt
+	 *            the prompt to set
 	 */
 	public void setPrompt(String prompt) {
 		this.prompt = prompt;
 	}
+
 	/**
 	 * @return the workingDirectory
 	 */
 	public File getWorkingDirectory() {
 		return workingDirectory;
 	}
+
 	/**
-	 * @param workingDirectory the workingDirectory to set
+	 * @param workingDirectory
+	 *            the workingDirectory to set
 	 */
 	public void setWorkingDirectory(File workingDirectory) {
 		this.workingDirectory = workingDirectory;
 	}
+
 	/**
 	 * @return the promptCharacter
 	 */
 	public char getPromptCharacter() {
 		return promptCharacter;
 	}
+
 	/**
-	 * @param promptCharacter the promptCharacter to set
+	 * @param promptCharacter
+	 *            the promptCharacter to set
 	 */
 	public void setPromptCharacter(char promptCharacter) {
 		this.promptCharacter = promptCharacter;
 	}
+
 	/**
 	 * @return the parentFrame
 	 */
@@ -149,6 +167,18 @@ public class ConsoleEditorPane extends JEditorPane implements KeyListener,
 	 */
 	public void setParentFrame(JFrame parentFrame) {
 		this.parentFrame = parentFrame;
+	}
+
+	public int getPromptLength() {
+		return promptLength;
+	}
+
+	public int getEndPromptOffset() {
+		return endPromptOffset;
+	}
+
+	public int getPromptLine() {
+		return promptLine;
 	}
 
 	@Override
@@ -198,25 +228,24 @@ public class ConsoleEditorPane extends JEditorPane implements KeyListener,
 		// TODO Auto-generated method stub
 
 	}
-	
-	
-	
-	
+
+	/*----------- Document Filter ------------------*/
+
 	/*----------- Test Method ------------------*/
-	public static void main(String args[]){
+	public static void main(String args[]) {
 		try {
 			JFrame frame = new JFrame("Navigation Filter Example");
-			
-			ConsoleEditorPane cep = new ConsoleEditorPane(frame);
+
+			ConsoleEditorPane cep = new ConsoleEditorPane(frame, new File(""));
 			cep.setPreferredSize(new Dimension(280, 150));
 			cep.setMinimumSize(cep.getPreferredSize());
 			JScrollPane sp = new JScrollPane();
 			sp.setViewportView(cep);
-			//frame.setSize(200, 120);
+			// frame.setSize(200, 120);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.getContentPane().add(sp);
 			frame.pack();
-			frame.setLocationRelativeTo( null );
+			frame.setLocationRelativeTo(null);
 			frame.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();

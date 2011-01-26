@@ -18,4 +18,7 @@ public interface JPromptConstants {
 	
 	String USER_NAME = System.getProperty("user.name");
 	
+	char DEFAULT_PROMPT_CHAR = '>';
+	
+	String DEFAULT_PROMPT = USER_NAME;
 }
