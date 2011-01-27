@@ -17,6 +17,11 @@
 			<artifactId>jprompt-common</artifactId>
 			<version>${release.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.gs.jprompt</groupId>
+			<artifactId>jprompt-bod</artifactId>
+			<version>${release.version}</version>
+		</dependency>
 	</dependencies>
 	
 </project>

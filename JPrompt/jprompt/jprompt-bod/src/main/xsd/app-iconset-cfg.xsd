@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified" targetNamespace="http://icon.cfg.bod.jprompt.gs.com"
+	xmlns:iconset="http://icon.cfg.bod.jprompt.gs.com">
+	<xs:element name="app-icon-configuration">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="iconset:default-set" />
+				<xs:element maxOccurs="unbounded" ref="iconset:icon-set" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="default-set" type="xs:NCName" />
+	<xs:element name="icon-set">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" ref="iconset:image-icon" />
+			</xs:sequence>
+			<xs:attribute name="base-location" use="required" type="xs:anyURI" />
+			<xs:attribute name="description" use="required" />
+			<xs:attribute name="display-order" use="required" type="xs:integer" />
+			<xs:attribute name="from-classpath" use="required" type="xs:boolean" />
+			<xs:attribute name="name" use="required" type="xs:NCName" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="image-icon">
+		<xs:complexType>
+			<xs:attribute name="alias" type="xs:NCName" />
+			<xs:attribute name="file-name" type="xs:NCName" />
+			<xs:attribute name="name" type="xs:NCName" />
+			<xs:attribute name="ref" type="xs:NCName" />
+			<xs:attribute name="file-type" use="required" type="iconset:fileExtensionEnum" />
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="fileExtensionEnum">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ICO" />
+			<xs:enumeration value="PNG" />
+			<xs:enumeration value="GIF" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

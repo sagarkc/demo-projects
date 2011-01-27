@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -32,6 +33,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
+import com.gs.jprompt.JPromptImageConstants;
 import com.gs.jprompt.common.JPromptContext;
 
 /**
@@ -139,7 +141,7 @@ public class JPromptMainFrame extends JFrame {
         actionToolBar.setRollover(true);
         actionToolBar.setName("actionToolBar"); // NOI18N
 
-        newConsoleButton.setIcon(new ImageIcon(getClass().getResource("/images/new-prompt.png"))); // NOI18N
+        newConsoleButton.setIcon(JPromptImageConstants.NEW_CONSOLE_ICON); // NOI18N
         newConsoleButton.setText(context.getResourceBundle().getString("JPromptMainFrame.newConsoleButton.text")); // NOI18N
         newConsoleButton.setFocusable(false);
         newConsoleButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -148,7 +150,7 @@ public class JPromptMainFrame extends JFrame {
         newConsoleButton.addActionListener(formListener);
         actionToolBar.add(newConsoleButton);
 
-        openCommandButton.setIcon(new ImageIcon(getClass().getResource("/images/folderopen.png"))); // NOI18N
+        openCommandButton.setIcon(JPromptImageConstants.FOLDER_OPEN_ICON); // NOI18N
         openCommandButton.setText(context.getResourceBundle().getString("JPromptMainFrame.openCommandButton.text")); // NOI18N
         openCommandButton.setFocusable(false);
         openCommandButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -161,6 +163,7 @@ public class JPromptMainFrame extends JFrame {
         actionToolBar.add(jSeparator15);
 
         copyButton.setText(context.getResourceBundle().getString("JPromptMainFrame.copyButton.text")); // NOI18N
+        copyButton.setIcon(JPromptImageConstants.COPY_ICON);
         copyButton.setFocusable(false);
         copyButton.setHorizontalTextPosition(SwingConstants.CENTER);
         copyButton.setName("copyButton"); // NOI18N
@@ -169,6 +172,7 @@ public class JPromptMainFrame extends JFrame {
         actionToolBar.add(copyButton);
 
         pasteButton.setText(context.getResourceBundle().getString("JPromptMainFrame.pasteButton.text")); // NOI18N
+        pasteButton.setIcon(JPromptImageConstants.PASTE_ICON);
         pasteButton.setFocusable(false);
         pasteButton.setHorizontalTextPosition(SwingConstants.CENTER);
         pasteButton.setName("pasteButton"); // NOI18N
@@ -177,6 +181,7 @@ public class JPromptMainFrame extends JFrame {
         actionToolBar.add(pasteButton);
 
         clearScreenButton.setText(context.getResourceBundle().getString("JPromptMainFrame.clearScreenButton.text")); // NOI18N
+        clearScreenButton.setIcon(JPromptImageConstants.CLEAR_ICON);
         clearScreenButton.setFocusable(false);
         clearScreenButton.setHorizontalTextPosition(SwingConstants.CENTER);
         clearScreenButton.setName("clearScreenButton"); // NOI18N
@@ -188,6 +193,7 @@ public class JPromptMainFrame extends JFrame {
         actionToolBar.add(jSeparator16);
 
         findButton.setText(context.getResourceBundle().getString("JPromptMainFrame.findButton.text")); // NOI18N
+        findButton.setIcon(JPromptImageConstants.FIND_ICON);
         findButton.setFocusable(false);
         findButton.setHorizontalTextPosition(SwingConstants.CENTER);
         findButton.setName("findButton"); // NOI18N
@@ -222,7 +228,7 @@ public class JPromptMainFrame extends JFrame {
         jLabel1.setName("jLabel1"); // NOI18N
         statusToolBar.add(jLabel1);
 
-        quickLaunchButton.setIcon(new ImageIcon(getClass().getResource("/images/folderopen.png"))); // NOI18N
+        quickLaunchButton.setIcon(JPromptImageConstants.QUICK_LAUNCH_ICON);
         quickLaunchButton.setText(context.getResourceBundle().getString("JPromptMainFrame.quickLaunchButton.text")); // NOI18N
         quickLaunchButton.setFocusable(false);
         quickLaunchButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -238,7 +244,7 @@ public class JPromptMainFrame extends JFrame {
         jLabel2.setName("jLabel2"); // NOI18N
         statusToolBar.add(jLabel2);
 
-        minimizedConcolesButton.setIcon(new ImageIcon(getClass().getResource("/images/folderopen.png"))); // NOI18N
+        minimizedConcolesButton.setIcon(JPromptImageConstants.MINIMIZED_WINDOWS_ICON);
         minimizedConcolesButton.setText(context.getResourceBundle().getString("JPromptMainFrame.minimizedConcolesButton.text")); // NOI18N
         minimizedConcolesButton.setFocusable(false);
         minimizedConcolesButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -332,14 +338,14 @@ public class JPromptMainFrame extends JFrame {
         fileMenu.setName("fileMenu"); // NOI18N
 
         newPromptMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK));
-        newPromptMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/new-prompt.png"))); // NOI18N
+        newPromptMenuItem.setIcon(JPromptImageConstants.NEW_CONSOLE_ICON);
         newPromptMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.newPromptMenuItem.text")); // NOI18N
         newPromptMenuItem.setName("newPromptMenuItem"); // NOI18N
         newPromptMenuItem.addActionListener(formListener);
         fileMenu.add(newPromptMenuItem);
 
         openCommandFileMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
-        openCommandFileMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/folderopen.png"))); // NOI18N
+        openCommandFileMenuItem.setIcon(JPromptImageConstants.FOLDER_OPEN_ICON);
         openCommandFileMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.openCommandFileMenuItem.text")); // NOI18N
         openCommandFileMenuItem.setName("openCommandFileMenuItem"); // NOI18N
         openCommandFileMenuItem.addActionListener(formListener);
@@ -349,11 +355,13 @@ public class JPromptMainFrame extends JFrame {
         fileMenu.add(jSeparator17);
 
         closeMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.closeMenuItem.text")); // NOI18N
+        closeMenuItem.setIcon(JPromptImageConstants.CLOSE_ICON);
         closeMenuItem.setName("closeMenuItem"); // NOI18N
         closeMenuItem.addActionListener(formListener);
         fileMenu.add(closeMenuItem);
 
         closeAllMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.closeAllMenuItem.text")); // NOI18N
+        closeAllMenuItem.setIcon(JPromptImageConstants.CLOSE_ALL_ICON);
         closeAllMenuItem.setName("closeAllMenuItem"); // NOI18N
         closeAllMenuItem.addActionListener(formListener);
         fileMenu.add(closeAllMenuItem);
@@ -362,20 +370,20 @@ public class JPromptMainFrame extends JFrame {
         fileMenu.add(jSeparator2);
 
         saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
-        saveMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/save_edit.gif"))); // NOI18N
+        saveMenuItem.setIcon(JPromptImageConstants.SAVE_ICON);
         saveMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.saveMenuItem.text")); // NOI18N
         saveMenuItem.setName("saveMenuItem"); // NOI18N
         saveMenuItem.addActionListener(formListener);
         fileMenu.add(saveMenuItem);
 
-        saveAsMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/saveas_edit.gif"))); // NOI18N
+        saveAsMenuItem.setIcon(JPromptImageConstants.SAVE_AS_ICON); // NOI18N
         saveAsMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.saveAsMenuItem.text")); // NOI18N
         saveAsMenuItem.setName("saveAsMenuItem"); // NOI18N
         saveAsMenuItem.addActionListener(formListener);
         fileMenu.add(saveAsMenuItem);
 
         saveAllMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.SHIFT_MASK | InputEvent.CTRL_MASK));
-        saveAllMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/saveall_edit.gif"))); // NOI18N
+        saveAllMenuItem.setIcon(JPromptImageConstants.SAVE_ALL_ICON); // NOI18N
         saveAllMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.saveAllMenuItem.text")); // NOI18N
         saveAllMenuItem.setName("saveAllMenuItem"); // NOI18N
         saveAllMenuItem.addActionListener(formListener);
@@ -385,6 +393,7 @@ public class JPromptMainFrame extends JFrame {
         fileMenu.add(jSeparator3);
 
         openLogFolderMenuItem.setText(context.getResourceBundle().getString("JPromptMainFrame.openLogFolderMenuItem.text")); // NOI18N
+        openLogFolderMenuItem.setIcon(JPromptImageConstants.OPEN_LOG_FOLDER_ICON);
         openLogFolderMenuItem.setName("openLogFolderMenuItem"); // NOI18N
         openLogFolderMenuItem.addActionListener(formListener);
         fileMenu.add(openLogFolderMenuItem);

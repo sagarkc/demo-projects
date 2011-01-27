@@ -6,6 +6,7 @@
 	<packaging>pom</packaging>
 	<name>JPrompt</name>
 	<modules>
+		<module>jprompt-bod</module>
 		<module>jprompt-common</module>
 		<module>jprompt-core</module>
 		<module>jprompt-app</module>
