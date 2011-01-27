@@ -37,6 +37,7 @@ import javax.swing.event.CaretListener;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
+import com.gs.jprompt.JPromptImageConstants;
 import com.gs.jprompt.common.JPromptContext;
 import com.gs.jprompt.common.PromptNavigationFilter;
 
@@ -90,6 +91,7 @@ public class JPromptInternalFrame extends JInternalFrame {
         promptAreaPopupMenu.setName("promptAreaPopupMenu"); // NOI18N
 
         refreshMenuItem.setText(context.getResourceBundle().getString("JPromptInternalFrame.refreshMenuItem.text")); // NOI18N
+        refreshMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/reload_green.png")));
         refreshMenuItem.setName("refreshMenuItem"); // NOI18N
         refreshMenuItem.addActionListener(formListener);
         promptAreaPopupMenu.add(refreshMenuItem);
@@ -99,10 +101,12 @@ public class JPromptInternalFrame extends JInternalFrame {
 
         copyMenuItem.setText(context.getResourceBundle().getString("JPromptInternalFrame.copyMenuItem.text")); // NOI18N
         copyMenuItem.setName("copyMenuItem"); // NOI18N
+        copyMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/copy_edit.gif")));
         copyMenuItem.addActionListener(formListener);
         promptAreaPopupMenu.add(copyMenuItem);
 
         saveMenuItem.setText(context.getResourceBundle().getString("JPromptInternalFrame.saveMenuItem.text")); // NOI18N
+        saveMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/save_edit.gif")));
         saveMenuItem.setName("saveMenuItem"); // NOI18N
         saveMenuItem.addActionListener(formListener);
         promptAreaPopupMenu.add(saveMenuItem);
@@ -111,6 +115,7 @@ public class JPromptInternalFrame extends JInternalFrame {
         promptAreaPopupMenu.add(jSeparator5);
 
         clearMenuItem.setText(context.getResourceBundle().getString("JPromptInternalFrame.clearMenuItem.text")); // NOI18N
+        clearMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/edit-clear.png")));
         clearMenuItem.setName("clearMenuItem"); // NOI18N
         clearMenuItem.addActionListener(formListener);
         promptAreaPopupMenu.add(clearMenuItem);
@@ -119,11 +124,13 @@ public class JPromptInternalFrame extends JInternalFrame {
         promptAreaPopupMenu.add(jSeparator6);
 
         startPauseMenuItem.setText(context.getResourceBundle().getString("JPromptInternalFrame.startPauseMenuItem.text")); // NOI18N
+        startPauseMenuItem.setIcon(JPromptImageConstants.START_EXECUTION_ICON);
         startPauseMenuItem.setName("startPauseMenuItem"); // NOI18N
         startPauseMenuItem.addActionListener(formListener);
         promptAreaPopupMenu.add(startPauseMenuItem);
 
         stopMenuItem.setText(context.getResourceBundle().getString("JPromptInternalFrame.stopMenuItem.text")); // NOI18N
+        stopMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/nav_stop.gif")));
         stopMenuItem.setName("stopMenuItem"); // NOI18N
         stopMenuItem.addActionListener(formListener);
         promptAreaPopupMenu.add(stopMenuItem);
@@ -152,6 +159,7 @@ public class JPromptInternalFrame extends JInternalFrame {
         promptToolBar.setName("promptToolBar"); // NOI18N
 
         refreshButton.setText(context.getResourceBundle().getString("JPromptInternalFrame.refreshButton.text")); // NOI18N
+        refreshButton.setIcon(new ImageIcon(getClass().getResource("/images/reload_green.png")));
         refreshButton.setFocusable(false);
         refreshButton.setHorizontalTextPosition(SwingConstants.CENTER);
         refreshButton.setName("refreshButton"); // NOI18N
@@ -163,6 +171,7 @@ public class JPromptInternalFrame extends JInternalFrame {
         promptToolBar.add(jSeparator1);
 
         copyButton.setText(context.getResourceBundle().getString("JPromptInternalFrame.copyButton.text")); // NOI18N
+        copyButton.setIcon(new ImageIcon(getClass().getResource("/images/copy_edit.gif")));
         copyButton.setFocusable(false);
         copyButton.setHorizontalTextPosition(SwingConstants.CENTER);
         copyButton.setName("copyButton"); // NOI18N
@@ -183,6 +192,7 @@ public class JPromptInternalFrame extends JInternalFrame {
         promptToolBar.add(jSeparator2);
 
         clearButton.setText(context.getResourceBundle().getString("JPromptInternalFrame.clearButton.text")); // NOI18N
+        clearButton.setIcon(new ImageIcon(getClass().getResource("/images/edit-clear.png")));
         clearButton.setFocusable(false);
         clearButton.setHorizontalTextPosition(SwingConstants.CENTER);
         clearButton.setName("clearButton"); // NOI18N
@@ -194,6 +204,7 @@ public class JPromptInternalFrame extends JInternalFrame {
         promptToolBar.add(jSeparator3);
 
         startPauseButton.setText(context.getResourceBundle().getString("JPromptInternalFrame.startPauseButton.text")); // NOI18N
+        startPauseButton.setIcon(JPromptImageConstants.START_EXECUTION_ICON);
         startPauseButton.setFocusable(false);
         startPauseButton.setHorizontalTextPosition(SwingConstants.CENTER);
         startPauseButton.setName("startPauseButton"); // NOI18N
@@ -202,6 +213,7 @@ public class JPromptInternalFrame extends JInternalFrame {
         promptToolBar.add(startPauseButton);
 
         stopButton.setText(context.getResourceBundle().getString("JPromptInternalFrame.stopButton.text")); // NOI18N
+        stopButton.setIcon(new ImageIcon(getClass().getResource("/images/nav_stop.gif")));
         stopButton.setFocusable(false);
         stopButton.setHorizontalTextPosition(SwingConstants.CENTER);
         stopButton.setName("stopButton"); // NOI18N
