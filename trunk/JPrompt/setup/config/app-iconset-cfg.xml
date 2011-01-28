@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="Cp1252"?>
+
+<app-icon-configuration xmlns="http://icon.cfg.bod.jprompt.gs.com">
+	<default-set>DefaultIconSet</default-set>
+	
+	<icon-set name="DefaultIconSet" description="Default Icon Set"
+		base-location="/images/" from-classpath="true" display-order="0">
+		<image-icon file-name="copy.gif" type="GIF" name="copyIcon"/>
+		<image-icon file-name="paste.png" type="PNG" name="pasteIcon"/>
+		<image-icon file-name="windows.ico" type="ICO" name="windows"/>
+		<image-icon ref="copyIcon" alias="windowsTextCopy"/>
+		<image-icon ref="pasteIcon" alias="windowsTextPaste"/>
+	</icon-set>
+	
+	<icon-set name="xpIconSet" description="Default Icon Set"
+		base-location="/app/images/" from-classpath="true" display-order="1">
+		<image-icon file-name="copy.gif" type="GIF" name="copyIcon"/>
+		<image-icon file-name="paste.png" type="PNG" name="pasteIcon"/>
+		<image-icon file-name="windows.ico" type="ICO" name="windows"/>
+		<image-icon ref="copyIcon" alias="windowsTextCopy"/>
+		<image-icon ref="pasteIcon" alias="windowsTextPaste"/>
+	</icon-set>
+	
+	<icon-set name="linuxIconSet" description="Default Icon Set"
+		base-location="d:/images/" from-classpath="false" display-order="2">
+		<image-icon file-name="copy.gif" type="GIF" name="copyIcon"/>
+		<image-icon file-name="paste.png" type="PNG" name="pasteIcon"/>
+		<image-icon file-name="windows.ico" type="ICO" name="windows"/>
+		<image-icon ref="copyIcon" alias="windowsTextCopy"/>
+		<image-icon ref="pasteIcon" alias="windowsTextPaste"/>
+	</icon-set>
+</app-icon-configuration>
