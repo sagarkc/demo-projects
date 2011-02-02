@@ -8,6 +8,7 @@
 	<modules>
 		<module>text4j-bod</module>
 		<module>text4j-common</module>
+		<module>text4j-model</module>
 		<module>text4j-core</module>
 		<module>text4j-app</module>
 	</modules>

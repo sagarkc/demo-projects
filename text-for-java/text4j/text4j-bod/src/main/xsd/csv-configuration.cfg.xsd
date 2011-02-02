@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.gs.com/text4j/bod/csv" xmlns:csv="http://www.gs.com/text4j/bod/csv">
+  <xs:element name="csv-configuration">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="csv:mapping"/>
+      </xs:sequence>
+      <xs:attribute name="mapping-location" use="required" type="xs:NCName"/>
+      <xs:attribute name="mapping-package" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mapping">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="csv:mapping-resource"/>
+        <xs:element maxOccurs="unbounded" ref="csv:annotated-class"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mapping-resource" type="xs:NCName"/>
+  <xs:element name="annotated-class" type="xs:NCName"/>
+</xs:schema>

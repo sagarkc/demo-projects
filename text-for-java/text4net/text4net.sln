@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "text4net-app", "text4net-ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "text4net-tools", "text4net-tools\text4net-tools.csproj", "{398F3BFB-FE1B-444B-905E-0936A5B12879}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "text4net-model", "text4net-model\text4net-model.csproj", "{D8BB0C56-472C-4FD5-8686-0B20BEF7434D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,16 @@ Global
 		{398F3BFB-FE1B-444B-905E-0936A5B12879}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{398F3BFB-FE1B-444B-905E-0936A5B12879}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{398F3BFB-FE1B-444B-905E-0936A5B12879}.Release|x86.ActiveCfg = Release|Any CPU
+		{D8BB0C56-472C-4FD5-8686-0B20BEF7434D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8BB0C56-472C-4FD5-8686-0B20BEF7434D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8BB0C56-472C-4FD5-8686-0B20BEF7434D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D8BB0C56-472C-4FD5-8686-0B20BEF7434D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D8BB0C56-472C-4FD5-8686-0B20BEF7434D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D8BB0C56-472C-4FD5-8686-0B20BEF7434D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8BB0C56-472C-4FD5-8686-0B20BEF7434D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8BB0C56-472C-4FD5-8686-0B20BEF7434D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D8BB0C56-472C-4FD5-8686-0B20BEF7434D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D8BB0C56-472C-4FD5-8686-0B20BEF7434D}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
