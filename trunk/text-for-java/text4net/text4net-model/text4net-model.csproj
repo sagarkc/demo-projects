@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5F5F7795-2F19-44C1-B484-865334306F3C}</ProjectGuid>
+    <ProjectGuid>{D8BB0C56-472C-4FD5-8686-0B20BEF7434D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>com.gs.text4net.bod</RootNamespace>
-    <AssemblyName>text4net-bod</AssemblyName>
+    <RootNamespace>com.gs.text4net.model</RootNamespace>
+    <AssemblyName>text4net-model</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,13 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="csv\CsvConfigurationDocument.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="xsd\csv-configuration.cfg.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <Folder Include="csv\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -22,6 +22,11 @@
 			<artifactId>text4j-bod</artifactId>
 			<version>${release.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.gs.text4j</groupId>
+			<artifactId>text4j-model</artifactId>
+			<version>${release.version}</version>
+		</dependency>
 	</dependencies>
 	
 </project>

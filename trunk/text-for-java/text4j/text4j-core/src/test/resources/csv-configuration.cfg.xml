@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<csv-configuration xmlns="http://www.gs.com/text4j/bod/csv"
+	mapping-location="dfsdfasf"
+	mapping-package="a.*.c">
+	
+	<mapping>
+		<mapping-resource>csv.entity.Department.csv.xml</mapping-resource>
+		<mapping-resource>csv.entity.Employee.xml</mapping-resource>
+
+		<annotated-class>csv.entity.Employee</annotated-class>
+		<annotated-class>csv.entity.Department</annotated-class>
+	</mapping>
+
+</csv-configuration>
