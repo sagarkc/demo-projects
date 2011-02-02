@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <csv-configuration xmlns="http://www.gs.com/text4j/bod/csv"
-	mapping-location="d:/"
+	mapping-location="dfsdfasf"
 	mapping-package="a.*.c">
 	
 	<mapping>
