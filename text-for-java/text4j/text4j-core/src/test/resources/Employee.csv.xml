@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapping-class filename="D:\SVN_HOME\demo-projects\trunk\text-for-java\text4j\text4j-core\employee-test.csv" 
+	class-name="com.gs.text4j.core.Employee"
+	delimeter="," quoted="false" headerRowNo="0">
+	
+	
+		
+</mapping-class>
