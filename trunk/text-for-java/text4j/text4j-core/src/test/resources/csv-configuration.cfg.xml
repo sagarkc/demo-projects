@@ -4,8 +4,8 @@
 	mapping-package="a.*.c">
 	
 	<mapping>
-		<mapping-resource>csv.entity.Department.csv.xml</mapping-resource>
-		<mapping-resource>csv.entity.Employee.xml</mapping-resource>
+		<mapping-resource>csv/entity/Department.csv.xml</mapping-resource>
+		<mapping-resource>csv/entity/Employee.xml</mapping-resource>
 
 		<annotated-class>csv.entity.Employee</annotated-class>
 		<annotated-class>csv.entity.Department</annotated-class>
