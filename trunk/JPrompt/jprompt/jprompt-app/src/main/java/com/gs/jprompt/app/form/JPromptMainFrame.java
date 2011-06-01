@@ -903,6 +903,11 @@ public class JPromptMainFrame extends JFrame {
     private void showEnvVarsMenuItemActionPerformed(ActionEvent evt) {
         // TODO add your handling code here:
     }
+    
+    
+    public void updateCaretStatus(int row, int column){
+    	lineInfoLabel.setText("" + row + " : " + column);
+    }
 
     /**
     * @param args the command line arguments

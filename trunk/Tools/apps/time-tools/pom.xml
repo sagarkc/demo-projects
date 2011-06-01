@@ -1,0 +1,108 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.gs.tools</groupId>
+	<artifactId>time-tools</artifactId>
+	<name>Time Tools</name>
+	<version>${release.version}</version>
+	<description>Utility package for several types of Date/Time operation</description>
+	<packaging>jar</packaging>
+	<dependencies>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+			<type>jar</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.12</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging-api</artifactId>
+			<version>1.1</version>
+			<type>jar</type>
+		</dependency>
+		
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.gs.dbex.launcher.DatabaseExplorerLauncher</mainClass>
+							<addClasspath>true</addClasspath>
+							<addExtensions>false</addExtensions>
+							<classpathPrefix>lib/</classpathPrefix>
+							<classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout>
+						</manifest>
+						<!-- <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile> 
+							<classpathLayoutType>repository</classpathLayoutType> <classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout> -->
+					</archive>
+					
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<!-- Coping JAR to release directory -->
+					<execution>
+						<id>defaultcopy</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<!-- Coping JAR to release directory -->
+								<copy todir="${release.dir}/${project.title}_${release.version}/"
+									overwrite="true" failonerror="true" includeEmptyDirs="true">
+									<fileset dir="target">
+										<include name="${artifactId}-${release.version}.jar" />
+									</fileset>
+								</copy>
+								
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	
+	
+	<properties>
+		<project.title>Time-Tools</project.title>
+		<project.home>D:/SVN_HOME/demo-projects/trunk/Tools/apps</project.home>
+		<release.version>1.0-BETA-1</release.version>
+		<release.dir>D:/SVN_HOME/demo-projects/trunk/Tools/release</release.dir>
+		<jdk.version>1.6</jdk.version>
+		<maven.test.skip>true</maven.test.skip>
+	</properties>
+</project>

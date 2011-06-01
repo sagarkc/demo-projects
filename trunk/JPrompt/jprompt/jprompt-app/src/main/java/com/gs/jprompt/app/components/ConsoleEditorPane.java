@@ -11,6 +11,10 @@ import java.io.IOException;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
@@ -48,7 +52,7 @@ import com.gs.utils.text.StringUtil;
  */
 
 public class ConsoleEditorPane extends JEditorPane implements KeyListener,
-		MouseListener {
+		MouseListener, CaretListener {
 
 	/**
 	 * 
@@ -106,7 +110,11 @@ public class ConsoleEditorPane extends JEditorPane implements KeyListener,
 		setText(getPrompt() + getPromptCharacter());
 		promptLength = prompt.length() + 1;
 		endPromptOffset = promptLength - 1;
-		
+		addKeyListener(this);
+		AbstractDocument abstractDocument = (AbstractDocument) getDocument();
+		PromptDocumentFilter documentFilter =  new PromptDocumentFilter();
+		documentFilter.setPromptLength(getPromptLength());
+		abstractDocument.setDocumentFilter(documentFilter);
 	}
 
 	/**
@@ -219,8 +227,11 @@ public class ConsoleEditorPane extends JEditorPane implements KeyListener,
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-
+		
+		int keyCode = e.getKeyCode();
+		if(KeyEvent.VK_ENTER == keyCode){
+			System.out.println("Command: ");
+		}
 	}
 
 	@Override
@@ -228,7 +239,18 @@ public class ConsoleEditorPane extends JEditorPane implements KeyListener,
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public void caretUpdate(CaretEvent e) {
+		
+	}
 
+	public boolean isPromptLine(){
+		int caretPos = getCaretPosition();
+		return false;
+	}
+	
+	
 	/*----------- Document Filter ------------------*/
 
 	/*----------- Test Method ------------------*/
@@ -251,5 +273,7 @@ public class ConsoleEditorPane extends JEditorPane implements KeyListener,
 			e.printStackTrace();
 		}
 	}
+
+	
 
 }
