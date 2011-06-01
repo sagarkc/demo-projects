@@ -17,7 +17,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,20 +37,30 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.BadLocationException;
 
 import com.gs.jprompt.JPromptImageConstants;
+import com.gs.jprompt.app.components.ConsoleTextArea;
+import com.gs.jprompt.app.task.CommandRunner;
+import com.gs.jprompt.common.Command;
 import com.gs.jprompt.common.JPromptContext;
 import com.gs.jprompt.common.PromptNavigationFilter;
+import com.gs.jprompt.core.CommandExecutioner;
+import com.gs.utils.text.StringUtil;
 
-public class JPromptInternalFrame extends JInternalFrame {
+public class JPromptInternalFrame extends JInternalFrame{
 
 	private static final JPromptContext context = JPromptContext.getContext();
 	
 	private JFrame parentFrame;
+	private FormListener formListener;
+	private CommandRunner<String, Command> commandRunner;
 	
     public JPromptInternalFrame(JFrame parentFrame) {
     	this.parentFrame = parentFrame;
@@ -56,7 +71,6 @@ public class JPromptInternalFrame extends JInternalFrame {
     }
 
 
-    @SuppressWarnings("unchecked")
     private void initComponents() {
         GridBagConstraints gridBagConstraints;
 
@@ -83,10 +97,10 @@ public class JPromptInternalFrame extends JInternalFrame {
         startPauseButton = new JButton();
         stopButton = new JButton();
         jScrollPane1 = new JScrollPane();
-        promptTextArea = new JTextArea();
+        promptTextArea = new ConsoleTextArea(parentFrame, context.consoleStartupDirectory);
         editModeCheckBox = new JCheckBox();
 
-        FormListener formListener = new FormListener();
+        formListener = new FormListener();
 
         promptAreaPopupMenu.setName("promptAreaPopupMenu"); // NOI18N
 
@@ -251,9 +265,6 @@ public class JPromptInternalFrame extends JInternalFrame {
         promptTextArea.addKeyListener(formListener);
         promptTextArea.addVetoableChangeListener(formListener);
         promptTextArea.setFont(context.getDefaultEditorFont());
-        String path = new File(context.consoleStartupDirectory).getAbsolutePath();
-        promptTextArea.setText("kgkhfkghskdfg\n"+path + context.PROMPT_CHAR+"sdkjfhaskdjfhlasdkhf");
-        promptTextArea.setNavigationFilter(new PromptNavigationFilter(path.length()+1, promptTextArea));
         jScrollPane1.setViewportView(promptTextArea);
 
         gridBagConstraints = new GridBagConstraints();
@@ -369,7 +380,10 @@ public class JPromptInternalFrame extends JInternalFrame {
         public void propertyChange(PropertyChangeEvent evt) {
             if (evt.getSource() == promptTextArea) {
                 JPromptInternalFrame.this.promptTextAreaPropertyChange(evt);
+            } else if (evt.getSource() == commandRunner) {
+                JPromptInternalFrame.this.commandRunnerPropertyChange(evt);
             }
+            
         }
 
         public void vetoableChange(PropertyChangeEvent evt)throws PropertyVetoException {
@@ -379,6 +393,9 @@ public class JPromptInternalFrame extends JInternalFrame {
         }
 
         public void caretUpdate(CaretEvent evt) {
+        	if (evt.getSource() instanceof JTextArea) {
+        		JPromptInternalFrame.this.textAreaCaretUpdate(evt);
+        	}
             if (evt.getSource() == promptTextArea) {
                 JPromptInternalFrame.this.promptTextAreaCaretUpdate(evt);
             }
@@ -457,7 +474,29 @@ public class JPromptInternalFrame extends JInternalFrame {
         // TODO add your handling code here:
     }
 
-    private void copyButtonActionPerformed(ActionEvent evt) {
+    public void textAreaCaretUpdate(CaretEvent evt) {
+    	JTextArea editArea = (JTextArea) evt.getSource();
+    	int linenum = 1;
+		int columnnum = 1;
+		try {
+			
+			int caretpos = editArea.getCaretPosition();
+			linenum = editArea.getLineOfOffset(caretpos);
+			columnnum = caretpos - editArea.getLineStartOffset(linenum);
+			linenum += 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		updateCaretStatus(linenum, columnnum);
+	}
+
+
+	private void updateCaretStatus(int linenum, int columnnum) {
+		((JPromptMainFrame)parentFrame).updateCaretStatus(linenum, columnnum);
+	}
+
+
+	private void copyButtonActionPerformed(ActionEvent evt) {
         // TODO add your handling code here:
     }
 
@@ -470,7 +509,7 @@ public class JPromptInternalFrame extends JInternalFrame {
     }
 
     private void startPauseButtonActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
+        executeCommand();
     }
 
     private void stopButtonActionPerformed(ActionEvent evt) {
@@ -478,16 +517,58 @@ public class JPromptInternalFrame extends JInternalFrame {
     }
 
     private void promptTextAreaKeyPressed(KeyEvent evt) {
-        // TODO add your handling code here:
+    	
+    	if(KeyEvent.VK_ENTER == evt.getKeyCode()){
+        	executeCommand();
+        } else if(KeyEvent.VK_LEFT != evt.getKeyCode()
+        		&& KeyEvent.VK_RIGHT != evt.getKeyCode()
+        		&& KeyEvent.VK_UP != evt.getKeyCode()
+        		&& KeyEvent.VK_DOWN != evt.getKeyCode()
+        		&& KeyEvent.VK_PAGE_UP != evt.getKeyCode()
+        		&& KeyEvent.VK_PAGE_DOWN != evt.getKeyCode()
+        		&& KeyEvent.VK_END != evt.getKeyCode()
+        		&& KeyEvent.VK_HOME != evt.getKeyCode()){
+        	ConsoleTextArea editArea = (ConsoleTextArea) evt.getSource();
+        	editArea.rePositionCaret();
+        }
+        
     }
 
+
+	/**
+	 * Execute command.
+	 */
+	public void executeCommand() {
+		final Command command;
+		final String commandLine = promptTextArea.getCommandLine();
+		if(StringUtil.hasValidContent(commandLine)){
+			command = new Command(commandLine);
+
+			synchronized (this) {
+				promptTextArea.setEditable(false);
+				commandRunner = new CommandRunner<String, Command>(command);
+				commandRunner.addPropertyChangeListener(formListener);
+				commandRunner.setConsoleTextArea(promptTextArea);
+				commandRunner.execute();
+			}
+		} else {
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					promptTextArea.append(promptTextArea.getPrompt() + promptTextArea.getPromptCharacter());
+					promptTextArea.setEditable(true);
+					promptTextArea.updateEndPromptOffset();
+				}
+			});
+		}
+		
+		
+		
+		
+	}
+
     private void promptTextAreaKeyReleased(KeyEvent evt) {
-    	if(KeyEvent.VK_ENTER == evt.getKeyCode()){
-        	System.out.println("Enter");
-        }
-        else {
-        	System.out.println("Other");
-        }
+    	
     }
 
     private void promptTextAreaKeyTyped(KeyEvent evt) {
@@ -495,7 +576,7 @@ public class JPromptInternalFrame extends JInternalFrame {
     }
 
     private void promptTextAreaCaretUpdate(CaretEvent evt) {
-        // TODO add your handling code here:
+        
     }
 
     private void promptTextAreaFocusGained(FocusEvent evt) {
@@ -586,6 +667,75 @@ public class JPromptInternalFrame extends JInternalFrame {
         // TODO add your handling code here:
     }
 
+	public void commandRunnerPropertyChange(PropertyChangeEvent evt) {
+		String propertyName = evt.getPropertyName();
+		if(CommandRunner.TASK_STATUS_DONE.equals(propertyName)){
+			promptTextArea.setEditable(true);
+			promptTextArea.rePositionCaret();
+		}
+		if(CommandRunner.TASK_STATUS_ABORT.equals(propertyName)){
+			/*Object msg = evt.getNewValue();
+			String txtMsg = "Transaction aborted";
+			if(null != msg){
+				txtMsg = msg.toString();
+			}
+			queryRunnerProgressBar.setIndeterminate(false);
+			messageLabel.setText(txtMsg);
+			queryLogTextArea.append("\n" + txtMsg);
+			stopExecutionButton.setEnabled(false);
+			stopExecutionMenuItem.setEnabled(false);
+			
+			runQueryButton.setEnabled(true);
+			runQueryMenuItem.setEnabled(true);
+			runAllButton.setEnabled(true);
+			runAllMenuItem.setEnabled(true);
+			runSelectedQueryButton.setEnabled(true);
+			runSelectionMenuItem.setEnabled(true);*/
+		}
+		if(CommandRunner.PROPERTY_PROGRESS.equals(propertyName)){
+			/*String type = evt.getNewValue().toString();
+			String txtMsg = "Executing Query ...";
+			queryLogTextArea.append("\n" + txtMsg);
+			if(QueryExecutionTask.TASK_STATUS_START.equals(type)){
+				queryResultTable.setModel(new DefaultTableModel());
+				
+				stopExecutionButton.setEnabled(true);
+				stopExecutionMenuItem.setEnabled(true);
+				
+				runQueryButton.setEnabled(false);
+				runQueryMenuItem.setEnabled(false);
+				runAllButton.setEnabled(false);
+				runAllMenuItem.setEnabled(false);
+				runSelectedQueryButton.setEnabled(false);
+				runSelectionMenuItem.setEnabled(false);
+				
+				queryRunnerProgressBar.setIndeterminate(true);
+			} else {
+				queryRunnerProgressBar.setIndeterminate(false);
+			}
+			messageLabel.setText(txtMsg);
+			updateUI();*/
+		}
+		if(CommandRunner.TASK_STATUS_FAILED.equals(propertyName)){
+			/*Object newValue = evt.getNewValue();
+			String txtMsg = "Query execution Failed.";
+			queryResultTable.setModel(new DefaultTableModel());
+			if(null != newValue){
+				if(newValue instanceof DbexException){
+					txtMsg += " Reason:: " + ((DbexException)newValue).getExceptionMessage();
+				}
+			}
+			
+			Object oldValue = evt.getOldValue();
+			if(null != oldValue){
+				if(oldValue instanceof Long){
+					messageLabel.setText(txtMsg + " [ Time taken : " + oldValue + "ms ]");
+				}
+			}
+			queryLogTextArea.append("\n" + txtMsg);*/
+		}
+	}
+
 
     private JButton clearButton;
     private JMenuItem clearMenuItem;
@@ -600,7 +750,7 @@ public class JPromptInternalFrame extends JInternalFrame {
     private JPopupMenu.Separator jSeparator6;
     private JPopupMenu.Separator jSeparator7;
     private JPopupMenu promptAreaPopupMenu;
-    private JTextArea promptTextArea;
+    private ConsoleTextArea promptTextArea;
     private JToolBar promptToolBar;
     private JButton refreshButton;
     private JMenuItem refreshMenuItem;

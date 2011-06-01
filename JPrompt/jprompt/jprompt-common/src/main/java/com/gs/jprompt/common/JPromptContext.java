@@ -77,7 +77,7 @@ public final class JPromptContext {
 		return defaultEditorFont;
 	}
 	
-	public String consoleStartupDirectory = "D:\\";
+	public String consoleStartupDirectory = "C:\\";
 	
 	public final char PROMPT_CHAR = '>';
 	
