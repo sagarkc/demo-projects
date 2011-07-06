@@ -11,6 +11,8 @@
 
 package com.gs.tools.launcher.ui;
 
+import com.gs.tools.fs.ui.CopyMultiFilesPanel;
+import com.gs.tools.fs.ui.FileCopyPanel;
 import com.gs.tools.time.ui.GetTimePanel;
 import com.gs.tools.time.ui.TimeZonePanel;
 import com.gs.utils.swing.window.WindowUtil;
@@ -53,6 +55,8 @@ public class ToolboxMainFrame extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         getTimeFromMiliMenuItem = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        fsMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Toolbox");
@@ -103,6 +107,18 @@ public class ToolboxMainFrame extends javax.swing.JFrame {
 
         jMenu1.add(jMenu2);
 
+        jMenu3.setText("File System");
+
+        fsMenuItem.setText("File System");
+        fsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fsMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu3.add(fsMenuItem);
+
+        jMenu1.add(jMenu3);
+
         mainMenuBar.add(jMenu1);
 
         setJMenuBar(mainMenuBar);
@@ -133,6 +149,20 @@ public class ToolboxMainFrame extends javax.swing.JFrame {
         frame.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void fsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fsMenuItemActionPerformed
+        ToolboxInternalFrame frame = new ToolboxInternalFrame();
+        frame.setSize(840, 490);
+        frame.setResizable(true);
+        frame.setMaximizable(true);
+        frame.setTitle("File Browser Tools");
+        //FileCopyPanel fileCopyPanel = new FileCopyPanel();
+        CopyMultiFilesPanel fileCopyPanel = new CopyMultiFilesPanel();
+        frame.add(fileCopyPanel, BorderLayout.CENTER);
+        mainDesktopPane.add(frame);
+        
+        frame.setVisible(true);
+    }//GEN-LAST:event_fsMenuItemActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -148,9 +178,11 @@ public class ToolboxMainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenuItem fsMenuItem;
     private javax.swing.JMenuItem getTimeFromMiliMenuItem;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JDesktopPane mainDesktopPane;

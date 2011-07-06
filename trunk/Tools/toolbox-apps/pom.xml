@@ -16,6 +16,8 @@
 		
 		<module>toolbox-time</module>
 		<module>toolbox-quartz</module>
+		<module>toolbox-net</module>
+		<module>toolbox-fs</module>
 		
 		<module>toolbox-launcher</module>
 	</modules>

@@ -40,7 +40,11 @@
 			<artifactId>toolbox-quartz</artifactId>
 			<version>${release.version}</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>com.gs.tools</groupId>
+			<artifactId>toolbox-fs</artifactId>
+			<version>${release.version}</version>
+		</dependency>
 		
 		<dependency>
 			<groupId>junit</groupId>
