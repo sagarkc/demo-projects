@@ -1,0 +1,58 @@
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>da-plugins</artifactId>
+    <groupId>com.gs.da.plugins</groupId>
+    <version>${release.version}</version>
+  </parent>
+  <groupId>com.gs.da.plugins</groupId>
+  <artifactId>da-ant</artifactId>
+  <version>${release.version}</version>
+  <packaging>pom</packaging>
+  <name>DA Plugins - ANT</name>
+	<modules>
+		<module>da-ant-common</module>
+		<module>da-ant-reactor</module>
+		<module>da-ant-application</module>
+		<module>da-ant-webapp</module>
+	</modules>
+	
+	<dependencyManagement>
+        <dependencies>
+			<dependency>
+				<groupId>org.apache.ant</groupId>
+				<artifactId>ant</artifactId>
+				<version>1.8.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>xml-apis</groupId>
+				<artifactId>xmlParserAPIs</artifactId>
+				<version>2.0.2</version>
+			</dependency>
+
+			<dependency>
+			  <groupId>xerces</groupId>
+			  <artifactId>xercesImpl</artifactId>
+			  <version>2.9.1</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>	
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xmlParserAPIs</artifactId>
+		</dependency>
+
+		<dependency>
+		  <groupId>xerces</groupId>
+		  <artifactId>xercesImpl</artifactId>
+		</dependency>
+	</dependencies>
+</project>
