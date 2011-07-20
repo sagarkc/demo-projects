@@ -1,0 +1,12 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>da-ant</artifactId>
+    <groupId>com.gs.da.plugins</groupId>
+    <version>${release.version}</version>
+  </parent>
+  <groupId>com.gs.da.plugins</groupId>
+  <artifactId>da-ant-common</artifactId>
+  <version>${release.version}</version>
+  <name>DA Plugins - ANT Common</name>
+</project>

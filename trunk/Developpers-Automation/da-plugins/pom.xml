@@ -1,0 +1,25 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.gs.da.plugins</groupId>
+  <artifactId>da-plugins</artifactId>
+  <version>${release.version}</version>
+  <packaging>pom</packaging>
+  <name>DA Plugins</name>
+  <modules>
+  	<module>da-ant</module>
+  	<module>da-maven</module>
+  </modules>
+  
+  <properties>
+        <project.title>DA-Plugins</project.title>
+        <project.home>D:/SVN_HOME/demo-projects/trunk/Developpers-Automation</project.home>
+        <release.version>1.0-BETA-1</release.version>
+        <setup.dir>${project.home}/setup/da-plugins</setup.dir>
+        <libs.dir>${setup.dir}/libs/da-plugins</libs.dir>
+        <release.dir>${project.home}/releases/da-plugins</release.dir>
+        <jdk.version>1.6</jdk.version>
+        <maven.test.skip>true</maven.test.skip>
+		
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+</project>
