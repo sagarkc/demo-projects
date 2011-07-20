@@ -373,7 +373,7 @@ public class CopyMultiFilesPanel extends javax.swing.JPanel implements PropertyC
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if(StringUtil.hasValidContent(sourceRootTextField.getText())
         		&& StringUtil.hasValidContent(targetTextField.getText())){
-        	File[] files = FileBrowserUtil.openMultipleFile(this, null, false);
+        	File[] files = FileBrowserUtil.openMultipleFile(this, null, false, sourceRootTextField.getText());
             if(null != files){
             	String[] fileNames = new String[files.length];
             	int i = 0;
