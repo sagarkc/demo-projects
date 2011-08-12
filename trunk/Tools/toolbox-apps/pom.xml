@@ -18,6 +18,7 @@
 		<module>toolbox-quartz</module>
 		<module>toolbox-net</module>
 		<module>toolbox-fs</module>
+		<module>toolbox-text</module>
 		
 		<module>toolbox-launcher</module>
 	</modules>
