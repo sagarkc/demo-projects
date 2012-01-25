@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.gs.exReport</groupId>
+	<artifactId>exReport</artifactId>
+	<version>${release.version}</version>
+	<packaging>pom</packaging>
+
+	<name>exReport</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<release.version>1.0</release.version>
+	</properties>
+
+
+	<modules>
+		<module>exReport-core</module>
+		<module>exReport-common</module>
+		<module>exReport-model</module>
+		<module>exReport-service</module>
+		<module>exReport-ext</module>
+		<module>exReport-template</module>
+		<module>exReport-apps</module>
+		<module>exReport-assembler</module>
+  </modules>
+	
+	
+	
+</project>

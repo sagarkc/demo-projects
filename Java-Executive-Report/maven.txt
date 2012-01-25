@@ -1,0 +1,26 @@
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.gs.exReport -DartifactId=exReport
+
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.gs.exReport -DartifactId=exReport-core
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.gs.exReport -DartifactId=exReport-common
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.gs.exReport -DartifactId=exReport-model
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.gs.exReport -DartifactId=exReport-service
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.gs.exReport -DartifactId=exReport-ext
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.gs.exReport.ext -DartifactId=exReport-spring
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.gs.exReport.ext -DartifactId=exReport-jdbc
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.gs.exReport.ext -DartifactId=exReport-hibernate
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.gs.exReport -DartifactId=exReport-template
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.gs.exReport -DartifactId=exReport-apps
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.gs.exReport.apps -DartifactId=exReport-ui
+
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DgroupId=com.gs.exReport.apps -DartifactId=exReport-web
