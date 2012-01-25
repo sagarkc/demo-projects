@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>exReport</artifactId>
+		<groupId>com.gs.exReport</groupId>
+		<version>${release.version}</version>
+	</parent>
+	<groupId>com.gs.exReport</groupId>
+	<artifactId>exReport-ext</artifactId>
+	<version>${release.version}</version>
+	<name>exReport-ext</name>
+	<packaging>pom</packaging>
+	<url>http://maven.apache.org</url>
+
+
+	<modules>
+		<module>exReport-spring</module>
+		<module>exReport-jdbc</module>
+		<module>exReport-hibernate</module>
+	</modules>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.gs.exReport</groupId>
+			<artifactId>exReport-common</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gs.exReport</groupId>
+			<artifactId>exReport-model</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gs.exReport</groupId>
+			<artifactId>exReport-core</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gs.exReport</groupId>
+			<artifactId>exReport-template</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+		
+	</dependencies>
+	
+</project>
