@@ -3,9 +3,12 @@ package com.gs.jprompt.common;
 import java.awt.Font;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 
 import org.apache.log4j.Logger;
@@ -20,6 +23,7 @@ public final class JPromptContext {
 		if(logger.isDebugEnabled()){
 			logger.debug("Creating new Instance of context");
 		}
+		promptCount = 0;
 		try{
 			Font digital7mono = Font.createFont(Font.TRUETYPE_FONT, 
 					getClass().getResourceAsStream("/fonts/digital-7-mono.ttf"));
@@ -80,6 +84,14 @@ public final class JPromptContext {
 	public String consoleStartupDirectory = "C:\\";
 	
 	public final char PROMPT_CHAR = '>';
+	
+	public int promptCount = 0;
+	
+	private Map<String, CommandWindow> commandWindowMap = new HashMap<String, CommandWindow>();
+
+	public Map<String, CommandWindow> getCommandWindowMap() {
+		return commandWindowMap;
+	}
 	
 	
 }

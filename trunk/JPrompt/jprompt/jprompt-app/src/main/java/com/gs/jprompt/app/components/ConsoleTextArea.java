@@ -1,33 +1,79 @@
 package com.gs.jprompt.app.components;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Event;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
-import javax.swing.text.DocumentFilter.FilterBypass;
 
 import org.apache.log4j.Logger;
 
+import com.gs.jprompt.common.CmdHistoryList;
+import com.gs.jprompt.common.ConsoleAppearance;
 import com.gs.jprompt.common.JPromptConstants;
 import com.gs.jprompt.common.JPromptContext;
+import com.gs.jprompt.common.SystemInfo;
 import com.gs.utils.text.StringUtil;
 
 public class ConsoleTextArea extends JTextArea implements CaretListener,
-		MouseListener, KeyListener {
+		MouseListener, KeyListener, FocusListener {
+
+	/**
+	 * @author sabuj.das
+	 * @MailTo sabuj.das@gmail.com
+	 * 
+	 */
+	private final class ConsoleDocumentFilter extends DocumentFilter {
+		@Override
+		public void remove(FilterBypass fb, int offset, int length)
+				throws BadLocationException {
+			if (offset >= getEndPromptOffset()) {
+				super.remove(fb, offset, length);
+			} else if(offset == 0 && length > 0){
+				super.remove(fb, offset, length);
+			}
+		}
+
+		@Override
+		public void insertString(FilterBypass fb, int offset, String string,
+				AttributeSet attr) throws BadLocationException {
+			
+			if (offset >= getEndPromptOffset()) {
+				super.insertString(fb, offset, string, attr);
+			} else {
+				super.insertString(fb, getEndPromptOffset(), string, attr);
+			}
+			
+		}
+
+		@Override
+		public void replace(FilterBypass fb, int offset, int length, String text,
+				AttributeSet attrs) throws BadLocationException {
+			if (offset >= getEndPromptOffset()) {
+				super.replace(fb, offset, length, text, attrs);
+			} else {
+				super.replace(fb, getEndPromptOffset(), length, text, attrs);
+			}
+		}
+	}
 
 	/**
 	 * 
@@ -42,12 +88,13 @@ public class ConsoleTextArea extends JTextArea implements CaretListener,
 
 	private String prompt;
 	private String workingDirectory;
-	private char promptCharacter = JPromptConstants.DEFAULT_PROMPT_CHAR;
+	private char promptCharacter = SystemInfo.PROMPT_CHAR;
 
 	private int promptLength;
 	private int endPromptOffset;
 	private int promptLine;
 	private String promptValue;
+	private CmdHistoryList<String> commandHistory = new CmdHistoryList<String>();
 
 	public ConsoleTextArea(JFrame parentFrame) {
 		this(parentFrame, ".");
@@ -98,40 +145,10 @@ public class ConsoleTextArea extends JTextArea implements CaretListener,
 		//addKeyListener(this);
 		//addMouseListener(this);
 		//addCaretListener(this);
+		//addFocusListener(this);
 		AbstractDocument abstractDocument = (AbstractDocument) getDocument();
-//		PromptDocumentFilter documentFilter =  new PromptDocumentFilter();
-//		documentFilter.setPromptLength(getPromptLength());
 		abstractDocument.setDocumentFilter(
-				new DocumentFilter(){
-					@Override
-					public void remove(FilterBypass fb, int offset, int length)
-							throws BadLocationException {
-						if (offset >= getEndPromptOffset()) {
-							super.remove(fb, offset, length);
-						}
-					}
-
-					@Override
-					public void insertString(FilterBypass fb, int offset, String string,
-							AttributeSet attr) throws BadLocationException {
-						if (offset >= getEndPromptOffset()) {
-							super.insertString(fb, offset, string, attr);
-						} else {
-							super.insertString(fb, getEndPromptOffset(), string, attr);
-						}
-						
-					}
-
-					@Override
-					public void replace(FilterBypass fb, int offset, int length, String text,
-							AttributeSet attrs) throws BadLocationException {
-						if (offset >= getEndPromptOffset()) {
-							super.replace(fb, offset, length, text, attrs);
-						} else {
-							super.replace(fb, getEndPromptOffset(), length, text, attrs);
-						}
-					}
-				}
+				new ConsoleDocumentFilter()
 		);
 		isPromptLine();
 	}
@@ -171,8 +188,49 @@ public class ConsoleTextArea extends JTextArea implements CaretListener,
 		this.prompt = prompt;
 		this.promptValue = prompt;
 		updatePromptLength();
+		rePositionCaret();
 	}
+	
+	/* (non-Javadoc)
+	 * @see javax.swing.JTextArea#replaceRange(java.lang.String, int, int)
+	 */
+	@Override
+	public void replaceRange(String str, int start, int end) {
+		if(start == 0 && end == getEndPromptOffset()-getPromptLength()){
+			try {
+				getDocument().remove(start, end - start);
+		        getDocument().insertString(start, str, null);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			updateEndPromptOffset();
+		}
+		else 
+			super.replaceRange(str, start, end);
+	}
+	
+	
 
+	public void clearScreen(){
+		try {
+			//setSelectionStart(0);
+		//	setSelectionEnd(getEndPromptOffset()-getPromptLength());
+			//replaceSelection(getSelectedText());
+			//this.replaceRange("", 0, getEndPromptOffset() - getPromptLength());
+			//getDocument().remove(0, getEndPromptOffset()-getPromptLength());
+			
+			this.replaceRange("", 0, getEndPromptOffset() - getPromptLength());
+			this.replaceRange("", getEndPromptOffset(), getEndPromptOffset() + getCommandLine().length());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//updateUI();
+		//setPrompt(getWorkingDirectory());
+		setPrompt(getPrompt());
+		rePositionCaret();
+	}
+	
 	public String getWorkingDirectory() {
 		return workingDirectory;
 	}
@@ -306,6 +364,16 @@ public class ConsoleTextArea extends JTextArea implements CaretListener,
 		
 	}
 	
+	@Override
+	public void focusGained(FocusEvent e) {
+		
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		
+	}
+
 	public void rePositionCaret(){
 		int row = 0;
     	int currentLine = 0;
@@ -344,8 +412,7 @@ public class ConsoleTextArea extends JTextArea implements CaretListener,
 			String text = getText(start, end - start);
 			return text;
 		} catch (BadLocationException e) {
-			e.printStackTrace();
-			
+			System.err.println(e.getMessage());
 		}
 		return "";
 	}
@@ -355,7 +422,7 @@ public class ConsoleTextArea extends JTextArea implements CaretListener,
 		try {
 			JFrame frame = new JFrame("Navigation Filter Example");
 
-			ConsoleTextArea cep = new ConsoleTextArea(frame, "d:\\");
+			ConsoleTextArea cep = new ConsoleTextArea(frame, "dfgsdfgsdfgsdfg");
 			cep.setRows(20);
 			cep.setColumns(133);
 			cep.setPreferredSize(new Dimension(280, 150));
@@ -388,4 +455,88 @@ public class ConsoleTextArea extends JTextArea implements CaretListener,
 			
 		}
 	}
+	
+	public boolean isSelectionEditable(){
+		int start = getSelectionStart();
+		int end = getSelectionEnd();
+		if((start >=0 && end >=start)
+				&& (start <= getEndPromptOffset())
+				&& (end <= getEndPromptOffset())){
+			return false;
+		}
+		
+		return true;
+	}
+
+	/**
+	 * 
+	 */
+	public void updateSelection() {
+		int start = getSelectionStart();
+		int end = getSelectionEnd();
+		if((start >=0 && end >=start)
+				&& (start <= getEndPromptOffset())
+				&& (end <= getEndPromptOffset())){
+			setSelectionStart(-1);
+			setSelectionEnd(-1);
+			return ;
+		}
+		setSelectionStart(getEndPromptOffset());
+		setSelectionEnd(end);
+	}
+
+	/**
+	 * @param consoleAppearance
+	 */
+	public void setAppearance(ConsoleAppearance consoleAppearance) {
+		if(null == consoleAppearance){
+			setFont(context.getDefaultEditorFont());
+			setForeground(Color.BLACK);
+			setBackground(Color.WHITE);
+			return;
+		}
+		setFont(consoleAppearance.getFont());
+		setForeground(consoleAppearance.getFgColor());
+		setCaretColor(consoleAppearance.getFgColor());
+		setBackground(consoleAppearance.getBgColor());
+	}
+
+	/**
+	 * @param fileName
+	 */
+	public void replaceLastWord(String fileName) {
+		if(fileName.contains(" ")){
+			fileName = "\"" + fileName + "\"";
+		}
+		String cmd = getCommandLine();
+		
+		if(fileName.endsWith("\"")){
+			replaceRange(fileName, getEndPromptOffset(), getEndPromptOffset() + cmd.length());
+			return;
+		}
+		
+		if(cmd.contains("\"")){
+			replaceRange(fileName, getEndPromptOffset(), getEndPromptOffset() + cmd.length());
+			return;
+		}
+		
+		if(StringUtil.hasValidContent(cmd)){
+			int spaceLoc = cmd.lastIndexOf(' ');
+			if(spaceLoc > -1){
+				replaceRange(fileName, getEndPromptOffset()+spaceLoc+1, getEndPromptOffset() + cmd.length());
+			} else {
+				replaceRange(fileName, getEndPromptOffset(), getEndPromptOffset() + cmd.length());
+			}
+		} else {
+			replaceRange(fileName, getEndPromptOffset(), getEndPromptOffset() + cmd.length());
+		}
+	}
+	
+	
+
+	public CmdHistoryList<String> getCommandHistory() {
+		return commandHistory;
+	}
+	
+	
 }
