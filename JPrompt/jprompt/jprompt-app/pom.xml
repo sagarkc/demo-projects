@@ -23,4 +23,94 @@
 			<version>${release.version}</version>
 		</dependency>
 	</dependencies>
+	
+	<build>
+
+		
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.gs.jprompt.app.JPromptLauncher</mainClass>
+							<addClasspath>true</addClasspath>
+							<addExtensions>false</addExtensions>
+							<classpathPrefix>lib/</classpathPrefix>
+							<classpathMavenRepositoryLayout>false</classpathMavenRepositoryLayout>
+						</manifest>
+						<!-- <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile> 
+							<classpathLayoutType>repository</classpathLayoutType> <classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout> -->
+					</archive>
+					
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<!-- Coping JAR to release directory -->
+					<execution>
+						<id>defaultcopy</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<!-- Coping JAR to release directory -->
+								<copy todir="${release.dir}/${project.title}_${release.version}/"
+									overwrite="true" failonerror="true" includeEmptyDirs="true">
+									<fileset dir="target">
+										<include name="jprompt-app-${release.version}.jar" />
+									</fileset>
+								</copy>
+								
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${release.dir}/${project.title}_${release.version}/lib/</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<useRepositoryLayout>false</useRepositoryLayout>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			
+		</plugins>
+	</build>
 </project>

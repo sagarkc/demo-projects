@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyVetoException;
+import java.text.SimpleDateFormat;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,6 +26,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -33,8 +39,10 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
+
 import com.gs.jprompt.JPromptImageConstants;
 import com.gs.jprompt.common.JPromptContext;
+import com.gs.utils.collection.CollectionUtils;
 
 /**
  * @author Sabuj Das
@@ -43,13 +51,27 @@ import com.gs.jprompt.common.JPromptContext;
 public class JPromptMainFrame extends JFrame {
 
 	private static final JPromptContext context = JPromptContext.getContext();
-	
+	private Timer timer;
 	
     /** Creates new form JPromptMainFrame */
     public JPromptMainFrame() {
+    	timer = new Timer();
+    	
         initComponents();
+        timer.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				java.util.Date date = new java.util.Date();
+				SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss");
+				String time = f.format(date);
+				sysTimeLabel.setText(time);
+			}
+		}, 1);
+        
     }
 
+    
     
     private void initComponents() {
         GridBagConstraints gridBagConstraints;
@@ -134,6 +156,7 @@ public class JPromptMainFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
         setTitle(context.getResourceBundle().getString("JPromptMainFrame.title")); // NOI18N
+        setIconImage(JPromptImageConstants.JPROMPT_FRAME_ICON.getImage());
         setName("Form"); // NOI18N
         getContentPane().setLayout(new GridBagLayout());
 
@@ -314,7 +337,8 @@ public class JPromptMainFrame extends JFrame {
         statusToolBar.add(jSeparator14);
 
         sysTimeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        sysTimeLabel.setText(context.getResourceBundle().getString("JPromptMainFrame.sysTimeLabel.text")); // NOI18N
+        //sysTimeLabel.setText(context.getResourceBundle().getString("JPromptMainFrame.sysTimeLabel.text")); // NOI18N
+        //sysTimeLabel.setText(new Date().toString());
         sysTimeLabel.setMaximumSize(new Dimension(80, 14));
         sysTimeLabel.setMinimumSize(new Dimension(80, 14));
         sysTimeLabel.setName("sysTimeLabel"); // NOI18N
@@ -728,7 +752,21 @@ public class JPromptMainFrame extends JFrame {
 
     private void newPromptMenuItemActionPerformed(ActionEvent evt) {
         JPromptInternalFrame f = new JPromptInternalFrame(this);
+        
+        JInternalFrame[] iFrames = promptDesktopPane.getAllFrames();
+        if(null != iFrames && iFrames.length > 0){
+        	Point location = iFrames[iFrames.length-1].getLocation();
+        	f.setLocation((int)location.getX()+20, (int)location.getY()+20);
+        	
+        }
+        try {
+			f.setSelected(true);
+		} catch (PropertyVetoException e) {
+			e.printStackTrace();
+		}
         f.setVisible(true);
+        
+        
         promptDesktopPane.add(f);
     }
 
@@ -909,24 +947,7 @@ public class JPromptMainFrame extends JFrame {
     	lineInfoLabel.setText("" + row + " : " + column);
     }
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-    	
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-            	try {
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
-                new JPromptMainFrame().setVisible(true);
-            }
-        });
-    }
-
+    
     // Variables declaration - do not modify
     private JMenuItem aboutMenuItem;
     private JToolBar actionToolBar;

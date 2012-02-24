@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Map;
 
+import javax.swing.JInternalFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
@@ -14,7 +16,10 @@ import org.apache.log4j.Logger;
 
 import com.gs.jprompt.app.components.ConsoleTextArea;
 import com.gs.jprompt.common.Command;
+import com.gs.jprompt.common.EnvironmentManager;
 import com.gs.jprompt.core.CommandExecutioner;
+import com.gs.jprompt.core.ProcessBuilderFactory;
+import com.gs.utils.text.StringUtil;
 
 public class CommandRunner<T , C extends Command> extends SwingWorker<T, C> {
 
@@ -30,13 +35,19 @@ public class CommandRunner<T , C extends Command> extends SwingWorker<T, C> {
 	
 	private Command command;
 	private ConsoleTextArea consoleTextArea;
-	private CommandExecutioner commandExecutioner;
+	private final JInternalFrame consoleInternalFrame;
+	private final EnvironmentManager environmentManager;
+	private Process currentProcess;
 	
-	
-	public CommandRunner(Command command) {
+	public CommandRunner(JInternalFrame consoleInternalFrame, Command command, EnvironmentManager manager) {
 		this.command = command;
+		this.consoleInternalFrame = consoleInternalFrame;
+		this.environmentManager = manager;
 	}
-	
+
+	public EnvironmentManager getEnvironmentManager() {
+		return environmentManager;
+	}
 
 	public Command getCommand() {
 		return command;
@@ -54,14 +65,6 @@ public class CommandRunner<T , C extends Command> extends SwingWorker<T, C> {
 		this.consoleTextArea = consoleTextArea;
 	}
 
-	public CommandExecutioner getCommandExecutioner() {
-		return commandExecutioner;
-	}
-
-	public void setCommandExecutioner(CommandExecutioner commandExecutioner) {
-		this.commandExecutioner = commandExecutioner;
-	}
-
 
 
 
@@ -71,15 +74,19 @@ public class CommandRunner<T , C extends Command> extends SwingWorker<T, C> {
 		Long totalTime = 0L;
 		firePropertyChange(PROPERTY_PROGRESS, null, TASK_STATUS_START);
 		if(null != command){
-			if(Command.CMD_TYPE_CHANGE_DRIVE.equals(command.getCommandType())){
-				String currentWorkDirName = command.getWorkingDir();
+			ProcessBuilder processBuilder = ProcessBuilderFactory.getFactory().getProcessBuilder(command.getCommandLine());
+			Map<String, String> builderEnvMap = processBuilder.environment();
+			builderEnvMap.putAll(environmentManager.getUserEnvironment().getAll());
+			String currentWorkDirName = command.getWorkingDir();
 			
+			if(Command.CMD_TYPE_CHANGE_DRIVE.equals(command.getCommandType())){
 				File dir = new File(currentWorkDirName);
 				if(dir.exists()){
+					processBuilder.directory(new File(currentWorkDirName));
 					consoleTextArea.setWorkingDirectory(currentWorkDirName);
-					CommandExecutioner executioner = new CommandExecutioner(command.getCommandLine(), new File(consoleTextArea.getWorkingDirectory()));
 					try {
-						final Process process = executioner.createProcess();
+						final Process process = processBuilder.start();
+						currentProcess = process;
 						InputStream is = process.getInputStream();
 						InputStreamReader isr = new InputStreamReader(is);
 						BufferedReader br = new BufferedReader(isr);
@@ -87,33 +94,27 @@ public class CommandRunner<T , C extends Command> extends SwingWorker<T, C> {
 						consoleTextArea.append("\n");
 						while ((line  = br.readLine()) != null) {
 							consoleTextArea.append(line + "\n");
+							consoleTextArea.rePositionCaret();
 						}
 						
-						/*InputStream es = process.getErrorStream();
-						InputStreamReader ier = new InputStreamReader(es);
-						BufferedReader er = new BufferedReader(ier);
-						line = "";
-						consoleTextArea.append("\n");
-						while ((line  = er.readLine()) != null) {
-							consoleTextArea.append(line + "\n");
-						}*/
-						//consoleTextArea.updateUI();
+						
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+						logger.error(e);
 						e.printStackTrace();
 					}
 				}
 			}
-			if(Command.CMD_TYPE_CD.equals(command.getCommandType())){
-				String currentWorkDirName = consoleTextArea.getWorkingDirectory()
+			else if(Command.CMD_TYPE_CD.equals(command.getCommandType())){
+				currentWorkDirName = consoleTextArea.getWorkingDirectory()
 					+ File.separator + command.getWorkingDir();
 				
 				File dir = new File(currentWorkDirName);
 				if(dir.exists()){
 					consoleTextArea.setWorkingDirectory(currentWorkDirName);
-					CommandExecutioner executioner = new CommandExecutioner(command.getCommandLine(), new File(consoleTextArea.getWorkingDirectory()));
+					processBuilder.directory(new File(currentWorkDirName));
 					try {
-						final Process process = executioner.createProcess();
+						final Process process = processBuilder.start();
+						currentProcess = process;
 						InputStream is = process.getInputStream();
 						InputStreamReader isr = new InputStreamReader(is);
 						BufferedReader br = new BufferedReader(isr);
@@ -121,6 +122,7 @@ public class CommandRunner<T , C extends Command> extends SwingWorker<T, C> {
 						consoleTextArea.append("\n");
 						while ((line  = br.readLine()) != null) {
 							consoleTextArea.append(line + "\n");
+							consoleTextArea.rePositionCaret();
 						}
 						
 						/*InputStream es = process.getErrorStream();
@@ -138,9 +140,11 @@ public class CommandRunner<T , C extends Command> extends SwingWorker<T, C> {
 					}
 				}
 			} else if(Command.CMD_TYPE_SHELL.equals(command.getCommandType())){
-				CommandExecutioner executioner = new CommandExecutioner(command.getCommandLine(), new File(consoleTextArea.getWorkingDirectory()));
+				processBuilder.directory(new File(consoleTextArea.getWorkingDirectory()));
+				
 				try {
-					final Process process = executioner.createProcess();
+					final Process process = processBuilder.start();
+					currentProcess = process;
 					InputStream is = process.getInputStream();
 					InputStreamReader isr = new InputStreamReader(is);
 					BufferedReader br = new BufferedReader(isr);
@@ -148,6 +152,7 @@ public class CommandRunner<T , C extends Command> extends SwingWorker<T, C> {
 					consoleTextArea.append("\n");
 					while ((line  = br.readLine()) != null) {
 						consoleTextArea.append(line + "\n");
+						consoleTextArea.rePositionCaret();
 					}
 					
 					InputStream es = process.getErrorStream();
@@ -157,16 +162,92 @@ public class CommandRunner<T , C extends Command> extends SwingWorker<T, C> {
 					consoleTextArea.append("\n");
 					while ((line  = er.readLine()) != null) {
 						consoleTextArea.append(line + "\n");
+						consoleTextArea.rePositionCaret();
 					}
 					//consoleTextArea.updateUI();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			}else if(Command.CMD_TYPE_SET.equals(command.getCommandType())){
+				processBuilder.directory(new File(consoleTextArea.getWorkingDirectory()));
+				
+				try {
+					final Process process = processBuilder.start();
+					currentProcess = process;
+					InputStream is = process.getInputStream();
+					InputStreamReader isr = new InputStreamReader(is);
+					BufferedReader br = new BufferedReader(isr);
+					String line = "";
+					consoleTextArea.append("\n");
+					while ((line  = br.readLine()) != null) {
+						consoleTextArea.append(line + "\n");
+						consoleTextArea.rePositionCaret();
+					}
+					
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				environmentManager.getUserEnvironment().set(command.getCommandLine());
+			}else if(Command.CMD_TYPE_TITLE.equals(command.getCommandType())){
+				if(StringUtil.hasValidContent(command.getCommandLine())){
+					consoleInternalFrame.setTitle(command.getCommandLine());
+				}
+			}else if(Command.CMD_TYPE_PROMPT.equals(command.getCommandType())){
+				processBuilder.directory(new File(consoleTextArea.getWorkingDirectory()));
+				boolean hasError = false;
+				try {
+					final Process process = processBuilder.start();
+					currentProcess = process;
+					InputStream is = process.getInputStream();
+					InputStreamReader isr = new InputStreamReader(is);
+					BufferedReader br = new BufferedReader(isr);
+					String line = "";
+					consoleTextArea.append("\n");
+					while ((line  = br.readLine()) != null) {
+						if(StringUtil.hasValidContent(line)){
+							consoleTextArea.append(line + "\n");
+						}
+					}
+					
+					InputStream es = process.getErrorStream();
+					InputStreamReader ier = new InputStreamReader(es);
+					BufferedReader er = new BufferedReader(ier);
+					line = "";
+					consoleTextArea.append("\n");
+					while ((line  = er.readLine()) != null) {
+						if(StringUtil.hasValidContent(line)){
+							consoleTextArea.append(line + "\n");
+							consoleTextArea.rePositionCaret();
+						}
+						hasError = true;
+					}
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if(!hasError){
+					
+					if(command.getCommandLine().indexOf(' ')+1 <= command.getCommandLine().length()
+							&& command.getCommandLine().indexOf(' ') >= 0){
+						String prompt = command.getCommandLine().substring(command.getCommandLine().indexOf(' ')+1);
+						if(StringUtil.hasValidContent(prompt)){
+							consoleTextArea.setPrompt(prompt);
+						} else {
+							consoleTextArea.setPrompt(null);
+							//consoleTextArea.setWorkingDirectory(consoleTextArea.getWorkingDirectory());
+						}
+					} else if(command.getCommandLine().indexOf(' ') < 0){
+						consoleTextArea.setPrompt(null);
+					}
+					
+				}
 			}
-		} else {
-			
-		}
+		} 
 		
 		
 		
@@ -206,6 +287,10 @@ public class CommandRunner<T , C extends Command> extends SwingWorker<T, C> {
 	}
 	
 	public void stop() {
+		if(null != currentProcess){
+			currentProcess.destroy();
+			//Runtime.getRuntime().
+		}
 		cancel(true);
 		firePropertyChange(TASK_STATUS_ABORT, null, null);
 	}

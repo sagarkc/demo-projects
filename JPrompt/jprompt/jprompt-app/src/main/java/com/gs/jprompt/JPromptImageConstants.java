@@ -1,6 +1,5 @@
 package com.gs.jprompt;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
@@ -9,6 +8,8 @@ import javax.swing.ImageIcon;
  */
 public final class JPromptImageConstants {
 
+	public static final ImageIcon JPROMPT_FRAME_ICON = new ImageIcon(JPromptImageConstants.class.getResource("/images/jPrompt.png"));
+	
 	public static final ImageIcon START_EXECUTION_ICON = new ImageIcon(JPromptImageConstants.class.getResource("/images/execution_obj.gif"));
 	
 	public static final ImageIcon PAUSE_EXECUTION_ICON = new ImageIcon(JPromptImageConstants.class.getResource("/images/Pause.png"));
@@ -23,7 +24,7 @@ public final class JPromptImageConstants {
 	
 	public static final ImageIcon CLEAR_ICON = new ImageIcon(JPromptImageConstants.class.getResource("/images/"));
 	
-	public static final ImageIcon NEW_CONSOLE_ICON = new ImageIcon(JPromptImageConstants.class.getResource("/images/new-prompt.png"));
+	public static final ImageIcon NEW_CONSOLE_ICON = new ImageIcon(JPromptImageConstants.class.getResource("/images/new_prompt.png"));
 	
 	public static final ImageIcon FOLDER_OPEN_ICON = new ImageIcon(JPromptImageConstants.class.getResource("/images/folderopen.png"));
 	

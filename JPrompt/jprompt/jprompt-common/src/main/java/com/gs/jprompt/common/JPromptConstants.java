@@ -21,4 +21,6 @@ public interface JPromptConstants {
 	char DEFAULT_PROMPT_CHAR = '>';
 	
 	String DEFAULT_PROMPT = USER_NAME;
+	
+	int CMD_HISTORY_MAX_LENGTH = 25;
 }

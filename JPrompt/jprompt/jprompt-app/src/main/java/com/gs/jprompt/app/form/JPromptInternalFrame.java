@@ -1,5 +1,7 @@
 package com.gs.jprompt.app.form;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -17,13 +19,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -33,49 +33,84 @@ import javax.swing.JInternalFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.colorchooser.ColorChooserComponentFactory;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.BadLocationException;
 
 import com.gs.jprompt.JPromptImageConstants;
+import com.gs.jprompt.app.components.AutoCompleteWindow;
 import com.gs.jprompt.app.components.ConsoleTextArea;
 import com.gs.jprompt.app.task.CommandRunner;
 import com.gs.jprompt.common.Command;
+import com.gs.jprompt.common.CommandWindow;
+import com.gs.jprompt.common.ConsoleAppearance;
+import com.gs.jprompt.common.EnvironmentManager;
 import com.gs.jprompt.common.JPromptContext;
-import com.gs.jprompt.common.PromptNavigationFilter;
-import com.gs.jprompt.core.CommandExecutioner;
 import com.gs.utils.text.StringUtil;
 
 public class JPromptInternalFrame extends JInternalFrame{
 
 	private static final JPromptContext context = JPromptContext.getContext();
 	
+	
 	private JFrame parentFrame;
 	private FormListener formListener;
 	private CommandRunner<String, Command> commandRunner;
+	private EnvironmentManager environmentManager;
+	private ConsoleAppearance consoleAppearance;
+	private AutoCompleteWindow autoCompleteWindow;
+	
+
+
+	private int previousKeyCode = 0;
+	private int previousSelection = 0;
+	private int previousCommandIndex = 0;
 	
     public JPromptInternalFrame(JFrame parentFrame) {
-    	this.parentFrame = parentFrame;
-    	if(null == this.parentFrame){
-    		//TODO: Throw exception
-    	}
-        initComponents();
+    	synchronized (this) {
+    		setName("JPromptInternalFrame_" + hashCode());
+        	environmentManager = new EnvironmentManager();
+        	this.parentFrame = parentFrame;
+        	if(null == this.parentFrame){
+        		//TODO: Throw exception
+        	}
+            
+        	consoleAppearance = new ConsoleAppearance();
+        	consoleAppearance.setFont(context.getDefaultEditorFont());
+        	consoleAppearance.setFgColor(Color.WHITE);
+        	consoleAppearance.setBgColor(Color.BLACK);
+
+        	initComponents();
+            
+            CommandWindow commandWindow = new CommandWindow();
+            commandWindow.setTitle(getTitle());
+            commandWindow.setInternalFrame(this);
+            context.getCommandWindowMap().put(getName(), commandWindow);
+            
+		}
+    	
     }
 
-
-    private void initComponents() {
+    /* (non-Javadoc)
+     * @see java.lang.Object#finalize()
+     */
+    @Override
+    protected void finalize() throws Throwable {
+    	super.finalize();
+    }
+    
+	private void initComponents() {
         GridBagConstraints gridBagConstraints;
 
         promptAreaPopupMenu = new JPopupMenu();
-        refreshMenuItem = new JMenuItem();
+        fontMenuItem = new JMenuItem();
+        colorMenuItem = new JMenuItem();
         jSeparator4 = new JPopupMenu.Separator();
         copyMenuItem = new JMenuItem();
         saveMenuItem = new JMenuItem();
@@ -87,7 +122,8 @@ public class JPromptInternalFrame extends JInternalFrame{
         jSeparator7 = new JPopupMenu.Separator();
         showToolbarCheckBoxMenuItem = new JCheckBoxMenuItem();
         promptToolBar = new JToolBar();
-        refreshButton = new JButton();
+        fontButton = new JButton();
+        colorButton = new JButton();
         jSeparator1 = new JToolBar.Separator();
         copyButton = new JButton();
         saveButton = new JButton();
@@ -100,15 +136,32 @@ public class JPromptInternalFrame extends JInternalFrame{
         promptTextArea = new ConsoleTextArea(parentFrame, context.consoleStartupDirectory);
         editModeCheckBox = new JCheckBox();
 
+        autoCompleteWindow = new AutoCompleteWindow(promptTextArea);
+        
         formListener = new FormListener();
 
+        setFrameIcon(JPromptImageConstants.JPROMPT_FRAME_ICON);
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle(context.getResourceBundle().getString("JPromptInternalFrame.title")); // NOI18N
+        
+        
+        
         promptAreaPopupMenu.setName("promptAreaPopupMenu"); // NOI18N
 
-        refreshMenuItem.setText(context.getResourceBundle().getString("JPromptInternalFrame.refreshMenuItem.text")); // NOI18N
-        refreshMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/reload_green.png")));
-        refreshMenuItem.setName("refreshMenuItem"); // NOI18N
-        refreshMenuItem.addActionListener(formListener);
-        promptAreaPopupMenu.add(refreshMenuItem);
+        fontMenuItem.setText(context.getResourceBundle().getString("JPromptInternalFrame.fontMenuItem.text")); // NOI18N
+        fontMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/font_size.png")));
+        fontMenuItem.setName("fontMenuItem"); // NOI18N
+        fontMenuItem.addActionListener(formListener);
+        promptAreaPopupMenu.add(fontMenuItem);
+        
+        colorMenuItem.setText(context.getResourceBundle().getString("JPromptInternalFrame.colorMenuItem.text")); // NOI18N
+        colorMenuItem.setIcon(new ImageIcon(getClass().getResource("/images/color_swatch.png")));
+        colorMenuItem.setName("colorMenuItem"); // NOI18N
+        colorMenuItem.addActionListener(formListener);
+        promptAreaPopupMenu.add(colorMenuItem);
 
         jSeparator4.setName("jSeparator4"); // NOI18N
         promptAreaPopupMenu.add(jSeparator4);
@@ -158,12 +211,7 @@ public class JPromptInternalFrame extends JInternalFrame{
         showToolbarCheckBoxMenuItem.addActionListener(formListener);
         promptAreaPopupMenu.add(showToolbarCheckBoxMenuItem);
 
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
-        setTitle(context.getResourceBundle().getString("JPromptInternalFrame.title")); // NOI18N
-        setName("Form"); // NOI18N
+        
         addInternalFrameListener(formListener);
         addFocusListener(formListener);
         getContentPane().setLayout(new GridBagLayout());
@@ -172,15 +220,24 @@ public class JPromptInternalFrame extends JInternalFrame{
         promptToolBar.setRollover(true);
         promptToolBar.setName("promptToolBar"); // NOI18N
 
-        refreshButton.setText(context.getResourceBundle().getString("JPromptInternalFrame.refreshButton.text")); // NOI18N
-        refreshButton.setIcon(new ImageIcon(getClass().getResource("/images/reload_green.png")));
-        refreshButton.setFocusable(false);
-        refreshButton.setHorizontalTextPosition(SwingConstants.CENTER);
-        refreshButton.setName("refreshButton"); // NOI18N
-        refreshButton.setVerticalTextPosition(SwingConstants.BOTTOM);
-        refreshButton.addActionListener(formListener);
-        promptToolBar.add(refreshButton);
+        fontButton.setText(context.getResourceBundle().getString("JPromptInternalFrame.appearanceButton.text")); // NOI18N
+        fontButton.setIcon(new ImageIcon(getClass().getResource("/images/font_size.png")));
+        fontButton.setFocusable(false);
+        fontButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        fontButton.setName("refreshButton"); // NOI18N
+        fontButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        fontButton.addActionListener(formListener);
+        promptToolBar.add(fontButton);
 
+        colorButton.setText(""); // NOI18N
+        colorButton.setIcon(new ImageIcon(getClass().getResource("/images/color_swatch.png")));
+        colorButton.setFocusable(false);
+        colorButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        colorButton.setName("refreshButton"); // NOI18N
+        colorButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        colorButton.addActionListener(formListener);
+        promptToolBar.add(colorButton);
+        
         jSeparator1.setName("jSeparator1"); // NOI18N
         promptToolBar.add(jSeparator1);
 
@@ -264,7 +321,8 @@ public class JPromptInternalFrame extends JInternalFrame{
         promptTextArea.addPropertyChangeListener(formListener);
         promptTextArea.addKeyListener(formListener);
         promptTextArea.addVetoableChangeListener(formListener);
-        promptTextArea.setFont(context.getDefaultEditorFont());
+        promptTextArea.addMouseListener(formListener);
+        promptTextArea.setAppearance(consoleAppearance);
         jScrollPane1.setViewportView(promptTextArea);
 
         gridBagConstraints = new GridBagConstraints();
@@ -288,8 +346,11 @@ public class JPromptInternalFrame extends JInternalFrame{
     	FormListener() {}
         
     	public void actionPerformed(ActionEvent evt) {
-            if (evt.getSource() == refreshButton) {
-                JPromptInternalFrame.this.refreshButtonActionPerformed(evt);
+            if (evt.getSource() == fontButton) {
+                JPromptInternalFrame.this.fontButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == colorButton) {
+                JPromptInternalFrame.this.colorButtonActionPerformed(evt);
             }
             else if (evt.getSource() == copyButton) {
                 JPromptInternalFrame.this.copyButtonActionPerformed(evt);
@@ -306,8 +367,11 @@ public class JPromptInternalFrame extends JInternalFrame{
             else if (evt.getSource() == stopButton) {
                 JPromptInternalFrame.this.stopButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == refreshMenuItem) {
-                JPromptInternalFrame.this.refreshMenuItemActionPerformed(evt);
+            else if (evt.getSource() == fontMenuItem) {
+                JPromptInternalFrame.this.fontButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == colorButton) {
+                JPromptInternalFrame.this.colorButtonActionPerformed(evt);
             }
             else if (evt.getSource() == copyMenuItem) {
                 JPromptInternalFrame.this.copyMenuItemActionPerformed(evt);
@@ -445,12 +509,11 @@ public class JPromptInternalFrame extends JInternalFrame{
 
 		public void mouseClicked(MouseEvent evt) {
 			if (evt.getSource() == promptTextArea) {
-                
+                autoCompleteWindow.setVisible(false);
             }
 		}
 
 		public void mousePressed(MouseEvent evt) {
-			// TODO Auto-generated method stub
 			
 		}
 
@@ -470,8 +533,32 @@ public class JPromptInternalFrame extends JInternalFrame{
 		}
     }
 
-    private void refreshButtonActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
+    private void fontButtonActionPerformed(ActionEvent evt) {
+        FontChooserDialog fd = new FontChooserDialog(parentFrame, true, consoleAppearance.getFont());
+        int opt = fd.showFontChooserDialog();
+        if(FontChooserDialog.OK_OPTION == opt){
+        	Font font = fd.getSelectedFont();
+        	//alpha clinin, jaynagar, dr saab er barir kache | kidney
+        	if(null != font){
+        		consoleAppearance.setFont(font);
+        		promptTextArea.setAppearance(consoleAppearance);
+        	}
+        }
+    }
+    
+    private void colorButtonActionPerformed(ActionEvent evt) {
+    	ConsoleColorChooserDialog ccd = new ConsoleColorChooserDialog(parentFrame, true, 
+    			consoleAppearance.getFgColor(), consoleAppearance.getBgColor());
+    	int opt  = ccd.showFontChooserDialog();
+    	if(ConsoleColorChooserDialog.OK_OPTION == opt){
+    		if(null != ccd.getSelectedFGColor()){
+    			consoleAppearance.setFgColor(ccd.getSelectedFGColor());
+    		}
+    		if(null != ccd.getSelectedBGColor()){
+    			consoleAppearance.setBgColor(ccd.getSelectedBGColor());
+    		}
+    		promptTextArea.setAppearance(consoleAppearance);
+    	}
     }
 
     public void textAreaCaretUpdate(CaretEvent evt) {
@@ -505,48 +592,169 @@ public class JPromptInternalFrame extends JInternalFrame{
     }
 
     private void clearButtonActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
+        promptTextArea.clearScreen();
     }
 
     private void startPauseButtonActionPerformed(ActionEvent evt) {
-        executeCommand();
+        executeCommand(null);
     }
 
     private void stopButtonActionPerformed(ActionEvent evt) {
-        // TODO add your handling code here:
+        if(null != commandRunner){
+        	commandRunner.stop();
+        }
     }
 
     private void promptTextAreaKeyPressed(KeyEvent evt) {
+    	ConsoleTextArea editArea = (ConsoleTextArea) evt.getSource();
+    	if(null == editArea)
+    		return;
+    	previousKeyCode = evt.getKeyCode();
+    	if(evt.isControlDown()){
+    		if(KeyEvent.VK_ENTER == evt.getKeyCode()){
+            	
+            } 
+    		else if(KeyEvent.VK_SPACE == evt.getKeyCode()){
+        		promptTextArea.requestFocus();
+        		autoCompleteWindow.showWindow();
+        		evt.consume();
+        	}
+    		else if(KeyEvent.VK_C == evt.getKeyCode()){
+    			commandRunner.stop();
+    		}
+    	} else {
+    		if(KeyEvent.VK_ENTER == evt.getKeyCode()){
+    			if(StringUtil.hasValidContent(editArea.getCommandLine()))
+    				editArea.getCommandHistory().add(editArea.getCommandLine());
+            	executeCommand(evt);
+            }
+    		else if(KeyEvent.VK_BACK_SPACE == evt.getKeyCode()){
+            	int start = editArea.getSelectionStart();
+            	int end = editArea.getSelectionEnd();
+            	if(start != end){
+            		editArea.updateSelection();
+                	editArea.rePositionCaret();
+            	}
+            } 
+    		else if(KeyEvent.VK_TAB == evt.getKeyCode()){
+    			String fileName = getDirName();
+    			if(StringUtil.hasValidContent(fileName)){
+    				editArea.replaceLastWord(fileName);
+    			}
+    			evt.consume();
+    		}
+    		else if(KeyEvent.VK_UP == evt.getKeyCode()){
+    			rotateCommandHistory(true, evt);
+    		}
+    		else if(KeyEvent.VK_DOWN == evt.getKeyCode()){
+    			rotateCommandHistory(false, evt);
+    		}
+    		else if(KeyEvent.VK_LEFT != evt.getKeyCode()
+            		&& KeyEvent.VK_RIGHT != evt.getKeyCode()
+            		&& KeyEvent.VK_PAGE_UP != evt.getKeyCode()
+            		&& KeyEvent.VK_PAGE_DOWN != evt.getKeyCode()
+            		&& KeyEvent.VK_END != evt.getKeyCode()
+            		&& KeyEvent.VK_HOME != evt.getKeyCode()){
+            	editArea.rePositionCaret();
+            } 
+    	}
     	
-    	if(KeyEvent.VK_ENTER == evt.getKeyCode()){
-        	executeCommand();
-        } else if(KeyEvent.VK_LEFT != evt.getKeyCode()
-        		&& KeyEvent.VK_RIGHT != evt.getKeyCode()
-        		&& KeyEvent.VK_UP != evt.getKeyCode()
-        		&& KeyEvent.VK_DOWN != evt.getKeyCode()
-        		&& KeyEvent.VK_PAGE_UP != evt.getKeyCode()
-        		&& KeyEvent.VK_PAGE_DOWN != evt.getKeyCode()
-        		&& KeyEvent.VK_END != evt.getKeyCode()
-        		&& KeyEvent.VK_HOME != evt.getKeyCode()){
-        	ConsoleTextArea editArea = (ConsoleTextArea) evt.getSource();
-        	editArea.rePositionCaret();
-        }
         
     }
+    
+    public void rotateCommandHistory(boolean up, KeyEvent e){
+		if((KeyEvent.VK_UP == previousKeyCode || KeyEvent.VK_DOWN == previousKeyCode)
+				&& promptTextArea.getCaretPosition() >= promptTextArea.getEndPromptOffset()){
+			String cmd = promptTextArea.getCommandHistory().getCurrentItem();
+			
+			if(StringUtil.hasValidContent(cmd)){
+				promptTextArea.replaceRange(cmd, 
+						promptTextArea.getEndPromptOffset(), 
+						promptTextArea.getCommandLine().length() + promptTextArea.getEndPromptOffset());
+				
+				e.consume();
+			}
+			previousCommandIndex = promptTextArea.getCommandHistory().getCurrentIndex();
+			if(KeyEvent.VK_UP == previousKeyCode){
+				if(previousCommandIndex > 0)
+					previousCommandIndex--;
+			} else {
+				if(previousCommandIndex < promptTextArea.getCommandHistory().size()-1)
+					previousCommandIndex++;
+			}
+			promptTextArea.getCommandHistory().setCurrentIndex(previousCommandIndex);
+		} 
+		else if(KeyEvent.VK_UP != previousKeyCode && KeyEvent.VK_DOWN != previousKeyCode) {
+			updateHistoryPointer();
+			previousCommandIndex = promptTextArea.getCommandHistory().getCurrentIndex();
+		}
+	}
+	
+	public void updateHistoryPointer(){
+		promptTextArea.getCommandHistory().setCurrentIndex(
+				(promptTextArea.getCommandHistory().size() > 0) 
+					? promptTextArea.getCommandHistory().size()-1
+					: 0
+				);
+	}
 
+    private String getDirName(){
+    	String dirName = promptTextArea.getWorkingDirectory();
+		if(!StringUtil.hasValidContent(dirName)){
+			return "";
+		}
+		File dir = new File(dirName);
+		if(!dir.exists())
+			return "";
+		
+		File[] files = dir.listFiles();
+		List<String> fileNames = new ArrayList<String>();
+		if(null != files && files.length > 0){
+			for (File file : files) {
+				if(file.exists()){
+					fileNames.add(file.getName());
+				}
+			}
+		} else {
+			return "";
+		}
+		
+		if(0 != previousKeyCode){
+			if(KeyEvent.VK_TAB == previousKeyCode){
+				previousSelection++;
+			}
+		}
+		if(previousSelection < fileNames.size())
+			return fileNames.get(previousSelection);
+		return "";
+    }
 
 	/**
 	 * Execute command.
 	 */
-	public void executeCommand() {
+	public void executeCommand(KeyEvent e) {
 		final Command command;
 		final String commandLine = promptTextArea.getCommandLine();
+		
+		
+		
 		if(StringUtil.hasValidContent(commandLine)){
+			if(commandLine.equalsIgnoreCase("cls")
+					|| commandLine.equalsIgnoreCase("clear")){
+				promptTextArea.clearScreen();
+				promptTextArea.updateEndPromptOffset();
+				promptTextArea.rePositionCaret();
+				if(null != e){
+					e.consume();
+				}
+				return;
+			}
+			
 			command = new Command(commandLine);
 
 			synchronized (this) {
 				promptTextArea.setEditable(false);
-				commandRunner = new CommandRunner<String, Command>(command);
+				commandRunner = new CommandRunner<String, Command>(this, command, environmentManager);
 				commandRunner.addPropertyChangeListener(formListener);
 				commandRunner.setConsoleTextArea(promptTextArea);
 				commandRunner.execute();
@@ -572,7 +780,8 @@ public class JPromptInternalFrame extends JInternalFrame{
     }
 
     private void promptTextAreaKeyTyped(KeyEvent evt) {
-        
+    	
+    	
     }
 
     private void promptTextAreaCaretUpdate(CaretEvent evt) {
@@ -580,7 +789,7 @@ public class JPromptInternalFrame extends JInternalFrame{
     }
 
     private void promptTextAreaFocusGained(FocusEvent evt) {
-        // TODO add your handling code here:
+        autoCompleteWindow.setVisible(false);
     }
 
     private void promptTextAreaFocusLost(FocusEvent evt) {
@@ -592,7 +801,7 @@ public class JPromptInternalFrame extends JInternalFrame{
     }
 
     private void promptTextAreaInputMethodTextChanged(InputMethodEvent evt) {
-        // TODO add your handling code here:
+    	autoCompleteWindow.setVisible(false);
     }
 
     private void promptTextAreaPropertyChange(PropertyChangeEvent evt) {
@@ -648,7 +857,7 @@ public class JPromptInternalFrame extends JInternalFrame{
     }
 
     private void formInternalFrameClosing(InternalFrameEvent evt) {
-        // TODO add your handling code here:
+    	context.getCommandWindowMap().remove(getName());
     }
 
     private void formInternalFrameDeactivated(InternalFrameEvent evt) {
@@ -752,8 +961,10 @@ public class JPromptInternalFrame extends JInternalFrame{
     private JPopupMenu promptAreaPopupMenu;
     private ConsoleTextArea promptTextArea;
     private JToolBar promptToolBar;
-    private JButton refreshButton;
-    private JMenuItem refreshMenuItem;
+    private JButton fontButton;
+    private JButton colorButton;
+    private JMenuItem fontMenuItem;
+    private JMenuItem colorMenuItem;
     private JButton saveButton;
     private JMenuItem saveMenuItem;
     private JCheckBoxMenuItem showToolbarCheckBoxMenuItem;
