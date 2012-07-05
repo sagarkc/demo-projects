@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="true">
+	<root> 
+		<priority value="info" />
+	</root> 
+	
+	<appender name="common_console_appender" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{dd-MMM-yyyy HH:mm:ss} %-5p %C{1}: %m%n" />
+		</layout>	
+	</appender>
+	
+	<appender name="file_log_appender" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="./logs/javatest-batch.log" />
+		<param name="MaxFileSize" value="10485760KB" />
+		<param name="maxBackupIndex" value="10" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{dd-MMM-yyyy HH:mm:ss} %-5p %C{1}: %m%n" />
+		</layout>
+	</appender>
+	
+	
+	<logger name="com.gmail.sabuj.career">
+    	<level value="DEBUG"/>
+		<appender-ref ref="common_console_appender"/>
+		<appender-ref ref="file_log_appender"/>
+	</logger>
+	
+	
+</log4j:configuration>

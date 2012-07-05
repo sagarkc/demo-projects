@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+
+	<bean id="reso" class="org.springframework.core.io.FileSystemResource">
+	    <constructor-arg index="0" value="./app-config/properties" />
+	</bean>
+
+	<bean name="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+		<property name="systemPropertiesMode" value="2" />
+		<property name="locations">
+			<list>
+				<bean class="com.gmail.sabuj.career.batch.model.LocalResource">
+					<constructor-arg><value>./app-config/properties/batch-settings.properties</value></constructor-arg>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="log4jInitialization"
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetClass" value="org.springframework.util.Log4jConfigurer" />
+		<property name="targetMethod" value="initLogging" />
+		<property name="arguments">
+			<list>
+				<value>./app-config/logger/app-log4j.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean class="com.gmail.sabuj.career.common.AppSettings"
+		factory-method="getInstance" init-method="configureSettings"
+		depends-on="log4jInitialization" /> 
+
+	
+
+	<import resource="application-scheduler-context.xml" />
+	
+</beans>
