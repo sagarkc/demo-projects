@@ -1,0 +1,64 @@
+This tasks involves reading data and organizing into the Table structure
+The environment is using spring, spring batch and Core Java,
+Tools to be used Maven, Eclipse
+And most importantly the PDM plug-in to be used for best coding practices.
+The PDM tool is to be used to assess the violations and errors.
+ 
+Any doubt Call Me (9035191550) / Sanju (9845411234)
+ 
+ 
+Java Test
+ 
+This example is simple enough and proves they can read from the web, 
+organize the contents into a table structure, and we can just have 
+them output to a file instead of writing to a database. A picture 
+is provided similar to that given to the previous developer.
+ 
+1)      Read in the contents of the following link: http://www.eia.gov/naturalgas/monthly/xls/ngm04vmall.xls
+
+2)      Organize the data into the following table structure:
+
+	a.      Column 1: Date
+	
+	    i.      Formatted as a date in MM-dd-yyyy
+	   ii.      Can use ‘1’ as the day of the date
+	  iii.      Ex. 1-1-1973, 2-1-1973, 3-1-1973, etc.
+	
+	b.      Column 2: Release_Date (retrieved from the “Contents” tab of the Excel sheet)
+	
+	c.       Column 3: Source_Key
+		i.      In row 2 of a data tab, applies for all data in that column
+	
+	d.      Column 4: Units
+		i.      In row 3 of a data tab, the units exist within the parentheses for that column
+	
+	e.      Column 5: Value
+
+3)      Output the data into a CSV format
+
+4)      The job setup should allow for the user to specify a specific data tab 
+(Data 1, Data 2, etc), Source_Key, unit type, or all three and extract accordingly
+
+	a.      Test 1 :  Extract all data in “Data 1” tab
+	
+	b.      Test 2:   Extract all data in  “Data 2” tab
+	
+	c.      Test 3:   Extract all data in “Data 2” where “MMcf” is the unit type
+	
+	d.      Test 4:   Extract all data in “Data 1” that’s has the source key value of “N9103AG2”
+
+5)      Blank cells should leave NULL or blank data
+
+ 
+Spring Batch Test
+ 
+ 
+1)      Create a Spring Batch Job which reads the CSV from 
+http://www.eia.gov/totalenergy/data/monthly/query/mer_data_csv.asp?table=T07.01 
+and writes this file out to a CSV in reverse order. 
+
+In other words, the first line of the input file will be the last line in the output file.
+2) The job should be scheduled with Quartz to run at 3 p.m. every day. 
+3)  Include one JUnit test that will allow us to run the job manually.
+4) The sample program should be buildable using Maven.  The code can be zipped up and emailed to us.
+

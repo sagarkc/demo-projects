@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+	<!-- <import resource="app-session-context.xml"/>
+
+
+ 	<bean id="employeeService01" class="com.springdemo.EmployeeService">
+		<property name="employeeDao" ref="employeeDao01" />
+	</bean>
+
+	<bean id="employeeDao01" class="com.springdemo.EmployeeDao">
+		<property name="userDao" ref="userDao01" />
+	</bean>
+
+	<bean id="userDao01" class="com.springdemo.UserDao">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+	
+
+	<bean id="command" class="com.springdemo.Command" scope="prototype">
+		
+	</bean>
+	
+	<bean id="commandManager" class="com.springdemo.CommandManager">
+		<lookup-method name="createCommand" bean="command" />
+		<lookup-method name="createUserDao" bean="userDao01" />
+	</bean> -->
+ 
+ 	<bean id="haddress" class="com.springdemo.Address.HomeAddress">
+ 		<property name="city" value="test" />
+ 	</bean>
+ 
+ 	<bean id="t1" class="com.springdemo.TimeSheet" init-method="init1">
+ 		<constructor-arg index="0" value="230"/>
+ 		<property name="areaCode" >
+ 			<null/>
+ 		</property>
+ 		<property name="address.street" value="Test"/>
+ 		<property name="names">
+ 			<list>
+ 				<value>A</value>
+ 				<value>B</value>
+ 			</list>
+ 		</property>
+ 	</bean>
+ 	<alias name="t2" alias="t"/>
+ 	<alias name="t1" alias="t"/>
+ 	<bean id="t2" class="com.springdemo.TimeSheet" init-method="init2">
+ 		<constructor-arg index="0" value="240"/>
+ 		<property name="areaCode" value="202"/>
+ 		<property name="address.street" value="Test"/>
+ 		<property name="names">
+ 			<set>
+ 				<value>C</value>
+ 				<value>D</value>
+ 			</set>
+ 		</property>
+ 	</bean>
+ 	
+ 	<bean id="file" class="java.io.File">
+ 		<constructor-arg>
+ 			<value >d:/temp.txt</value>
+ 		</constructor-arg>
+ 	</bean>
+ 	
+</beans>

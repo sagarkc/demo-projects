@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>automill</artifactId>
+		<groupId>com.gs.automill</groupId>
+		<version>${release.version}</version>
+	</parent>
+	<groupId>com.gs.automill</groupId>
+	<artifactId>automill-app</artifactId>
+	<version>${release.version}</version>
+	<name>automill-app</name>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.gs.automill</groupId>
+			<artifactId>automill-common</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gs.automill</groupId>
+			<artifactId>automill-model</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gs.automill</groupId>
+			<artifactId>automill-core</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gs.automill</groupId>
+			<artifactId>automill-designer</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gs.automill</groupId>
+			<artifactId>automill-service</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gs.automill</groupId>
+			<artifactId>automill-resources</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+		
+		<!--<dependency>
+            <groupId>${swt.groupId}</groupId>
+            <artifactId>${swt.artifactId}</artifactId>
+            <version>${swt.version}</version>
+        </dependency>-->
+		
+	</dependencies>
+	
+	
+	<build>
+
+		
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>${manifest.mainClass}</mainClass>
+							<addClasspath>true</addClasspath>
+							<addExtensions>false</addExtensions>
+							<classpathPrefix>lib/</classpathPrefix>
+							<classpathMavenRepositoryLayout>false</classpathMavenRepositoryLayout>
+						</manifest>
+						<!-- <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile> 
+							<classpathLayoutType>repository</classpathLayoutType> <classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout> -->
+					</archive>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<!-- Coping JAR to release directory -->
+					<execution>
+						<id>defaultcopy</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<!-- Coping JAR to release directory -->
+								<copy todir="${release.dir}/AutoMill-${release.version}/"
+									overwrite="true" failonerror="true" includeEmptyDirs="true">
+									<fileset dir="target">
+										<include name="automill-app-${release.version}.jar" />
+									</fileset>
+								</copy>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${release.dir}/AutoMill-${release.version}/lib/</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<useRepositoryLayout>false</useRepositoryLayout>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			
+		</plugins>
+	</build>
+	
+	<!--<profiles>
+        <profile>
+            <id>mac</id>
+            <activation>
+                <os>
+                    <name>mac os x</name>
+                </os>
+            </activation>
+            <properties>
+                <swt.groupId>org.eclipse.swt</swt.groupId>
+                <swt.artifactId>org.eclipse.swt.carbon.macosx</swt.artifactId>
+            </properties>
+        </profile>
+        <profile>
+            <id>windows</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <properties>
+                <swt.groupId>org.eclipse.swt</swt.groupId>
+                <swt.artifactId>org.eclipse.swt.win32.win32.x86</swt.artifactId>
+            </properties>
+        </profile>
+        <profile>
+            <id>linux</id>
+            <activation>
+                <os>
+                    <family>linux</family>
+                </os>
+            </activation>
+            <properties>
+                <swt.groupId>org.eclipse.swt</swt.groupId>
+                <swt.artifactId>org.eclipse.swt.gtk.linux.x86</swt.artifactId>
+            </properties>
+        </profile>
+    </profiles>-->
+</project>

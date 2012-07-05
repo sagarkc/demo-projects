@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.gs.css4j</groupId>
+	<artifactId>css4j</artifactId>
+	<version>${release.version}</version>
+	<packaging>pom</packaging>
+
+	<name>CSS for Java :: css4j</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.home>D:\SVN_HOME\demo-projects\trunk\CSS-for-Java</project.home>
+		<project.name>css4j</project.name>
+		<release.version>BETA-0.0.1</release.version>
+		<jdk.version>1.6</jdk.version>
+		<dist.dir>${project.home}/dist</dist.dir>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<modules>
+		<module>css4j-common</module>
+		<module>css4j-core</module>
+		<module>css4j-parser</module>
+		<module>css4j-tools</module>
+		<module>css4j-swing</module>
+		<module>css4j-factory</module>
+	</modules>
+</project>
