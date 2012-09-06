@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.gs.css.studio</groupId>
+	<artifactId>css-studio</artifactId>
+	<version>${release.version}</version>
+	<packaging>pom</packaging>
+	<name>CSS Studio</name>
+	<description>WUSIWUG Css Editor in Java</description>
+	
+	<properties>
+		<maven.test.skip>true</maven.test.skip>
+		
+		<release.version>1.0.1</release.version>
+		<jdk.version>1.6</jdk.version>
+		
+	</properties>
+	
+	
+	<modules>
+		<module>css-studio-common</module>
+		<module>css-studio-core</module>
+		<module>css-studio-app</module>
+	</modules>
+	
+</project>
