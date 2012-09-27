@@ -55,7 +55,6 @@ public abstract class AbstractCsvConverter implements CsvConverter {
 		this.target = target;
 	}
 
-	@Override
 	public Object getOutputData() {
 		return null;
 	}

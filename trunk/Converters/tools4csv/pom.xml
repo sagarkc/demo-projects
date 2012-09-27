@@ -55,6 +55,7 @@
 		<module>tools4csv-core</module>
 		<module>tools4csv-config</module>
 		<module>tools4csv-xbeans</module>
+		<module>tools4csv-app</module>
 	</modules>
 	<dependencies>
 		<dependency>

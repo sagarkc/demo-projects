@@ -1,0 +1,90 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>tools4csv</artifactId>
+		<groupId>net.sf.tools4csv</groupId>
+		<version>${release.version}</version>
+	</parent>
+	<artifactId>tools4csv-app</artifactId>
+	<groupId>net.sf.tools4csv</groupId>
+	<version>${release.version}</version>
+	<dependencies>
+		<dependency>
+			<groupId>net.sf.tools4csv</groupId>
+			<artifactId>tools4csv-config</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.tools4csv</groupId>
+			<artifactId>tools4csv-core</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.1</version>
+
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${dist.dir}/${release.version}/</outputDirectory>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<useRepositoryLayout>false</useRepositoryLayout>
+							<excludeTransitive>true</excludeTransitive>
+							
+						</configuration>
+						
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<!-- Coping JAR to release directory -->
+					<execution>
+						<id>defaultcopy</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<!-- Coping JAR to dist directory -->
+								<copy todir="${dist.dir}/${release.version}/"
+											overwrite="true" failonerror="true" includeEmptyDirs="true">
+									<fileset dir="target">
+										<include name="${artifactId}-${release.version}.jar" />
+									</fileset>
+								</copy>
+
+
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			
+			
+		</plugins>
+	</build>
+	
+</project>
