@@ -28,7 +28,6 @@ public class CsvSerialConversionProcessor implements CsvConversionProcessor {
 		return converters;
 	}
 
-	@Override
 	public void start() {
 		logger.info("Start CSV converters");
 		if(null != getConverters() && getConverters().size() > 0){

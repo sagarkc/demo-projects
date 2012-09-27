@@ -28,7 +28,6 @@ public class CsvParallelConversionProcessor implements CsvConversionProcessor {
 	}
 
 
-	@Override
 	public void start() {
 		logger.info("Start CSV converters");
 		if(null != getConverters() && getConverters().size() > 0){
