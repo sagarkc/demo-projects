@@ -11,7 +11,6 @@ import org.apache.xmlbeans.XmlException;
 
 import com.gs.text4J.bod.csv.CsvConfigurationDocument;
 import com.gs.text4J.bod.csv.MappingDocument.Mapping;
-import com.gs.text4j.core.annotation.CsvEntity;
 import com.gs.text4j.core.parser.CsvParserFactory;
 import com.gs.utils.text.StringUtil;
 
