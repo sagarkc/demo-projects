@@ -1,0 +1,84 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.sf.tools4csv</groupId>
+	<artifactId>tools4csv</artifactId>
+	<version>${release.version}</version>
+	<packaging>pom</packaging>
+	<name>tools4csv</name>
+	<url>http://tools4csv.sourceforge.net/</url>
+	<inceptionYear>2012</inceptionYear>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jdk.version>1.5</jdk.version>
+		<dist.dir>D:/SVN_HOME/demo-projects/Converters/tools4csv/dist</dist.dir>
+		<bin.dir>D:/SVN_HOME/demo-projects/Converters/tools4csv/bin</bin.dir>
+		<compression.format>zip</compression.format>
+		<release.version>1.0</release.version>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<configuration>
+					<locales>en,fr</locales>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<modules>
+		<module>tools4csv-core</module>
+		<module>tools4csv-config</module>
+		<module>tools4csv-xbeans</module>
+	</modules>
+	<dependencies>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging-api</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+		</dependency>
+	</dependencies>
+
+	
+
+</project>

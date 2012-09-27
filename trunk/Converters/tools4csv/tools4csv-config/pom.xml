@@ -1,0 +1,21 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>tools4csv</artifactId>
+		<groupId>net.sf.tools4csv</groupId>
+		<version>${release.version}</version>
+	</parent>
+	<artifactId>tools4csv-config</artifactId>
+	<groupId>net.sf.tools4csv</groupId>
+	<version>${release.version}</version>
+	<dependencies>
+		<dependency>
+			<groupId>net.sf.tools4csv</groupId>
+			<artifactId>tools4csv-xbeans</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+	</dependencies>
+	
+	
+</project>
