@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+		This is a Assembly description to pack all the required files in a
+	compressed (zip/tar/tar.gz) file. This file is used by Maven Assembly
+	plugin for creating the compressed file.
+
+	Author: Sabuj.Das
+	
+	Note: Please DO NOT MODIFY the source locations of the files without
+		having enough information.
+-->
+
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+	<id>pack</id>
+	<baseDirectory>/</baseDirectory>
+
+	<formats>
+		<format>${compression.format}</format>
+	</formats>
+	<fileSets>
+		<!-- Add the lib (.jar) files -->
+		<fileSet>
+			<directory>${dist.dir}/${release.version}
+			</directory>
+			<outputDirectory>/tools4csv/lib/</outputDirectory>
+			<includes>
+				<include>commons-dbcp-1.4.jar</include>
+				<include>commons-lang-2.6.jar</include>
+				<include>commons-logging-1.1.1.jar</include>
+				<include>commons-logging-api-1.1.jar</include>
+				<include>log4j-1.2.14.jar</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>${dist.dir}/${release.version}
+			</directory>
+			<outputDirectory>/tools4csv/</outputDirectory>
+			<includes>
+				<include>tools4csv-xbeans-${release.version}.jar</include>
+				<include>tools4csv-config-${release.version}.jar</include>
+				<include>tools4csv-core-${release.version}.jar</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>${bin.dir}
+			</directory>
+			<outputDirectory>/tools4csv/bin/</outputDirectory>
+			<includes>
+				<include>maven-install.bat</include>
+				<include>maven-install.sh</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+</assembly>

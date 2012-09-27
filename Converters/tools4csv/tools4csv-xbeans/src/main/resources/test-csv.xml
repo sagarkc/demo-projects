@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<csv-configuration>
+	
+	<parsers></parsers>
+	
+	<!-- 
+		Converters are to similar to tasks, which can be executed in parallel.
+		parallel=true/false 
+		The order attribute in each converter, defines the order, if parallel = false
+	 -->
+	<converters parallel="true">
+		<!-- 
+			Each converter is defined by the id attribute.
+			Attributes:
+				type		: defines the type of the converter.
+					file-to-file 	=> both source and target are files
+					file-to-db		=> read the source file and execute a series of 
+									   SQLs to store the data in db directly (plain JDBC)
+				sourcePath 	: source directory
+				targetPath 	: target directory
+				mkdirs		: make the directories if not exists.
+					true => create the directories
+					false=> do not create any directory, throws exception is the dir is not present
+				 
+		 -->
+		<converter id="c1" type="csv-to-csv" 
+			sourcePath="d:\\source-csv" 
+			targetPath="d:\\target-csv" 
+			overwrite="true"
+			mkdirs="true"
+			order="1"
+			active="true">
+			<!-- 
+				The source defines the file to read.
+				file	 : the source fileName
+				hasHeader: whether the first line is the header line or not
+			 -->
+			<source file="aaa.csv" hasHeader="true">
+				<!-- 
+					'select' defines the layout to be read from the file.
+					from	: starting line
+						0 	=> start from 1st line, which can be 0/1 based on the hasHeader="true/false"
+						-1	=> start from 1st line, which can be 0/1 based on the hasHeader="true/false"
+				 -->
+				<select from="0" to="900" batchSize="100">
+					<column index="0" name="a"/>
+					<column index="3" name="b"/>
+					<column index="6" name="c"/>
+					<column index="7" name="d"/>
+				</select>
+			</source>
+			<target file="can be a pattern" hasHeader="true">
+				<write from="0" to="900" batchSize="100">
+					<column name="a" index="0" type="number" format="true" pattern="#.##" default="" header="ca"/>
+					<column name="b" index="1" type="date" format="true" pattern="HH:MM:ss" default="" header="cb"/>
+					<column name="d" index="2" type="string" header="cd"/>
+					<column name="c" index="3" type="number" header="cc"/>
+				</write>
+			</target>
+		</converter>
+		<converter id="c2" type="csv-to-db"
+			sourcePath="d:\\source-csv" 
+			order="2"
+			active="true">
+			<source file="sdfsd">
+				<select from="0" to="900" batchSize="100">
+					<column index="0" name="a"/>
+					<column index="3" name="b"/>
+					<column index="6" name="c"/>
+					<column index="7" name="d"/>
+				</select>
+			</source>
+			<target insert="true">
+				<write from="-1" to="-1" batchSize="100">
+					<connection>
+						<url>dsfasd</url>
+						<userName>sdfasdf</userName>
+						<password>asdfasd</password>
+					</connection>
+					<sql index="0">
+						<query namedParam="true">
+						<![CDATA[
+             				insert script
+             				where x := a/b/c/d
+               			]]>
+						</query>
+						<select>
+							<column name="a" index="0" type="number" format="true" pattern="#.##" default=""/>
+							<column name="b" index="1" type="date" format="true" pattern="HH:MM:ss" default=""/>
+							<column name="d" index="2" type="string" />
+							<column name="c" index="3" type="int" />
+						</select>
+					</sql>
+					<sql index="1">
+						<query namedParam="false">
+						<![CDATA[
+             				insert script
+             				? ? ?
+               			]]>
+						</query>
+						<select>
+							<column name="a" index="0" type="number" format="true" pattern="#.##" default=""/>
+							<column name="b" index="1" type="date" format="true" pattern="HH:MM:ss" default=""/>
+							<column name="c" index="2" type="number" />
+						</select>
+					</sql>
+				</write>
+			</target>
+		</converter>
+		
+		<converter id="c3" type="csv-to-pojo"
+			sourcePath="d:\\source-csv" 
+			order="3"
+			active="true">
+			<source file="sdfsd">
+				<select from="0" to="900" batchSize="100">
+					<column index="0" name="a"/>
+					<column index="3" name="b"/>
+					<column index="6" name="c"/>
+					<column index="7" name="d"/>
+				</select>
+			</source>
+			<target collection="true">
+				<collect targetClassName="class.name">
+					<property name="propA" map-to="a" default="" format="true" pattern="#.##"/>
+					<property name="propB" map-to="b" default="" format="true" pattern="HH:MM:ss"/>
+					<property name="propC" map-to="c"  />
+					<property name="propD" map-to="d"  />
+				</collect>
+			</target>
+		</converter>
+	</converters>
+
+</csv-configuration>
