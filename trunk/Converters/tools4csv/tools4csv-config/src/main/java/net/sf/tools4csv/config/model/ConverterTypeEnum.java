@@ -6,7 +6,10 @@ public enum ConverterTypeEnum {
 	CSV_TO_CSV("csv-to-csv", "Convert from csv to csv"),
 	CSV_TO_DB("csv-to-db", "Convert from file to database"),
 	CSV_TO_XLS("csv-to-xls", "Convert from file to xls"),
-	CSV_TO_POJO("csv-to-pojo", "csv-to-pojo");
+	CSV_TO_POJO("csv-to-pojo", "csv-to-pojo"),
+	DB_TO_CSV("db-to-csv", "db-to-csv"),
+	CSV_TO_XML("csv-to-xml", "Convert from csv-to-xml"),
+	XML_TO_CSV("xml-to-csv", "Convert from xml-to-csv");
 	
 	private final String type;
 	private final String description;

@@ -83,7 +83,7 @@
 				<configuration>
 					<outputDirectory>${dist.dir}/upload</outputDirectory>
 					<descriptors>
-						<descriptor>D:/SVN_HOME/demo-projects/Converters/tools4csv/assembler/tools4csv-assembler.xml</descriptor>
+						<descriptor>${core.assembler}</descriptor>
 					</descriptors>
 				</configuration>
 				<executions>

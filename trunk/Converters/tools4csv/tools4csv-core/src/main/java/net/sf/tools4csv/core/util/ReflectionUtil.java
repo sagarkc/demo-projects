@@ -1,13 +1,11 @@
 package net.sf.tools4csv.core.util;
 
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import javax.swing.text.NumberFormatter;
-
-
-import net.sf.tools4csv.config.model.Property;
 import net.sf.tools4csv.core.IllegalConverterException;
 
 import org.apache.commons.lang.StringUtils;
@@ -59,7 +57,9 @@ public class ReflectionUtil {
 				|| "integer".equals(formatType)
 				|| "float".equals(formatType)
 				|| "long".equals(formatType)
-				|| "double".equals(formatType));
+				|| "double".equals(formatType)
+				|| "bigint".equals(formatType)
+				|| "bigdecimal".equals(formatType));
 	}
 
 	public static Object getObject(String type, String value) throws ParseException {
@@ -71,8 +71,14 @@ public class ReflectionUtil {
 				return Integer.valueOf(value);
 			if("long".equals(type))
 				return Long.valueOf(value);
-			if("double".equals(type) || "float".equals(type)) 
+			if("float".equals(type)) 
+				return Float.valueOf(value);
+			if("double".equals(type)) 
 				return Double.valueOf(value);
+			if("bigint".equals(type) || "biginteger".equals(type)) 
+				return new BigInteger(value);
+			if("bigdecimal".equals(type)) 
+				return new BigDecimal(value);
 			return Long.valueOf(value);
 		}
 		return (Object)value;
@@ -125,12 +131,6 @@ public class ReflectionUtil {
 		} catch (Exception e) {
 			throw new IllegalConverterException(e.getMessage(),e);
 		}
-	}
-
-	public static Object parseObject(Property property, String string,
-			String sourceFormat) {
-		
-		return null;
 	}
 
 	

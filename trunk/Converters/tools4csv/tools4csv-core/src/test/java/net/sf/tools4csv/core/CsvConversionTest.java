@@ -23,6 +23,7 @@ public class CsvConversionTest {
 			
 			if(null != conversionProcessor) {
 				conversionProcessor.start();
+				
 				String converterId = "employee-converter";
 				CsvConverter converter = CsvConverterFactory.getConverter(conversionProcessor, converterId);
 				if(null != converter){

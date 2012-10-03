@@ -11,10 +11,11 @@ import net.sf.tools4csv.config.model.ConnectionProperties;
 import net.sf.tools4csv.core.converter.AbstractCsvConverter;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.log4j.Logger;
 
 
 public class CsvToDatabaseConverter extends AbstractCsvConverter {
-
+	private static Logger logger = Logger.getLogger(CsvToDatabaseConverter.class);
 	private BasicDataSource dataSource;
 	
 	@Override

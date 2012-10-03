@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	elementFormDefault="qualified" >
+	
+	<xs:simpleType name="converterType" >
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="csv-to-csv" />
+			<xs:enumeration value="csv-to-db" />
+			<xs:enumeration value="csv-to-xls" />
+			<xs:enumeration value="csv-to-pojo" />
+			<xs:enumeration value="db-to-csv" />
+			<xs:enumeration value="xml-to-csv" />
+			<xs:enumeration value="csv-to-xml" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="dataType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="char" />
+			<xs:enumeration value="byte" />
+			<xs:enumeration value="int" />
+			<xs:enumeration value="integer" />
+			<xs:enumeration value="long" />
+			<xs:enumeration value="float" />
+			<xs:enumeration value="double" />
+			<xs:enumeration value="string" />
+			<xs:enumeration value="number" />
+			<xs:enumeration value="date" />
+			<xs:enumeration value="bigint" />
+			<xs:enumeration value="biginteger" />
+			<xs:enumeration value="bigdecimal" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	
 	<xs:element name="csv-configuration">
 		<xs:complexType>
 			<xs:sequence>
@@ -22,7 +54,7 @@
 			<xs:attribute name="exitOnError" use="required" type="xs:boolean" />
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="converter">
+	<xs:element name="converter" >
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="source" />
@@ -35,7 +67,7 @@
 			<xs:attribute name="overwrite" type="xs:boolean" />
 			<xs:attribute name="sourcePath" use="required" type="xs:string"/>
 			<xs:attribute name="targetPath" type="xs:string"/>
-			<xs:attribute name="type" use="required" type="xs:string" />
+			<xs:attribute name="type" use="required" type="converterType" />
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="source">
@@ -76,7 +108,7 @@
 			<xs:attribute name="map-to" use="required" type="xs:string" />
 			<xs:attribute name="name" use="required" type="xs:string" />
 			<xs:attribute name="pattern" type="xs:string"/>
-			<xs:attribute name="type" use="required" type="xs:string" />
+			<xs:attribute name="type" use="required" type="dataType" />
 			<xs:attribute name="index" type="xs:integer" />
 		</xs:complexType>
 	</xs:element>
@@ -144,7 +176,7 @@
 			<xs:attribute name="index" use="required" type="xs:integer" />
 			<xs:attribute name="name" use="required" type="xs:string" />
 			<xs:attribute name="pattern" type="xs:string"/>
-			<xs:attribute name="type" type="xs:string" />
+			<xs:attribute name="type" type="dataType" />
 			<xs:attribute name="useQuote" use="required" type="xs:boolean" />
 		</xs:complexType>
 	</xs:element>
