@@ -12,11 +12,14 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jdk.version>1.5</jdk.version>
+		<jdk.version>1.6</jdk.version>
 		<dist.dir>D:/SVN_HOME/demo-projects/Converters/tools4csv/dist</dist.dir>
 		<bin.dir>D:/SVN_HOME/demo-projects/Converters/tools4csv/bin</bin.dir>
 		<compression.format>zip</compression.format>
 		<release.version>1.0</release.version>
+		
+		<app.assembler>D:/SVN_HOME/demo-projects/Converters/tools4csv/assembler/tools4csv-app-assembler.xml</app.assembler>
+		<core.assembler>D:/SVN_HOME/demo-projects/Converters/tools4csv/assembler/tools4csv-assembler.xml</core.assembler>
 	</properties>
 
 	<build>

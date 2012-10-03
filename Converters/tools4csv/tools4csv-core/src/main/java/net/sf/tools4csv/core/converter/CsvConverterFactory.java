@@ -1,11 +1,14 @@
 package net.sf.tools4csv.core.converter;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.tools4csv.config.CsvConfiguration;
 import net.sf.tools4csv.config.model.Configuration;
 import net.sf.tools4csv.config.model.Converter;
 import net.sf.tools4csv.config.model.ConverterTypeEnum;
+import net.sf.tools4csv.core.IllegalConfigurationException;
 import net.sf.tools4csv.core.converter.impl.CsvToCsvConverter;
 import net.sf.tools4csv.core.converter.impl.CsvToDatabaseConverter;
 import net.sf.tools4csv.core.converter.impl.CsvToPojoConverter;
@@ -60,6 +63,44 @@ public class CsvConverterFactory {
 	}
 	
 	public static CsvConversionProcessor buildConversionProcessor(Configuration configuration){
+		if(null != configuration){
+			List<CsvConverter> converters = createConverters(configuration);
+			if(configuration.isParallelConverters()){
+				return new  CsvParallelConversionProcessor(converters);
+			}
+			return new  CsvSerialConversionProcessor(converters);
+		}
+		return null;
+	}
+	
+	/**
+	 * <pre>An example (in an XML based bean factory definition) of a bean definition which uses this class to call a static factory method:
+
+ &lt;bean id="myObject" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"&gt;
+   &lt;property name="staticMethod"&gt;&lt;value&gt;com.whatever.MyClassFactory.getInstance&lt;/value&gt;&lt;/property&gt;
+ &lt;/bean&gt;
+An example of calling a static method then an instance method to get at a Java system property. Somewhat verbose, but it works.
+
+ &lt;bean id="sysProps" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"&gt;
+   &lt;property name="targetClass"&gt;&lt;value&gt;java.lang.System&lt;/value&gt;&lt;/property&gt;
+   &lt;property name="targetMethod"&gt;&lt;value&gt;getProperties&lt;/value&gt;&lt;/property&gt;
+ &lt;/bean&gt;</pre>
+	 * @param fileName
+	 * @return
+	 */
+	public static CsvConversionProcessor buildConversionProcessor(String fileName){
+		File file = new File(fileName);
+		if(!file.exists()){
+			throw new IllegalConfigurationException("File not exists : " + fileName);
+		}
+		
+		Configuration configuration = null;
+		try {
+			configuration = CsvConfiguration.configure(fileName).getConfiguration();
+		} catch (Exception e) {
+			throw new IllegalConfigurationException(e);
+		}
+		
 		if(null != configuration){
 			List<CsvConverter> converters = createConverters(configuration);
 			if(configuration.isParallelConverters()){

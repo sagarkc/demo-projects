@@ -76,7 +76,7 @@ public class CsvConfigTransformer {
 	private static Converter populateToConverter(net.sf.tools4csv.xbeans.ConverterDocument.Converter converter) throws Exception{
 		Converter modelConverter = new Converter();
 		modelConverter.setId(converter.getId());
-		modelConverter.setConverterType(ConverterTypeEnum.getConverterType(converter.getType()));
+		modelConverter.setConverterType(ConverterTypeEnum.getConverterType(converter.getType().toString()));
 		modelConverter.setMkdirs(converter.getMkdirs());
 		if(null != converter.getOrder())
 			modelConverter.setOrder(converter.getOrder().intValue());
@@ -131,7 +131,7 @@ public class CsvConfigTransformer {
 					modelProperty.setMapTo(property.getMapTo());
 					modelProperty.setFormat(property.getFormat());
 					modelProperty.setPattern(property.getPattern());
-					modelProperty.setType(property.getType());
+					modelProperty.setType(property.getType().toString());
 					if(null != property.getIndex())
 						modelProperty.setIndex(property.getIndex().intValue());
 					
@@ -239,7 +239,8 @@ public class CsvConfigTransformer {
 		modelColumn.setName(column.getName());
 		if(null != column.getIndex())
 			modelColumn.setIndex(column.getIndex().intValue());
-		modelColumn.setType(column.getType());
+		if(null != column.getType())
+			modelColumn.setType(column.getType().toString());
 		modelColumn.setHeader(column.getHeader());
 		modelColumn.setDefaultValue(column.getDefault());
 		modelColumn.setFormat(column.getFormat());

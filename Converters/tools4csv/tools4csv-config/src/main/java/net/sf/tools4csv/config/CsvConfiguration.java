@@ -8,7 +8,7 @@ import net.sf.tools4csv.config.model.Configuration;
 
 public class CsvConfiguration {
 
-	public static final String DEFAULT_CFG_FILE = "/csv.cfg.xml";
+	public static final String DEFAULT_CFG_FILE = "csv.cfg.xml";
 	private Configuration configuration;
 	
 	public static CsvConfiguration configure() throws Exception{
