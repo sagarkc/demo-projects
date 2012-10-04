@@ -6,6 +6,49 @@
 	<short-name>jxsp - Java Extended Server Pages</short-name>
 	<uri>/jxsp-tld-0.0.1</uri>
 	
+	<tag>
+		<name>using</name>
+		<tag-class>net.sf.jxsp.tld.UsingTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>htmlVersion</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 	
+	<tag>
+		<name>layout</name>
+		<tag-class>net.sf.jxsp.tld.layout.LayoutTag</tag-class>
+		<tei-class>net.sf.jxsp.tei.layout.LayoutTei</tei-class>
+		<body-content>empty</body-content>
+		<dynamic-attributes>false</dynamic-attributes>
+		
+		<icon>
+			<small-icon>../images/layout/layout_16x16.png</small-icon>
+		</icon>
+		
+		<attribute>
+			<name>type</name>
+			<rtexprvalue>true</rtexprvalue>
+			<required>true</required>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>box</name>
+		<tag-class>net.sf.jxsp.tld.layout.BoxTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
+		<name>vbox</name>
+		<tag-class>net.sf.jxsp.tld.layout.VBoxTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
+		<name>hbox</name>
+		<tag-class>net.sf.jxsp.tld.layout.HBoxTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
 	
 </taglib>

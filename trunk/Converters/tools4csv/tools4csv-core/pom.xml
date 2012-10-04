@@ -20,9 +20,13 @@
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.xmlbeans</groupId>
+			<artifactId>xmlbeans</artifactId>
+			<version>2.4.0</version>
+		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -44,9 +48,9 @@
 							<overWriteIfNewer>true</overWriteIfNewer>
 							<useRepositoryLayout>false</useRepositoryLayout>
 							<excludeTransitive>true</excludeTransitive>
-							
+
 						</configuration>
-						
+
 					</execution>
 				</executions>
 			</plugin>
@@ -60,8 +64,8 @@
 						<configuration>
 							<tasks>
 								<!-- Coping JAR to dist directory -->
-								<copy todir="${dist.dir}/${release.version}/"
-											overwrite="true" failonerror="true" includeEmptyDirs="true">
+								<copy todir="${dist.dir}/${release.version}/" overwrite="true"
+									failonerror="true" includeEmptyDirs="true">
 									<fileset dir="target">
 										<include name="${artifactId}-${release.version}.jar" />
 									</fileset>
@@ -99,8 +103,8 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 		</plugins>
 	</build>
-	
+
 </project>
