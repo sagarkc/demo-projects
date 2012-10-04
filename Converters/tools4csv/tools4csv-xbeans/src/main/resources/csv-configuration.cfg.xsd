@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	elementFormDefault="qualified">
+	elementFormDefault="qualified" >
+	
+	<xs:simpleType name="converterType" >
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="csv-to-csv" />
+			<xs:enumeration value="csv-to-db" />
+			<xs:enumeration value="csv-to-xls" />
+			<xs:enumeration value="csv-to-pojo" />
+			<xs:enumeration value="db-to-csv" />
+			<xs:enumeration value="xml-to-csv" />
+			<xs:enumeration value="csv-to-xml" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="dataType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="char" />
+			<xs:enumeration value="byte" />
+			<xs:enumeration value="int" />
+			<xs:enumeration value="integer" />
+			<xs:enumeration value="long" />
+			<xs:enumeration value="float" />
+			<xs:enumeration value="double" />
+			<xs:enumeration value="string" />
+			<xs:enumeration value="number" />
+			<xs:enumeration value="date" />
+			<xs:enumeration value="bigint" />
+			<xs:enumeration value="biginteger" />
+			<xs:enumeration value="bigdecimal" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	
 	<xs:element name="csv-configuration">
 		<xs:complexType>
 			<xs:sequence>
@@ -19,21 +51,23 @@
 					minOccurs="1" />
 			</xs:sequence>
 			<xs:attribute name="parallel" use="required" type="xs:boolean" />
+			<xs:attribute name="exitOnError" use="required" type="xs:boolean" />
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="converter">
+	<xs:element name="converter" >
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="source" />
 				<xs:element ref="target" />
 			</xs:sequence>
+			<xs:attribute name="active" use="required" type="xs:boolean"/>
 			<xs:attribute name="id" use="required" type="xs:string" />
 			<xs:attribute name="mkdirs" type="xs:boolean" />
 			<xs:attribute name="order" use="required" type="xs:integer" />
 			<xs:attribute name="overwrite" type="xs:boolean" />
-			<xs:attribute name="sourcePath" use="required" />
-			<xs:attribute name="targetPath" />
-			<xs:attribute name="type" use="required" type="xs:string" />
+			<xs:attribute name="sourcePath" use="required" type="xs:string"/>
+			<xs:attribute name="targetPath" type="xs:string"/>
+			<xs:attribute name="type" use="required" type="converterType" />
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="source">
@@ -43,16 +77,39 @@
 			</xs:sequence>
 			<xs:attribute name="file" use="required" type="xs:string" />
 			<xs:attribute name="hasHeader" type="xs:boolean" />
+			<xs:attribute name="separator" use="required" type="xs:string" />
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="target">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="write" minOccurs="1" maxOccurs="1" />
+				<xs:element ref="collect" minOccurs="0" maxOccurs="1" />
+				<xs:element ref="write" minOccurs="0" maxOccurs="1" />
 			</xs:sequence>
-			<xs:attribute name="file" />
+			<xs:attribute name="file" type="xs:string"/>
 			<xs:attribute name="hasHeader" type="xs:boolean" />
 			<xs:attribute name="insert" type="xs:boolean" />
+			<xs:attribute name="separator" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="collect">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" ref="property" />
+			</xs:sequence>
+			<xs:attribute name="targetClassName" use="required"
+				type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="property" >
+		<xs:complexType>
+			<xs:attribute name="default" type="xs:string"/>
+			<xs:attribute name="format" type="xs:boolean" />
+			<xs:attribute name="map-to" use="required" type="xs:string" />
+			<xs:attribute name="name" use="required" type="xs:string" />
+			<xs:attribute name="pattern" type="xs:string"/>
+			<xs:attribute name="type" use="required" type="dataType" />
+			<xs:attribute name="index" type="xs:integer" />
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="write">
@@ -73,12 +130,14 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="url" />
+				<xs:element ref="driverClass" />
 				<xs:element ref="userName" />
 				<xs:element ref="password" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="url" type="xs:string" />
+	<xs:element name="driverClass" type="xs:string" />
 	<xs:element name="userName" type="xs:string" />
 	<xs:element name="password" type="xs:string" />
 	<xs:element name="sql">
@@ -92,7 +151,11 @@
 	</xs:element>
 	<xs:element name="query">
 		<xs:complexType mixed="true">
-			<xs:attribute name="namedParam" use="required" type="xs:boolean" />
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="namedParam" use="required" type="xs:boolean" />
+				</xs:extension>
+			</xs:simpleContent>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="select">
@@ -107,13 +170,14 @@
 	</xs:element>
 	<xs:element name="column">
 		<xs:complexType>
-			<xs:attribute name="default" />
+			<xs:attribute name="default" type="xs:string"/>
 			<xs:attribute name="format" type="xs:boolean" />
 			<xs:attribute name="header" type="xs:string" />
 			<xs:attribute name="index" use="required" type="xs:integer" />
 			<xs:attribute name="name" use="required" type="xs:string" />
-			<xs:attribute name="pattern" />
-			<xs:attribute name="type" type="xs:string" />
+			<xs:attribute name="pattern" type="xs:string"/>
+			<xs:attribute name="type" type="dataType" />
+			<xs:attribute name="useQuote" use="required" type="xs:boolean" />
 		</xs:complexType>
 	</xs:element>
 </xs:schema>
