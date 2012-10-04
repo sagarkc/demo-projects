@@ -1,17 +1,24 @@
 package net.sf.tools4csv.config.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 public class Target {
 
 	private String fileName;
 	private boolean hasHeader;
 	private boolean insert;
 	private boolean collection;
-	private Write write;
-	private Collect collect;
+	private Map<String, Write> writes;
+	private List<Collect> collects;
 	private String separator = ",";
 	
 	public Target() {
-		// TODO Auto-generated constructor stub
+		writes = new HashMap<String, Write>(0);
+		collects = new ArrayList<Collect>(0);
 	}
 
 	public String getSeparator() {
@@ -46,14 +53,6 @@ public class Target {
 		this.insert = insert;
 	}
 
-	public Write getWrite() {
-		return write;
-	}
-
-	public void setWrite(Write write) {
-		this.write = write;
-	}
-
 	public boolean isCollection() {
 		return collection;
 	}
@@ -62,12 +61,20 @@ public class Target {
 		this.collection = collection;
 	}
 
-	public Collect getCollect() {
-		return collect;
+	public Map<String, Write> getWrites() {
+		return writes;
 	}
 
-	public void setCollect(Collect collect) {
-		this.collect = collect;
+	public void setWrites(Map<String, Write> writes) {
+		this.writes = writes;
+	}
+
+	public List<Collect> getCollects() {
+		return collects;
+	}
+
+	public void setCollects(List<Collect> collects) {
+		this.collects = collects;
 	}
 
 	@Override
@@ -75,4 +82,17 @@ public class Target {
 		return "Target [fileName=" + fileName + "]";
 	}
 	
+	public Write getWrite(String id){
+		return null;
+	}
+	
+	public void addWrite(Write write){
+		
+	}
+	
+	public Iterator<Write> getWriteIterator(){
+		if(writes == null)
+			return null;
+		return getWrites().values().iterator();
+	}
 }

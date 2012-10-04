@@ -133,7 +133,9 @@ public abstract class AbstractCsvConverter implements CsvConverter {
 
 	protected abstract void writeTargetHeader(String targetHeader) throws IOException ;
 
-	protected String processHeader() {
+	protected abstract String processHeader() ;
+	
+	/*{
 		StringBuffer targetBuffer = new StringBuffer();
 		for(int i=0 ; i < getTarget().getWrite().getColumns().size() ; i++){
 			Column column = getTarget().getWrite().getColumns().get(i);
@@ -145,7 +147,7 @@ public abstract class AbstractCsvConverter implements CsvConverter {
 			}
 		}
 		return targetBuffer.toString();
-	}
+	}*/
 
 	protected abstract void closeWriter() throws IOException ;
 

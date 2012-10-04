@@ -5,12 +5,13 @@
 	<xs:simpleType name="converterType" >
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="csv-to-csv" />
+			<xs:enumeration value="csv-to-merged" />
 			<xs:enumeration value="csv-to-db" />
 			<xs:enumeration value="csv-to-xls" />
 			<xs:enumeration value="csv-to-pojo" />
+			<xs:enumeration value="csv-to-xml" />
 			<xs:enumeration value="db-to-csv" />
 			<xs:enumeration value="xml-to-csv" />
-			<xs:enumeration value="csv-to-xml" />
 		</xs:restriction>
 	</xs:simpleType>
 	
@@ -29,6 +30,15 @@
 			<xs:enumeration value="bigint" />
 			<xs:enumeration value="biginteger" />
 			<xs:enumeration value="bigdecimal" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="writerType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="csvWriter" />
+			<xs:enumeration value="databaseWriter" />
+			<xs:enumeration value="xlsWriter" />
+			<xs:enumeration value="xmlWriter" />
 		</xs:restriction>
 	</xs:simpleType>
 	
@@ -83,12 +93,13 @@
 	<xs:element name="target">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="collect" minOccurs="0" maxOccurs="1" />
-				<xs:element ref="write" minOccurs="0" maxOccurs="1" />
+				<xs:element ref="collect" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element ref="write" minOccurs="0" maxOccurs="unbounded" />
 			</xs:sequence>
 			<xs:attribute name="file" type="xs:string"/>
 			<xs:attribute name="hasHeader" type="xs:boolean" />
 			<xs:attribute name="insert" type="xs:boolean" />
+			<xs:attribute name="collection" type="xs:boolean" />
 			<xs:attribute name="separator" type="xs:string" />
 		</xs:complexType>
 	</xs:element>
@@ -99,6 +110,7 @@
 			</xs:sequence>
 			<xs:attribute name="targetClassName" use="required"
 				type="xs:string" />
+			<xs:attribute name="orderBy" type="xs:string"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="property" >
@@ -124,6 +136,9 @@
 			<xs:attribute name="batchSize" use="required" type="xs:integer" />
 			<xs:attribute name="from" use="required" type="xs:integer" />
 			<xs:attribute name="to" use="required" type="xs:integer" />
+			<xs:attribute name="order" type="xs:integer" />
+			<xs:attribute name="type" type="writerType" use="required"/>
+			<xs:attribute name="id" type="xs:string" use="required"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="connection">

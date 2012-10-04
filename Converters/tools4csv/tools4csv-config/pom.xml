@@ -17,5 +17,34 @@
 		</dependency>
 	</dependencies>
 	
-	
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<!-- Coping JAR to release directory -->
+					<execution>
+						<id>defaultcopy</id>
+						<phase>package</phase>
+						<configuration>
+							<tasks>
+								<!-- Coping JAR to dist directory -->
+								<copy todir="${dist.dir}/${release.version}/" overwrite="true"
+									failonerror="true" includeEmptyDirs="true">
+									<fileset dir="target">
+										<include name="${artifactId}-${release.version}-sources.jar" />
+									</fileset>
+								</copy>
+
+
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
