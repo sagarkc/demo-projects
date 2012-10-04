@@ -48,6 +48,16 @@
 			</includes>
 		</fileSet>
 		<fileSet>
+			<directory>${dist.dir}/${release.version}
+			</directory>
+			<outputDirectory>/tools4csv/src/</outputDirectory>
+			<includes>
+				<include>tools4csv-xbeans-${release.version}-sources.jar</include>
+				<include>tools4csv-config-${release.version}-sources.jar</include>
+				<include>tools4csv-core-${release.version}-sources.jar</include>
+			</includes>
+		</fileSet>
+		<fileSet>
 			<directory>${bin.dir}
 			</directory>
 			<outputDirectory>/tools4csv/bin/</outputDirectory>

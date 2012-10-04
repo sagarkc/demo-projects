@@ -68,6 +68,7 @@
 									failonerror="true" includeEmptyDirs="true">
 									<fileset dir="target">
 										<include name="${artifactId}-${release.version}.jar" />
+										<include name="${artifactId}-${release.version}-sources.jar" />
 									</fileset>
 								</copy>
 

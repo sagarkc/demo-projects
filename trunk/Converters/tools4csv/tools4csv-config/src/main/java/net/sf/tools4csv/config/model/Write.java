@@ -5,16 +5,35 @@ import java.util.List;
 
 public class Write {
 
+	private String id;
+	private String type;
 	private int from;
 	private int to;
 	private int batchSize;
+	private int order;
 	private ConnectionProperties connectionProperties;
 	private List<Sql> sqls;
 	private List<Column> columns;
 	
 	public Write() {
-		sqls = new ArrayList<Sql>();
-		columns = new ArrayList<Column>();
+		sqls = new ArrayList<Sql>(0);
+		columns = new ArrayList<Column>(0);
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public int getFrom() {
@@ -63,6 +82,14 @@ public class Write {
 
 	public void setColumns(List<Column> columns) {
 		this.columns = columns;
+	}
+
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
 	}
 	
 }

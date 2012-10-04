@@ -17,7 +17,7 @@
 		<bin.dir>D:/SVN_HOME/demo-projects/Converters/tools4csv/bin</bin.dir>
 		<compression.format>zip</compression.format>
 		<release.version>1.0</release.version>
-		
+
 		<app.assembler>D:/SVN_HOME/demo-projects/Converters/tools4csv/assembler/tools4csv-app-assembler.xml</app.assembler>
 		<core.assembler>D:/SVN_HOME/demo-projects/Converters/tools4csv/assembler/tools4csv-assembler.xml</core.assembler>
 	</properties>
@@ -43,8 +43,19 @@
 					</execution>
 				</executions>
 			</plugin>
-			
-			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<artifactId>maven-site-plugin</artifactId>
 				<configuration>
@@ -53,7 +64,7 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<modules>
 		<module>tools4csv-core</module>
 		<module>tools4csv-config</module>
@@ -83,6 +94,6 @@
 		</dependency>
 	</dependencies>
 
-	
+
 
 </project>
