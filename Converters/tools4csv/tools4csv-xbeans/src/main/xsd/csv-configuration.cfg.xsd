@@ -96,11 +96,7 @@
 				<xs:element ref="collect" minOccurs="0" maxOccurs="unbounded" />
 				<xs:element ref="write" minOccurs="0" maxOccurs="unbounded" />
 			</xs:sequence>
-			<xs:attribute name="file" type="xs:string"/>
-			<xs:attribute name="hasHeader" type="xs:boolean" />
-			<xs:attribute name="insert" type="xs:boolean" />
-			<xs:attribute name="collection" type="xs:boolean" />
-			<xs:attribute name="separator" type="xs:string" />
+			<xs:attribute name="parallel" type="xs:boolean" default="false"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="collect">
@@ -108,8 +104,8 @@
 			<xs:sequence>
 				<xs:element maxOccurs="unbounded" ref="property" />
 			</xs:sequence>
-			<xs:attribute name="targetClassName" use="required"
-				type="xs:string" />
+			<xs:attribute name="id" type="xs:string" use="required"/>
+			<xs:attribute name="targetClassName" use="required" type="xs:string" />
 			<xs:attribute name="orderBy" type="xs:string"/>
 		</xs:complexType>
 	</xs:element>
@@ -133,12 +129,15 @@
 				</xs:sequence>
 				<xs:element maxOccurs="unbounded" ref="column" />
 			</xs:choice>
-			<xs:attribute name="batchSize" use="required" type="xs:integer" />
-			<xs:attribute name="from" use="required" type="xs:integer" />
-			<xs:attribute name="to" use="required" type="xs:integer" />
-			<xs:attribute name="order" type="xs:integer" />
-			<xs:attribute name="type" type="writerType" use="required"/>
 			<xs:attribute name="id" type="xs:string" use="required"/>
+			<xs:attribute name="type" type="writerType" use="required"/>
+			<xs:attribute name="order" type="xs:integer" />
+			<xs:attribute name="fileName" type="xs:string" />
+			<xs:attribute name="separator" type="xs:string" />
+			<xs:attribute name="hasHeader" type="xs:boolean" />
+			<xs:attribute name="batchSize" type="xs:integer" />
+			<xs:attribute name="from" type="xs:integer" />
+			<xs:attribute name="to" type="xs:integer" />
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="connection">
@@ -176,7 +175,7 @@
 	<xs:element name="select">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element maxOccurs="unbounded" ref="column" />
+				<xs:element maxOccurs="unbounded" ref="column" minOccurs="1" />
 			</xs:sequence>
 			<xs:attribute name="batchSize" type="xs:integer" />
 			<xs:attribute name="from" type="xs:integer" />
@@ -185,14 +184,14 @@
 	</xs:element>
 	<xs:element name="column">
 		<xs:complexType>
+			<xs:attribute name="index" use="required" type="xs:integer" />
+			<xs:attribute name="name" use="required" type="xs:string" />
 			<xs:attribute name="default" type="xs:string"/>
 			<xs:attribute name="format" type="xs:boolean" />
 			<xs:attribute name="header" type="xs:string" />
-			<xs:attribute name="index" use="required" type="xs:integer" />
-			<xs:attribute name="name" use="required" type="xs:string" />
 			<xs:attribute name="pattern" type="xs:string"/>
 			<xs:attribute name="type" type="dataType" />
-			<xs:attribute name="useQuote" use="required" type="xs:boolean" />
+			<xs:attribute name="useQuote" type="xs:boolean" />
 		</xs:complexType>
 	</xs:element>
 </xs:schema>

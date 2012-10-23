@@ -22,8 +22,6 @@ import org.apache.xmlbeans.XmlBeans;
 import org.apache.xmlbeans.XmlException;
 import org.apache.xmlbeans.XmlOptions;
 
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
-
 public class CsvConfigTransformer {
 
 	private static Logger logger = Logger.getLogger(CsvConfigTransformer.class);
@@ -49,7 +47,8 @@ public class CsvConfigTransformer {
 		Configuration configuration = new Configuration();
 		
 		if(null != csvConfigDocument.getCsvConfiguration()){
-			net.sf.tools4csv.xbeans.ConvertersDocument.Converters converters = csvConfigDocument.getCsvConfiguration().getConverters();
+			net.sf.tools4csv.xbeans.ConvertersDocument.Converters converters 
+				= csvConfigDocument.getCsvConfiguration().getConverters();
 			if(null != converters){
 				net.sf.tools4csv.xbeans.ConverterDocument.Converter[] converterArray
 					= converters.getConverterArray();
@@ -73,7 +72,8 @@ public class CsvConfigTransformer {
 		return configuration;
 	}
 	
-	private static Converter populateToConverter(net.sf.tools4csv.xbeans.ConverterDocument.Converter converter) throws Exception{
+	private static Converter populateToConverter(
+			net.sf.tools4csv.xbeans.ConverterDocument.Converter converter) throws Exception{
 		Converter modelConverter = new Converter();
 		modelConverter.setId(converter.getId());
 		modelConverter.setConverterType(ConverterTypeEnum.getConverterType(converter.getType().toString()));
@@ -86,15 +86,10 @@ public class CsvConfigTransformer {
 		
 		if(null != converter.getSource() && null != converter.getTarget()){
 			modelConverter.setSource(populateToSource(converter.getSource()));
-			
 			modelConverter.getSource().setFileName(
 					modelConverter.getSourcePath() + File.separator + modelConverter.getSource().getFileName()
 					);
-			
 			modelConverter.setTarget(populateToTarget(converter.getTarget()));
-			modelConverter.getTarget().setFileName(
-					modelConverter.getTargetPath() + File.separator + modelConverter.getTarget().getFileName()
-					);
 		} else {
 			throw new Exception("Illegal converter configuration...");
 		}
@@ -105,23 +100,32 @@ public class CsvConfigTransformer {
 	private static Target populateToTarget(
 			net.sf.tools4csv.xbeans.TargetDocument.Target target) throws Exception {
 		Target modelTarget = new Target();
-		modelTarget.setFileName(target.getFile());
-		modelTarget.setHasHeader(target.getHasHeader());
-		modelTarget.setInsert(target.getInsert());
-		if(null != target.getSeparator())
-			modelTarget.setSeparator(getSeprator(target.getSeparator()));
-		modelTarget.setWrite(populateToWrite(target));
-		modelTarget.setCollect(populateToCollect(target));
-		
+		modelTarget.setParallel(target.getParallel());
+		if(null != target.getCollectArray() && target.getCollectArray().length > 0){
+			for (int i = 0; i < target.getCollectArray().length; i++) {
+				net.sf.tools4csv.xbeans.CollectDocument.Collect collect = 
+						target.getCollectArray()[i];
+				if(null != collect)
+					modelTarget.addCollect(populateToCollect(collect));
+			}
+		}
+		if(null != target.getWriteArray() && target.getWriteArray().length > 0){
+			for (int i = 0; i < target.getWriteArray().length; i++) {
+				net.sf.tools4csv.xbeans.WriteDocument.Write write = 
+						target.getWriteArray()[i];
+				if(null != write)
+					modelTarget.addWrite(populateToWrite(write));
+			}
+		}
 		return modelTarget;
 	}
 
 	private static Collect populateToCollect(
-			net.sf.tools4csv.xbeans.TargetDocument.Target target) {
+			net.sf.tools4csv.xbeans.CollectDocument.Collect collect) {
 		Collect modelCollect = new Collect();
-		if(null != target.getCollect()){
-			modelCollect.setTargetClassName(target.getCollect().getTargetClassName());
-			net.sf.tools4csv.xbeans.PropertyDocument.Property[]  properties = target.getCollect().getPropertyArray();
+		if(null != collect){
+			modelCollect.setTargetClassName(collect.getTargetClassName());
+			net.sf.tools4csv.xbeans.PropertyDocument.Property[]  properties = collect.getPropertyArray();
 			if(null != properties && properties.length > 0){
 				for (net.sf.tools4csv.xbeans.PropertyDocument.Property property : properties) {
 					Property modelProperty = new Property();
@@ -143,15 +147,15 @@ public class CsvConfigTransformer {
 	}
 
 	private static Write populateToWrite(
-			net.sf.tools4csv.xbeans.TargetDocument.Target target) throws Exception {
+			net.sf.tools4csv.xbeans.WriteDocument.Write write) throws Exception {
 		Write modelWrite = new Write();
-		if(null != target.getWrite()){
-			if(null != target.getWrite().getBatchSize())
-				modelWrite.setBatchSize(target.getWrite().getBatchSize().intValue());
-			modelWrite.setFrom(target.getWrite().getFrom().intValue());
-			if(null != target.getWrite().getTo())
-				modelWrite.setTo(target.getWrite().getTo().intValue());
-			net.sf.tools4csv.xbeans.ConnectionDocument.Connection connection = target.getWrite().getConnection();
+		if(null != write){
+			if(null != write.getBatchSize())
+				modelWrite.setBatchSize(write.getBatchSize().intValue());
+			modelWrite.setFrom(write.getFrom().intValue());
+			if(null != write.getTo())
+				modelWrite.setTo(write.getTo().intValue());
+			net.sf.tools4csv.xbeans.ConnectionDocument.Connection connection = write.getConnection();
 			if(null != connection){
 				ConnectionProperties connectionProperties = new ConnectionProperties();
 				connectionProperties.setUrl(connection.getUrl());
@@ -161,8 +165,8 @@ public class CsvConfigTransformer {
 				modelWrite.setConnectionProperties(connectionProperties);
 			}
 			
-			if(null != target.getWrite().getSqlArray() && target.getWrite().getSqlArray().length > 0){
-				for(net.sf.tools4csv.xbeans.SqlDocument.Sql sql : target.getWrite().getSqlArray()){
+			if(null != write.getSqlArray() && write.getSqlArray().length > 0){
+				for(net.sf.tools4csv.xbeans.SqlDocument.Sql sql : write.getSqlArray()){
 					Sql modelSql = new Sql();
 					if(null != sql.getIndex())
 						modelSql.setIndex(sql.getIndex().intValue());
@@ -172,8 +176,8 @@ public class CsvConfigTransformer {
 				}
 			}
 			
-			if(null != target.getWrite().getColumnArray() && target.getWrite().getColumnArray().length > 0){
-				for (net.sf.tools4csv.xbeans.ColumnDocument.Column column : target.getWrite().getColumnArray()) {
+			if(null != write.getColumnArray() && write.getColumnArray().length > 0){
+				for (net.sf.tools4csv.xbeans.ColumnDocument.Column column : write.getColumnArray()) {
 					Column modelColumn = populateToColumn(column);
 					modelWrite.getColumns().add(modelColumn);
 				}

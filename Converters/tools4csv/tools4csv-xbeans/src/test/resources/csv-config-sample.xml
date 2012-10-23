@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<csv-configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="../../main/xsd/csv-configuration.cfg.xsd">
+	
+	<converters exitOnError="true" parallel="false">
+	
+		<converter order="1" type="csv-to-merged" 
+			sourcePath="/home/sabuj/temp/in" active="true" id="csv-to-merged"
+			targetPath="/home/sabuj/temp/out"
+			mkdirs="true" overwrite="true">
+			
+			<source file="in.csv" separator=","  hasHeader="true">
+				<select from="-1" to="-1" batchSize="10">
+					<column index="0" name="a0" useQuote="false"/>
+					<column index="1" name="a1" useQuote="false"/>
+					<column index="2" name="a2" useQuote="false"/>
+					<column index="3" name="a3" useQuote="false"/>
+					<column index="5" name="a5" useQuote="false"/>
+					<column index="7" name="a7" useQuote="false" pattern="dd/MM/yyyyy"/>
+				</select>
+			</source>
+			
+			<target >
+				<collect id="C" targetClassName="a.b.C" orderBy="b">
+					<property map-to="a1" name="a" type="string" default="--" />
+					<property map-to="a3" name="b" type="string"/>
+				</collect>
+				
+				<collect id="D" targetClassName="a.b.D">
+					<property map-to="a2" name="d" type="string"/>
+					<property map-to="a5" name="e" type="string"/>
+				</collect>
+				
+				<write id="write-to-file-1" type="csvWriter" fileName="out1.csv" separator="\t" batchSize="10" from="-1" to="-1">
+					<column useQuote="true" name="a1" index="0" type="string"/>
+					<column useQuote="true" name="a7" index="1" type="date" format="true" pattern="MM-ddd-yy"/>
+				</write>
+				
+				<write id="write-to-file-2" type="csvWriter" fileName="out2.csv" separator=",">
+					<column useQuote="true" name="a4" index="0" type="string"/>
+					<column useQuote="true" name="a7" index="1" type="date" format="true" pattern="MMM-ddd-yy"/>
+				</write>
+				
+				<write id="insert-to-db-1" type="databaseWriter">
+					<connection>
+						<url>sdfasdf</url>
+						<driverClass>a.B</driverClass>
+						<userName>dsfsf</userName>
+						<password>fsdfgsdfg</password>
+					</connection>
+					<sql index="0">
+						<query namedParam="false">
+						<![CDATA[
+							insert into ...
+						]]>
+						</query>
+						<select >
+							<column useQuote="true" name="a3" index="0"/>
+							<column useQuote="true" name="a5" index="1"/>
+						</select>
+					</sql>
+					<sql index="1">
+						<query namedParam="false">
+						<![CDATA[
+							insert into ...
+						]]>
+						</query>
+						<select >
+							<column useQuote="true" name="a1" index="0"/>
+							<column useQuote="true" name="a4" index="1"/>
+						</select>
+					</sql>
+				</write>
+				
+				
+			</target>
+		
+		</converter>
+	</converters>
+	
+</csv-configuration>
