@@ -7,6 +7,9 @@ public class Write {
 
 	private String id;
 	private String type;
+	private String fileName;
+	private String separator;
+	private boolean hasHeader;
 	private int from;
 	private int to;
 	private int batchSize;
@@ -90,6 +93,30 @@ public class Write {
 
 	public void setOrder(int order) {
 		this.order = order;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getSeparator() {
+		return separator;
+	}
+
+	public void setSeparator(String separator) {
+		this.separator = separator;
+	}
+
+	public boolean isHasHeader() {
+		return hasHeader;
+	}
+
+	public void setHasHeader(boolean hasHeader) {
+		this.hasHeader = hasHeader;
 	}
 	
 }

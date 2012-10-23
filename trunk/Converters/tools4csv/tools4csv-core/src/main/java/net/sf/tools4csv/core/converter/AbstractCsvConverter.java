@@ -77,9 +77,7 @@ public abstract class AbstractCsvConverter implements CsvConverter {
 				int lineCount = 0;
 				if(getSource().isHasHeader())
 					bufferedReader.readLine();
-				if(getTarget().isHasHeader()){
-					writeTargetHeader(processHeader());
-				}
+				
 				while((line = bufferedReader.readLine()) != null){
 					lineCount ++;
 					if(!"".equals(line.trim())){

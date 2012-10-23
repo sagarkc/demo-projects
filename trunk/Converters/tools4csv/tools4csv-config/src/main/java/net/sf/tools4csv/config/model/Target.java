@@ -2,63 +2,30 @@ package net.sf.tools4csv.config.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 public class Target {
 
-	private String fileName;
-	private boolean hasHeader;
-	private boolean insert;
-	private boolean collection;
+	private boolean parallel = false;
 	private Map<String, Write> writes;
-	private List<Collect> collects;
-	private String separator = ",";
-	
+	private List<Write> writeList;
+	private Map<String, Collect> collects;
+	private List<Collect> collectList;
+
 	public Target() {
 		writes = new HashMap<String, Write>(0);
-		collects = new ArrayList<Collect>(0);
+		writeList = new ArrayList<Write>(0);
+		collects = new HashMap<String, Collect>(0);
+		collectList = new ArrayList<Collect>(0);
 	}
 
-	public String getSeparator() {
-		return separator;
+	public boolean isParallel() {
+		return parallel;
 	}
 
-	public void setSeparator(String separator) {
-		this.separator = separator;
-	}
-
-	public String getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
-	public boolean isHasHeader() {
-		return hasHeader;
-	}
-
-	public void setHasHeader(boolean hasHeader) {
-		this.hasHeader = hasHeader;
-	}
-
-	public boolean isInsert() {
-		return insert;
-	}
-
-	public void setInsert(boolean insert) {
-		this.insert = insert;
-	}
-
-	public boolean isCollection() {
-		return collection;
-	}
-
-	public void setCollection(boolean collection) {
-		this.collection = collection;
+	public void setParallel(boolean parallel) {
+		this.parallel = parallel;
 	}
 
 	public Map<String, Write> getWrites() {
@@ -69,30 +36,55 @@ public class Target {
 		this.writes = writes;
 	}
 
-	public List<Collect> getCollects() {
+	public Map<String, Collect> getCollects() {
 		return collects;
 	}
 
-	public void setCollects(List<Collect> collects) {
+	public void setCollects(Map<String, Collect> collects) {
 		this.collects = collects;
 	}
 
-	@Override
-	public String toString() {
-		return "Target [fileName=" + fileName + "]";
+	public List<Write> getWriteList() {
+		return writeList;
 	}
-	
-	public Write getWrite(String id){
+
+	public void setWriteList(List<Write> writeList) {
+		this.writeList = writeList;
+	}
+
+	public List<Collect> getCollectList() {
+		return collectList;
+	}
+
+	public void setCollectList(List<Collect> collectList) {
+		this.collectList = collectList;
+	}
+
+	public Write getWrite(String id) {
+		if(null != writes)
+			return writes.get(id);
 		return null;
 	}
-	
-	public void addWrite(Write write){
-		
+
+	public void addWrite(Write write) {
+		if(null != write && null != write.getId() && !"".equals(write.getId().trim())){
+			writes.put(write.getId(), write);
+			writeList.add(write);
+		}
 	}
-	
-	public Iterator<Write> getWriteIterator(){
-		if(writes == null)
-			return null;
-		return getWrites().values().iterator();
+
+	public Collect getCollect(String id) {
+		if(null != collects)
+			return collects.get(id);
+		return null;
 	}
+
+	public void addCollect(Collect collect) {
+		if(null != collect && null != collect.getId() && !"".equals(collect.getId().trim())){
+			collects.put(collect.getId(), collect);
+			collectList.add(collect);
+		}
+	}
+
+
 }
