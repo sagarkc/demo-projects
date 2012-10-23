@@ -31,4 +31,6 @@ public final class SplitterContext {
 	
 	public File lastOpenedDir = new File(".");
 	public String lastOpenedPath = ".";
+	
+	
 }
