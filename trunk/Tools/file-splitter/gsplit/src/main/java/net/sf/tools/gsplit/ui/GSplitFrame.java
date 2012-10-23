@@ -553,7 +553,7 @@ public class GSplitFrame extends JFrame {
         gridBagConstraints.insets = new Insets(4, 4, 4, 4);
         jPanel2.add(jLabel12, gridBagConstraints);
 
-        manualJoinStartButton.setText("jButton3");
+        manualJoinStartButton.setText("Start");
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
