@@ -42,7 +42,8 @@
 							<classpathMavenRepositoryLayout>false</classpathMavenRepositoryLayout>
 						</manifest>
 						<!-- <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile> 
-							<classpathLayoutType>repository</classpathLayoutType> <classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout> -->
+							<classpathLayoutType>repository</classpathLayoutType> 
+							<classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout> -->
 					</archive>
 					
 				</configuration>
