@@ -8,6 +8,8 @@ import java.io.File;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel;
+
 import net.sf.tools.gsplit.core.FileAutoJoiner;
 import net.sf.tools.gsplit.core.FileSplitter;
 import net.sf.tools.gsplit.ui.GSplitFrame;
@@ -24,8 +26,9 @@ public class GreenSplitter {
 	 */
 	public static void main(String[] args) {
 		try {
-			UIManager.setLookAndFeel(
-					UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			//UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			//UIManager.setLookAndFeel(NimbusLookAndFeel.class.getCanonicalName());
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
