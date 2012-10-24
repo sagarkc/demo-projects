@@ -11,9 +11,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 
 import javax.swing.SwingWorker;
+
 
 import net.sf.tools.gsplit.SplitterConstants;
 import net.sf.tools.gsplit.WorkerTaskConstants;
@@ -29,6 +31,7 @@ public final class FileAutoJoiner extends SwingWorker<Void, Void> implements Wor
 	private final File targetFile;
 	private File sourceDir;
 	private File targetDir;
+	private boolean isWorkerTask;
 	
 	public FileAutoJoiner(File sourceFile, File targetFile) {
 		if(!sourceFile.exists()){
@@ -44,6 +47,10 @@ public final class FileAutoJoiner extends SwingWorker<Void, Void> implements Wor
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public FileAutoJoiner(String source, String target) {
+		this(new File(source), new File(target));
 	}
 
 	/**
@@ -78,6 +85,7 @@ public final class FileAutoJoiner extends SwingWorker<Void, Void> implements Wor
 					new FileOutputStream(targetFile));
 			
 			int count = -1;
+			int writeCount = 0;
 			byte[] buffer = new byte[SplitterConstants.KB];
 			
 			for(PartMetaData partMetaData : fileMetaData.getPartMetaDataList()){
@@ -92,7 +100,21 @@ public final class FileAutoJoiner extends SwingWorker<Void, Void> implements Wor
 					if(count < 0 && header.length != PartMetaData.HEADER_LENGTH){
 						throw new RuntimeException("Invalid part... Header not found.");
 					}
+					byte[] totalParts = Arrays.copyOfRange(header, 0, 4);
+					ByteBuffer totalPartsBuffer = ByteBuffer.allocate(4);
+					totalPartsBuffer.putInt(partMetaData.getTotalPartCount());
+					byte[] currentPart = Arrays.copyOfRange(header, 4, 8);
+					ByteBuffer currentPartBuffer = ByteBuffer.allocate(4);
+					currentPartBuffer.putInt(partMetaData.getCurrentPartNumber());
 					byte[] chkSum = Arrays.copyOfRange(header, 8, 40);
+					
+					if(!Arrays.equals(totalPartsBuffer.array(), totalParts)){
+						throw new RuntimeException("Invalid part... Total part count not matched.");
+					}
+					
+					if(!Arrays.equals(currentPartBuffer.array(), currentPart)){
+						throw new RuntimeException("Invalid part... Current part number not matched.");
+					}
 					
 					if(!Arrays.equals(chkSum, partMetaData.getCheckSum())){
 						throw new RuntimeException("Invalid part... Header CheckSum not matched.");
@@ -100,6 +122,12 @@ public final class FileAutoJoiner extends SwingWorker<Void, Void> implements Wor
 					
 					while((count = inputStream.read(buffer, 0, SplitterConstants.KB)) > 0){
 						outputStream.write(buffer, 0, count);
+						writeCount += count;
+						if(isWorkerTask){
+							firePropertyChange(PROPERTY_PROGRESS, null, 
+									Math.min((int)((writeCount*1.0/fileMetaData.getOriginalFileSize()*1.0)*100.0), 100)
+									);
+						}
 					}
 				} finally {
 					if(null != inputStream){
@@ -119,29 +147,29 @@ public final class FileAutoJoiner extends SwingWorker<Void, Void> implements Wor
 		}
 	}
 
-	/**
-	 * @param partMetaData
-	 * @return
-	 */
-	private boolean validPart(PartMetaData partMetaData) {
-		
-		return false;
-	}
+	
 	
 	/* (non-Javadoc)
 	 * @see javax.swing.SwingWorker#doInBackground()
 	 */
 	@Override
 	protected Void doInBackground() throws Exception {
-		firePropertyChange(PROPERTY_PROGRESS, null, TASK_STATUS_START);
+		isWorkerTask = true;
 		Long startTime = System.currentTimeMillis();
 		Long totalTime = 0L;
+		firePropertyChange(PROPERTY_PROGRESS, null, TASK_STATUS_START);
 		try {
 			join();
+		} catch (RuntimeException e) {
+			firePropertyChange(TASK_STATUS_FAILED, null, e.getMessage());
+			e.printStackTrace();
 		} catch (Exception e) {
+			firePropertyChange(TASK_STATUS_FAILED, null, e.getMessage());
 			e.printStackTrace();
 		}
-		
+		Long endTime = System.currentTimeMillis();
+		totalTime = endTime - startTime;
+		firePropertyChange(TASK_STATUS_DONE, null, totalTime);
 		return null;
 	}
 }

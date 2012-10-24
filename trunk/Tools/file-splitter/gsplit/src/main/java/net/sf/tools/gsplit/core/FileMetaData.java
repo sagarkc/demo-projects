@@ -19,6 +19,7 @@ public final class FileMetaData implements Serializable{
 	private static final long serialVersionUID = 306852703898295610L;
 
 	private int totalPartCount;
+	private long originalFileSize;
 	private List<PartMetaData> partMetaDataList;
 	private transient String currentDirectory;
 	
@@ -70,6 +71,14 @@ public final class FileMetaData implements Serializable{
 	 */
 	public void setCurrentDirectory(String currentDirectory) {
 		this.currentDirectory = currentDirectory;
+	}
+
+	public long getOriginalFileSize() {
+		return originalFileSize;
+	}
+
+	public void setOriginalFileSize(long originalFileSize) {
+		this.originalFileSize = originalFileSize;
 	}
 	
 }
