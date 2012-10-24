@@ -15,13 +15,12 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
 import java.io.File;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -44,7 +43,12 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import net.sf.tools.gsplit.ResourceBundleManager;
+import net.sf.tools.gsplit.SplitterConstants;
 import net.sf.tools.gsplit.SplitterContext;
+import net.sf.tools.gsplit.WorkerTaskConstants;
+import net.sf.tools.gsplit.core.FileAutoJoiner;
+import net.sf.tools.gsplit.core.FileSplitter;
+import net.sf.tools.gsplit.util.ExtensionFileFilter;
 import net.sf.tools.gsplit.util.FileBrowserUtil;
 import net.sf.tools.gsplit.util.StringUtil;
 import net.sf.tools.gsplit.util.WindowUtil;
@@ -53,11 +57,18 @@ import net.sf.tools.gsplit.util.WindowUtil;
  * @author Sabuj Das | sabuj.das@gmail.com
  *
  */
-public class GSplitFrame extends JFrame {
+public class GSplitFrame extends JFrame implements PropertyChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3832358587043248983L;
+	
 	private static final SplitterContext context = SplitterContext.getContext();
 	private ResourceBundle bundle = ResourceBundleManager.getBundleManager().getResourceBundle();
 	
+	private FileSplitter fileSplitter;
+	private FileAutoJoiner fileAutoJoiner;
 	
 	private FormActionListener formActionListener;
 	
@@ -126,6 +137,9 @@ public class GSplitFrame extends JFrame {
 				+ " " + bundle.getString("app.version"));
 		setSize(540, 350);
 		setMinimumSize(getSize());
+		
+		setIconImage((new ImageIcon(getClass().getResource("/images/file-splitter_16x16.png"))).getImage());
+		
 		WindowUtil.bringToCenter(this);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		formActionListener = new FormActionListener();
@@ -148,7 +162,7 @@ public class GSplitFrame extends JFrame {
         jLabel4 = new JLabel();
         splitterTargetTextField = new JTextField();
         browseSplitterTargetButton = new JButton();
-        splitterProgressBar = new JProgressBar();
+        splitterProgressBar = new JProgressBar(0, 100);
         splitterStopButton = new JButton();
         jLabel5 = new JLabel();
         splitterStartButton = new JButton();
@@ -207,9 +221,65 @@ public class GSplitFrame extends JFrame {
         splitterStartButton.addActionListener(formActionListener);
         splitterStopButton.addActionListener(formActionListener);
         
-        splitterSourceTextField.getDocument().addDocumentListener(formActionListener);
-        splitterTargetTextField.getDocument().addDocumentListener(formActionListener);
+        splitterSourceTextField.getDocument().addDocumentListener(new DocumentListener() {
+			public void removeUpdate(DocumentEvent e) {
+				updateSplitterStartButton();
+			}
+			public void insertUpdate(DocumentEvent e) {
+				updateSplitterStartButton();
+			}
+			public void changedUpdate(DocumentEvent e) {
+				updateSplitterStartButton();
+			}
+		});
+        splitterTargetTextField.getDocument().addDocumentListener(new DocumentListener() {
+			public void removeUpdate(DocumentEvent e) {
+				updateSplitterStartButton();
+			}
+			public void insertUpdate(DocumentEvent e) {
+				updateSplitterStartButton();
+			}
+			public void changedUpdate(DocumentEvent e) {
+				updateSplitterStartButton();
+			}
+		});
         
+        
+        autoJoinProgressBar.setVisible(false);
+        autoJoinProgressBar.setMinimum(0);
+        autoJoinProgressBar.setMaximum(100);
+        autoJoinProgressBar.setValue(0);
+        autoJoinProgressBar.setStringPainted(true);
+        
+        autoJoinStartButton.setEnabled(false);
+        autoJoinStartButton.addActionListener(formActionListener);
+        autoJoinStopButton.setVisible(false);
+        autoJoinStopButton.addActionListener(formActionListener);
+        browseAutoJoinSourceButton.addActionListener(formActionListener);
+        browseAutoJoinTargetButton.addActionListener(formActionListener);
+        
+        autoJoinSourceTextField.getDocument().addDocumentListener(new DocumentListener() {
+			public void removeUpdate(DocumentEvent e) {
+				updateAutoJoinStartButton();
+			}
+			public void insertUpdate(DocumentEvent e) {
+				updateAutoJoinStartButton();
+			}
+			public void changedUpdate(DocumentEvent e) {
+				updateAutoJoinStartButton();
+			}
+		});
+        autoJoinTargetTextField.getDocument().addDocumentListener(new DocumentListener() {
+			public void removeUpdate(DocumentEvent e) {
+				updateAutoJoinStartButton();
+			}
+			public void insertUpdate(DocumentEvent e) {
+				updateAutoJoinStartButton();
+			}
+			public void changedUpdate(DocumentEvent e) {
+				updateAutoJoinStartButton();
+			}
+		});
         
         splitterPanel.setLayout(new GridBagLayout());
 
@@ -289,6 +359,8 @@ public class GSplitFrame extends JFrame {
         gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new Insets(4, 4, 4, 4);
+        splitterProgressBar.setValue(0);
+        splitterProgressBar.setStringPainted(true);
         splitterPanel.add(splitterProgressBar, gridBagConstraints);
 
         splitterStopButton.setText("Stop");
@@ -332,6 +404,7 @@ public class GSplitFrame extends JFrame {
         splitterPanel.add(splitterPartSizeTextField, gridBagConstraints);
 
         byteComboBox.setModel(new DefaultComboBoxModel(new String[] { "BYTE", "KB", "MB", "GB" }));
+        byteComboBox.setSelectedIndex(1);
         gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
@@ -602,94 +675,251 @@ public class GSplitFrame extends JFrame {
         pack();
 	}
 	
+	private void updateSplitterStartButton(){
+		if(StringUtil.hasValidContent(splitterSourceTextField.getText())
+				&& StringUtil.hasValidContent(splitterTargetTextField.getText())){
+			splitterStartButton.setEnabled(true);
+		} else {
+			splitterStartButton.setEnabled(false);
+		}
+	}
 	
+	private void updateAutoJoinStartButton(){
+		if(StringUtil.hasValidContent(autoJoinSourceTextField.getText())
+				&& StringUtil.hasValidContent(autoJoinTargetTextField.getText())){
+			autoJoinStartButton.setEnabled(true);
+		} else {
+			autoJoinStartButton.setEnabled(false);
+		}
+	}
+	
+	private void startSplitter() {
+		synchronized (this) {
+			fileSplitter = new FileSplitter(splitterSourceTextField.getText(), 
+					splitterTargetTextField.getText());
+			fileSplitter.addPropertyChangeListener(this);
+			long blockSize = 0;
+			try{
+				int multiplier = 1;
+				String mul = byteComboBox.getSelectedItem().toString();
+				if(SplitterConstants.KB_TEXT.equals(mul)){
+					multiplier = SplitterConstants.KB;
+				} else if(SplitterConstants.MB_TEXT.equals(mul)){
+					multiplier = SplitterConstants.MB;
+				} else if(SplitterConstants.GB_TEXT.equals(mul)){
+					multiplier = SplitterConstants.GB;
+				} 
+				blockSize = Integer.parseInt(splitterPartSizeTextField.getText()) * multiplier;
+			} catch(Exception ex){
+				ex.printStackTrace();
+			}
+			if(blockSize <= 0){
+				JOptionPane.showMessageDialog(this, "Block size is incorrect.");
+				return;
+			}
+			fileSplitter.setByteCount(blockSize);
+			fileSplitter.execute();
+		}
+	}
+	
+	private void startAutoJoin(){
+		synchronized (this) {
+			fileAutoJoiner = new FileAutoJoiner(
+					autoJoinSourceTextField.getText(), 
+					autoJoinTargetTextField.getText());
+			fileAutoJoiner.addPropertyChangeListener(this);
+			fileAutoJoiner.execute();
+		}
+	}
+	
+	private void stopSplitter() {
+		if(null != fileSplitter){
+			fileSplitter.cancel(true);
+		}
+	}
 
-	private class FormActionListener implements ActionListener, 
-		PropertyChangeListener,
-		VetoableChangeListener,
-		DocumentListener{
+	private void stopAutoJoin() {
+		if(null != fileAutoJoiner){
+			fileAutoJoiner.cancel(true);
+		}
+	}
+	
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		String propertyName = evt.getPropertyName();
+		if(evt.getSource().equals(fileSplitter)){
+			if(WorkerTaskConstants.TASK_STATUS_DONE.equals(propertyName)){
+				Object newValue = evt.getNewValue();
+				JOptionPane.showMessageDialog(GSplitFrame.this, 
+						String.format("Completed in [ %10.2f ] seconds.",
+								((Long)newValue)/1000.0));
+				splitterStartButton.setEnabled(true);
+				splitterStopButton.setVisible(false);
+				splitterProgressBar.setVisible(false);
+				splitterSourceTextField.setEditable(true);
+				splitterTargetTextField.setEditable(true);
+				browseSplitterSourceButton.setEnabled(true);
+				browseSplitterTargetButton.setEnabled(true);
+			}
+			if(WorkerTaskConstants.TASK_STATUS_ABORT.equals(propertyName)){
+				Object newValue = evt.getNewValue();
+				JOptionPane.showMessageDialog(GSplitFrame.this, "Split aborted by user");
+				splitterStartButton.setEnabled(true);
+				splitterStopButton.setVisible(false);
+				splitterProgressBar.setVisible(false);
+				splitterSourceTextField.setEditable(true);
+				splitterTargetTextField.setEditable(true);
+				browseSplitterSourceButton.setEnabled(true);
+				browseSplitterTargetButton.setEnabled(true);
+			}
+			if(WorkerTaskConstants.PROPERTY_PROGRESS.equals(propertyName)){
+				String type = evt.getNewValue().toString();
+				Object newProgress = evt.getNewValue();
+				if(null != newProgress && newProgress instanceof Integer){
+					splitterProgressBar.setValue((Integer)newProgress);
+					splitterProgressBar.updateUI();
+				} else if(WorkerTaskConstants.TASK_STATUS_START.equals(newProgress)){
+					splitterStartButton.setEnabled(false);
+					splitterStopButton.setVisible(true);
+					splitterProgressBar.setVisible(true);
+					splitterSourceTextField.setEditable(false);
+					splitterTargetTextField.setEditable(false);
+					browseSplitterSourceButton.setEnabled(false);
+					browseSplitterTargetButton.setEnabled(false);
+				}
+			}
+			
+			if(WorkerTaskConstants.TASK_STATUS_FAILED.equals(propertyName)){
+				Object newValue = evt.getNewValue();
+				JOptionPane.showMessageDialog(GSplitFrame.this, "Split failed for : " + newValue);
+				splitterStartButton.setEnabled(true);
+				splitterStopButton.setVisible(false);
+				splitterProgressBar.setVisible(false);
+				splitterSourceTextField.setEditable(true);
+				splitterTargetTextField.setEditable(true);
+				browseSplitterSourceButton.setEnabled(true);
+				browseSplitterTargetButton.setEnabled(true);
+			}
+		}
+		else if(evt.getSource().equals(fileAutoJoiner)){
+			if(WorkerTaskConstants.TASK_STATUS_DONE.equals(propertyName)){
+				Object newValue = evt.getNewValue();
+				JOptionPane.showMessageDialog(GSplitFrame.this, 
+						String.format("Completed in [ %10.2f ] seconds.",
+								((Long)newValue)/1000.0));
+				autoJoinStartButton.setEnabled(true);
+				autoJoinStopButton.setVisible(false);
+				autoJoinProgressBar.setVisible(false);
+				autoJoinSourceTextField.setEditable(true);
+				autoJoinTargetTextField.setEditable(true);
+				browseAutoJoinSourceButton.setEnabled(true);
+				browseAutoJoinTargetButton.setEnabled(true);
+			}
+			if(WorkerTaskConstants.TASK_STATUS_ABORT.equals(propertyName)){
+				Object newValue = evt.getNewValue();
+				JOptionPane.showMessageDialog(GSplitFrame.this, "Join aborted by user");
+				autoJoinStartButton.setEnabled(true);
+				autoJoinStopButton.setVisible(false);
+				autoJoinProgressBar.setVisible(false);
+				autoJoinSourceTextField.setEditable(true);
+				autoJoinTargetTextField.setEditable(true);
+				browseAutoJoinSourceButton.setEnabled(true);
+				browseAutoJoinTargetButton.setEnabled(true);
+			}
+			if(WorkerTaskConstants.PROPERTY_PROGRESS.equals(propertyName)){
+				String type = evt.getNewValue().toString();
+				Object newProgress = evt.getNewValue();
+				if(null != newProgress && newProgress instanceof Integer){
+					autoJoinProgressBar.setValue((Integer)newProgress);
+					autoJoinProgressBar.updateUI();
+				} else if(WorkerTaskConstants.TASK_STATUS_START.equals(newProgress)){
+					autoJoinStartButton.setEnabled(false);
+					autoJoinStopButton.setVisible(true);
+					autoJoinProgressBar.setVisible(true);
+					autoJoinSourceTextField.setEditable(false);
+					autoJoinTargetTextField.setEditable(false);
+					browseAutoJoinSourceButton.setEnabled(false);
+					browseAutoJoinTargetButton.setEnabled(false);
+				}
+			}
+			
+			if(WorkerTaskConstants.TASK_STATUS_FAILED.equals(propertyName)){
+				Object newValue = evt.getNewValue();
+				JOptionPane.showMessageDialog(GSplitFrame.this, "Join failed for : " + newValue);
+				autoJoinStartButton.setEnabled(true);
+				autoJoinStopButton.setVisible(false);
+				autoJoinProgressBar.setVisible(false);
+				autoJoinSourceTextField.setEditable(true);
+				autoJoinTargetTextField.setEditable(true);
+				browseAutoJoinSourceButton.setEnabled(true);
+				browseAutoJoinTargetButton.setEnabled(true);
+			}
+		}
+	}
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-		 */
+	private class FormActionListener implements ActionListener{
+
 		@Override
 		public void actionPerformed(ActionEvent evt) {
 			if(evt.getSource().equals(closeMenuItem)){
 				System.exit(0);
 			}
 			if(evt.getSource().equals(browseSplitterSourceButton)){
-				File file = FileBrowserUtil.openSingleFile(GSplitFrame.this, null, false);
+				File file = FileBrowserUtil.openSingleFile(GSplitFrame.this, null, false, context.lastOpenedPath);
 				if(null != file){
 					splitterSourceTextField.setText(file.getAbsolutePath());
-					fileSizeLabel.setText("Size: "+file.length());
+					
+					long size = file.length();
+					if(size < SplitterConstants.KB){
+						fileSizeLabel.setText("Size: "+file.length() + SplitterConstants.BYTE_TEXT); 
+					} else if(size >= SplitterConstants.KB && size < SplitterConstants.MB){
+						fileSizeLabel.setText("Size: "+file.length()/SplitterConstants.KB + SplitterConstants.KB_TEXT); 
+					} else if(size >= SplitterConstants.MB && size < SplitterConstants.GB){
+						fileSizeLabel.setText("Size: "+file.length()/SplitterConstants.MB + SplitterConstants.MB_TEXT); 
+					} else if(size >= SplitterConstants.GB){
+						fileSizeLabel.setText("Size: "+file.length()/SplitterConstants.GB + SplitterConstants.GB_TEXT); 
+					}
+					context.lastOpenedPath = file.getAbsolutePath();
 				}
 			}
 			if(evt.getSource().equals(browseSplitterTargetButton)){
-				File dir = FileBrowserUtil.openSingleFile(GSplitFrame.this, null, true);
+				File dir = FileBrowserUtil.openSingleFile(GSplitFrame.this, null, true, context.lastOpenedPath);
 				if(null != dir){
 					splitterTargetTextField.setText(dir.getAbsolutePath());
+					context.lastOpenedPath = dir.getAbsolutePath();
 				}
 			}
 			if(evt.getSource().equals(splitterStartButton)){
-				JOptionPane.showMessageDialog(GSplitFrame.this, "dsfasdfasdf");
+				startSplitter();
 			}
-		}
-		
-		/* (non-Javadoc)
-		 * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
-		 */
-		@Override
-		public void propertyChange(PropertyChangeEvent evt) {
+			if(evt.getSource().equals(splitterStopButton)){
+				stopSplitter();
+			}
 			
-		}
-		
-		/* (non-Javadoc)
-		 * @see java.beans.VetoableChangeListener#vetoableChange(java.beans.PropertyChangeEvent)
-		 */
-		@Override
-		public void vetoableChange(PropertyChangeEvent evt)
-				throws PropertyVetoException {
-			
-		}
-
-		/* (non-Javadoc)
-		 * @see event.DocumentListener#insertUpdate(event.DocumentEvent)
-		 */
-		@Override
-		public void insertUpdate(DocumentEvent evt) {
-			if(StringUtil.hasValidContent(splitterSourceTextField.getText())
-					&& StringUtil.hasValidContent(splitterTargetTextField.getText())){
-				splitterStartButton.setEnabled(true);
-			} else {
-				splitterStartButton.setEnabled(false);
+			if(evt.getSource().equals(browseAutoJoinSourceButton)){
+				File file = FileBrowserUtil.openSingleFile(GSplitFrame.this, 
+						new ExtensionFileFilter(new String[]{".mdat"}, "Splitter Metadata file")
+						, false, context.lastOpenedPath);
+				if(null != file){
+					autoJoinSourceTextField.setText(file.getAbsolutePath());
+					context.lastOpenedPath = file.getAbsolutePath();
+				}
+			}
+			if(evt.getSource().equals(browseAutoJoinTargetButton)){
+				File file = FileBrowserUtil.openSingleFile(GSplitFrame.this, null, false, context.lastOpenedPath);
+				if(null != file){
+					autoJoinTargetTextField.setText(file.getAbsolutePath());
+					context.lastOpenedPath = file.getAbsolutePath();
+				}
+			}
+			if(evt.getSource().equals(autoJoinStartButton)){
+				startAutoJoin();
+			}
+			if(evt.getSource().equals(autoJoinStopButton)){
+				stopAutoJoin();
 			}
 		}
 
-		/* (non-Javadoc)
-		 * @see event.DocumentListener#removeUpdate(event.DocumentEvent)
-		 */
-		@Override
-		public void removeUpdate(DocumentEvent evt) {
-			if(StringUtil.hasValidContent(splitterSourceTextField.getText())
-					&& StringUtil.hasValidContent(splitterTargetTextField.getText())){
-				splitterStartButton.setEnabled(true);
-			} else {
-				splitterStartButton.setEnabled(false);
-			}
-		}
-
-		/* (non-Javadoc)
-		 * @see event.DocumentListener#changedUpdate(event.DocumentEvent)
-		 */
-		@Override
-		public void changedUpdate(DocumentEvent evt) {
-			if(StringUtil.hasValidContent(splitterSourceTextField.getText())
-					&& StringUtil.hasValidContent(splitterTargetTextField.getText())){
-				splitterStartButton.setEnabled(true);
-			} else {
-				splitterStartButton.setEnabled(false);
-			}
-		}
 		
 		
 	}

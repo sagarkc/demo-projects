@@ -14,18 +14,23 @@ import java.io.ObjectOutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
 
+import javax.swing.SwingWorker;
+
 import net.sf.tools.gsplit.SplitterConstants;
+import net.sf.tools.gsplit.WorkerTaskConstants;
 import net.sf.tools.gsplit.util.MD5Util;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
  *
  */
-public class FileSplitter {
+public class FileSplitter extends SwingWorker<Void, Void> implements WorkerTaskConstants{
 
 	private FileMetaData fileMetaData;
 	private final File sourceFile;
 	private final File targetDir;
+	private boolean isWorkerTask;
+	private long byteCount;
 	
 	public FileSplitter(String fileName, String targeDirName){
 		this(new File(fileName), new File(targeDirName));
@@ -43,6 +48,14 @@ public class FileSplitter {
 		this.fileMetaData = new FileMetaData();
 	}
 	
+	public long getByteCount() {
+		return byteCount;
+	}
+
+	public void setByteCount(long byteCount) {
+		this.byteCount = byteCount;
+	}
+
 	/**
 	 * @return the fileMetaData
 	 */
@@ -77,11 +90,12 @@ public class FileSplitter {
 		return targetDir;
 	}
 
-	public void splitBySize(long byteCount) throws IOException{
+	public void splitBySize() throws IOException{
 		if(byteCount < 1){
 			throw new RuntimeException("The target byte count should be >= 1.");
 		}
 		long size = sourceFile.length();
+		fileMetaData.setOriginalFileSize(size);
 		if(size <= 0){
 			return;
 		}
@@ -160,6 +174,12 @@ public class FileSplitter {
 				fileMetaData.getPartMetaDataList().add(partMetaData);
 				
 				currentPart ++;
+				if(isWorkerTask){
+					firePropertyChange(PROPERTY_PROGRESS, null, 
+							Math.min((int)((currentPart*1.0/partCount*1.0)*100.0), 100)
+							);
+					
+				}
 			}
 			
 		} finally {
@@ -198,4 +218,24 @@ public class FileSplitter {
 		}
 	}
 
+	@Override
+	protected Void doInBackground() throws Exception {
+		isWorkerTask = true;
+		Long startTime = System.currentTimeMillis();
+		Long totalTime = 0L;
+		firePropertyChange(PROPERTY_PROGRESS, null, TASK_STATUS_START);
+		try {
+			splitBySize();
+		} catch (RuntimeException e) {
+			firePropertyChange(TASK_STATUS_FAILED, null, e.getMessage());
+			e.printStackTrace();
+		} catch (Exception e) {
+			firePropertyChange(TASK_STATUS_FAILED, null, e.getMessage());
+			e.printStackTrace();
+		}
+		Long endTime = System.currentTimeMillis();
+		totalTime = endTime - startTime;
+		firePropertyChange(TASK_STATUS_DONE, null, totalTime);
+		return null;
+	}
 }
