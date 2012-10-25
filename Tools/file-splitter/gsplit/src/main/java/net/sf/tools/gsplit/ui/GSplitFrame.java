@@ -50,6 +50,7 @@ import net.sf.tools.gsplit.core.FileAutoJoiner;
 import net.sf.tools.gsplit.core.FileSplitter;
 import net.sf.tools.gsplit.util.ExtensionFileFilter;
 import net.sf.tools.gsplit.util.FileBrowserUtil;
+import net.sf.tools.gsplit.util.MetaDataFileView;
 import net.sf.tools.gsplit.util.StringUtil;
 import net.sf.tools.gsplit.util.WindowUtil;
 
@@ -899,7 +900,7 @@ public class GSplitFrame extends JFrame implements PropertyChangeListener {
 			if(evt.getSource().equals(browseAutoJoinSourceButton)){
 				File file = FileBrowserUtil.openSingleFile(GSplitFrame.this, 
 						new ExtensionFileFilter(new String[]{".mdat"}, "Splitter Metadata file")
-						, false, context.lastOpenedPath);
+						, false, context.lastOpenedPath, new MetaDataFileView());
 				if(null != file){
 					autoJoinSourceTextField.setText(file.getAbsolutePath());
 					context.lastOpenedPath = file.getAbsolutePath();
