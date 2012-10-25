@@ -7,6 +7,7 @@ import java.awt.Component;
 import java.io.File;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileView;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
@@ -21,6 +22,11 @@ public class FileBrowserUtil {
 
 	public static File openSingleFile(Component parent,
 			ExtensionFileFilter fileFilter, Boolean isDir, String initialDir) {
+		return openSingleFile(parent, fileFilter, isDir, initialDir, null);
+	}
+
+	public static File openSingleFile(Component parent,
+			ExtensionFileFilter fileFilter, Boolean isDir, String initialDir, FileView fileView) {
 		File file = null;
 
 		if (!StringUtil.hasValidContent(initialDir)) {
@@ -30,6 +36,10 @@ public class FileBrowserUtil {
 		JFileChooser chooser = new JFileChooser(initialDir);
 		if (fileFilter != null)
 			chooser.setFileFilter(fileFilter);
+		if(null != fileView){
+			chooser.setFileView(fileView);
+		}
+		
 		chooser.setMultiSelectionEnabled(false);
 		if (isDir != null) {
 			if (Boolean.TRUE == isDir)
@@ -47,7 +57,7 @@ public class FileBrowserUtil {
 
 		return file;
 	}
-
+	
 	public static File[] openMultipleFile(Component parent,
 			ExtensionFileFilter fileFilter, Boolean isDir) {
 		return openMultipleFile(parent, fileFilter, isDir, ".");
