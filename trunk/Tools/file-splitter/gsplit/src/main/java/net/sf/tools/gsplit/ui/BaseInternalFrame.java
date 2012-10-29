@@ -4,17 +4,32 @@
  */
 package net.sf.tools.gsplit.ui;
 
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
+
 /**
  *
  * @author SG1736
  */
 public class BaseInternalFrame extends javax.swing.JInternalFrame {
 
+    private JPanel workerPanel;
+    
     /**
      * Creates new form BaseInternalFrame
      */
     public BaseInternalFrame() {
         initComponents();
+        addInternalFrameListener(WindowManager.getManager());
+    }
+
+    public BaseInternalFrame(JPanel workerPanel) {
+        this.workerPanel = workerPanel;
+        initComponents();
+        addInternalFrameListener(WindowManager.getManager());
+        if(null != workerPanel)
+            containerPanel.add(workerPanel, BorderLayout.CENTER);
+        containerPanel.updateUI();
     }
 
     /**
@@ -28,17 +43,15 @@ public class BaseInternalFrame extends javax.swing.JInternalFrame {
 
         containerPanel = new javax.swing.JPanel();
 
-        javax.swing.GroupLayout containerPanelLayout = new javax.swing.GroupLayout(containerPanel);
-        containerPanel.setLayout(containerPanelLayout);
-        containerPanelLayout.setHorizontalGroup(
-            containerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 526, Short.MAX_VALUE)
-        );
-        containerPanelLayout.setVerticalGroup(
-            containerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 310, Short.MAX_VALUE)
-        );
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Base");
+        setMinimumSize(new java.awt.Dimension(400, 300));
+        setPreferredSize(new java.awt.Dimension(400, 300));
 
+        containerPanel.setLayout(new java.awt.BorderLayout());
         getContentPane().add(containerPanel, java.awt.BorderLayout.CENTER);
 
         pack();
