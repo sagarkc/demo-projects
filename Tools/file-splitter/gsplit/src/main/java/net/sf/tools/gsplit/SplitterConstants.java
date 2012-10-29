@@ -3,6 +3,8 @@
  */
 package net.sf.tools.gsplit;
 
+import java.awt.Color;
+
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
  *
@@ -21,4 +23,6 @@ public interface SplitterConstants {
 	String PART_EXT = ".part";
 	String METADATA_EXT = ".mdat";
 	
+        Color LINK_BG_COLOR = new Color(153, 204, 255);
+        Color LINK_FG_COLOR = Color.BLUE;
 }

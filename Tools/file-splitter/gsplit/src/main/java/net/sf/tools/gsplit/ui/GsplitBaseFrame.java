@@ -4,6 +4,11 @@
  */
 package net.sf.tools.gsplit.ui;
 
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.event.MouseEvent;
+import net.sf.tools.gsplit.SplitterConstants;
+import net.sf.tools.gsplit.ui.core.SecureSplitPanel;
 import net.sf.tools.gsplit.util.WindowUtil;
 
 /**
@@ -12,11 +17,15 @@ import net.sf.tools.gsplit.util.WindowUtil;
  */
 public class GsplitBaseFrame extends javax.swing.JFrame {
 
+    private static final WindowManager WINDOW_MANAGER = WindowManager.getManager();
     /**
      * Creates new form GsplitBaseFrame
      */
     public GsplitBaseFrame() {
         initComponents();
+        WINDOW_MANAGER.baseDesktopPane = this.baseDesktopPane;
+        WINDOW_MANAGER.windowManagerLabel = this.windowManagerLabel;
+        WINDOW_MANAGER.windowManagerPopupMenu = this.windowManagerPopupMenu;
     }
 
     /**
@@ -32,6 +41,8 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         baseDesktopPopupMenu = new javax.swing.JPopupMenu();
         minimizeAllMenuItem = new javax.swing.JMenuItem();
         maximizeAllMenuItem = new javax.swing.JMenuItem();
+        windowManagerPopupMenu = new javax.swing.JPopupMenu();
+        showAllMenuItem = new javax.swing.JMenuItem();
         baseToolBar = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -67,17 +78,30 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         settingsMenuItem = new javax.swing.JMenuItem();
+        viewMenu = new javax.swing.JMenu();
+        showToolbarChkbxMenuItem = new javax.swing.JCheckBoxMenuItem();
+        showStatusbarChkbxMenuItem = new javax.swing.JCheckBoxMenuItem();
+        jSeparator9 = new javax.swing.JPopupMenu.Separator();
+        showLogMenuItem = new javax.swing.JMenuItem();
+        openLogFileMenuItem = new javax.swing.JMenuItem();
+        exploreLogFolderMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        helpMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
 
         FormListener formListener = new FormListener();
 
-        minimizeAllMenuItem.setText("jMenuItem1");
+        minimizeAllMenuItem.setText("Minimize All");
+        minimizeAllMenuItem.addActionListener(formListener);
         baseDesktopPopupMenu.add(minimizeAllMenuItem);
 
-        maximizeAllMenuItem.setText("jMenuItem1");
+        maximizeAllMenuItem.setText("Maximize All");
+        maximizeAllMenuItem.addActionListener(formListener);
         baseDesktopPopupMenu.add(maximizeAllMenuItem);
+
+        showAllMenuItem.setText("Show All");
+        showAllMenuItem.addActionListener(formListener);
+        windowManagerPopupMenu.add(showAllMenuItem);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -123,6 +147,7 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         windowManagerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/window-manager_24x24.png"))); // NOI18N
         windowManagerLabel.setText("Window Manager");
         windowManagerLabel.setEnabled(false);
+        windowManagerLabel.addMouseListener(formListener);
         baseStatusBar.add(windowManagerLabel);
         baseStatusBar.add(jSeparator5);
 
@@ -221,15 +246,47 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
 
         baseMenuBar.add(editMenu);
 
+        viewMenu.setText("View");
+
+        showToolbarChkbxMenuItem.setSelected(true);
+        showToolbarChkbxMenuItem.setText("Show Toolbar");
+        showToolbarChkbxMenuItem.addActionListener(formListener);
+        viewMenu.add(showToolbarChkbxMenuItem);
+
+        showStatusbarChkbxMenuItem.setSelected(true);
+        showStatusbarChkbxMenuItem.setText("Show Statusbar");
+        showStatusbarChkbxMenuItem.addActionListener(formListener);
+        viewMenu.add(showStatusbarChkbxMenuItem);
+        viewMenu.add(jSeparator9);
+
+        showLogMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/file_extension_log.png"))); // NOI18N
+        showLogMenuItem.setText("Show Log");
+        showLogMenuItem.addActionListener(formListener);
+        viewMenu.add(showLogMenuItem);
+
+        openLogFileMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/folder_open_document_text.png"))); // NOI18N
+        openLogFileMenuItem.setText("Open Log File");
+        openLogFileMenuItem.addActionListener(formListener);
+        viewMenu.add(openLogFileMenuItem);
+
+        exploreLogFolderMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/folder_explore.png"))); // NOI18N
+        exploreLogFolderMenuItem.setText("Open Log Folder");
+        exploreLogFolderMenuItem.addActionListener(formListener);
+        viewMenu.add(exploreLogFolderMenuItem);
+
+        baseMenuBar.add(viewMenu);
+
         helpMenu.setText("Help");
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
-        jMenuItem3.setText("Help");
-        helpMenu.add(jMenuItem3);
+        helpMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        helpMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
+        helpMenuItem.setText("Help");
+        helpMenuItem.addActionListener(formListener);
+        helpMenu.add(helpMenuItem);
 
         aboutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/info.png"))); // NOI18N
         aboutMenuItem.setText("About");
+        aboutMenuItem.addActionListener(formListener);
         helpMenu.add(aboutMenuItem);
 
         baseMenuBar.add(helpMenu);
@@ -241,23 +298,17 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements java.awt.event.ActionListener {
+    private class FormListener implements java.awt.event.ActionListener, java.awt.event.MouseListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == flatMenuItem) {
-                GsplitBaseFrame.this.flatMenuItemActionPerformed(evt);
-            }
-            else if (evt.getSource() == exitMenuItem) {
-                GsplitBaseFrame.this.exitMenuItemActionPerformed(evt);
-            }
-            else if (evt.getSource() == settingsMenuItem) {
-                GsplitBaseFrame.this.settingsMenuItemActionPerformed(evt);
-            }
-            else if (evt.getSource() == secureSplitMenuItem) {
+            if (evt.getSource() == secureSplitMenuItem) {
                 GsplitBaseFrame.this.secureSplitMenuItemActionPerformed(evt);
             }
             else if (evt.getSource() == secureJoinMenuItem) {
                 GsplitBaseFrame.this.secureJoinMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == flatMenuItem) {
+                GsplitBaseFrame.this.flatMenuItemActionPerformed(evt);
             }
             else if (evt.getSource() == flatJoinMenuItem) {
                 GsplitBaseFrame.this.flatJoinMenuItemActionPerformed(evt);
@@ -273,6 +324,72 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
             }
             else if (evt.getSource() == minimize2trayMenuItem) {
                 GsplitBaseFrame.this.minimize2trayMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == exitMenuItem) {
+                GsplitBaseFrame.this.exitMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == settingsMenuItem) {
+                GsplitBaseFrame.this.settingsMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == showToolbarChkbxMenuItem) {
+                GsplitBaseFrame.this.showToolbarChkbxMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == showStatusbarChkbxMenuItem) {
+                GsplitBaseFrame.this.showStatusbarChkbxMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == showLogMenuItem) {
+                GsplitBaseFrame.this.showLogMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == openLogFileMenuItem) {
+                GsplitBaseFrame.this.openLogFileMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == exploreLogFolderMenuItem) {
+                GsplitBaseFrame.this.exploreLogFolderMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == helpMenuItem) {
+                GsplitBaseFrame.this.helpMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == aboutMenuItem) {
+                GsplitBaseFrame.this.aboutMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == showAllMenuItem) {
+                GsplitBaseFrame.this.showAllMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == minimizeAllMenuItem) {
+                GsplitBaseFrame.this.minimizeAllMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == maximizeAllMenuItem) {
+                GsplitBaseFrame.this.maximizeAllMenuItemActionPerformed(evt);
+            }
+        }
+
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            if (evt.getSource() == windowManagerLabel) {
+                GsplitBaseFrame.this.windowManagerLabelMouseClicked(evt);
+            }
+        }
+
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+            if (evt.getSource() == windowManagerLabel) {
+                GsplitBaseFrame.this.windowManagerLabelMouseEntered(evt);
+            }
+        }
+
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+            if (evt.getSource() == windowManagerLabel) {
+                GsplitBaseFrame.this.windowManagerLabelMouseExited(evt);
+            }
+        }
+
+        public void mousePressed(java.awt.event.MouseEvent evt) {
+            if (evt.getSource() == windowManagerLabel) {
+                GsplitBaseFrame.this.windowManagerLabelMousePressed(evt);
+            }
+        }
+
+        public void mouseReleased(java.awt.event.MouseEvent evt) {
+            if (evt.getSource() == windowManagerLabel) {
+                GsplitBaseFrame.this.windowManagerLabelMouseReleased(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -290,7 +407,16 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsMenuItemActionPerformed
 
     private void secureSplitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secureSplitMenuItemActionPerformed
-        // TODO add your handling code here:
+        if(WINDOW_MANAGER.containsFrame(WindowManager.SECURE_SPLIT_WINDOW_TITLE)){
+            WINDOW_MANAGER.showFrame(WindowManager.SECURE_SPLIT_WINDOW_TITLE);
+            return;
+        }
+        SecureSplitPanel secureSplitPanel = new SecureSplitPanel();
+        BaseInternalFrame baseInternalFrame = new BaseInternalFrame(secureSplitPanel);
+        baseInternalFrame.setTitle(WindowManager.SECURE_SPLIT_WINDOW_TITLE);
+        baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
+				.getResource("/images/arrow-split.png")));
+        WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_secureSplitMenuItemActionPerformed
 
     private void secureJoinMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secureJoinMenuItemActionPerformed
@@ -318,40 +444,73 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
 				.getResource("/images/file-splitter_24x24.png")).getImage());
     }//GEN-LAST:event_minimize2trayMenuItemActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GsplitBaseFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GsplitBaseFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GsplitBaseFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GsplitBaseFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void showToolbarChkbxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showToolbarChkbxMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showToolbarChkbxMenuItemActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GsplitBaseFrame().setVisible(true);
-            }
-        });
-    }
+    private void showStatusbarChkbxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showStatusbarChkbxMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showStatusbarChkbxMenuItemActionPerformed
+
+    private void showLogMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showLogMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showLogMenuItemActionPerformed
+
+    private void openLogFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openLogFileMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_openLogFileMenuItemActionPerformed
+
+    private void exploreLogFolderMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exploreLogFolderMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_exploreLogFolderMenuItemActionPerformed
+
+    private void helpMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_helpMenuItemActionPerformed
+
+    private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_aboutMenuItemActionPerformed
+
+    private void windowManagerLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_windowManagerLabelMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_windowManagerLabelMouseClicked
+
+    private void windowManagerLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_windowManagerLabelMouseEntered
+        windowManagerLabel.setForeground(SplitterConstants.LINK_FG_COLOR);
+        windowManagerLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_windowManagerLabelMouseEntered
+
+    private void windowManagerLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_windowManagerLabelMouseExited
+        windowManagerLabel.setForeground(Color.BLACK);
+        windowManagerLabel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }//GEN-LAST:event_windowManagerLabelMouseExited
+
+    private void windowManagerLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_windowManagerLabelMousePressed
+        if(MouseEvent.BUTTON1 == evt.getButton() && windowManagerLabel.isEnabled()){
+           windowManagerPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY()); 
+        }
+    }//GEN-LAST:event_windowManagerLabelMousePressed
+
+    private void windowManagerLabelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_windowManagerLabelMouseReleased
+        if(MouseEvent.BUTTON1 == evt.getButton() && windowManagerLabel.isEnabled()){
+           windowManagerPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY()); 
+        }
+    }//GEN-LAST:event_windowManagerLabelMouseReleased
+
+    private void showAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAllMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showAllMenuItemActionPerformed
+
+    private void minimizeAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizeAllMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_minimizeAllMenuItemActionPerformed
+
+    private void maximizeAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maximizeAllMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_maximizeAllMenuItemActionPerformed
+
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JDesktopPane baseDesktopPane;
@@ -361,10 +520,12 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     private javax.swing.JToolBar baseToolBar;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
+    private javax.swing.JMenuItem exploreLogFolderMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuItem flatJoinMenuItem;
     private javax.swing.JMenuItem flatMenuItem;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem helpMenuItem;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -372,7 +533,6 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
@@ -382,17 +542,25 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JToolBar.Separator jSeparator7;
     private javax.swing.JToolBar.Separator jSeparator8;
+    private javax.swing.JPopupMenu.Separator jSeparator9;
     private javax.swing.JMenuItem maximizeAllMenuItem;
     private javax.swing.JMenuItem minimize2trayMenuItem;
     private javax.swing.JMenuItem minimizeAllMenuItem;
+    private javax.swing.JMenuItem openLogFileMenuItem;
     private javax.swing.JMenuItem openMdatMenuItem;
     private javax.swing.JMenuItem secureJoinMenuItem;
     private javax.swing.JMenuItem secureSplitMenuItem;
     private javax.swing.JMenuItem settingsMenuItem;
+    private javax.swing.JMenuItem showAllMenuItem;
+    private javax.swing.JMenuItem showLogMenuItem;
+    private javax.swing.JCheckBoxMenuItem showStatusbarChkbxMenuItem;
+    private javax.swing.JCheckBoxMenuItem showToolbarChkbxMenuItem;
     private javax.swing.JLabel statusLabel;
     private javax.swing.JPanel statusPanel;
     private javax.swing.JMenuItem textJoinMenuItem;
     private javax.swing.JMenuItem textSplitMenuItem;
+    private javax.swing.JMenu viewMenu;
     private javax.swing.JLabel windowManagerLabel;
+    private javax.swing.JPopupMenu windowManagerPopupMenu;
     // End of variables declaration//GEN-END:variables
 }
