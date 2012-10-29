@@ -10,6 +10,7 @@ import javax.swing.UIManager;
 import net.sf.tools.gsplit.core.FileAutoJoiner;
 import net.sf.tools.gsplit.core.FileSplitter;
 import net.sf.tools.gsplit.ui.GSplitFrame;
+import net.sf.tools.gsplit.ui.GsplitBaseFrame;
 
 
 /**
@@ -29,7 +30,8 @@ public class GreenSplitter {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		new GSplitFrame().setVisible(true);
+		//new GSplitFrame().setVisible(true);
+                new GsplitBaseFrame().setVisible(true);
 	}
 	
 	public static void test() {

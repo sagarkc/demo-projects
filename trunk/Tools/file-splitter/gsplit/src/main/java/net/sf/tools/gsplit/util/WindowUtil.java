@@ -3,11 +3,21 @@
  */
 package net.sf.tools.gsplit.util;
 
+import java.awt.AWTException;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Image;
+import java.awt.MenuItem;
 import java.awt.Point;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
 import java.awt.Toolkit;
+import java.awt.TrayIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JDialog;
 
@@ -219,4 +229,88 @@ public final class WindowUtil {
 		}
 	}
 
+        
+        public static TrayIcon minimizeToTray(final Frame frame, final Image image) {
+		final PopupMenu popup = new PopupMenu();
+		final TrayIcon trayIcon = new TrayIcon(image, frame.getTitle(), popup);
+
+		ActionListener actionListener = new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				trayIcon.displayMessage("Action Event",
+						"An Action Event Has Been Performed!",
+						TrayIcon.MessageType.INFO);
+			}
+		};
+		if (SystemTray.isSupported()) {
+			// get the SystemTray instance
+			final SystemTray tray = SystemTray.getSystemTray();
+			MouseListener mouseListener = new MouseListener() {
+
+				public void mouseClicked(MouseEvent e) {
+					if(MouseEvent.BUTTON1 == e.getButton() && e.getClickCount() == 2){
+						tray.remove(trayIcon);
+						frame.setVisible(true);
+					}
+				}
+
+				public void mouseEntered(MouseEvent e) {
+					System.out.println("Tray Icon - Mouse entered!");
+				}
+
+				public void mouseExited(MouseEvent e) {
+					System.out.println("Tray Icon - Mouse exited!");
+				}
+
+				public void mousePressed(MouseEvent e) {
+					System.out.println("Tray Icon - Mouse pressed!");
+				}
+
+				public void mouseReleased(MouseEvent e) {
+					System.out.println("Tray Icon - Mouse released!");
+				}
+			};
+
+			ActionListener exitListener = new ActionListener() {
+
+				public void actionPerformed(ActionEvent e) {
+					System.out.println("Exiting...");
+					System.exit(0);
+				}
+			};
+			
+
+			MenuItem restoreItem = new MenuItem("Restore");
+			restoreItem.addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						tray.remove(trayIcon);
+						frame.setVisible(true);
+					}
+				}
+			);
+			popup.add(restoreItem);
+			
+			MenuItem exitItem = new MenuItem("Exit");
+			exitItem.addActionListener(exitListener);
+			popup.add(exitItem);
+
+			trayIcon.setImageAutoSize(true);
+			trayIcon.addActionListener(actionListener);
+			trayIcon.addMouseListener(mouseListener);
+
+			try {
+				tray.add(trayIcon);
+				frame.setVisible(false);
+			} catch (AWTException e) {
+				System.err.println("TrayIcon could not be added.");
+			}
+
+			return trayIcon;
+		} else {
+			// disable tray option in your application or
+			// perform other actions
+		}
+		return null;
+	}
 }
