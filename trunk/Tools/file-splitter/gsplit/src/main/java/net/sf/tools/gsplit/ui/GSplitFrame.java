@@ -866,7 +866,7 @@ public class GSplitFrame extends JFrame implements PropertyChangeListener {
 				System.exit(0);
 			}
 			if(evt.getSource().equals(browseSplitterSourceButton)){
-				File file = FileBrowserUtil.openSingleFile(GSplitFrame.this, null, false, context.lastOpenedPath);
+				File file = FileBrowserUtil.openSingleFile(GSplitFrame.this, null, false, context.lastAccessedPathName);
 				if(null != file){
 					splitterSourceTextField.setText(file.getAbsolutePath());
 					
@@ -880,14 +880,14 @@ public class GSplitFrame extends JFrame implements PropertyChangeListener {
 					} else if(size >= SplitterConstants.GB){
 						fileSizeLabel.setText("Size: "+file.length()/SplitterConstants.GB + SplitterConstants.GB_TEXT); 
 					}
-					context.lastOpenedPath = file.getAbsolutePath();
+					context.lastAccessedPathName = file.getAbsolutePath();
 				}
 			}
 			if(evt.getSource().equals(browseSplitterTargetButton)){
-				File dir = FileBrowserUtil.openSingleFile(GSplitFrame.this, null, true, context.lastOpenedPath);
+				File dir = FileBrowserUtil.openSingleFile(GSplitFrame.this, null, true, context.lastAccessedPathName);
 				if(null != dir){
 					splitterTargetTextField.setText(dir.getAbsolutePath());
-					context.lastOpenedPath = dir.getAbsolutePath();
+					context.lastAccessedPathName = dir.getAbsolutePath();
 				}
 			}
 			if(evt.getSource().equals(splitterStartButton)){
@@ -900,17 +900,17 @@ public class GSplitFrame extends JFrame implements PropertyChangeListener {
 			if(evt.getSource().equals(browseAutoJoinSourceButton)){
 				File file = FileBrowserUtil.openSingleFile(GSplitFrame.this, 
 						new ExtensionFileFilter(new String[]{".mdat"}, "Splitter Metadata file")
-						, false, context.lastOpenedPath, new MetaDataFileView());
+						, false, context.lastAccessedPathName, new MetaDataFileView());
 				if(null != file){
 					autoJoinSourceTextField.setText(file.getAbsolutePath());
-					context.lastOpenedPath = file.getAbsolutePath();
+					context.lastAccessedPathName = file.getAbsolutePath();
 				}
 			}
 			if(evt.getSource().equals(browseAutoJoinTargetButton)){
-				File file = FileBrowserUtil.openSingleFile(GSplitFrame.this, null, false, context.lastOpenedPath);
+				File file = FileBrowserUtil.openSingleFile(GSplitFrame.this, null, false, context.lastAccessedPathName);
 				if(null != file){
 					autoJoinTargetTextField.setText(file.getAbsolutePath());
-					context.lastOpenedPath = file.getAbsolutePath();
+					context.lastAccessedPathName = file.getAbsolutePath();
 				}
 			}
 			if(evt.getSource().equals(autoJoinStartButton)){

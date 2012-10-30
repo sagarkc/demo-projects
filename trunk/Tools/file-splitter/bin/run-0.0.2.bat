@@ -1,0 +1,1 @@
+start javaw -jar .\gsplit-0.0.2.jar

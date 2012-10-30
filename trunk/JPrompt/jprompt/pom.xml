@@ -85,7 +85,7 @@
 	
 	<properties>
 		<project.title>JPrompt</project.title>
-		<project.home>D:/SVN_HOME/demo-projects/trunk/JPrompt</project.home>
+		<project.home>D:/SVN_HOME/demo-projects/JPrompt</project.home>
 		<release.version>1.0-BETA-1</release.version>
 		<setup.dir>${project.home}/setup</setup.dir>
 		<libs.dir>${setup.dir}/libs</libs.dir>
