@@ -15,6 +15,7 @@ import org.apache.log4j.PropertyConfigurator;
 public final class SplitterContext implements Serializable {
 
     private static SplitterContext context;
+    
 
     private SplitterContext() {
         
@@ -40,8 +41,8 @@ public final class SplitterContext implements Serializable {
         log4jProperties.setProperty("log4j.rootLogger", "DEBUG, APP_LOG");
         log4jProperties.setProperty("log4j.appender.APP_LOG", "org.apache.log4j.RollingFileAppender");
         log4jProperties.setProperty("log4j.appender.APP_LOG.layout", "org.apache.log4j.PatternLayout");
-        log4jProperties.setProperty("log4j.appender.APP_LOG.layout.ConversionPattern", "%d{dd-MMM-yyyy HH:mm:ss.SSS} %-5p %C{1}: %m%n");
-        log4jProperties.setProperty("log4j.appender.APP_LOG.file", "./logs/gsplit.log");
+        log4jProperties.setProperty("log4j.appender.APP_LOG.layout.ConversionPattern", "%d{dd/MM/yy HH:mm:ss} %-5p %C{1}: %m%n");
+        log4jProperties.setProperty("log4j.appender.APP_LOG.file", SplitterConstants.LOG_FILE_NAME);
         log4jProperties.setProperty("log4j.appender.APP_LOG.MaxFileSize", "10MB");
         log4jProperties.setProperty("log4j.appender.APP_LOG.maxBackupIndex", "10");
         
@@ -59,6 +60,7 @@ public final class SplitterContext implements Serializable {
     }
     
     public void initContext() {
+        
         // load context from file
         initLogger();
     }
