@@ -9,6 +9,8 @@ import java.beans.PropertyVetoException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
@@ -25,11 +27,23 @@ public final class WindowManager implements InternalFrameListener {
 
     protected static final String SECURE_SPLIT_WINDOW_TITLE = "Secure Split";
     protected static final String SECURE_JOIN_WINDOW_TITLE = "Secure Join";
+    protected static final String FLAT_SPLIT_WINDOW_TITLE = "Flat Split";
+    protected static final String FLAT_JOIN_WINDOW_TITLE = "Flat Join";
+    protected static final String TEXT_SPLIT_WINDOW_TITLE = "Text Split";
+    protected static final String TEXT_JOIN_WINDOW_TITLE = "Text Join";
+    protected static final String PDF_SPLIT_WINDOW_TITLE = "PDF Split";
+    protected static final String PDF_JOIN_WINDOW_TITLE = "PDF Join";
+    protected static final String XML_SPLIT_WINDOW_TITLE = "XML Split";
+    protected static final String XML_JOIN_WINDOW_TITLE = "XML Join";
+    
+    protected static final String SHOW_LOG_WINDOW_TITLE = "Show Log";
+    
     protected static final int FRAME_DISTANCE = 10;
     protected static final int FRAME_X = 10;
     protected static final int FRAME_Y = 10;
     private static int frameCount = 0;
     private static WindowManager manager;
+
 
     private WindowManager() {
         internalFrameMap = new HashMap<String, JInternalFrame>();
@@ -103,6 +117,12 @@ public final class WindowManager implements InternalFrameListener {
         JInternalFrame iFrame = e.getInternalFrame();
         if (null != iFrame) {
             iFrame.setVisible(true);
+            iFrame.setEnabled(true);
+            try {
+                iFrame.setSelected(true);
+            } catch (PropertyVetoException ex) {
+                
+            }
             hiddenFrameMap.remove(iFrame.getTitle());
             removePopupMenu(iFrame.getTitle());
         }
@@ -126,6 +146,12 @@ public final class WindowManager implements InternalFrameListener {
                     if (iFrame.isIcon()) {
                         iFrame.show();
                         baseDesktopPane.getDesktopManager().deiconifyFrame(iFrame);
+                        baseDesktopPane.getDesktopManager().activateFrame(iFrame);
+                        try {
+                            iFrame.setSelected(true);
+                        } catch (PropertyVetoException ex) {
+                            
+                        }
                         iFrame.updateUI();
                     }
                     baseDesktopPane.moveToFront(iFrame);
@@ -268,6 +294,28 @@ public final class WindowManager implements InternalFrameListener {
             }
             y += h; // start the next row
             x = 0;
+        }
+    }
+
+    public void showAllFrames() {
+        JInternalFrame[] frames = baseDesktopPane.getAllFrames();
+        if (null != frames && frames.length > 0) {
+            for (int i = 0; i < frames.length; i++) {
+                JInternalFrame iFrame = frames[i];
+                if (iFrame.isIcon()) {
+                    iFrame.show();
+                    baseDesktopPane.getDesktopManager().deiconifyFrame(iFrame);
+                    baseDesktopPane.getDesktopManager().activateFrame(iFrame);
+                    iFrame.updateUI();
+                    hiddenFrameMap.remove(iFrame.getTitle());
+                    removePopupMenu(iFrame.getTitle());
+                    try {
+                        iFrame.setSelected(true);
+                    } catch (PropertyVetoException ex) {
+
+                    }
+                }
+            }
         }
     }
 }

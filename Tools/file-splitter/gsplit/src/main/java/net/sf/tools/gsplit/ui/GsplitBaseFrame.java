@@ -9,11 +9,20 @@ import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import net.sf.tools.gsplit.ResourceBundleManager;
 import net.sf.tools.gsplit.SplitterConstants;
 import net.sf.tools.gsplit.SplitterContext;
+import net.sf.tools.gsplit.ui.core.FlatJoinPanel;
+import net.sf.tools.gsplit.ui.core.FlatSplitPanel;
+import net.sf.tools.gsplit.ui.core.PdfJointPanel;
+import net.sf.tools.gsplit.ui.core.PdfSplitPanel;
 import net.sf.tools.gsplit.ui.core.SecureJoinPanel;
 import net.sf.tools.gsplit.ui.core.SecureSplitPanel;
+import net.sf.tools.gsplit.ui.core.TextJointPanel;
+import net.sf.tools.gsplit.ui.core.TextSplitPanel;
+import net.sf.tools.gsplit.ui.core.XmlJoinPanel;
+import net.sf.tools.gsplit.ui.core.XmlSplitPanel;
 import net.sf.tools.gsplit.util.WindowUtil;
 
 /**
@@ -60,6 +69,7 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         windowManagerPopupMenu = new javax.swing.JPopupMenu();
         showAllMenuItem = new javax.swing.JMenuItem();
         openMdatMenuItem = new javax.swing.JMenuItem();
+        openLogFileMenuItem = new javax.swing.JMenuItem();
         baseToolBar = new javax.swing.JToolBar();
         secureSplitButton = new javax.swing.JButton();
         secureJoinButton = new javax.swing.JButton();
@@ -84,7 +94,7 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         secureSplitMenuItem = new javax.swing.JMenuItem();
         secureJoinMenuItem = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        flatMenuItem = new javax.swing.JMenuItem();
+        flatSplitMenuItem = new javax.swing.JMenuItem();
         flatJoinMenuItem = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         textMenu = new javax.swing.JMenu();
@@ -106,7 +116,6 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         showStatusbarChkbxMenuItem = new javax.swing.JCheckBoxMenuItem();
         jSeparator9 = new javax.swing.JPopupMenu.Separator();
         showLogMenuItem = new javax.swing.JMenuItem();
-        openLogFileMenuItem = new javax.swing.JMenuItem();
         exploreLogFolderMenuItem = new javax.swing.JMenuItem();
         jSeparator10 = new javax.swing.JPopupMenu.Separator();
         windowsMenu = new javax.swing.JMenu();
@@ -135,6 +144,10 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         openMdatMenuItem.setText("Open Metadata file");
         openMdatMenuItem.addActionListener(formListener);
 
+        openLogFileMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/folder_open_document_text.png"))); // NOI18N
+        openLogFileMenuItem.setText("Open Log File");
+        openLogFileMenuItem.addActionListener(formListener);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         baseToolBar.setFloatable(false);
@@ -144,12 +157,14 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         secureSplitButton.setFocusable(false);
         secureSplitButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         secureSplitButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        secureSplitButton.addActionListener(formListener);
         baseToolBar.add(secureSplitButton);
 
         secureJoinButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/arrow-join.png"))); // NOI18N
         secureJoinButton.setFocusable(false);
         secureJoinButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         secureJoinButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        secureJoinButton.addActionListener(formListener);
         baseToolBar.add(secureJoinButton);
         baseToolBar.add(jSeparator6);
 
@@ -204,12 +219,14 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         jLabel4.setText("Current Process ");
         baseStatusBar.add(jLabel4);
 
+        jProgressBar2.setEnabled(false);
         jProgressBar2.setMaximumSize(new java.awt.Dimension(160, 19));
         jProgressBar2.setMinimumSize(new java.awt.Dimension(160, 19));
         baseStatusBar.add(jProgressBar2);
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/stop.png"))); // NOI18N
         jButton6.setToolTipText("Stop");
+        jButton6.setEnabled(false);
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -237,9 +254,9 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         fileMenu.add(secureJoinMenuItem);
         fileMenu.add(jSeparator1);
 
-        flatMenuItem.setText("Flat Split");
-        flatMenuItem.addActionListener(formListener);
-        fileMenu.add(flatMenuItem);
+        flatSplitMenuItem.setText("Flat Split");
+        flatSplitMenuItem.addActionListener(formListener);
+        fileMenu.add(flatSplitMenuItem);
 
         flatJoinMenuItem.setText("Flat Join");
         flatJoinMenuItem.addActionListener(formListener);
@@ -327,11 +344,6 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         showLogMenuItem.addActionListener(formListener);
         viewMenu.add(showLogMenuItem);
 
-        openLogFileMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/folder_open_document_text.png"))); // NOI18N
-        openLogFileMenuItem.setText("Open Log File");
-        openLogFileMenuItem.addActionListener(formListener);
-        viewMenu.add(openLogFileMenuItem);
-
         exploreLogFolderMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/folder_explore.png"))); // NOI18N
         exploreLogFolderMenuItem.setText("Open Log Folder");
         exploreLogFolderMenuItem.addActionListener(formListener);
@@ -389,17 +401,17 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
             else if (evt.getSource() == showAllMenuItem) {
                 GsplitBaseFrame.this.showAllMenuItemActionPerformed(evt);
             }
+            else if (evt.getSource() == openMdatMenuItem) {
+                GsplitBaseFrame.this.openMdatMenuItemActionPerformed(evt);
+            }
             else if (evt.getSource() == secureSplitMenuItem) {
                 GsplitBaseFrame.this.secureSplitMenuItemActionPerformed(evt);
             }
             else if (evt.getSource() == secureJoinMenuItem) {
                 GsplitBaseFrame.this.secureJoinMenuItemActionPerformed(evt);
             }
-            else if (evt.getSource() == openMdatMenuItem) {
-                GsplitBaseFrame.this.openMdatMenuItemActionPerformed(evt);
-            }
-            else if (evt.getSource() == flatMenuItem) {
-                GsplitBaseFrame.this.flatMenuItemActionPerformed(evt);
+            else if (evt.getSource() == flatSplitMenuItem) {
+                GsplitBaseFrame.this.flatSplitMenuItemActionPerformed(evt);
             }
             else if (evt.getSource() == flatJoinMenuItem) {
                 GsplitBaseFrame.this.flatJoinMenuItemActionPerformed(evt);
@@ -449,14 +461,20 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
             else if (evt.getSource() == windowsTilesMenuItem) {
                 GsplitBaseFrame.this.windowsTilesMenuItemActionPerformed(evt);
             }
+            else if (evt.getSource() == windowsCascadeMenuItem) {
+                GsplitBaseFrame.this.windowsCascadeMenuItemActionPerformed(evt);
+            }
             else if (evt.getSource() == helpMenuItem) {
                 GsplitBaseFrame.this.helpMenuItemActionPerformed(evt);
             }
             else if (evt.getSource() == aboutMenuItem) {
                 GsplitBaseFrame.this.aboutMenuItemActionPerformed(evt);
             }
-            else if (evt.getSource() == windowsCascadeMenuItem) {
-                GsplitBaseFrame.this.windowsCascadeMenuItemActionPerformed(evt);
+            else if (evt.getSource() == secureSplitButton) {
+                GsplitBaseFrame.this.secureSplitButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == secureJoinButton) {
+                GsplitBaseFrame.this.secureJoinButtonActionPerformed(evt);
             }
         }
 
@@ -491,9 +509,18 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         }
     }// </editor-fold>//GEN-END:initComponents
 
-    private void flatMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flatMenuItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_flatMenuItemActionPerformed
+    private void flatSplitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flatSplitMenuItemActionPerformed
+        if(WINDOW_MANAGER.containsFrame(WindowManager.FLAT_SPLIT_WINDOW_TITLE)){
+            WINDOW_MANAGER.showFrame(WindowManager.FLAT_SPLIT_WINDOW_TITLE);
+            return;
+        }
+        FlatSplitPanel flatSplitPanel = new FlatSplitPanel();
+        BaseInternalFrame baseInternalFrame = new BaseInternalFrame(flatSplitPanel);
+        baseInternalFrame.setTitle(WindowManager.FLAT_SPLIT_WINDOW_TITLE);
+        baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
+				.getResource("/images/arrow-split.png")));
+        WINDOW_MANAGER.addIFrame(baseInternalFrame);
+    }//GEN-LAST:event_flatSplitMenuItemActionPerformed
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         System.exit(0);
@@ -530,15 +557,42 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_secureJoinMenuItemActionPerformed
 
     private void flatJoinMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flatJoinMenuItemActionPerformed
-        // TODO add your handling code here:
+        if(WINDOW_MANAGER.containsFrame(WindowManager.FLAT_JOIN_WINDOW_TITLE)){
+            WINDOW_MANAGER.showFrame(WindowManager.FLAT_JOIN_WINDOW_TITLE);
+            return;
+        }
+        FlatJoinPanel panel = new FlatJoinPanel();
+        BaseInternalFrame baseInternalFrame = new BaseInternalFrame(panel);
+        baseInternalFrame.setTitle(WindowManager.FLAT_JOIN_WINDOW_TITLE);
+        baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
+				.getResource("/images/arrow-join.png")));
+        WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_flatJoinMenuItemActionPerformed
 
     private void textSplitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textSplitMenuItemActionPerformed
-        // TODO add your handling code here:
+        if(WINDOW_MANAGER.containsFrame(WindowManager.TEXT_SPLIT_WINDOW_TITLE)){
+            WINDOW_MANAGER.showFrame(WindowManager.TEXT_SPLIT_WINDOW_TITLE);
+            return;
+        }
+        TextSplitPanel panel = new TextSplitPanel();
+        BaseInternalFrame baseInternalFrame = new BaseInternalFrame(panel);
+        baseInternalFrame.setTitle(WindowManager.TEXT_SPLIT_WINDOW_TITLE);
+        baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
+				.getResource("/images/arrow-split.png")));
+        WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_textSplitMenuItemActionPerformed
 
     private void textJoinMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textJoinMenuItemActionPerformed
-        // TODO add your handling code here:
+        if(WINDOW_MANAGER.containsFrame(WindowManager.TEXT_JOIN_WINDOW_TITLE)){
+            WINDOW_MANAGER.showFrame(WindowManager.TEXT_JOIN_WINDOW_TITLE);
+            return;
+        }
+        TextJointPanel panel = new TextJointPanel();
+        BaseInternalFrame baseInternalFrame = new BaseInternalFrame(panel);
+        baseInternalFrame.setTitle(WindowManager.TEXT_JOIN_WINDOW_TITLE);
+        baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
+				.getResource("/images/arrow-join.png")));
+        WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_textJoinMenuItemActionPerformed
 
     private void openMdatMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMdatMenuItemActionPerformed
@@ -567,7 +621,16 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_showStatusbarChkbxMenuItemActionPerformed
 
     private void showLogMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showLogMenuItemActionPerformed
-        
+        if(WINDOW_MANAGER.containsFrame(WindowManager.SHOW_LOG_WINDOW_TITLE)){
+            WINDOW_MANAGER.showFrame(WindowManager.SHOW_LOG_WINDOW_TITLE);
+            return;
+        }
+        LogViewerPanel logViewerPanel = new LogViewerPanel();
+        BaseInternalFrame baseInternalFrame = new BaseInternalFrame(logViewerPanel);
+        baseInternalFrame.setTitle(WindowManager.SHOW_LOG_WINDOW_TITLE);
+        baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
+				.getResource("/images/file_extension_log.png")));
+        WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_showLogMenuItemActionPerformed
 
     private void openLogFileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openLogFileMenuItemActionPerformed
@@ -613,7 +676,9 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_windowManagerLabelMouseReleased
 
     private void showAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAllMenuItemActionPerformed
-        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "test");
+        WINDOW_MANAGER.showAllFrames();
+        
     }//GEN-LAST:event_showAllMenuItemActionPerformed
 
     private void minimizeAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizeAllMenuItemActionPerformed
@@ -629,24 +694,68 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_windowsTilesMenuItemActionPerformed
 
     private void pdfSplitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdfSplitMenuItemActionPerformed
-        // TODO add your handling code here:
+        if(WINDOW_MANAGER.containsFrame(WindowManager.PDF_SPLIT_WINDOW_TITLE)){
+            WINDOW_MANAGER.showFrame(WindowManager.PDF_SPLIT_WINDOW_TITLE);
+            return;
+        }
+        PdfSplitPanel panel = new PdfSplitPanel();
+        BaseInternalFrame baseInternalFrame = new BaseInternalFrame(panel);
+        baseInternalFrame.setTitle(WindowManager.PDF_SPLIT_WINDOW_TITLE);
+        baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
+				.getResource("/images/arrow-split.png")));
+        WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_pdfSplitMenuItemActionPerformed
 
     private void pdfJoinMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdfJoinMenuItemActionPerformed
-        // TODO add your handling code here:
+        if(WINDOW_MANAGER.containsFrame(WindowManager.PDF_JOIN_WINDOW_TITLE)){
+            WINDOW_MANAGER.showFrame(WindowManager.PDF_JOIN_WINDOW_TITLE);
+            return;
+        }
+        PdfJointPanel panel = new PdfJointPanel();
+        BaseInternalFrame baseInternalFrame = new BaseInternalFrame(panel);
+        baseInternalFrame.setTitle(WindowManager.PDF_JOIN_WINDOW_TITLE);
+        baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
+				.getResource("/images/arrow-join.png")));
+        WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_pdfJoinMenuItemActionPerformed
 
     private void xmlSplitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xmlSplitMenuItemActionPerformed
-        // TODO add your handling code here:
+        if(WINDOW_MANAGER.containsFrame(WindowManager.XML_SPLIT_WINDOW_TITLE)){
+            WINDOW_MANAGER.showFrame(WindowManager.XML_SPLIT_WINDOW_TITLE);
+            return;
+        }
+        XmlSplitPanel panel = new XmlSplitPanel();
+        BaseInternalFrame baseInternalFrame = new BaseInternalFrame(panel);
+        baseInternalFrame.setTitle(WindowManager.XML_SPLIT_WINDOW_TITLE);
+        baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
+				.getResource("/images/arrow-split.png")));
+        WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_xmlSplitMenuItemActionPerformed
 
     private void xmlJoinMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xmlJoinMenuItemActionPerformed
-        // TODO add your handling code here:
+        if(WINDOW_MANAGER.containsFrame(WindowManager.XML_JOIN_WINDOW_TITLE)){
+            WINDOW_MANAGER.showFrame(WindowManager.XML_JOIN_WINDOW_TITLE);
+            return;
+        }
+        XmlJoinPanel panel = new XmlJoinPanel();
+        BaseInternalFrame baseInternalFrame = new BaseInternalFrame(panel);
+        baseInternalFrame.setTitle(WindowManager.XML_JOIN_WINDOW_TITLE);
+        baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
+				.getResource("/images/arrow-join.png")));
+        WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_xmlJoinMenuItemActionPerformed
 
     private void windowsCascadeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windowsCascadeMenuItemActionPerformed
         WINDOW_MANAGER.cascadeWindows(baseDesktopPane);
     }//GEN-LAST:event_windowsCascadeMenuItemActionPerformed
+
+    private void secureSplitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secureSplitButtonActionPerformed
+        secureSplitMenuItemActionPerformed(evt);
+    }//GEN-LAST:event_secureSplitButtonActionPerformed
+
+    private void secureJoinButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secureJoinButtonActionPerformed
+        secureJoinMenuItemActionPerformed(evt);
+    }//GEN-LAST:event_secureJoinButtonActionPerformed
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -663,8 +772,8 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     private javax.swing.JMenu fileMenu;
     private javax.swing.JButton flatJoinButton;
     private javax.swing.JMenuItem flatJoinMenuItem;
-    private javax.swing.JMenuItem flatMenuItem;
     private javax.swing.JButton flatSplitButton;
+    private javax.swing.JMenuItem flatSplitMenuItem;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem helpMenuItem;
     private javax.swing.JButton jButton6;
