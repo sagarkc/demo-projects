@@ -9,6 +9,8 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import net.sf.tools.gsplit.SplitterConstants;
 import net.sf.tools.gsplit.SplitterContext;
@@ -16,6 +18,7 @@ import net.sf.tools.gsplit.WorkerTaskConstants;
 import net.sf.tools.gsplit.core.SecureFileSplitter;
 import net.sf.tools.gsplit.ui.GSplitFrame;
 import net.sf.tools.gsplit.util.FileBrowserUtil;
+import net.sf.tools.gsplit.util.StringUtil;
 
 /**
  *
@@ -25,11 +28,50 @@ public class SecureSplitPanel extends javax.swing.JPanel implements PropertyChan
 
     private static SplitterContext context = SplitterContext.getContext();
     private SecureFileSplitter fileSplitter;
-	/**
+
+    /**
      * Creates new form SecureSplitPanel
      */
     public SecureSplitPanel() {
         initComponents();
+        splitterProgressBar.setVisible(false);
+        splitterStopButton.setVisible(false);
+        splitterStartButton.setEnabled(false);
+        splitterSourceTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void removeUpdate(DocumentEvent e) {
+                updateSplitterStartButton();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                updateSplitterStartButton();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                updateSplitterStartButton();
+            }
+        });
+        splitterTargetTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void removeUpdate(DocumentEvent e) {
+                updateSplitterStartButton();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                updateSplitterStartButton();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                updateSplitterStartButton();
+            }
+        });
+    }
+
+    private void updateSplitterStartButton() {
+        if (StringUtil.hasValidContent(splitterSourceTextField.getText())
+                && StringUtil.hasValidContent(splitterTargetTextField.getText())) {
+            splitterStartButton.setEnabled(true);
+        } else {
+            splitterStartButton.setEnabled(false);
+        }
     }
 
     /**
@@ -163,8 +205,9 @@ public class SecureSplitPanel extends javax.swing.JPanel implements PropertyChan
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         splitterPanel.add(browseSplitterTargetButton, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
@@ -280,8 +323,8 @@ public class SecureSplitPanel extends javax.swing.JPanel implements PropertyChan
     }// </editor-fold>//GEN-END:initComponents
 
     private void browseSplitterSourceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseSplitterSourceButtonActionPerformed
-    	File file = FileBrowserUtil.openSingleFile(this, null, false,
-                context .getAppSettings().getLastAccessedPathName());
+        File file = FileBrowserUtil.openSingleFile(this, null, false,
+                context.getAppSettings().getLastAccessedPathName());
         if (null != file) {
             splitterSourceTextField.setText(file.getAbsolutePath());
 
@@ -300,7 +343,7 @@ public class SecureSplitPanel extends javax.swing.JPanel implements PropertyChan
     }//GEN-LAST:event_browseSplitterSourceButtonActionPerformed
 
     private void browseSplitterTargetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseSplitterTargetButtonActionPerformed
-    	File dir = FileBrowserUtil.openSingleFile(this, null, true,
+        File dir = FileBrowserUtil.openSingleFile(this, null, true,
                 context.getAppSettings().getLastAccessedPathName());
         if (null != dir) {
             splitterTargetTextField.setText(dir.getAbsolutePath());
@@ -309,16 +352,16 @@ public class SecureSplitPanel extends javax.swing.JPanel implements PropertyChan
     }//GEN-LAST:event_browseSplitterTargetButtonActionPerformed
 
     private void sizeRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeRadioButtonActionPerformed
-    	if(sizeRadioButton.isSelected()){
-        	sizeOrPartLabel.setText("Maximum Part Size");
-        	sizeComboBox.setVisible(true);
+        if (sizeRadioButton.isSelected()) {
+            sizeOrPartLabel.setText("Maximum Part Size");
+            sizeComboBox.setVisible(true);
         }
     }//GEN-LAST:event_sizeRadioButtonActionPerformed
 
     private void partsRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_partsRadioButtonActionPerformed
-        if(partsRadioButton.isSelected()){
-        	sizeOrPartLabel.setText("Maximum Part Number");
-        	sizeComboBox.setVisible(false);
+        if (partsRadioButton.isSelected()) {
+            sizeOrPartLabel.setText("Maximum Part Number");
+            sizeComboBox.setVisible(false);
         }
     }//GEN-LAST:event_partsRadioButtonActionPerformed
 
@@ -330,7 +373,6 @@ public class SecureSplitPanel extends javax.swing.JPanel implements PropertyChan
         startSplitter();
     }//GEN-LAST:event_splitterStartButtonActionPerformed
 
-    
     private void startSplitter() {
         synchronized (this) {
             fileSplitter = new SecureFileSplitter(splitterSourceTextField.getText(),
@@ -339,9 +381,9 @@ public class SecureSplitPanel extends javax.swing.JPanel implements PropertyChan
             long blockSize = 0;
             int maxPartCount = 0;
             try {
-            	if(sizeRadioButton.isSelected()){
-            		fileSplitter.setSplitByPartCount(false);
-            		int multiplier = 1;
+                if (sizeRadioButton.isSelected()) {
+                    fileSplitter.setSplitByPartCount(false);
+                    int multiplier = 1;
                     String mul = sizeComboBox.getSelectedItem().toString();
                     if (SplitterConstants.KB_TEXT.equals(mul)) {
                         multiplier = SplitterConstants.KB;
@@ -351,12 +393,12 @@ public class SecureSplitPanel extends javax.swing.JPanel implements PropertyChan
                         multiplier = SplitterConstants.GB;
                     }
                     blockSize = Integer.parseInt(sizeOrPartTextField.getText()) * multiplier;
-            	} else if(partsRadioButton.isSelected()){
-            		fileSplitter.setSplitByPartCount(true);
-            		maxPartCount = Integer.parseInt(sizeOrPartTextField.getText());
-            	}
-            	
-                
+                } else if (partsRadioButton.isSelected()) {
+                    fileSplitter.setSplitByPartCount(true);
+                    maxPartCount = Integer.parseInt(sizeOrPartTextField.getText());
+                }
+
+
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -373,7 +415,7 @@ public class SecureSplitPanel extends javax.swing.JPanel implements PropertyChan
             fileSplitter.execute();
         }
     }
-    
+
     private void stopSplitter() {
         if (null != fileSplitter) {
             fileSplitter.cancel(true);
@@ -385,7 +427,7 @@ public class SecureSplitPanel extends javax.swing.JPanel implements PropertyChan
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-    	String propertyName = evt.getPropertyName();
+        String propertyName = evt.getPropertyName();
         if (evt.getSource().equals(fileSplitter)) {
             if (WorkerTaskConstants.TASK_STATUS_DONE.equals(propertyName)) {
                 Object newValue = evt.getNewValue();
@@ -441,8 +483,6 @@ public class SecureSplitPanel extends javax.swing.JPanel implements PropertyChan
             }
         }
     }
-    
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton browseSplitterSourceButton;
     private javax.swing.JButton browseSplitterTargetButton;
