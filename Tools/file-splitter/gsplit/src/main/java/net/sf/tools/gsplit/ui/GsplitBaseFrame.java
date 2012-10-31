@@ -6,6 +6,8 @@ package net.sf.tools.gsplit.ui;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
@@ -19,6 +21,7 @@ import net.sf.tools.gsplit.ui.core.PdfJointPanel;
 import net.sf.tools.gsplit.ui.core.PdfSplitPanel;
 import net.sf.tools.gsplit.ui.core.SecureJoinPanel;
 import net.sf.tools.gsplit.ui.core.SecureSplitPanel;
+import net.sf.tools.gsplit.ui.core.SettingsPanel;
 import net.sf.tools.gsplit.ui.core.TextJointPanel;
 import net.sf.tools.gsplit.ui.core.TextSplitPanel;
 import net.sf.tools.gsplit.ui.core.XmlJoinPanel;
@@ -34,7 +37,7 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     private static final WindowManager WINDOW_MANAGER = WindowManager.getManager();
     private static final SplitterContext context = SplitterContext.getContext();
     private ResourceBundle bundle = ResourceBundleManager.getBundleManager().getResourceBundle();
-    
+
     /**
      * Creates new form GsplitBaseFrame
      */
@@ -148,7 +151,8 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         openLogFileMenuItem.setText("Open Log File");
         openLogFileMenuItem.addActionListener(formListener);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(formListener);
 
         baseToolBar.setFloatable(false);
         baseToolBar.setRollover(true);
@@ -185,6 +189,7 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         editSettingsButton.setFocusable(false);
         editSettingsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         editSettingsButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        editSettingsButton.addActionListener(formListener);
         baseToolBar.add(editSettingsButton);
 
         getContentPane().add(baseToolBar, java.awt.BorderLayout.PAGE_START);
@@ -389,10 +394,16 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements java.awt.event.ActionListener, java.awt.event.MouseListener {
+    private class FormListener implements java.awt.event.ActionListener, java.awt.event.MouseListener, java.awt.event.WindowListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == minimizeAllMenuItem) {
+            if (evt.getSource() == secureSplitButton) {
+                GsplitBaseFrame.this.secureSplitButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == secureJoinButton) {
+                GsplitBaseFrame.this.secureJoinButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == minimizeAllMenuItem) {
                 GsplitBaseFrame.this.minimizeAllMenuItemActionPerformed(evt);
             }
             else if (evt.getSource() == maximizeAllMenuItem) {
@@ -403,6 +414,9 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
             }
             else if (evt.getSource() == openMdatMenuItem) {
                 GsplitBaseFrame.this.openMdatMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == openLogFileMenuItem) {
+                GsplitBaseFrame.this.openLogFileMenuItemActionPerformed(evt);
             }
             else if (evt.getSource() == secureSplitMenuItem) {
                 GsplitBaseFrame.this.secureSplitMenuItemActionPerformed(evt);
@@ -452,9 +466,6 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
             else if (evt.getSource() == showLogMenuItem) {
                 GsplitBaseFrame.this.showLogMenuItemActionPerformed(evt);
             }
-            else if (evt.getSource() == openLogFileMenuItem) {
-                GsplitBaseFrame.this.openLogFileMenuItemActionPerformed(evt);
-            }
             else if (evt.getSource() == exploreLogFolderMenuItem) {
                 GsplitBaseFrame.this.exploreLogFolderMenuItemActionPerformed(evt);
             }
@@ -470,11 +481,8 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
             else if (evt.getSource() == aboutMenuItem) {
                 GsplitBaseFrame.this.aboutMenuItemActionPerformed(evt);
             }
-            else if (evt.getSource() == secureSplitButton) {
-                GsplitBaseFrame.this.secureSplitButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == secureJoinButton) {
-                GsplitBaseFrame.this.secureJoinButtonActionPerformed(evt);
+            else if (evt.getSource() == editSettingsButton) {
+                GsplitBaseFrame.this.editSettingsButtonActionPerformed(evt);
             }
         }
 
@@ -507,10 +515,34 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
                 GsplitBaseFrame.this.windowManagerLabelMouseReleased(evt);
             }
         }
+
+        public void windowActivated(java.awt.event.WindowEvent evt) {
+        }
+
+        public void windowClosed(java.awt.event.WindowEvent evt) {
+        }
+
+        public void windowClosing(java.awt.event.WindowEvent evt) {
+            if (evt.getSource() == GsplitBaseFrame.this) {
+                GsplitBaseFrame.this.formWindowClosing(evt);
+            }
+        }
+
+        public void windowDeactivated(java.awt.event.WindowEvent evt) {
+        }
+
+        public void windowDeiconified(java.awt.event.WindowEvent evt) {
+        }
+
+        public void windowIconified(java.awt.event.WindowEvent evt) {
+        }
+
+        public void windowOpened(java.awt.event.WindowEvent evt) {
+        }
     }// </editor-fold>//GEN-END:initComponents
 
     private void flatSplitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flatSplitMenuItemActionPerformed
-        if(WINDOW_MANAGER.containsFrame(WindowManager.FLAT_SPLIT_WINDOW_TITLE)){
+        if (WINDOW_MANAGER.containsFrame(WindowManager.FLAT_SPLIT_WINDOW_TITLE)) {
             WINDOW_MANAGER.showFrame(WindowManager.FLAT_SPLIT_WINDOW_TITLE);
             return;
         }
@@ -518,20 +550,32 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         BaseInternalFrame baseInternalFrame = new BaseInternalFrame(flatSplitPanel);
         baseInternalFrame.setTitle(WindowManager.FLAT_SPLIT_WINDOW_TITLE);
         baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
-				.getResource("/images/arrow-split.png")));
+                .getResource("/images/arrow-split.png")));
         WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_flatSplitMenuItemActionPerformed
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+        context.saveContext();
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void settingsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsMenuItemActionPerformed
-        // TODO add your handling code here:
+        if (WINDOW_MANAGER.containsFrame(WindowManager.APP_SETTINGS_WINDOW_TITLE)) {
+            WINDOW_MANAGER.showFrame(WindowManager.APP_SETTINGS_WINDOW_TITLE);
+            return;
+        }
+        
+        BaseInternalFrame baseInternalFrame = new BaseInternalFrame();
+        SettingsPanel panel = new SettingsPanel(baseInternalFrame);
+        baseInternalFrame.setWorkerPanel(panel);
+        baseInternalFrame.setTitle(WindowManager.APP_SETTINGS_WINDOW_TITLE);
+        baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
+                .getResource("/images/settings.png")));
+        WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_settingsMenuItemActionPerformed
 
     private void secureSplitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secureSplitMenuItemActionPerformed
-        if(WINDOW_MANAGER.containsFrame(WindowManager.SECURE_SPLIT_WINDOW_TITLE)){
+        if (WINDOW_MANAGER.containsFrame(WindowManager.SECURE_SPLIT_WINDOW_TITLE)) {
             WINDOW_MANAGER.showFrame(WindowManager.SECURE_SPLIT_WINDOW_TITLE);
             return;
         }
@@ -539,12 +583,12 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         BaseInternalFrame baseInternalFrame = new BaseInternalFrame(secureSplitPanel);
         baseInternalFrame.setTitle(WindowManager.SECURE_SPLIT_WINDOW_TITLE);
         baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
-				.getResource("/images/arrow-split.png")));
+                .getResource("/images/arrow-split.png")));
         WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_secureSplitMenuItemActionPerformed
 
     private void secureJoinMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secureJoinMenuItemActionPerformed
-        if(WINDOW_MANAGER.containsFrame(WindowManager.SECURE_JOIN_WINDOW_TITLE)){
+        if (WINDOW_MANAGER.containsFrame(WindowManager.SECURE_JOIN_WINDOW_TITLE)) {
             WINDOW_MANAGER.showFrame(WindowManager.SECURE_JOIN_WINDOW_TITLE);
             return;
         }
@@ -552,12 +596,12 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         BaseInternalFrame baseInternalFrame = new BaseInternalFrame(secureJoinPanel);
         baseInternalFrame.setTitle(WindowManager.SECURE_JOIN_WINDOW_TITLE);
         baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
-				.getResource("/images/arrow-join.png")));
+                .getResource("/images/arrow-join.png")));
         WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_secureJoinMenuItemActionPerformed
 
     private void flatJoinMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_flatJoinMenuItemActionPerformed
-        if(WINDOW_MANAGER.containsFrame(WindowManager.FLAT_JOIN_WINDOW_TITLE)){
+        if (WINDOW_MANAGER.containsFrame(WindowManager.FLAT_JOIN_WINDOW_TITLE)) {
             WINDOW_MANAGER.showFrame(WindowManager.FLAT_JOIN_WINDOW_TITLE);
             return;
         }
@@ -565,12 +609,12 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         BaseInternalFrame baseInternalFrame = new BaseInternalFrame(panel);
         baseInternalFrame.setTitle(WindowManager.FLAT_JOIN_WINDOW_TITLE);
         baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
-				.getResource("/images/arrow-join.png")));
+                .getResource("/images/arrow-join.png")));
         WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_flatJoinMenuItemActionPerformed
 
     private void textSplitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textSplitMenuItemActionPerformed
-        if(WINDOW_MANAGER.containsFrame(WindowManager.TEXT_SPLIT_WINDOW_TITLE)){
+        if (WINDOW_MANAGER.containsFrame(WindowManager.TEXT_SPLIT_WINDOW_TITLE)) {
             WINDOW_MANAGER.showFrame(WindowManager.TEXT_SPLIT_WINDOW_TITLE);
             return;
         }
@@ -578,12 +622,12 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         BaseInternalFrame baseInternalFrame = new BaseInternalFrame(panel);
         baseInternalFrame.setTitle(WindowManager.TEXT_SPLIT_WINDOW_TITLE);
         baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
-				.getResource("/images/arrow-split.png")));
+                .getResource("/images/arrow-split.png")));
         WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_textSplitMenuItemActionPerformed
 
     private void textJoinMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textJoinMenuItemActionPerformed
-        if(WINDOW_MANAGER.containsFrame(WindowManager.TEXT_JOIN_WINDOW_TITLE)){
+        if (WINDOW_MANAGER.containsFrame(WindowManager.TEXT_JOIN_WINDOW_TITLE)) {
             WINDOW_MANAGER.showFrame(WindowManager.TEXT_JOIN_WINDOW_TITLE);
             return;
         }
@@ -591,7 +635,7 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         BaseInternalFrame baseInternalFrame = new BaseInternalFrame(panel);
         baseInternalFrame.setTitle(WindowManager.TEXT_JOIN_WINDOW_TITLE);
         baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
-				.getResource("/images/arrow-join.png")));
+                .getResource("/images/arrow-join.png")));
         WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_textJoinMenuItemActionPerformed
 
@@ -600,12 +644,19 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_openMdatMenuItemActionPerformed
 
     private void minimize2trayMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimize2trayMenuItemActionPerformed
+        ActionListener exitListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                context.saveContext();
+                System.exit(0);
+            }
+        };
         WindowUtil.minimizeToTray(this, new javax.swing.ImageIcon(getClass()
-				.getResource("/images/file-splitter_24x24.png")).getImage());
+                .getResource("/images/file-splitter_24x24.png")).getImage(),
+                exitListener);
     }//GEN-LAST:event_minimize2trayMenuItemActionPerformed
 
     private void showToolbarChkbxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showToolbarChkbxMenuItemActionPerformed
-        if(!showToolbarChkbxMenuItem.isSelected()){
+        if (!showToolbarChkbxMenuItem.isSelected()) {
             baseToolBar.setVisible(false);
         } else {
             baseToolBar.setVisible(true);
@@ -613,7 +664,7 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_showToolbarChkbxMenuItemActionPerformed
 
     private void showStatusbarChkbxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showStatusbarChkbxMenuItemActionPerformed
-        if(!showStatusbarChkbxMenuItem.isSelected()){
+        if (!showStatusbarChkbxMenuItem.isSelected()) {
             baseStatusBar.setVisible(false);
         } else {
             baseStatusBar.setVisible(true);
@@ -621,7 +672,7 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_showStatusbarChkbxMenuItemActionPerformed
 
     private void showLogMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showLogMenuItemActionPerformed
-        if(WINDOW_MANAGER.containsFrame(WindowManager.SHOW_LOG_WINDOW_TITLE)){
+        if (WINDOW_MANAGER.containsFrame(WindowManager.SHOW_LOG_WINDOW_TITLE)) {
             WINDOW_MANAGER.showFrame(WindowManager.SHOW_LOG_WINDOW_TITLE);
             return;
         }
@@ -629,7 +680,7 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         BaseInternalFrame baseInternalFrame = new BaseInternalFrame(logViewerPanel);
         baseInternalFrame.setTitle(WindowManager.SHOW_LOG_WINDOW_TITLE);
         baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
-				.getResource("/images/file_extension_log.png")));
+                .getResource("/images/file_extension_log.png")));
         WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_showLogMenuItemActionPerformed
 
@@ -664,21 +715,21 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_windowManagerLabelMouseExited
 
     private void windowManagerLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_windowManagerLabelMousePressed
-        if(MouseEvent.BUTTON1 == evt.getButton() && windowManagerLabel.isEnabled()){
-           windowManagerPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY()); 
+        if (MouseEvent.BUTTON1 == evt.getButton() && windowManagerLabel.isEnabled()) {
+            windowManagerPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_windowManagerLabelMousePressed
 
     private void windowManagerLabelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_windowManagerLabelMouseReleased
-        if(MouseEvent.BUTTON1 == evt.getButton() && windowManagerLabel.isEnabled()){
-           windowManagerPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY()); 
+        if (MouseEvent.BUTTON1 == evt.getButton() && windowManagerLabel.isEnabled()) {
+            windowManagerPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_windowManagerLabelMouseReleased
 
     private void showAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAllMenuItemActionPerformed
         JOptionPane.showMessageDialog(this, "test");
         WINDOW_MANAGER.showAllFrames();
-        
+
     }//GEN-LAST:event_showAllMenuItemActionPerformed
 
     private void minimizeAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizeAllMenuItemActionPerformed
@@ -694,7 +745,7 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_windowsTilesMenuItemActionPerformed
 
     private void pdfSplitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdfSplitMenuItemActionPerformed
-        if(WINDOW_MANAGER.containsFrame(WindowManager.PDF_SPLIT_WINDOW_TITLE)){
+        if (WINDOW_MANAGER.containsFrame(WindowManager.PDF_SPLIT_WINDOW_TITLE)) {
             WINDOW_MANAGER.showFrame(WindowManager.PDF_SPLIT_WINDOW_TITLE);
             return;
         }
@@ -702,12 +753,12 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         BaseInternalFrame baseInternalFrame = new BaseInternalFrame(panel);
         baseInternalFrame.setTitle(WindowManager.PDF_SPLIT_WINDOW_TITLE);
         baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
-				.getResource("/images/arrow-split.png")));
+                .getResource("/images/arrow-split.png")));
         WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_pdfSplitMenuItemActionPerformed
 
     private void pdfJoinMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pdfJoinMenuItemActionPerformed
-        if(WINDOW_MANAGER.containsFrame(WindowManager.PDF_JOIN_WINDOW_TITLE)){
+        if (WINDOW_MANAGER.containsFrame(WindowManager.PDF_JOIN_WINDOW_TITLE)) {
             WINDOW_MANAGER.showFrame(WindowManager.PDF_JOIN_WINDOW_TITLE);
             return;
         }
@@ -715,12 +766,12 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         BaseInternalFrame baseInternalFrame = new BaseInternalFrame(panel);
         baseInternalFrame.setTitle(WindowManager.PDF_JOIN_WINDOW_TITLE);
         baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
-				.getResource("/images/arrow-join.png")));
+                .getResource("/images/arrow-join.png")));
         WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_pdfJoinMenuItemActionPerformed
 
     private void xmlSplitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xmlSplitMenuItemActionPerformed
-        if(WINDOW_MANAGER.containsFrame(WindowManager.XML_SPLIT_WINDOW_TITLE)){
+        if (WINDOW_MANAGER.containsFrame(WindowManager.XML_SPLIT_WINDOW_TITLE)) {
             WINDOW_MANAGER.showFrame(WindowManager.XML_SPLIT_WINDOW_TITLE);
             return;
         }
@@ -728,12 +779,12 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         BaseInternalFrame baseInternalFrame = new BaseInternalFrame(panel);
         baseInternalFrame.setTitle(WindowManager.XML_SPLIT_WINDOW_TITLE);
         baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
-				.getResource("/images/arrow-split.png")));
+                .getResource("/images/arrow-split.png")));
         WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_xmlSplitMenuItemActionPerformed
 
     private void xmlJoinMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xmlJoinMenuItemActionPerformed
-        if(WINDOW_MANAGER.containsFrame(WindowManager.XML_JOIN_WINDOW_TITLE)){
+        if (WINDOW_MANAGER.containsFrame(WindowManager.XML_JOIN_WINDOW_TITLE)) {
             WINDOW_MANAGER.showFrame(WindowManager.XML_JOIN_WINDOW_TITLE);
             return;
         }
@@ -741,7 +792,7 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         BaseInternalFrame baseInternalFrame = new BaseInternalFrame(panel);
         baseInternalFrame.setTitle(WindowManager.XML_JOIN_WINDOW_TITLE);
         baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
-				.getResource("/images/arrow-join.png")));
+                .getResource("/images/arrow-join.png")));
         WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_xmlJoinMenuItemActionPerformed
 
@@ -757,7 +808,15 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         secureJoinMenuItemActionPerformed(evt);
     }//GEN-LAST:event_secureJoinButtonActionPerformed
 
-   
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        context.saveContext();
+        System.exit(0);
+    }//GEN-LAST:event_formWindowClosing
+
+    private void editSettingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSettingsButtonActionPerformed
+        settingsMenuItemActionPerformed(evt);
+    }//GEN-LAST:event_editSettingsButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JDesktopPane baseDesktopPane;
