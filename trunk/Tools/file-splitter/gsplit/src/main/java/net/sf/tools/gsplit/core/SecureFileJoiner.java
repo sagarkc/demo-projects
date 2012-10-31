@@ -24,7 +24,7 @@ import net.sf.tools.gsplit.WorkerTaskConstants;
  * @author Sabuj Das | sabuj.das@gmail.com
  *
  */
-public final class FileAutoJoiner extends SwingWorker<Void, Void> implements WorkerTaskConstants{
+public final class SecureFileJoiner extends SwingWorker<Void, Void> implements WorkerTaskConstants{
 
 	private FileMetaData fileMetaData;
 	private final File sourceFile;
@@ -33,7 +33,7 @@ public final class FileAutoJoiner extends SwingWorker<Void, Void> implements Wor
 	private File targetDir;
 	private boolean isWorkerTask;
 	
-	public FileAutoJoiner(File sourceFile, File targetFile) {
+	public SecureFileJoiner(File sourceFile, File targetFile) {
 		if(!sourceFile.exists()){
 			throw new RuntimeException(new FileNotFoundException("The source file does not exists !!!"));
 		}
@@ -49,7 +49,7 @@ public final class FileAutoJoiner extends SwingWorker<Void, Void> implements Wor
 		}
 	}
 
-	public FileAutoJoiner(String source, String target) {
+	public SecureFileJoiner(String source, String target) {
 		this(new File(source), new File(target));
 	}
 

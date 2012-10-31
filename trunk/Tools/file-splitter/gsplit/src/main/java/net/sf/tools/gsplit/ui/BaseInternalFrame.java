@@ -32,6 +32,15 @@ public class BaseInternalFrame extends javax.swing.JInternalFrame {
         containerPanel.updateUI();
     }
 
+    public void setWorkerPanel(JPanel workerPanel) {
+        this.workerPanel = workerPanel;
+        if(null != workerPanel)
+            containerPanel.add(workerPanel, BorderLayout.CENTER);
+        containerPanel.updateUI();
+    }
+    
+    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

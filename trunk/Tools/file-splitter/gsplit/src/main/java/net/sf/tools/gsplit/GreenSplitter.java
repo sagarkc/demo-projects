@@ -4,12 +4,9 @@
 package net.sf.tools.gsplit;
 
 import java.io.File;
-
 import javax.swing.UIManager;
-
-import net.sf.tools.gsplit.core.FileAutoJoiner;
-import net.sf.tools.gsplit.core.FileSplitter;
-import net.sf.tools.gsplit.ui.GSplitFrame;
+import net.sf.tools.gsplit.core.SecureFileJoiner;
+import net.sf.tools.gsplit.core.SecureFileSplitter;
 import net.sf.tools.gsplit.ui.GsplitBaseFrame;
 import org.apache.log4j.Logger;
 
@@ -27,13 +24,16 @@ public class GreenSplitter {
         Logger logger = Logger.getLogger(GreenSplitter.class);
         
         try {
-            logger.info("Set LaF");
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            //UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-            //UIManager.setLookAndFeel(NimbusLookAndFeel.class.getCanonicalName());
+            logger.info("Set LaF to " + SplitterContext.getContext().getAppSettings().getLafClassName());
+            UIManager.setLookAndFeel(SplitterContext.getContext().getAppSettings().getLafClassName());
         } catch (Exception e) {
-            e.printStackTrace();
             logger.error(e);
+            try {
+                logger.info("Set LaF to " + UIManager.getCrossPlatformLookAndFeelClassName());
+                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            } catch (Exception ignore) {
+                
+            }
         }
         logger.info("Start App");
         //new GSplitFrame().setVisible(true);
@@ -41,10 +41,10 @@ public class GreenSplitter {
     }
 
     public static void test() {
-        FileSplitter fileSplitter = new FileSplitter(
+        SecureFileSplitter fileSplitter = new SecureFileSplitter(
                 "D:\\temp\\eclipse.zip",
                 "d:\\temp\\eclipseparts");
-        FileAutoJoiner fileJoiner = new FileAutoJoiner(
+        SecureFileJoiner fileJoiner = new SecureFileJoiner(
                 new File("d:\\temp\\eclipseparts\\eclipse.zip.mdat"),
                 new File("d:\\temp\\eclipse-join\\eclipse.zip"));
         try {

@@ -42,6 +42,8 @@ public class SecureJoinPanel extends javax.swing.JPanel {
         autoJoinStartButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
+        FormListener formListener = new FormListener();
+
         setLayout(new java.awt.BorderLayout());
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -114,6 +116,7 @@ public class SecureJoinPanel extends javax.swing.JPanel {
         jPanel1.add(autoJoinProgressBar, gridBagConstraints);
 
         browseAutoJoinSourceButton.setText("Browse");
+        browseAutoJoinSourceButton.addActionListener(formListener);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -122,6 +125,7 @@ public class SecureJoinPanel extends javax.swing.JPanel {
         jPanel1.add(browseAutoJoinSourceButton, gridBagConstraints);
 
         browseAutoJoinTargetButton.setText("Browse");
+        browseAutoJoinTargetButton.addActionListener(formListener);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
@@ -130,6 +134,7 @@ public class SecureJoinPanel extends javax.swing.JPanel {
         jPanel1.add(browseAutoJoinTargetButton, gridBagConstraints);
 
         splitterStopButton1.setText("Stop");
+        splitterStopButton1.addActionListener(formListener);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
@@ -138,6 +143,7 @@ public class SecureJoinPanel extends javax.swing.JPanel {
         jPanel1.add(splitterStopButton1, gridBagConstraints);
 
         autoJoinStartButton.setText("Start");
+        autoJoinStartButton.addActionListener(formListener);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 5;
@@ -154,7 +160,44 @@ public class SecureJoinPanel extends javax.swing.JPanel {
         jPanel1.add(jLabel3, gridBagConstraints);
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
+    }
+
+    // Code for dispatching events from components to event handlers.
+
+    private class FormListener implements java.awt.event.ActionListener {
+        FormListener() {}
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            if (evt.getSource() == browseAutoJoinSourceButton) {
+                SecureJoinPanel.this.browseAutoJoinSourceButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == browseAutoJoinTargetButton) {
+                SecureJoinPanel.this.browseAutoJoinTargetButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == splitterStopButton1) {
+                SecureJoinPanel.this.splitterStopButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == autoJoinStartButton) {
+                SecureJoinPanel.this.autoJoinStartButtonActionPerformed(evt);
+            }
+        }
     }// </editor-fold>//GEN-END:initComponents
+
+    private void browseAutoJoinSourceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseAutoJoinSourceButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_browseAutoJoinSourceButtonActionPerformed
+
+    private void browseAutoJoinTargetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseAutoJoinTargetButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_browseAutoJoinTargetButtonActionPerformed
+
+    private void splitterStopButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_splitterStopButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_splitterStopButton1ActionPerformed
+
+    private void autoJoinStartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoJoinStartButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_autoJoinStartButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar autoJoinProgressBar;
     private javax.swing.JTextField autoJoinSourceTextField;

@@ -7,7 +7,7 @@ package net.sf.tools.gsplit.ui;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import net.sf.tools.gsplit.SplitterConstants;
+import net.sf.tools.gsplit.SplitterContext;
 import org.apache.log4j.Logger;
 
 /**
@@ -121,7 +121,9 @@ public class LogViewerPanel extends javax.swing.JPanel {
     private void readLogFile() {
         BufferedReader reader = null;
         try{
-            reader = new BufferedReader(new FileReader(SplitterConstants.LOG_FILE_NAME));
+            reader = new BufferedReader(new FileReader(
+                    SplitterContext.getContext().getAppSettings().getLogFileName()
+                    ));
             String line = "";
             while((line = reader.readLine()) != null){
                 logsTextArea.append(line + System.getProperty("line.separator"));

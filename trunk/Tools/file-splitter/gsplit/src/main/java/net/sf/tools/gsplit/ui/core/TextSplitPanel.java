@@ -25,11 +25,31 @@ public class TextSplitPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        splitterPanel = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        splitterSourceTextField = new javax.swing.JTextField();
+        browseSplitterSourceButton = new javax.swing.JButton();
+        fileSizeLabel = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        splitterTargetTextField = new javax.swing.JTextField();
+        browseSplitterTargetButton = new javax.swing.JButton();
+        splitterProgressBar = new javax.swing.JProgressBar();
+        splitterStopButton = new javax.swing.JButton();
+        splitterStartButton = new javax.swing.JButton();
+        sizeOrPartLabel = new javax.swing.JLabel();
+        splitterPartSizeTextField = new javax.swing.JTextField();
+        byteComboBox = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
+        sizeRadioButton = new javax.swing.JRadioButton();
+        partsRadioButton = new javax.swing.JRadioButton();
+        jLabel6 = new javax.swing.JLabel();
+
+        FormListener formListener = new FormListener();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -63,13 +83,229 @@ public class TextSplitPanel extends javax.swing.JPanel {
 
         add(jPanel3, java.awt.BorderLayout.PAGE_START);
 
-        jPanel1.setLayout(new java.awt.GridBagLayout());
-        add(jPanel1, java.awt.BorderLayout.CENTER);
+        splitterPanel.setMinimumSize(new java.awt.Dimension(384, 137));
+        splitterPanel.setLayout(new java.awt.GridBagLayout());
+
+        jLabel4.setText("Source File");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        splitterPanel.add(jLabel4, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        splitterPanel.add(splitterSourceTextField, gridBagConstraints);
+
+        browseSplitterSourceButton.setText("Browse");
+        browseSplitterSourceButton.addActionListener(formListener);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        splitterPanel.add(browseSplitterSourceButton, gridBagConstraints);
+
+        fileSizeLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        fileSizeLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        splitterPanel.add(fileSizeLabel, gridBagConstraints);
+
+        jLabel5.setText("Target Folder");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        splitterPanel.add(jLabel5, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        splitterPanel.add(splitterTargetTextField, gridBagConstraints);
+
+        browseSplitterTargetButton.setText("Browse");
+        browseSplitterTargetButton.addActionListener(formListener);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        splitterPanel.add(browseSplitterTargetButton, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        splitterPanel.add(splitterProgressBar, gridBagConstraints);
+
+        splitterStopButton.setText("Stop");
+        splitterStopButton.addActionListener(formListener);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        splitterPanel.add(splitterStopButton, gridBagConstraints);
+
+        splitterStartButton.setText("Start");
+        splitterStartButton.addActionListener(formListener);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        splitterPanel.add(splitterStartButton, gridBagConstraints);
+
+        sizeOrPartLabel.setText("Maximum Part Size");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        splitterPanel.add(sizeOrPartLabel, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        splitterPanel.add(splitterPartSizeTextField, gridBagConstraints);
+
+        byteComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "BYTE", "KB", "MB", "GB" }));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        splitterPanel.add(byteComboBox, gridBagConstraints);
+
+        jLabel3.setText("Split By");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        splitterPanel.add(jLabel3, gridBagConstraints);
+
+        sizeRadioButton.setSelected(true);
+        sizeRadioButton.setText("Size");
+        sizeRadioButton.addActionListener(formListener);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        splitterPanel.add(sizeRadioButton, gridBagConstraints);
+
+        partsRadioButton.setText("No of Lines");
+        partsRadioButton.addActionListener(formListener);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        splitterPanel.add(partsRadioButton, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        splitterPanel.add(jLabel6, gridBagConstraints);
+
+        add(splitterPanel, java.awt.BorderLayout.CENTER);
+    }
+
+    // Code for dispatching events from components to event handlers.
+
+    private class FormListener implements java.awt.event.ActionListener {
+        FormListener() {}
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            if (evt.getSource() == browseSplitterSourceButton) {
+                TextSplitPanel.this.browseSplitterSourceButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == browseSplitterTargetButton) {
+                TextSplitPanel.this.browseSplitterTargetButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == splitterStopButton) {
+                TextSplitPanel.this.splitterStopButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == splitterStartButton) {
+                TextSplitPanel.this.splitterStartButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == sizeRadioButton) {
+                TextSplitPanel.this.sizeRadioButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == partsRadioButton) {
+                TextSplitPanel.this.partsRadioButtonActionPerformed(evt);
+            }
+        }
     }// </editor-fold>//GEN-END:initComponents
+
+    private void browseSplitterSourceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseSplitterSourceButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_browseSplitterSourceButtonActionPerformed
+
+    private void browseSplitterTargetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseSplitterTargetButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_browseSplitterTargetButtonActionPerformed
+
+    private void splitterStopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_splitterStopButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_splitterStopButtonActionPerformed
+
+    private void splitterStartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_splitterStartButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_splitterStartButtonActionPerformed
+
+    private void sizeRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sizeRadioButtonActionPerformed
+
+    private void partsRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_partsRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_partsRadioButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton browseSplitterSourceButton;
+    private javax.swing.JButton browseSplitterTargetButton;
+    private javax.swing.JComboBox byteComboBox;
+    private javax.swing.JLabel fileSizeLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JRadioButton partsRadioButton;
+    private javax.swing.JLabel sizeOrPartLabel;
+    private javax.swing.JRadioButton sizeRadioButton;
+    private javax.swing.JPanel splitterPanel;
+    private javax.swing.JTextField splitterPartSizeTextField;
+    private javax.swing.JProgressBar splitterProgressBar;
+    private javax.swing.JTextField splitterSourceTextField;
+    private javax.swing.JButton splitterStartButton;
+    private javax.swing.JButton splitterStopButton;
+    private javax.swing.JTextField splitterTargetTextField;
     // End of variables declaration//GEN-END:variables
 }

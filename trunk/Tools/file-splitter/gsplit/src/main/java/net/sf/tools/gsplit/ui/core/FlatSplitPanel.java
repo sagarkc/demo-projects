@@ -46,9 +46,11 @@ public class FlatSplitPanel extends javax.swing.JPanel {
         splitterPartSizeTextField = new javax.swing.JTextField();
         byteComboBox = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        sizeRadioButton = new javax.swing.JRadioButton();
+        partsRadioButton = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
+
+        FormListener formListener = new FormListener();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -102,6 +104,7 @@ public class FlatSplitPanel extends javax.swing.JPanel {
         splitterPanel.add(splitterSourceTextField, gridBagConstraints);
 
         browseSplitterSourceButton.setText("Browse");
+        browseSplitterSourceButton.addActionListener(formListener);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
@@ -137,6 +140,7 @@ public class FlatSplitPanel extends javax.swing.JPanel {
         splitterPanel.add(splitterTargetTextField, gridBagConstraints);
 
         browseSplitterTargetButton.setText("Browse");
+        browseSplitterTargetButton.addActionListener(formListener);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;
@@ -152,6 +156,7 @@ public class FlatSplitPanel extends javax.swing.JPanel {
         splitterPanel.add(splitterProgressBar, gridBagConstraints);
 
         splitterStopButton.setText("Stop");
+        splitterStopButton.addActionListener(formListener);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 6;
@@ -160,6 +165,7 @@ public class FlatSplitPanel extends javax.swing.JPanel {
         splitterPanel.add(splitterStopButton, gridBagConstraints);
 
         splitterStartButton.setText("Start");
+        splitterStartButton.addActionListener(formListener);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 7;
@@ -198,26 +204,28 @@ public class FlatSplitPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         splitterPanel.add(jLabel3, gridBagConstraints);
 
-        splitByButtonGroup.add(jRadioButton1);
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("Size");
+        splitByButtonGroup.add(sizeRadioButton);
+        sizeRadioButton.setSelected(true);
+        sizeRadioButton.setText("Size");
+        sizeRadioButton.addActionListener(formListener);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        splitterPanel.add(jRadioButton1, gridBagConstraints);
+        splitterPanel.add(sizeRadioButton, gridBagConstraints);
 
-        splitByButtonGroup.add(jRadioButton2);
-        jRadioButton2.setText("No of Parts");
+        splitByButtonGroup.add(partsRadioButton);
+        partsRadioButton.setText("No of Parts");
+        partsRadioButton.addActionListener(formListener);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        splitterPanel.add(jRadioButton2, gridBagConstraints);
+        splitterPanel.add(partsRadioButton, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 8;
@@ -228,7 +236,58 @@ public class FlatSplitPanel extends javax.swing.JPanel {
         splitterPanel.add(jLabel6, gridBagConstraints);
 
         add(splitterPanel, java.awt.BorderLayout.CENTER);
+    }
+
+    // Code for dispatching events from components to event handlers.
+
+    private class FormListener implements java.awt.event.ActionListener {
+        FormListener() {}
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            if (evt.getSource() == browseSplitterSourceButton) {
+                FlatSplitPanel.this.browseSplitterSourceButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == browseSplitterTargetButton) {
+                FlatSplitPanel.this.browseSplitterTargetButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == sizeRadioButton) {
+                FlatSplitPanel.this.sizeRadioButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == partsRadioButton) {
+                FlatSplitPanel.this.partsRadioButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == splitterStopButton) {
+                FlatSplitPanel.this.splitterStopButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == splitterStartButton) {
+                FlatSplitPanel.this.splitterStartButtonActionPerformed(evt);
+            }
+        }
     }// </editor-fold>//GEN-END:initComponents
+
+    private void browseSplitterSourceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseSplitterSourceButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_browseSplitterSourceButtonActionPerformed
+
+    private void browseSplitterTargetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseSplitterTargetButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_browseSplitterTargetButtonActionPerformed
+
+    private void sizeRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sizeRadioButtonActionPerformed
+
+    private void partsRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_partsRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_partsRadioButtonActionPerformed
+
+    private void splitterStopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_splitterStopButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_splitterStopButtonActionPerformed
+
+    private void splitterStartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_splitterStartButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_splitterStartButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton browseSplitterSourceButton;
     private javax.swing.JButton browseSplitterTargetButton;
@@ -241,9 +300,9 @@ public class FlatSplitPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton partsRadioButton;
     private javax.swing.JLabel sizeOrPartLabel;
+    private javax.swing.JRadioButton sizeRadioButton;
     private javax.swing.ButtonGroup splitByButtonGroup;
     private javax.swing.JPanel splitterPanel;
     private javax.swing.JTextField splitterPartSizeTextField;
