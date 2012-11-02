@@ -53,6 +53,7 @@ public class SecureJoinPanel extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/security-high.png"))); // NOI18N
         jLabel1.setText("Secure Join");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

@@ -8,12 +8,12 @@ package net.sf.tools.gsplit.ui.core;
  *
  * @author SG1736
  */
-public class PdfJointPanel extends javax.swing.JPanel {
+public class TextJoinPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form TextSplitPanel
      */
-    public PdfJointPanel() {
+    public TextJoinPanel() {
         initComponents();
     }
 
@@ -40,7 +40,8 @@ public class PdfJointPanel extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel1.setText("Text File Splitter");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/text-file.png"))); // NOI18N
+        jLabel1.setText("Text File Joiner");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/arrow-join.png"))); // NOI18N

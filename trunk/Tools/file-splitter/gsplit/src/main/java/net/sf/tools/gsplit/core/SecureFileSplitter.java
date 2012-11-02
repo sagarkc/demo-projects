@@ -110,7 +110,7 @@ public class SecureFileSplitter extends BinaryFileSplitter{
 					while((count = inputStream.read(buffer, 0, splitterPartInfo.bufferSize)) >= 0){
 						outputStream.write(buffer, 0, count);
 						partSize += count;
-						if(partSize == splitterPartInfo.maxBytes)
+						if(partSize >= splitterPartInfo.maxBytes)
 							break;
 					}
 					if(count < 0)
