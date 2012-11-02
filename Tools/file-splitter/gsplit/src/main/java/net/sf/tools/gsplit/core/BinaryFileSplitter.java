@@ -121,6 +121,7 @@ public abstract class BinaryFileSplitter extends SwingWorker<Void, Void> impleme
 		if(byteCount < 1){
 			throw new RuntimeException("The target byte count should be >= 1.");
 		}
+		splitterPartIfo.maxBytes = byteCount;
 		long size = sourceFile.length();
 		splitterPartIfo.totalFileSize = size;
 		if(size <= 0){
@@ -172,6 +173,7 @@ public abstract class BinaryFileSplitter extends SwingWorker<Void, Void> impleme
 			maxBytes = Math.round(size/maximumPartCount) + 1;
 		}
 		splitterPartIfo.partCount = maximumPartCount;
+		splitterPartIfo.maxBytes = maxBytes;
 		
 		int bufferSize = SplitterConstants.KB;
 		if(maxBytes > SplitterConstants.KB && byteCount < SplitterConstants.MB){
@@ -181,6 +183,7 @@ public abstract class BinaryFileSplitter extends SwingWorker<Void, Void> impleme
 		} else if(maxBytes >= SplitterConstants.GB){
 			bufferSize = SplitterConstants.MB * 10;
 		}
+		
 		splitterPartIfo.bufferSize = bufferSize;
 		return splitterPartIfo;
 	}

@@ -11,11 +11,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 
 import net.sf.tools.gsplit.SplitterConstants;
-import net.sf.tools.gsplit.core.BinaryFileSplitter.SplitterPartInfo;
-import net.sf.tools.gsplit.util.MD5Util;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
@@ -89,7 +86,7 @@ public class FlatFileSplitter extends BinaryFileSplitter {
 					while((count = inputStream.read(buffer, 0, splitterPartInfo.bufferSize)) >= 0){
 						outputStream.write(buffer, 0, count);
 						partSize += count;
-						if(partSize == splitterPartInfo.maxBytes)
+						if(partSize >= splitterPartInfo.maxBytes)
 							break;
 					}
 					if(count < 0)

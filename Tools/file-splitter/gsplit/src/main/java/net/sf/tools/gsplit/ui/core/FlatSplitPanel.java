@@ -61,6 +61,7 @@ public class FlatSplitPanel extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/security-low.png"))); // NOI18N
         jLabel1.setText("Flat Splitter - Not Secure");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -249,17 +250,17 @@ public class FlatSplitPanel extends javax.swing.JPanel {
             else if (evt.getSource() == browseSplitterTargetButton) {
                 FlatSplitPanel.this.browseSplitterTargetButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == sizeRadioButton) {
-                FlatSplitPanel.this.sizeRadioButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == partsRadioButton) {
-                FlatSplitPanel.this.partsRadioButtonActionPerformed(evt);
-            }
             else if (evt.getSource() == splitterStopButton) {
                 FlatSplitPanel.this.splitterStopButtonActionPerformed(evt);
             }
             else if (evt.getSource() == splitterStartButton) {
                 FlatSplitPanel.this.splitterStartButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == sizeRadioButton) {
+                FlatSplitPanel.this.sizeRadioButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == partsRadioButton) {
+                FlatSplitPanel.this.partsRadioButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents

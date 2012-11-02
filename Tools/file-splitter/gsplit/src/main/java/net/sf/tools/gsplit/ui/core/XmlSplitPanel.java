@@ -59,6 +59,7 @@ public class XmlSplitPanel extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 17)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/xml.png"))); // NOI18N
         jLabel1.setText("Flat Splitter - Not Secure");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
