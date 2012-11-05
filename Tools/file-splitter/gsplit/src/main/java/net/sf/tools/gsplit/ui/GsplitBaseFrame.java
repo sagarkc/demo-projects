@@ -6,6 +6,7 @@ package net.sf.tools.gsplit.ui;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -101,6 +102,7 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         statusLabel = new javax.swing.JLabel();
         jSeparator8 = new javax.swing.JToolBar.Separator();
         baseDesktopPane = new javax.swing.JDesktopPane();
+        desktopImageLabel = new javax.swing.JLabel();
         baseMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         secureSplitMenuItem = new javax.swing.JMenuItem();
@@ -267,8 +269,15 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         getContentPane().add(baseStatusBar, java.awt.BorderLayout.PAGE_END);
 
         baseDesktopPane.setComponentPopupMenu(baseDesktopPopupMenu);
+        baseDesktopPane.setDoubleBuffered(true);
         baseDesktopPane.setMinimumSize(new java.awt.Dimension(500, 300));
         baseDesktopPane.setPreferredSize(new java.awt.Dimension(640, 350));
+        baseDesktopPane.addComponentListener(formListener);
+
+        desktopImageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/file-splitter_256x256.png"))); // NOI18N
+        desktopImageLabel.setBounds(364, 114, 260, 240);
+        baseDesktopPane.add(desktopImageLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         getContentPane().add(baseDesktopPane, java.awt.BorderLayout.CENTER);
 
         fileMenu.setText(bundle.getString("GsplitBaseFrame.fileMenu.text")); // NOI18N
@@ -382,7 +391,7 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements java.awt.event.ActionListener, java.awt.event.MouseListener, java.awt.event.WindowListener {
+    private class FormListener implements java.awt.event.ActionListener, java.awt.event.ComponentListener, java.awt.event.MouseListener, java.awt.event.WindowListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if (evt.getSource() == secureSplitButton) {
@@ -409,18 +418,6 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
             else if (evt.getSource() == openLogFileMenuItem) {
                 GsplitBaseFrame.this.openLogFileMenuItemActionPerformed(evt);
             }
-            else if (evt.getSource() == secureSplitMenuItem) {
-                GsplitBaseFrame.this.secureSplitMenuItemActionPerformed(evt);
-            }
-            else if (evt.getSource() == secureJoinMenuItem) {
-                GsplitBaseFrame.this.secureJoinMenuItemActionPerformed(evt);
-            }
-            else if (evt.getSource() == flatSplitMenuItem) {
-                GsplitBaseFrame.this.flatSplitMenuItemActionPerformed(evt);
-            }
-            else if (evt.getSource() == flatJoinMenuItem) {
-                GsplitBaseFrame.this.flatJoinMenuItemActionPerformed(evt);
-            }
             else if (evt.getSource() == textSplitMenuItem) {
                 GsplitBaseFrame.this.textSplitMenuItemActionPerformed(evt);
             }
@@ -438,6 +435,18 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
             }
             else if (evt.getSource() == xmlJoinMenuItem) {
                 GsplitBaseFrame.this.xmlJoinMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == secureSplitMenuItem) {
+                GsplitBaseFrame.this.secureSplitMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == secureJoinMenuItem) {
+                GsplitBaseFrame.this.secureJoinMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == flatSplitMenuItem) {
+                GsplitBaseFrame.this.flatSplitMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == flatJoinMenuItem) {
+                GsplitBaseFrame.this.flatJoinMenuItemActionPerformed(evt);
             }
             else if (evt.getSource() == minimize2trayMenuItem) {
                 GsplitBaseFrame.this.minimize2trayMenuItemActionPerformed(evt);
@@ -472,6 +481,21 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
             else if (evt.getSource() == aboutMenuItem) {
                 GsplitBaseFrame.this.aboutMenuItemActionPerformed(evt);
             }
+        }
+
+        public void componentHidden(java.awt.event.ComponentEvent evt) {
+        }
+
+        public void componentMoved(java.awt.event.ComponentEvent evt) {
+        }
+
+        public void componentResized(java.awt.event.ComponentEvent evt) {
+            if (evt.getSource() == baseDesktopPane) {
+                GsplitBaseFrame.this.baseDesktopPaneComponentResized(evt);
+            }
+        }
+
+        public void componentShown(java.awt.event.ComponentEvent evt) {
         }
 
         public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -685,7 +709,9 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_helpMenuItemActionPerformed
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
-        // TODO add your handling code here:
+        AboutDialog aboutDialog = new AboutDialog(this, true);
+        WindowUtil.bringCenterTo(aboutDialog, this);
+        aboutDialog.setVisible(true);
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
     private void windowManagerLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_windowManagerLabelMouseClicked
@@ -715,9 +741,7 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_windowManagerLabelMouseReleased
 
     private void showAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAllMenuItemActionPerformed
-        JOptionPane.showMessageDialog(this, "test");
         WINDOW_MANAGER.showAllFrames();
-
     }//GEN-LAST:event_showAllMenuItemActionPerformed
 
     private void minimizeAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizeAllMenuItemActionPerformed
@@ -805,6 +829,13 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         settingsMenuItemActionPerformed(evt);
     }//GEN-LAST:event_editSettingsButtonActionPerformed
 
+    private void baseDesktopPaneComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_baseDesktopPaneComponentResized
+        Dimension d = baseDesktopPane.getSize();
+        int x = d.width - 264;
+        int y = d.height - 244;
+        desktopImageLabel.setBounds(x, y, 260, 240);
+    }//GEN-LAST:event_baseDesktopPaneComponentResized
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JDesktopPane baseDesktopPane;
@@ -812,6 +843,7 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar baseMenuBar;
     private javax.swing.JToolBar baseStatusBar;
     private javax.swing.JToolBar baseToolBar;
+    private javax.swing.JLabel desktopImageLabel;
     private javax.swing.JMenu editMenu;
     private javax.swing.JButton editSettingsButton;
     private javax.swing.JMenuItem exitMenuItem;
