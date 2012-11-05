@@ -307,6 +307,7 @@ public final class WindowManager implements InternalFrameListener {
                     iFrame.show();
                     baseDesktopPane.getDesktopManager().deiconifyFrame(iFrame);
                     baseDesktopPane.getDesktopManager().activateFrame(iFrame);
+                    baseDesktopPane.moveToFront(iFrame);
                     iFrame.updateUI();
                     hiddenFrameMap.remove(iFrame.getTitle());
                     removePopupMenu(iFrame.getTitle());
