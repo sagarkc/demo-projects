@@ -99,7 +99,9 @@
       <SubComponents>
         <MenuItem class="javax.swing.JMenuItem" name="textSplitMenuItem">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Split"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.textSplitMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textSplitMenuItemActionPerformed"/>
@@ -107,7 +109,9 @@
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="textJoinMenuItem">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Join"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.textJoinMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textJoinMenuItemActionPerformed"/>
@@ -129,7 +133,9 @@
       <SubComponents>
         <MenuItem class="javax.swing.JMenuItem" name="pdfSplitMenuItem">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Split"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.pdfSplitMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pdfSplitMenuItemActionPerformed"/>
@@ -137,7 +143,9 @@
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="pdfJoinMenuItem">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Join"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.pdfJoinMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pdfJoinMenuItemActionPerformed"/>
@@ -159,7 +167,9 @@
       <SubComponents>
         <MenuItem class="javax.swing.JMenuItem" name="xmlSplitMenuItem">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Split"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.xmlSplitMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="xmlSplitMenuItemActionPerformed"/>
@@ -167,7 +177,9 @@
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="xmlJoinMenuItem">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Join"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.xmlJoinMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="xmlJoinMenuItemActionPerformed"/>
@@ -208,7 +220,7 @@
         <Menu class="javax.swing.JMenu" name="fileMenu">
           <Properties>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="i18n/message.properties" key="fileMenu.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.fileMenu.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <SubComponents>
@@ -236,7 +248,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/arrow-join.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Secure Join"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.secureJoinMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="secureJoinMenuItemActionPerformed"/>
@@ -246,7 +260,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="flatSplitMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Flat Split"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.flatSplitMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="flatSplitMenuItemActionPerformed"/>
@@ -254,7 +270,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="flatJoinMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Flat Join"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.flatJoinMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="flatJoinMenuItemActionPerformed"/>
@@ -272,7 +290,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/hide.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Minimize to Tray"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.minimize2trayMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="minimize2trayMenuItemActionPerformed"/>
@@ -286,7 +306,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/exit.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Exit"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.exitMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitMenuItemActionPerformed"/>
@@ -296,7 +318,9 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="editMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Edit"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.editMenu.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="settingsMenuItem">
@@ -304,7 +328,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/settings.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Settings"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.settingsMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="settingsMenuItemActionPerformed"/>
@@ -314,13 +340,17 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="viewMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="View"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.viewMenu.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="showToolbarChkbxMenuItem">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Show Toolbar"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.showToolbarChkbxMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showToolbarChkbxMenuItemActionPerformed"/>
@@ -329,7 +359,9 @@
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="showStatusbarChkbxMenuItem">
               <Properties>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Show Statusbar"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.showStatusbarChkbxMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showStatusbarChkbxMenuItemActionPerformed"/>
@@ -342,7 +374,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/file_extension_log.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Show Log"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.showLogMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showLogMenuItemActionPerformed"/>
@@ -353,7 +387,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/folder_explore.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Open Log Folder"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.exploreLogFolderMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exploreLogFolderMenuItemActionPerformed"/>
@@ -374,7 +410,9 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/images/application_view_tile.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Tiles"/>
+                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                      <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.windowsTilesMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="windowsTilesMenuItemActionPerformed"/>
@@ -385,7 +423,9 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/images/application_cascade.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Cascade"/>
+                    <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                      <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.windowsCascadeMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="windowsCascadeMenuItemActionPerformed"/>
@@ -397,7 +437,9 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="helpMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Help"/>
+            <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+              <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.helpMenu.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+            </Property>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="helpMenuItem">
@@ -408,7 +450,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/help.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Help"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.helpMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="helpMenuItemActionPerformed"/>
@@ -419,7 +463,9 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/info.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="About"/>
+                <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+                  <ResourceString bundle="i18n/message.properties" key="GsplitBaseFrame.aboutMenuItem.text" replaceFormat="bundle.getString(&quot;{key}&quot;)"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="aboutMenuItemActionPerformed"/>

@@ -57,8 +57,8 @@ public class BaseInternalFrame extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setResizable(true);
         setTitle("Base");
-        setMinimumSize(new java.awt.Dimension(680, 350));
-        setPreferredSize(new java.awt.Dimension(680, 350));
+        setMinimumSize(new java.awt.Dimension(580, 350));
+        setPreferredSize(new java.awt.Dimension(580, 350));
 
         containerPanel.setLayout(new java.awt.BorderLayout());
         getContentPane().add(containerPanel, java.awt.BorderLayout.CENTER);
