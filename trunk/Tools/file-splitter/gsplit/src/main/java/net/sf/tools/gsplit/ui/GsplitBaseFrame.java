@@ -164,33 +164,33 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         textMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/text-file.png"))); // NOI18N
         textMenu.setText("Text");
 
-        textSplitMenuItem.setText("Split");
+        textSplitMenuItem.setText(bundle.getString("GsplitBaseFrame.textSplitMenuItem.text")); // NOI18N
         textSplitMenuItem.addActionListener(formListener);
         textMenu.add(textSplitMenuItem);
 
-        textJoinMenuItem.setText("Join");
+        textJoinMenuItem.setText(bundle.getString("GsplitBaseFrame.textJoinMenuItem.text")); // NOI18N
         textJoinMenuItem.addActionListener(formListener);
         textMenu.add(textJoinMenuItem);
 
         pdfMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pdf.png"))); // NOI18N
         pdfMenu.setText("PDF");
 
-        pdfSplitMenuItem.setText("Split");
+        pdfSplitMenuItem.setText(bundle.getString("GsplitBaseFrame.pdfSplitMenuItem.text")); // NOI18N
         pdfSplitMenuItem.addActionListener(formListener);
         pdfMenu.add(pdfSplitMenuItem);
 
-        pdfJoinMenuItem.setText("Join");
+        pdfJoinMenuItem.setText(bundle.getString("GsplitBaseFrame.pdfJoinMenuItem.text")); // NOI18N
         pdfJoinMenuItem.addActionListener(formListener);
         pdfMenu.add(pdfJoinMenuItem);
 
         xmlMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/xml.png"))); // NOI18N
         xmlMenu.setText("XML");
 
-        xmlSplitMenuItem.setText("Split");
+        xmlSplitMenuItem.setText(bundle.getString("GsplitBaseFrame.xmlSplitMenuItem.text")); // NOI18N
         xmlSplitMenuItem.addActionListener(formListener);
         xmlMenu.add(xmlSplitMenuItem);
 
-        xmlJoinMenuItem.setText("Join");
+        xmlJoinMenuItem.setText(bundle.getString("GsplitBaseFrame.xmlJoinMenuItem.text")); // NOI18N
         xmlJoinMenuItem.addActionListener(formListener);
         xmlMenu.add(xmlJoinMenuItem);
 
@@ -271,7 +271,7 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         baseDesktopPane.setPreferredSize(new java.awt.Dimension(640, 350));
         getContentPane().add(baseDesktopPane, java.awt.BorderLayout.CENTER);
 
-        fileMenu.setText(bundle.getString("fileMenu.text")); // NOI18N
+        fileMenu.setText(bundle.getString("GsplitBaseFrame.fileMenu.text")); // NOI18N
 
         secureSplitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
         secureSplitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/arrow-split.png"))); // NOI18N
@@ -281,16 +281,16 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
 
         secureJoinMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
         secureJoinMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/arrow-join.png"))); // NOI18N
-        secureJoinMenuItem.setText("Secure Join");
+        secureJoinMenuItem.setText(bundle.getString("GsplitBaseFrame.secureJoinMenuItem.text")); // NOI18N
         secureJoinMenuItem.addActionListener(formListener);
         fileMenu.add(secureJoinMenuItem);
         fileMenu.add(jSeparator1);
 
-        flatSplitMenuItem.setText("Flat Split");
+        flatSplitMenuItem.setText(bundle.getString("GsplitBaseFrame.flatSplitMenuItem.text")); // NOI18N
         flatSplitMenuItem.addActionListener(formListener);
         fileMenu.add(flatSplitMenuItem);
 
-        flatJoinMenuItem.setText("Flat Join");
+        flatJoinMenuItem.setText(bundle.getString("GsplitBaseFrame.flatJoinMenuItem.text")); // NOI18N
         flatJoinMenuItem.addActionListener(formListener);
         fileMenu.add(flatJoinMenuItem);
         fileMenu.add(jSeparator2);
@@ -298,47 +298,47 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
 
         minimize2trayMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.ALT_MASK));
         minimize2trayMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hide.png"))); // NOI18N
-        minimize2trayMenuItem.setText("Minimize to Tray");
+        minimize2trayMenuItem.setText(bundle.getString("GsplitBaseFrame.minimize2trayMenuItem.text")); // NOI18N
         minimize2trayMenuItem.addActionListener(formListener);
         fileMenu.add(minimize2trayMenuItem);
 
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit.png"))); // NOI18N
-        exitMenuItem.setText("Exit");
+        exitMenuItem.setText(bundle.getString("GsplitBaseFrame.exitMenuItem.text")); // NOI18N
         exitMenuItem.addActionListener(formListener);
         fileMenu.add(exitMenuItem);
 
         baseMenuBar.add(fileMenu);
 
-        editMenu.setText("Edit");
+        editMenu.setText(bundle.getString("GsplitBaseFrame.editMenu.text")); // NOI18N
 
         settingsMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/settings.png"))); // NOI18N
-        settingsMenuItem.setText("Settings");
+        settingsMenuItem.setText(bundle.getString("GsplitBaseFrame.settingsMenuItem.text")); // NOI18N
         settingsMenuItem.addActionListener(formListener);
         editMenu.add(settingsMenuItem);
 
         baseMenuBar.add(editMenu);
 
-        viewMenu.setText("View");
+        viewMenu.setText(bundle.getString("GsplitBaseFrame.viewMenu.text")); // NOI18N
 
         showToolbarChkbxMenuItem.setSelected(true);
-        showToolbarChkbxMenuItem.setText("Show Toolbar");
+        showToolbarChkbxMenuItem.setText(bundle.getString("GsplitBaseFrame.showToolbarChkbxMenuItem.text")); // NOI18N
         showToolbarChkbxMenuItem.addActionListener(formListener);
         viewMenu.add(showToolbarChkbxMenuItem);
 
         showStatusbarChkbxMenuItem.setSelected(true);
-        showStatusbarChkbxMenuItem.setText("Show Statusbar");
+        showStatusbarChkbxMenuItem.setText(bundle.getString("GsplitBaseFrame.showStatusbarChkbxMenuItem.text")); // NOI18N
         showStatusbarChkbxMenuItem.addActionListener(formListener);
         viewMenu.add(showStatusbarChkbxMenuItem);
         viewMenu.add(jSeparator9);
 
         showLogMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/file_extension_log.png"))); // NOI18N
-        showLogMenuItem.setText("Show Log");
+        showLogMenuItem.setText(bundle.getString("GsplitBaseFrame.showLogMenuItem.text")); // NOI18N
         showLogMenuItem.addActionListener(formListener);
         viewMenu.add(showLogMenuItem);
 
         exploreLogFolderMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/folder_explore.png"))); // NOI18N
-        exploreLogFolderMenuItem.setText("Open Log Folder");
+        exploreLogFolderMenuItem.setText(bundle.getString("GsplitBaseFrame.exploreLogFolderMenuItem.text")); // NOI18N
         exploreLogFolderMenuItem.addActionListener(formListener);
         viewMenu.add(exploreLogFolderMenuItem);
         viewMenu.add(jSeparator10);
@@ -347,12 +347,12 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         windowsMenu.setText("Windows");
 
         windowsTilesMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/application_view_tile.png"))); // NOI18N
-        windowsTilesMenuItem.setText("Tiles");
+        windowsTilesMenuItem.setText(bundle.getString("GsplitBaseFrame.windowsTilesMenuItem.text")); // NOI18N
         windowsTilesMenuItem.addActionListener(formListener);
         windowsMenu.add(windowsTilesMenuItem);
 
         windowsCascadeMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/application_cascade.png"))); // NOI18N
-        windowsCascadeMenuItem.setText("Cascade");
+        windowsCascadeMenuItem.setText(bundle.getString("GsplitBaseFrame.windowsCascadeMenuItem.text")); // NOI18N
         windowsCascadeMenuItem.addActionListener(formListener);
         windowsMenu.add(windowsCascadeMenuItem);
 
@@ -360,16 +360,16 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
 
         baseMenuBar.add(viewMenu);
 
-        helpMenu.setText("Help");
+        helpMenu.setText(bundle.getString("GsplitBaseFrame.helpMenu.text")); // NOI18N
 
         helpMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         helpMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
-        helpMenuItem.setText("Help");
+        helpMenuItem.setText(bundle.getString("GsplitBaseFrame.helpMenuItem.text")); // NOI18N
         helpMenuItem.addActionListener(formListener);
         helpMenu.add(helpMenuItem);
 
         aboutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/info.png"))); // NOI18N
-        aboutMenuItem.setText("About");
+        aboutMenuItem.setText(bundle.getString("GsplitBaseFrame.aboutMenuItem.text")); // NOI18N
         aboutMenuItem.addActionListener(formListener);
         helpMenu.add(aboutMenuItem);
 
