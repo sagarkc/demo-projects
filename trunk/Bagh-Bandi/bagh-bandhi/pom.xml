@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>net.sf.bagh.bandhi</groupId>
+	<artifactId>bagh-bandhi</artifactId>
+	<version>${release.version}</version>
+	<packaging>pom</packaging>
+
+	<name>bagh-bandhi</name>
+	<url>http://sourceforge.net/p/bagh-bandi</url>
+
+	<properties>
+		<release.version>0.1</release.version>
+        <jdk.version>1.6</jdk.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.test.skip>true</maven.test.skip>
+        <release.dir>../dist</release.dir>
+        <bin.dir>../bin</bin.dir>
+        <help.dir>../help</help.dir>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<modules>
+		<module>bagh-bandhi-core</module>
+		<module>bagh-bandhi-app</module>
+	</modules>
+</project>
