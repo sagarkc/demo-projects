@@ -26,10 +26,26 @@ public class Box {
 	
 	private Player player;
 	private Stack<Player> players;
+	private boolean visited;
+	
 	
 	public Box(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	/**
+	 * @return the visited
+	 */
+	public boolean isVisited() {
+		return visited;
+	}
+
+	/**
+	 * @param visited the visited to set
+	 */
+	public void setVisited(boolean visited) {
+		this.visited = visited;
 	}
 
 	/**
@@ -200,4 +216,14 @@ public class Box {
 		this.bottomRightBox = bottomRightBox;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Box [x=" + x + ", y=" + y + "]";
+	}
+
+	
+	
 }
