@@ -3,7 +3,14 @@
  */
 package net.sf.bagh.bandhi.core.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Stack;
+
+import net.sf.bagh.bandhi.core.activity.Captureable;
+import net.sf.bagh.bandhi.core.model.Animal.AnimalType;
 
 /**
  * 
@@ -15,16 +22,23 @@ import java.util.Stack;
 public class Board {
 
 	private Box[][] boxes = new Box[5][5];
-	private Player[] goats;
-	private Player[] tigers;
-	private Player selectedPlayer;
-	private Player lastMovedPlayer;
-	private Player nextPlayerToMove;
+	private final Goat[] goats;
+	private final Tiger[] tigers;
+	private Animal selectedAnimal;
+	private Animal lastMovedAnimal;
+	private Animal nextAnimalToMove;
+	private Box selectedSourceBox;
+	private Box selectedTargetBox;
+	private List<Captureable> capturedGoats;
+	private List<Captureable> availableGoats;
+	private Map<Animal, Box> animalBoxMap;
 	
-	public Board(Player[] tigers, Player[] goats) {
+	public Board(Tiger[] tigers, Goat[] goats) {
 		this.tigers = tigers;
 		this.goats = goats;
-		
+		this.capturedGoats = new ArrayList<Captureable>(20);
+		this.availableGoats = new ArrayList<Captureable>(20);
+		this.animalBoxMap = new HashMap<Animal, Box>();
 		initBoard();
 	}
 
@@ -45,71 +59,85 @@ public class Board {
 	/**
 	 * @return the goats
 	 */
-	public Player[] getGoats() {
+	public Animal[] getGoats() {
 		return goats;
-	}
-
-	/**
-	 * @param goats the goats to set
-	 */
-	public void setGoats(Player[] goats) {
-		this.goats = goats;
 	}
 
 	/**
 	 * @return the tigers
 	 */
-	public Player[] getTigers() {
+	public Animal[] getTigers() {
 		return tigers;
 	}
 
 	/**
-	 * @param tigers the tigers to set
+	 * @return the selectedAnimal
 	 */
-	public void setTigers(Player[] tigers) {
-		this.tigers = tigers;
+	public Animal getSelectedAnimal() {
+		return selectedAnimal;
 	}
 
 	/**
-	 * @return the selectedPlayer
+	 * @param selectedAnimal the selectedAnimal to set
 	 */
-	public Player getSelectedPlayer() {
-		return selectedPlayer;
+	public void setSelectedAnimal(Animal selectedAnimal) {
+		this.selectedAnimal = selectedAnimal;
 	}
 
 	/**
-	 * @param selectedPlayer the selectedPlayer to set
+	 * @return the lastMovedAnimal
 	 */
-	public void setSelectedPlayer(Player selectedPlayer) {
-		this.selectedPlayer = selectedPlayer;
+	public Animal getLastMovedAnimal() {
+		return lastMovedAnimal;
 	}
 
 	/**
-	 * @return the lastMovedPlayer
+	 * @param lastMovedAnimal the lastMovedAnimal to set
 	 */
-	public Player getLastMovedPlayer() {
-		return lastMovedPlayer;
+	public void setLastMovedAnimal(Animal lastMovedAnimal) {
+		this.lastMovedAnimal = lastMovedAnimal;
 	}
 
 	/**
-	 * @param lastMovedPlayer the lastMovedPlayer to set
+	 * @return the nextAnimalToMove
 	 */
-	public void setLastMovedPlayer(Player lastMovedPlayer) {
-		this.lastMovedPlayer = lastMovedPlayer;
+	public Animal getNextAnimalToMove() {
+		return nextAnimalToMove;
 	}
 
 	/**
-	 * @return the nextPlayerToMove
+	 * @param nextAnimalToMove the nextAnimalToMove to set
 	 */
-	public Player getNextPlayerToMove() {
-		return nextPlayerToMove;
+	public void setNextAnimalToMove(Animal nextAnimalToMove) {
+		this.nextAnimalToMove = nextAnimalToMove;
 	}
 
 	/**
-	 * @param nextPlayerToMove the nextPlayerToMove to set
+	 * @return the selectedSourceBox
 	 */
-	public void setNextPlayerToMove(Player nextPlayerToMove) {
-		this.nextPlayerToMove = nextPlayerToMove;
+	public Box getSelectedSourceBox() {
+		return selectedSourceBox;
+	}
+
+	/**
+	 * @param selectedSourceBox the selectedSourceBox to set
+	 */
+	public void setSelectedSourceBox(Box selectedSourceBox) {
+		this.selectedSourceBox = selectedSourceBox;
+	}
+
+	/**
+	 * @return the selectedTargetBox
+	 */
+	public Box getSelectedTargetBox() {
+		return selectedTargetBox;
+	}
+
+	/**
+	 * @param selectedTargetBox the selectedTargetBox to set
+	 */
+	public void setSelectedTargetBox(Box selectedTargetBox) {
+		this.selectedTargetBox = selectedTargetBox;
 	}
 
 	/**
@@ -138,37 +166,47 @@ public class Board {
 	 * 
 	 */
 	private void putGoats() {
-		Stack<Player> players1 = new Stack<Player>();
+		Stack<Animal> players1 = new Stack<Animal>();
 		for(int i=0; i < 5; i++){
 			players1.push(goats[i]);
+			animalBoxMap.put(goats[i], boxes[1][0]);
+			availableGoats.add(goats[i]);
 		}
-		boxes[1][0].setPlayers(players1);
+		boxes[1][0].setAnimals(players1);
 		
-		Stack<Player> players2 = new Stack<Player>();
+		Stack<Animal> players2 = new Stack<Animal>();
 		for(int i=5; i < 10; i++){
 			players2.push(goats[i]);
+			animalBoxMap.put(goats[i], boxes[1][2]);
+			availableGoats.add(goats[i]);
 		}
-		boxes[1][2].setPlayers(players2);
+		boxes[1][2].setAnimals(players2);
 		
-		Stack<Player> players3 = new Stack<Player>();
+		Stack<Animal> players3 = new Stack<Animal>();
 		for(int i=10; i < 15; i++){
 			players3.push(goats[i]);
+			animalBoxMap.put(goats[i], boxes[3][0]);
+			availableGoats.add(goats[i]);
 		}
-		boxes[3][0].setPlayers(players3);
+		boxes[3][0].setAnimals(players3);
 		
-		Stack<Player> players4 = new Stack<Player>();
+		Stack<Animal> players4 = new Stack<Animal>();
 		for(int i=15; i < 20; i++){
 			players4.push(goats[i]);
+			animalBoxMap.put(goats[i], boxes[3][2]);
+			availableGoats.add(goats[i]);
 		}
-		boxes[1][2].setPlayers(players4);
+		boxes[3][2].setAnimals(players4);
 	}
 
 	/**
 	 * 
 	 */
 	private void putTigers() {
-		boxes[2][1].setPlayer(tigers[0]);
-		boxes[2][3].setPlayer(tigers[1]);
+		boxes[2][1].setAnimal(tigers[0]);
+		animalBoxMap.put(tigers[0], boxes[2][1]);
+		boxes[2][3].setAnimal(tigers[1]);
+		animalBoxMap.put(tigers[1], boxes[2][3]);
 	}
 
 	private void addNaighbour(final Box box){
@@ -259,12 +297,30 @@ public class Board {
 		}
 	}
 	
-	public void movePlayer(Player player, Box toBox){
-		if(player.equals(lastMovedPlayer)){
-			System.out.println("This player is already moved!");
-			return;
+	
+
+	public AnimalType evalute(){
+		// all the goats are captured
+		if(availableGoats.size() == 0 && capturedGoats.size() == 20){
+			return AnimalType.TIGER;
 		}
-		player.moveTo(toBox);
+		Box box1 = animalBoxMap.get(tigers[0]);
+		Box box2 = animalBoxMap.get(tigers[1]);
+		if((null != box1 && !box1.hasEmptyNeighbour())
+				&& (null != box2 && !box2.hasEmptyNeighbour())
+				&& !tigers[0].canCaptureAnyGoat(box1)
+				&& !tigers[1].canCaptureAnyGoat(box2)){
+			return AnimalType.GOAT;
+		}
+		return AnimalType.NONE;
 	}
 
+	/**
+	 * @param i
+	 * @param j
+	 * @return
+	 */
+	public Box getBoxAt(int i, int j) {
+		return boxes[i][j];
+	}
 }

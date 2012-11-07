@@ -3,43 +3,21 @@
  */
 package net.sf.bagh.bandhi.core.model;
 
-import net.sf.bagh.bandhi.core.activity.Movable;
+import net.sf.bagh.bandhi.core.model.Animal.AnimalType;
+
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
  *
  */
-public abstract class Player implements Movable{
+public abstract class Player{
 
-	private char symbol = '-';
 	private String name;
-	private int number;
-	private boolean canCapture;
+	private AnimalType animalType;
 	
-	/**
-	 * 
-	 */
-	public Player() {
-		this("Player_0", 0);
-	}
-
-	public Player(String name, int number) {
+	public Player(String name, AnimalType animalType) {
 		this.name = name;
-		this.number = number;
-	}
-
-	/**
-	 * @return the number
-	 */
-	public int getNumber() {
-		return number;
-	}
-
-	/**
-	 * @param number the number to set
-	 */
-	public void setNumber(int number) {
-		this.number = number;
+		this.animalType = animalType;
 	}
 
 	/**
@@ -57,39 +35,17 @@ public abstract class Player implements Movable{
 	}
 
 	/**
-	 * @return the canCapture
+	 * @return the animalType
 	 */
-	public boolean isCanCapture() {
-		return canCapture;
+	public Animal.AnimalType getAnimalType() {
+		return animalType;
 	}
 
 	/**
-	 * @param canCapture the canCapture to set
+	 * @param animalType the animalType to set
 	 */
-	public void setCanCapture(boolean canCapture) {
-		this.canCapture = canCapture;
-	}
-
-	/**
-	 * @return the symbol
-	 */
-	public char getSymbol() {
-		return symbol;
-	}
-
-	/**
-	 * @param symbol the symbol to set
-	 */
-	public void setSymbol(char symbol) {
-		this.symbol = symbol;
-	}
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Player [symbol=" + symbol + "]";
+	public void setAnimalType(Animal.AnimalType animalType) {
+		this.animalType = animalType;
 	}
 
 	/* (non-Javadoc)
@@ -99,9 +55,9 @@ public abstract class Player implements Movable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result
+				+ ((animalType == null) ? 0 : animalType.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + number;
-		result = prime * result + symbol;
 		return result;
 	}
 
@@ -120,6 +76,9 @@ public abstract class Player implements Movable{
 			return false;
 		}
 		Player other = (Player) obj;
+		if (animalType != other.animalType) {
+			return false;
+		}
 		if (name == null) {
 			if (other.name != null) {
 				return false;
@@ -127,14 +86,17 @@ public abstract class Player implements Movable{
 		} else if (!name.equals(other.name)) {
 			return false;
 		}
-		if (number != other.number) {
-			return false;
-		}
-		if (symbol != other.symbol) {
-			return false;
-		}
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Player [name=" + name + ", animalType=" + animalType + "]";
+	}
+	
+	
 	
 }
