@@ -24,10 +24,20 @@ public class Box {
 	private Box bottomLeftBox;
 	private Box bottomRightBox;
 	
-	private Player player;
-	private Stack<Player> players;
+	private Animal animal;
+	private Stack<Animal> animals;
 	private boolean visited;
 	
+	public enum BoxPosition{
+		TOP,
+		TOP_PEFT,
+		LEFT,
+		BOTTOM_LEFT,
+		BOTTOM, 
+		BOTTOM_RIGHT,
+		RIGHT,
+		TOP_RIGHT
+	}
 	
 	public Box(int x, int y) {
 		this.x = x;
@@ -76,32 +86,34 @@ public class Box {
 		this.y = y;
 	}
 
+
+
 	/**
-	 * @return the player
+	 * @return the animal
 	 */
-	public Player getPlayer() {
-		return player;
+	public Animal getAnimal() {
+		return animal;
 	}
 
 	/**
-	 * @param player the player to set
+	 * @param animal the animal to set
 	 */
-	public void setPlayer(Player player) {
-		this.player = player;
+	public void setAnimal(Animal animal) {
+		this.animal = animal;
 	}
 
 	/**
-	 * @return the players
+	 * @return the animals
 	 */
-	public Stack<Player> getPlayers() {
-		return players;
+	public Stack<Animal> getAnimals() {
+		return animals;
 	}
 
 	/**
-	 * @param players the players to set
+	 * @param animals the animals to set
 	 */
-	public void setPlayers(Stack<Player> players) {
-		this.players = players;
+	public void setAnimals(Stack<Animal> animals) {
+		this.animals = animals;
 	}
 
 	/**
@@ -224,6 +236,41 @@ public class Box {
 		return "Box [x=" + x + ", y=" + y + "]";
 	}
 
+	public boolean putAnimal(Animal animal){
+		return true;
+	}
 	
+	public boolean removeAnimal(Animal animal){
+		return true;
+	}
 	
+	public boolean isEmpty(){
+		if(null != animals && animals.size() > 0)
+			return false;
+		if(null != animal)
+			return false;
+		return true;
+	}
+	
+	public boolean hasEmptyNeighbour(){
+		if(null != topBox && topBox.isEmpty())
+			return true;
+		if(null != leftBox && leftBox.isEmpty())
+			return true;
+		if(null != bottomBox && bottomBox.isEmpty())
+			return true;
+		if(null != rightBox && rightBox.isEmpty())
+			return true;
+		
+		if(null != topLeftBox && topLeftBox.isEmpty())
+			return true;
+		if(null != topRightBox && topRightBox.isEmpty())
+			return true;
+		if(null != bottomLeftBox && bottomLeftBox.isEmpty())
+			return true;
+		if(null != bottomRightBox && bottomRightBox.isEmpty())
+			return true;
+		
+		return false;
+	}
 }

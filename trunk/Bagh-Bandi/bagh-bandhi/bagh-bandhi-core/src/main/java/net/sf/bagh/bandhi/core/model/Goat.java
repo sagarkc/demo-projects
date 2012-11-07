@@ -3,11 +3,13 @@
  */
 package net.sf.bagh.bandhi.core.model;
 
+import net.sf.bagh.bandhi.core.activity.Captureable;
+
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
  * 
  */
-public class Goat extends Player {
+public class Goat extends Animal implements Captureable{
 
 	/**
 	 * 
@@ -30,6 +32,12 @@ public class Goat extends Player {
 	public void moveTo(Box to) {
 		// TODO Auto-generated method stub
 
+	}
+
+	
+	public boolean canBeCaptured(Tiger tiger) {
+		
+		return false;
 	}
 
 }
