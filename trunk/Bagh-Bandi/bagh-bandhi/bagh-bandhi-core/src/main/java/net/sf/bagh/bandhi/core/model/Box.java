@@ -355,4 +355,37 @@ public class Box {
 			return AnimalType.TIGER;
 		return AnimalType.NONE;
 	}
+	
+	public Box getCommonNeighbourOnPath(Box toBox) {
+		if(null == toBox)
+			return null;
+		
+		if(null != topBox && toBox.equals(topBox.topBox)){
+			return topBox;
+		}
+		if(null != leftBox && toBox.equals(leftBox.leftBox)){
+			return leftBox;
+		}
+		if(null != bottomBox && toBox.equals(bottomBox.bottomBox)){
+			return bottomBox;
+		}
+		if(null != rightBox && toBox.equals(rightBox.rightBox)){
+			return rightBox;
+		}
+		
+		if(null != topLeftBox && toBox.equals(topLeftBox.topLeftBox)){
+			return topLeftBox;
+		}
+		if(null != topRightBox && toBox.equals(topRightBox.topRightBox)){
+			return topRightBox;
+		}
+		if(null != bottomLeftBox && toBox.equals(bottomLeftBox.bottomLeftBox)){
+			return bottomLeftBox;
+		}
+		if(null != bottomRightBox && toBox.equals(bottomRightBox.bottomRightBox)){
+			return bottomRightBox;
+		}
+		
+		return null;
+	}
 }

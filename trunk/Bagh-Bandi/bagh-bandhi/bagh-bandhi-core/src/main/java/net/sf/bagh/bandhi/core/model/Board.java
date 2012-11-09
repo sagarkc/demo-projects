@@ -337,6 +337,11 @@ public class Board {
 			box.setBottomBox(boxes[box.getX()][box.getY()+1]);
 			box.setRightBox(boxes[box.getX()+1][box.getY()]);
 		}
+		if(box.getX() == 4 && box.getY() == 4){
+			box.setTopBox(boxes[box.getX()][box.getY()-1]);
+			box.setLeftBox(boxes[box.getX()-1][box.getY()]);
+			box.setTopLeftBox(boxes[box.getX()-1][box.getY()-1]);
+		} 
 	}
 	
 	
@@ -365,4 +370,39 @@ public class Board {
 	public Box getBoxAt(int i, int j) {
 		return boxes[i][j];
 	}
+	
+	public boolean move(Box fromBox, Box toBox) {
+		boolean success = false;
+		if(null != fromBox && null != toBox){
+			if(fromBox.getAnimals() != null && fromBox.getAnimals().size() > 0){
+				Animal animal = fromBox.getAnimals().pop();
+				toBox.setAnimal(animal);
+				success = true;
+			} else {
+				Animal animal = fromBox.getAnimal();
+				toBox.setAnimal(animal);
+				fromBox.setAnimal(null);
+				success = true;
+			}
+			System.out.println("Moved from " + fromBox + " To " + toBox);
+		}
+		return success;
+	}
+	
+	public List<Animal> findAllCapturableAnimals(Box box){
+		List<Animal> animals = new ArrayList<Animal>();
+		if(null != box.getAnimals() && box.getAnimals().size() > 0){
+			return animals;
+		}
+		Animal animal = box.getAnimal();
+		if(null != animal && animal instanceof Tiger){
+			
+		}
+		
+		return animals;
+	}
 }
+
+
+
+

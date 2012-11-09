@@ -10,13 +10,14 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.ImageIcon;
 
+import net.sf.bagh.bandhi.core.activity.Captureable;
 import net.sf.bagh.bandhi.core.model.Goat;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
  *
  */
-public class UIGoat extends Goat implements MouseListener, MouseMotionListener, Drawable {
+public class UIGoat extends Goat implements MouseListener, MouseMotionListener, Drawable, Captureable {
 
 	public static final int WIDTH = 48;
 	public static final int HEIGHT = 48;
