@@ -141,9 +141,51 @@ public class Board {
 	}
 
 	/**
+	 * @return the capturedGoats
+	 */
+	public List<Captureable> getCapturedGoats() {
+		return capturedGoats;
+	}
+
+	/**
+	 * @param capturedGoats the capturedGoats to set
+	 */
+	public void setCapturedGoats(List<Captureable> capturedGoats) {
+		this.capturedGoats = capturedGoats;
+	}
+
+	/**
+	 * @return the availableGoats
+	 */
+	public List<Captureable> getAvailableGoats() {
+		return availableGoats;
+	}
+
+	/**
+	 * @param availableGoats the availableGoats to set
+	 */
+	public void setAvailableGoats(List<Captureable> availableGoats) {
+		this.availableGoats = availableGoats;
+	}
+
+	/**
+	 * @return the animalBoxMap
+	 */
+	public Map<Animal, Box> getAnimalBoxMap() {
+		return animalBoxMap;
+	}
+
+	/**
+	 * @param animalBoxMap the animalBoxMap to set
+	 */
+	public void setAnimalBoxMap(Map<Animal, Box> animalBoxMap) {
+		this.animalBoxMap = animalBoxMap;
+	}
+
+	/**
 	 * 
 	 */
-	private void initBoard() {
+	protected void initBoard() {
 		// init the boxes
 		for(int i=0; i<5; i++){
 			for(int j=0; j<5; j++){
@@ -165,7 +207,7 @@ public class Board {
 	/**
 	 * 
 	 */
-	private void putGoats() {
+	protected void putGoats() {
 		Stack<Animal> players1 = new Stack<Animal>();
 		for(int i=0; i < 5; i++){
 			players1.push(goats[i]);
@@ -202,14 +244,14 @@ public class Board {
 	/**
 	 * 
 	 */
-	private void putTigers() {
+	protected void putTigers() {
 		boxes[2][1].setAnimal(tigers[0]);
 		animalBoxMap.put(tigers[0], boxes[2][1]);
 		boxes[2][3].setAnimal(tigers[1]);
 		animalBoxMap.put(tigers[1], boxes[2][3]);
 	}
 
-	private void addNaighbour(final Box box){
+	protected void addNaighbour(final Box box){
 		if(null == box){
 			return;
 		}

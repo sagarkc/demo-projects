@@ -3,7 +3,11 @@
  */
 package net.sf.bagh.bandhi.core.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
+
+import net.sf.bagh.bandhi.core.model.Animal.AnimalType;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
@@ -272,5 +276,51 @@ public class Box {
 			return true;
 		
 		return false;
+	}
+	
+	public List<Box> getEmptyNeighbours(){
+		List<Box> boxs = new ArrayList<Box>();
+		if(null != topBox && topBox.isEmpty())
+			boxs.add(topBox);
+		if(null != leftBox && leftBox.isEmpty())
+			boxs.add(leftBox);
+		if(null != bottomBox && bottomBox.isEmpty())
+			boxs.add(bottomBox);
+		if(null != rightBox && rightBox.isEmpty())
+			boxs.add(rightBox);
+		
+		if(null != topLeftBox && topLeftBox.isEmpty())
+			boxs.add(topLeftBox);
+		if(null != topRightBox && topRightBox.isEmpty())
+			boxs.add(topRightBox);
+		if(null != bottomLeftBox && bottomLeftBox.isEmpty())
+			boxs.add(bottomLeftBox);
+		if(null != bottomRightBox && bottomRightBox.isEmpty())
+			boxs.add(bottomRightBox);
+		
+		return boxs;
+	}
+	
+	public boolean hasAnimal(){
+		if(null != animals && animals.size() > 0)
+			return true;
+		return (null != animal);
+	}
+	
+	public AnimalType getAnimalType(){
+		if(!hasAnimal())
+			return AnimalType.NONE;
+		if(null != animals && animals.size() > 0){
+			Animal animal = animals.peek();
+			if(null != animal && animal instanceof Goat)
+				return AnimalType.GOAT;
+			if(null != animal && animal instanceof Tiger)
+				return AnimalType.TIGER;
+		}
+		if(null != animal && animal instanceof Goat)
+			return AnimalType.GOAT;
+		if(null != animal && animal instanceof Tiger)
+			return AnimalType.TIGER;
+		return AnimalType.NONE;
 	}
 }
