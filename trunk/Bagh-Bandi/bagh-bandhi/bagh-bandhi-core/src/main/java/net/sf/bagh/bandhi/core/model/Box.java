@@ -244,8 +244,11 @@ public class Box {
 		return true;
 	}
 	
-	public boolean removeAnimal(Animal animal){
-		return true;
+	
+
+	public Animal removeAnimal(Animal animal){
+		
+		return animal;
 	}
 	
 	public boolean isEmpty(){
@@ -273,6 +276,35 @@ public class Box {
 		if(null != bottomLeftBox && bottomLeftBox.isEmpty())
 			return true;
 		if(null != bottomRightBox && bottomRightBox.isEmpty())
+			return true;
+		
+		return false;
+	}
+	
+	public boolean isEmptyNeighbour(Box other){
+		if(null == other){
+			return false;
+		}
+		if(!other.isEmpty()){
+			return false;
+		}
+			
+		if(other.equals(topBox))
+			return true;
+		if(other.equals(leftBox))
+			return true;
+		if(other.equals(bottomBox))
+			return true;
+		if(other.equals(rightBox))
+			return true;
+		
+		if(other.equals(topLeftBox))
+			return true;
+		if(other.equals(topRightBox))
+			return true;
+		if(other.equals(bottomLeftBox))
+			return true;
+		if(other.equals(bottomRightBox))
 			return true;
 		
 		return false;

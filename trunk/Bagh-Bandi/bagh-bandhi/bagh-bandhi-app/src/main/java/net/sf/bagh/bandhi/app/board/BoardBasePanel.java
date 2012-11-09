@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -21,6 +22,7 @@ import net.sf.bagh.bandhi.core.model.Board;
 import net.sf.bagh.bandhi.core.model.Box;
 import net.sf.bagh.bandhi.core.model.Goat;
 import net.sf.bagh.bandhi.core.model.Human;
+import net.sf.bagh.bandhi.core.model.Player;
 import net.sf.bagh.bandhi.core.model.Tiger;
 import net.sf.bagh.bandhi.core.model.Animal.AnimalType;
 
@@ -46,8 +48,12 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 	// Margin  
 	
 	private UIBoard gameBoard ;
-	
 	private UiBox previousSelectedBox;
+	private boolean canBeMoved = false;
+	private Human firstPlayer;
+	private Human secondPlayer;
+	private Player currentPlayer;
+	
 	/**
 	 * 
 	 */
@@ -63,8 +69,8 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 	 * 
 	 */
 	private void initGame() {
-		Human firstPlayer = new Human("A", AnimalType.TIGER);
-		Human secondPlayer = new Human("B", AnimalType.GOAT);
+		firstPlayer = new Human("A", AnimalType.TIGER);
+		secondPlayer = new Human("B", AnimalType.GOAT);
 		UITiger[] tigers = new UITiger[2];
 		tigers[0] = new UITiger("T1", 1);
 		tigers[1] = new UITiger("T2", 2);
@@ -74,7 +80,7 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 			goats[i] = new UIGoat("G", i+1);
 		}
 		gameBoard = new UIBoard(tigers, goats);
-		
+		currentPlayer = firstPlayer;
 	}
 
 	private void initComponents() {
@@ -121,7 +127,8 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 		x1 = y1 = LEFT_MARGIN;
 		x2 = x1 + MAX_WIDTH;
 		y2 = y1;
-		g.setColor(Color.GREEN);
+		//g.setColor(Color.GREEN);
+		g.setColor(new Color(0, 153, 51));
 		for (int i = 0; i <= 5; i++) {
 			g.drawLine(x1, y1+(i * BOX_WIDTH), x2, y2+(i * BOX_WIDTH));
 		}
@@ -158,9 +165,10 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 	public void mousePressed(MouseEvent e) {
 		int x = e.getX();
 		int y = e.getY();
-		if(x >= 20 && x <= 670 && y >= 20 && y <= 670){
+		/*if(x >= 20 && x <= 670 && y >= 20 && y <= 670){
 			repaint();
-		}
+		}*/
+		
 	}
 
 	/* (non-Javadoc)
@@ -169,12 +177,13 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 	public void mouseReleased(MouseEvent e) {
 		int x = e.getX();
 		int y = e.getY();
-		if(x >= 20 && x <= 670 && y >= 20 && y <= 670){
+		/*if(x >= 20 && x <= 670 && y >= 20 && y <= 670){
 			paintLocation(e.getX(), e.getY());
-		}
+		}*/
 		
 		final UiBox box = gameBoard.getSelectedBox(x, y);
-		if(null != box && box.hasAnimal()){
+		// select the box
+		if(null != box && box.hasAnimal() && box.getAnimalType() == currentPlayer.getAnimalType()){
 			if(null != previousSelectedBox){
 				previousSelectedBox.setBgImage(new ImageIcon(getClass().getResource(
 						"/images/box_grey-128x128.png")) );
@@ -195,20 +204,59 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 							"/images/box_green-128x128.png")) );
 					((UiBox)neighbour).draw(getGraphics());
 				}
-				
-				/*box.setBgImage(new ImageIcon(getClass().getResource(
-						"/images/box_green-128x128.png")) );*/
 			} else if(AnimalType.TIGER == box.getAnimalType()){
 				for (Box neighbour : selectedNeighbours) {
 					((UiBox)neighbour).setBgImage(new ImageIcon(getClass().getResource(
 							"/images/box_red-128x128.png")) );
 					((UiBox)neighbour).draw(getGraphics());
 				}
-				/*box.setBgImage(new ImageIcon(getClass().getResource(
-						"/images/box_orange-128x128.png")) );*/
 			} 
 			box.draw(getGraphics());
 			previousSelectedBox = box;
+		}
+		// clicked on an empty box
+		else if(null != box && null != previousSelectedBox
+				&& box.isEmpty() && !box.equals(previousSelectedBox)){
+			
+			// if the animal can be moved to this box
+			if(gameBoard.canBeMoved(previousSelectedBox, box)){
+				// do move
+				gameBoard.move(previousSelectedBox, box);
+				previousSelectedBox.draw(getGraphics());
+				previousSelectedBox.setBgImage(new ImageIcon(getClass().getResource(
+						"/images/box_grey-128x128.png")) );
+				box.setBgImage(new ImageIcon(getClass().getResource(
+						"/images/box_grey-128x128.png")) );
+				if(null != previousSelectedBox){
+					List<Box> previousNeighbours = previousSelectedBox.getEmptyNeighbours();
+					for (Box neighbour : previousNeighbours) {
+						((UiBox)neighbour).setBgImage(new ImageIcon(getClass().getResource(
+								"/images/box_grey-128x128.png")) );
+						((UiBox)neighbour).draw(getGraphics());
+					}
+				}
+				previousSelectedBox.draw(getGraphics());
+				box.draw(getGraphics());
+				previousSelectedBox = null;
+				currentPlayer = secondPlayer;
+			} else {
+				JOptionPane.showMessageDialog(this, "invalid move");
+			}
+		}
+		// clicked on board
+		else if(box == null ) {
+			if(null != previousSelectedBox){
+				previousSelectedBox.setBgImage(new ImageIcon(getClass().getResource(
+						"/images/box_grey-128x128.png")) );
+				List<Box> previousNeighbours = previousSelectedBox.getEmptyNeighbours();
+				for (Box neighbour : previousNeighbours) {
+					((UiBox)neighbour).setBgImage(new ImageIcon(getClass().getResource(
+							"/images/box_grey-128x128.png")) );
+					((UiBox)neighbour).draw(getGraphics());
+				}
+				previousSelectedBox.draw(getGraphics());
+			}
+			previousSelectedBox = null;
 		}
 	}
 
