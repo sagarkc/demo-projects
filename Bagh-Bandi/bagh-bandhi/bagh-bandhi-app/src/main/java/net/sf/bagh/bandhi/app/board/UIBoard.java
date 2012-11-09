@@ -4,16 +4,13 @@
 package net.sf.bagh.bandhi.app.board;
 
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.Stack;
 
 import net.sf.bagh.bandhi.core.model.Animal;
 import net.sf.bagh.bandhi.core.model.Board;
-import net.sf.bagh.bandhi.core.model.Box;
 import net.sf.bagh.bandhi.core.model.Goat;
 import net.sf.bagh.bandhi.core.model.Tiger;
+import net.sf.bagh.bandhi.core.model.Animal.AnimalType;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
@@ -159,6 +156,13 @@ public class UIBoard extends Board implements Drawable {
 		if(fromBox.isEmptyNeighbour(toBox)){
 			return true;
 		}
+		if(AnimalType.TIGER == fromBox.getAnimalType()){
+			UiBox uiBox = (UiBox) fromBox.getCommonNeighbourOnPath(toBox);
+			if(null != uiBox && AnimalType.GOAT == uiBox.getAnimalType()){
+				return true;
+			}
+		}
+		
 		return false;
 	}
 
@@ -170,18 +174,8 @@ public class UIBoard extends Board implements Drawable {
 	public boolean move(UiBox fromBox, UiBox toBox) {
 		boolean success = false;
 		if(null != fromBox && null != toBox){
-			if(fromBox.getAnimals() != null && fromBox.getAnimals().size() > 0){
-				Animal animal = fromBox.getAnimals().pop();
-				toBox.setAnimal(animal);
-				if(null != animal && animal instanceof UITiger){
-					((UITiger)animal).setX(toBox.getPosition().x + (UiBox.WIDTH / 2) - (UITiger.WIDTH / 2));
-					((UITiger)animal).setY(toBox.getPosition().y + (UiBox.HEIGHT / 2) - (UITiger.HEIGHT / 2));
-				}
-				else if(null != animal && animal instanceof UIGoat){
-					((UIGoat)animal).setX(toBox.getPosition().x + (UiBox.WIDTH / 2) - (UIGoat.WIDTH / 2));
-					((UIGoat)animal).setY(toBox.getPosition().y + (UiBox.HEIGHT / 2) - (UIGoat.HEIGHT / 2));
-				}
-			} else {
+			UiBox commonOnPath = (UiBox) fromBox.getCommonNeighbourOnPath(toBox);
+			if(AnimalType.TIGER == fromBox.getAnimalType()){
 				Animal animal = fromBox.getAnimal();
 				toBox.setAnimal(animal);
 				fromBox.setAnimal(null);
@@ -189,12 +183,40 @@ public class UIBoard extends Board implements Drawable {
 					((UITiger)animal).setX(toBox.getPosition().x + (UiBox.WIDTH / 2) - (UITiger.WIDTH / 2));
 					((UITiger)animal).setY(toBox.getPosition().y + (UiBox.HEIGHT / 2) - (UITiger.HEIGHT / 2));
 				}
-				else if(null != animal && animal instanceof UIGoat){
-					((UIGoat)animal).setX(toBox.getPosition().x + (UiBox.WIDTH / 2) - (UIGoat.WIDTH / 2));
-					((UIGoat)animal).setY(toBox.getPosition().y + (UiBox.HEIGHT / 2) - (UIGoat.HEIGHT / 2));
+				if(null != commonOnPath && AnimalType.GOAT == commonOnPath.getAnimalType()){
+					if(commonOnPath.getAnimals() != null && commonOnPath.getAnimals().size() > 0){
+						Goat goat = (Goat) commonOnPath.getAnimals().pop();
+						getCapturedGoats().add(goat);
+					} else {
+						Goat goat = (Goat) commonOnPath.getAnimal();
+						commonOnPath.setAnimal(null);
+						getCapturedGoats().add(goat);
+					}
+				}
+				success = true;
+			} else if(AnimalType.GOAT == fromBox.getAnimalType()){
+				if(fromBox.getAnimals() != null && fromBox.getAnimals().size() > 0){
+					Animal animal = fromBox.getAnimals().pop();
+					toBox.setAnimal(animal);
+					if(null != animal && animal instanceof UIGoat){
+						((UIGoat)animal).setX(toBox.getPosition().x + (UiBox.WIDTH / 2) - (UIGoat.WIDTH / 2));
+						((UIGoat)animal).setY(toBox.getPosition().y + (UiBox.HEIGHT / 2) - (UIGoat.HEIGHT / 2));
+					}
+					success = true;
+				} else {
+					Animal animal = fromBox.getAnimal();
+					toBox.setAnimal(animal);
+					fromBox.setAnimal(null);
+					if(null != animal && animal instanceof UIGoat){
+						((UIGoat)animal).setX(toBox.getPosition().x + (UiBox.WIDTH / 2) - (UIGoat.WIDTH / 2));
+						((UIGoat)animal).setY(toBox.getPosition().y + (UiBox.HEIGHT / 2) - (UIGoat.HEIGHT / 2));
+					}
+					success = true;
 				}
 			}
-			System.out.println("Moved from " + fromBox + " To " + toBox);
+			
+			if(success)
+				System.out.println("Moved from " + fromBox + " To " + toBox);
 		}
 		return success;
 	}

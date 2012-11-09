@@ -133,4 +133,9 @@ public class UiBox extends Box implements Drawable{
 		
 	}
 
+
+	/*protected UiBox getCommonNeighbourOnPath(UiBox toBox) {
+		return super.getCommonNeighbourOnPath(toBox);
+	}*/
+
 }

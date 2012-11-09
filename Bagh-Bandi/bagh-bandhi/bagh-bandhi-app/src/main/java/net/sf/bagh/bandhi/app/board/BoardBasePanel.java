@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -18,13 +19,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-import net.sf.bagh.bandhi.core.model.Board;
+import net.sf.bagh.bandhi.core.activity.Captureable;
+import net.sf.bagh.bandhi.core.model.Animal;
+import net.sf.bagh.bandhi.core.model.Animal.AnimalType;
 import net.sf.bagh.bandhi.core.model.Box;
-import net.sf.bagh.bandhi.core.model.Goat;
 import net.sf.bagh.bandhi.core.model.Human;
 import net.sf.bagh.bandhi.core.model.Player;
 import net.sf.bagh.bandhi.core.model.Tiger;
-import net.sf.bagh.bandhi.core.model.Animal.AnimalType;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
@@ -42,9 +43,14 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 	
 	private static final int LEFT_MARGIN = 20;
 	private static final int RIGHT_MARGIN = 20;
-	private static final int MAX_HEIGHT = 650;
-	private static final int MAX_WIDTH = 650;
+	private static final int GRID_HEIGHT = 650;
+	private static final int GRID_WIDTH = 650;
 	private static final int BOX_WIDTH = 130;
+	private static final int INFO_BOX_WIDTH = 100;
+	private static final int INFO_BOX_HEIGHT = 650;
+	private static final int INFO_BOX_X = 690;
+	private static final int INFO_BOX_Y = 20;
+	private static final int TEXT_HEIGHT = 20;
 	// Margin  
 	
 	private UIBoard gameBoard ;
@@ -106,7 +112,7 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(new ImageIcon(getClass().getResource(
-				"/images/wood-plank.jpg")).getImage(), 20, 20, 650, 650, null);
+				"/images/wood-plank.jpg")).getImage(), 20, 20, GRID_WIDTH, GRID_HEIGHT, null);
 		drawGrid(g2d);
 		drawBoard(g2d);
 	}
@@ -130,7 +136,7 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 	private void drawGrid(Graphics2D g){
 		int x1, y1, x2, y2;
 		x1 = y1 = LEFT_MARGIN;
-		x2 = x1 + MAX_WIDTH;
+		x2 = x1 + GRID_WIDTH;
 		y2 = y1;
 		//g.setColor(Color.GREEN);
 		g.setColor(new Color(0, 153, 51));
@@ -140,14 +146,24 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 		
 		x1 = x2 = LEFT_MARGIN;
 		y1 = x1 ;
-		y2 = y1 + MAX_WIDTH;
+		y2 = y1 + GRID_WIDTH;
 		for (int j = 0; j <= 5; j++) {
 			g.drawLine(x1+(j * BOX_WIDTH), y1, x2+(j * BOX_WIDTH), y2);
 		}
 		
 		g.setColor(Color.PINK);
-		g.drawRect(690, 20, 100, 650);
+		g.drawRect(INFO_BOX_X, INFO_BOX_Y, INFO_BOX_WIDTH, INFO_BOX_HEIGHT);
 		
+		g.setColor(Color.LIGHT_GRAY);
+		g.drawString("Tigers Blocked", INFO_BOX_X+5, INFO_BOX_Y+TEXT_HEIGHT );
+		g.drawRect(INFO_BOX_X+30, INFO_BOX_Y+(int)(TEXT_HEIGHT*1.5)+2, INFO_BOX_WIDTH-35, TEXT_HEIGHT+10);
+		g.drawString("Goats Killed", INFO_BOX_X+5, INFO_BOX_Y+(int)(TEXT_HEIGHT*4)+2);
+		g.drawRect(INFO_BOX_X+30, INFO_BOX_Y+(int)(TEXT_HEIGHT*4.5)+2, INFO_BOX_WIDTH-35, TEXT_HEIGHT+10);
+		
+		g.setColor(Color.PINK);
+		g.drawLine(INFO_BOX_X, INFO_BOX_Y+(int)(TEXT_HEIGHT*6)+5, 
+				INFO_BOX_X+INFO_BOX_WIDTH, INFO_BOX_Y+(int)(TEXT_HEIGHT*6)+5
+				);
 	}
 	
 	void paintLocation(int x, int y){
@@ -173,7 +189,7 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 		/*if(x >= 20 && x <= 670 && y >= 20 && y <= 670){
 			repaint();
 		}*/
-		
+		//repaint();
 	}
 
 	/* (non-Javadoc)
@@ -219,38 +235,59 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 			box.draw(getGraphics());
 			previousSelectedBox = box;
 		}
-		// clicked on an empty box
+		// clicked on an empty box 
 		else if(null != box && null != previousSelectedBox
 				&& box.isEmpty() && !box.equals(previousSelectedBox)){
-			
+			AnimalType winer = gameBoard.evalute();
 			// if the animal can be moved to this box
-			if(gameBoard.canBeMoved(previousSelectedBox, box)){
+			if(gameBoard.canBeMoved(previousSelectedBox, box) && AnimalType.NONE == winer){
 				// do move
-				gameBoard.move(previousSelectedBox, box);
-				previousSelectedBox.draw(getGraphics());
-				previousSelectedBox.setBgImage(new ImageIcon(getClass().getResource(
-						"/images/box_grey-128x128.png")) );
-				box.setBgImage(new ImageIcon(getClass().getResource(
-						"/images/box_grey-128x128.png")) );
-				if(null != previousSelectedBox){
-					List<Box> previousNeighbours = previousSelectedBox.getEmptyNeighbours();
-					for (Box neighbour : previousNeighbours) {
-						((UiBox)neighbour).setBgImage(new ImageIcon(getClass().getResource(
-								"/images/box_grey-128x128.png")) );
-						((UiBox)neighbour).draw(getGraphics());
+				boolean moved = gameBoard.move(previousSelectedBox, box);
+				if(moved){
+					winer = gameBoard.evalute();
+					previousSelectedBox.draw(getGraphics());
+					previousSelectedBox.setBgImage(new ImageIcon(getClass().getResource(
+							"/images/box_grey-128x128.png")) );
+					box.setBgImage(new ImageIcon(getClass().getResource(
+							"/images/box_grey-128x128.png")) );
+					if(null != previousSelectedBox){
+						List<Box> previousNeighbours = previousSelectedBox.getEmptyNeighbours();
+						for (Box neighbour : previousNeighbours) {
+							((UiBox)neighbour).setBgImage(new ImageIcon(getClass().getResource(
+									"/images/box_grey-128x128.png")) );
+							((UiBox)neighbour).draw(getGraphics());
+						}
 					}
+					previousSelectedBox.draw(getGraphics());
+					box.draw(getGraphics());
+					previousSelectedBox = null;
+					boolean hasNextMove = false;
+					/*if(AnimalType.TIGER == box.getAnimalType()){
+						Tiger tiger = (Tiger) box.getAnimal();
+						tiger.getAllCaptureableGoats(box);
+						if(tiger.canCaptureAnyGoat(box)){
+							hasNextMove = true;
+						}
+					}*/
+					if(!hasNextMove){
+						if(currentPlayerIndex == 0){
+							currentPlayerIndex = 1;
+						} else if(currentPlayerIndex == 1){
+							currentPlayerIndex = 0;
+						}
+						currentPlayer = players[currentPlayerIndex];
+					}
+					drawCapturedAnimals(gameBoard.getCapturedGoats());
+					if(AnimalType.NONE != winer)
+						JOptionPane.showMessageDialog(this, "Winer is : " + winer);
+				} else {
+					JOptionPane.showMessageDialog(this, "Move Failed");
 				}
-				previousSelectedBox.draw(getGraphics());
-				box.draw(getGraphics());
-				previousSelectedBox = null;
-				if(currentPlayerIndex == 0){
-					currentPlayerIndex = 1;
-				} else if(currentPlayerIndex == 1){
-					currentPlayerIndex = 0;
-				}
-				currentPlayer = players[currentPlayerIndex];
 			} else {
-				JOptionPane.showMessageDialog(this, "invalid move");
+				if(AnimalType.NONE != winer)
+					JOptionPane.showMessageDialog(this, "Winer is : " + winer);
+				else 
+					JOptionPane.showMessageDialog(this, "invalid move");
 			}
 		}
 		// clicked on board
@@ -268,6 +305,33 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 			}
 			previousSelectedBox = null;
 		}
+	}
+
+	private void drawCapturedAnimals(List<Captureable> capturedGoats) {
+		Graphics2D g = (Graphics2D) getGraphics();
+		List<Captureable> animals = gameBoard.getCapturedGoats();
+		if(null != animals){
+			for (int i = 0; i < animals.size(); i++) {
+				if(null != animals.get(i) && animals.get(i) instanceof UIGoat){
+					UIGoat goat = (UIGoat) animals.get(i);
+					goat.setX(INFO_BOX_X + (INFO_BOX_WIDTH / 2) - (UIGoat.WIDTH / 2));
+					goat.setY(INFO_BOX_Y + (INFO_BOX_HEIGHT - ((i+1) * UIGoat.HEIGHT/2) ) - 25);
+					goat.draw(g);
+				}
+			}
+			g.setColor(Color.BLACK);
+			g.fillRect(INFO_BOX_X+30+1, INFO_BOX_Y+(int)(TEXT_HEIGHT*4.5)+3, INFO_BOX_WIDTH-36, TEXT_HEIGHT+9);
+			g.setColor(Color.BLUE);
+			g.drawString("" + animals.size(), INFO_BOX_X+35, INFO_BOX_Y+(int)(TEXT_HEIGHT*5.5)+3 );
+		}
+		
+		
+		g.setColor(Color.BLACK);
+		g.fillRect(INFO_BOX_X+30+1, INFO_BOX_Y+(int)(TEXT_HEIGHT*1.5)+3, INFO_BOX_WIDTH-36, TEXT_HEIGHT+9);
+		g.setColor(Color.BLUE);
+		g.drawString("0", INFO_BOX_X+35, INFO_BOX_Y+(int)(TEXT_HEIGHT*2.5)+3 );
+		
+		
 	}
 
 	/* (non-Javadoc)
