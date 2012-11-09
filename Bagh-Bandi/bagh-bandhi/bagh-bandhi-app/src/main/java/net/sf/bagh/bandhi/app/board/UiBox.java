@@ -43,35 +43,6 @@ public class UiBox extends Box implements Drawable{
 	}
 
 
-
-	public void draw(Graphics g) {
-		if(g == null)
-			return;
-		g.drawImage(bgImage.getImage(), position.x, position.y, 128, 128, null);
-		Stack<Animal> animals = getAnimals();
-		if(null != animals && animals.size() > 0){
-			Animal animal = animals.peek();
-			if(null != animal){
-				if(animal instanceof UITiger){
-					((UITiger) animal).draw(g);
-				}
-				else if(animal instanceof UIGoat){
-					((UIGoat) animal).draw(g);
-				}
-			}
-		}
-		Animal animal = getAnimal();
-		if(null != animal){
-			if(animal instanceof UITiger){
-				((UITiger) animal).draw(g);
-			}
-			else if(animal instanceof UIGoat){
-				((UIGoat) animal).draw(g);
-			}
-		}
-	}
-
-
 	/**
 	 * @return the position
 	 */
@@ -126,6 +97,40 @@ public class UiBox extends Box implements Drawable{
 	 */
 	public void setBorderColor(Color borderColor) {
 		this.borderColor = borderColor;
+	}
+
+	public void draw(Graphics g) {
+		if(g == null)
+			return;
+		g.drawImage(bgImage.getImage(), position.x, position.y, 128, 128, null);
+		Stack<Animal> animals = getAnimals();
+		if(null != animals && animals.size() > 0){
+			Animal animal = animals.peek();
+			if(null != animal){
+				if(animal instanceof UITiger){
+					((UITiger) animal).draw(g);
+				}
+				else if(animal instanceof UIGoat){
+					((UIGoat) animal).draw(g);
+				}
+			}
+		}
+		Animal animal = getAnimal();
+		if(null != animal){
+			if(animal instanceof UITiger){
+				((UITiger) animal).draw(g);
+			}
+			else if(animal instanceof UIGoat){
+				((UIGoat) animal).draw(g);
+			}
+		}
+	}
+
+	/**
+	 * @param graphics
+	 */
+	public void drawAll(Graphics g) {
+		
 	}
 
 }

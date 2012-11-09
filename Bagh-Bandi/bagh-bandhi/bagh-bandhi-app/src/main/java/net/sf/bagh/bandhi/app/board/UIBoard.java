@@ -149,4 +149,54 @@ public class UIBoard extends Board implements Drawable {
 		return null;
 	}
 
+
+	/**
+	 * @param previousSelectedBox
+	 * @param box
+	 * @return
+	 */
+	public boolean canBeMoved(UiBox fromBox, UiBox toBox) {
+		if(fromBox.isEmptyNeighbour(toBox)){
+			return true;
+		}
+		return false;
+	}
+
+
+	/**
+	 * @param previousSelectedBox
+	 * @param box
+	 */
+	public boolean move(UiBox fromBox, UiBox toBox) {
+		boolean success = false;
+		if(null != fromBox && null != toBox){
+			if(fromBox.getAnimals() != null && fromBox.getAnimals().size() > 0){
+				Animal animal = fromBox.getAnimals().pop();
+				toBox.setAnimal(animal);
+				if(null != animal && animal instanceof UITiger){
+					((UITiger)animal).setX(toBox.getPosition().x + (UiBox.WIDTH / 2) - (UITiger.WIDTH / 2));
+					((UITiger)animal).setY(toBox.getPosition().y + (UiBox.HEIGHT / 2) - (UITiger.HEIGHT / 2));
+				}
+				else if(null != animal && animal instanceof UIGoat){
+					((UIGoat)animal).setX(toBox.getPosition().x + (UiBox.WIDTH / 2) - (UIGoat.WIDTH / 2));
+					((UIGoat)animal).setY(toBox.getPosition().y + (UiBox.HEIGHT / 2) - (UIGoat.HEIGHT / 2));
+				}
+			} else {
+				Animal animal = fromBox.getAnimal();
+				toBox.setAnimal(animal);
+				fromBox.setAnimal(null);
+				if(null != animal && animal instanceof UITiger){
+					((UITiger)animal).setX(toBox.getPosition().x + (UiBox.WIDTH / 2) - (UITiger.WIDTH / 2));
+					((UITiger)animal).setY(toBox.getPosition().y + (UiBox.HEIGHT / 2) - (UITiger.HEIGHT / 2));
+				}
+				else if(null != animal && animal instanceof UIGoat){
+					((UIGoat)animal).setX(toBox.getPosition().x + (UiBox.WIDTH / 2) - (UIGoat.WIDTH / 2));
+					((UIGoat)animal).setY(toBox.getPosition().y + (UiBox.HEIGHT / 2) - (UIGoat.HEIGHT / 2));
+				}
+			}
+			System.out.println("Moved from " + fromBox + " To " + toBox);
+		}
+		return success;
+	}
+
 }

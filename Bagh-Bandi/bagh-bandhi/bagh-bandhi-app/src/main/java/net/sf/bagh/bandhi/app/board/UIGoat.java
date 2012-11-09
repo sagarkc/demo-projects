@@ -18,6 +18,8 @@ import net.sf.bagh.bandhi.core.model.Goat;
  */
 public class UIGoat extends Goat implements MouseListener, MouseMotionListener, Drawable {
 
+	public static final int WIDTH = 48;
+	public static final int HEIGHT = 48;
 	private int x, y;
 	private ImageIcon bgImage = new ImageIcon(getClass().getResource(
 			"/images/circle_blue-48x48.png"));
