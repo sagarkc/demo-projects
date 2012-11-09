@@ -53,6 +53,9 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 	private Human firstPlayer;
 	private Human secondPlayer;
 	private Player currentPlayer;
+	private Player[] players = new Player[2];
+	private int currentPlayerIndex = 0;
+	
 	
 	/**
 	 * 
@@ -70,7 +73,9 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 	 */
 	private void initGame() {
 		firstPlayer = new Human("A", AnimalType.TIGER);
+		players[0] = firstPlayer;
 		secondPlayer = new Human("B", AnimalType.GOAT);
+		players[1] = secondPlayer;
 		UITiger[] tigers = new UITiger[2];
 		tigers[0] = new UITiger("T1", 1);
 		tigers[1] = new UITiger("T2", 2);
@@ -238,7 +243,12 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 				previousSelectedBox.draw(getGraphics());
 				box.draw(getGraphics());
 				previousSelectedBox = null;
-				currentPlayer = secondPlayer;
+				if(currentPlayerIndex == 0){
+					currentPlayerIndex = 1;
+				} else if(currentPlayerIndex == 1){
+					currentPlayerIndex = 0;
+				}
+				currentPlayer = players[currentPlayerIndex];
 			} else {
 				JOptionPane.showMessageDialog(this, "invalid move");
 			}
