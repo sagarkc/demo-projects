@@ -15,9 +15,9 @@
         <jdk.version>1.6</jdk.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.test.skip>true</maven.test.skip>
-        <release.dir>../dist</release.dir>
-        <bin.dir>../bin</bin.dir>
-        <help.dir>../help</help.dir>
+        <release.dir>../../dist</release.dir>
+        <bin.dir>../../bin</bin.dir>
+        <help.dir>../../help</help.dir>
 	</properties>
 
 	<dependencies>
