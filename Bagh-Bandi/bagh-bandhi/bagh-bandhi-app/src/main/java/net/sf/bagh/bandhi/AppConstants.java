@@ -14,6 +14,7 @@ public interface AppConstants extends GameConstants {
 	String GAME_DATA_FOLDER = "./data";
 	
 	
+	
 	// images
 	
 }

@@ -11,7 +11,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -21,7 +20,6 @@ import javax.swing.border.Border;
 
 import net.sf.bagh.bandhi.core.GameEngine;
 import net.sf.bagh.bandhi.core.activity.Captureable;
-import net.sf.bagh.bandhi.core.model.Animal;
 import net.sf.bagh.bandhi.core.model.Animal.AnimalType;
 import net.sf.bagh.bandhi.core.model.Box;
 import net.sf.bagh.bandhi.core.model.PathOfMove;
@@ -39,6 +37,8 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 	private static final long serialVersionUID = -3821322838306025737L;
 	
 	private static final GameEngine gameEngine = GameEngine.getEngine();
+	private static final int BOARD_WIDTH = 820;
+	private static final int BOARD_HEIGHT = 690;
 	private static final int LEFT_MARGIN = 20;
 	private static final int RIGHT_MARGIN = 20;
 	private static final int GRID_HEIGHT = 650;
@@ -55,7 +55,7 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 			.createCompoundBorder(BorderFactory.createMatteBorder(10, 10,
 					10, 10, new ImageIcon(getClass().getResource("/images/wood-plank-small.jpg"))), BorderFactory
 					.createLineBorder(new Color(0, 153, 51))));
-	private final Dimension boardSize = new Dimension(690, 690);
+	private final Dimension boardSize = new Dimension(BOARD_WIDTH, BOARD_HEIGHT);
 	
 	private Color boardBGColor = Color.BLACK;
 	private UIBoard gameBoard ;
@@ -81,6 +81,8 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 		setMinimumSize(boardSize);
 		setPreferredSize(boardSize);
 		setLayout(null);
+		setOpaque(true);
+		setDoubleBuffered(true);
 		setBorder(boardBorder);
 	}
 	

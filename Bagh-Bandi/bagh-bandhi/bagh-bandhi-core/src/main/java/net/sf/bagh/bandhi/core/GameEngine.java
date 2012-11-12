@@ -29,9 +29,9 @@ public final class GameEngine {
 	
 	private GameSimulator gameSimulator;
 	
-	private Player currentPlayer;
-	private Human firstPlayer;
-	private Human secondPlayer;
+	private Player currentPlayer = MANUAL_TIGER_PLAYER;
+	private Human firstPlayer = MANUAL_TIGER_PLAYER;
+	private Human secondPlayer = MANUAL_GOAT_PLAYER;
 	private Player[] players = new Player[2];
 	private int currentPlayerIndex = 0;
 	
