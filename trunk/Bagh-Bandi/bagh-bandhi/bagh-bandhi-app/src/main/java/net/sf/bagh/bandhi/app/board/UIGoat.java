@@ -10,6 +10,8 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.ImageIcon;
 
+import net.sf.bagh.bandhi.app.AnimalSizeEnum;
+import net.sf.bagh.bandhi.app.GoatImageEnum;
 import net.sf.bagh.bandhi.core.activity.Captureable;
 import net.sf.bagh.bandhi.core.model.Goat;
 
@@ -19,11 +21,8 @@ import net.sf.bagh.bandhi.core.model.Goat;
  */
 public class UIGoat extends Goat implements MouseListener, MouseMotionListener, Drawable, Captureable {
 
-	public static final int WIDTH = 48;
-	public static final int HEIGHT = 48;
 	private int x, y;
-	private ImageIcon bgImage = new ImageIcon(getClass().getResource(
-			"/images/circle_blue-48x48.png"));
+	private ImageIcon bgImage = GoatImageEnum.getValue(UIBoard.sizeFactorEnum).getImage();
 	
 	/**
 	 * 
@@ -68,13 +67,29 @@ public class UIGoat extends Goat implements MouseListener, MouseMotionListener, 
 		this.y = y;
 	}
 
+	/**
+	 * @return the bgImage
+	 */
+	public ImageIcon getBgImage() {
+		return bgImage;
+	}
+
+	/**
+	 * @param bgImage the bgImage to set
+	 */
+	public void setBgImage(ImageIcon bgImage) {
+		this.bgImage = bgImage;
+	}
+
 	/* (non-Javadoc)
 	 * @see net.sf.bagh.bandhi.app.board.Drawable#draw(java.awt.Graphics)
 	 */
 	public void draw(Graphics g) {
 		if(null == g)
 			return;
-		g.drawImage(bgImage.getImage(), x, y, 48, 48, null);
+		g.drawImage(bgImage.getImage(), x, y, 
+				AnimalSizeEnum.getValue(UIBoard.sizeFactorEnum).getWidth(), 
+				AnimalSizeEnum.getValue(UIBoard.sizeFactorEnum).getHeight(), null);
 	}
 
 	/* (non-Javadoc)

@@ -6,6 +6,11 @@ package net.sf.bagh.bandhi.app.board;
 import java.awt.Graphics;
 import java.util.Stack;
 
+import net.sf.bagh.bandhi.app.AnimalSizeEnum;
+import net.sf.bagh.bandhi.app.BoxSizeEnum;
+import net.sf.bagh.bandhi.app.GoatImageEnum;
+import net.sf.bagh.bandhi.app.SizeFactorEnum;
+import net.sf.bagh.bandhi.app.TigerImageEnum;
 import net.sf.bagh.bandhi.core.GameEngine;
 import net.sf.bagh.bandhi.core.model.Animal;
 import net.sf.bagh.bandhi.core.model.Board;
@@ -24,13 +29,12 @@ public class UIBoard extends Board implements Drawable {
 	
 	public static int X = 20;
 	public static int Y = 20;
-	public static int WIDTH = 670;
-	public static int HEIGHT = 670;
 	
-	
+	public static SizeFactorEnum sizeFactorEnum;
 	
 	public UIBoard(Tiger[] tigers, Goat[] goats) {
 		super(tigers, goats);
+		sizeFactorEnum = SizeFactorEnum.NORMAL;
 		initBoard();
 	}
 
@@ -39,8 +43,8 @@ public class UIBoard extends Board implements Drawable {
 		for(int i=0; i<5; i++){
 			for(int j=0; j<5; j++){
 				UiBox box = new UiBox(i, j);
-				box.getPosition().x = X + (i * UiBox.WIDTH);
-				box.getPosition().y = Y + (j * UiBox.HEIGHT);
+				box.getPosition().x = X + (i * BoxSizeEnum.getValue(sizeFactorEnum).getWidth());
+				box.getPosition().y = Y + (j * BoxSizeEnum.getValue(sizeFactorEnum).getHeight());
 				getBoxes()[i][j] = box;
 			}
 		}
@@ -61,8 +65,7 @@ public class UIBoard extends Board implements Drawable {
 		Stack<Animal> players1 = new Stack<Animal>();
 		UiBox box10 = (UiBox) getBoxes()[1][0];
 		for(int i=0; i < 5; i++){
-			goats[i].setX(box10.getPosition().x + (UiBox.WIDTH / 2) - (UITiger.WIDTH / 2));
-			goats[i].setY(box10.getPosition().y + (UiBox.HEIGHT / 2) - (UITiger.HEIGHT / 2));
+			updateGoatPosition(goats, box10, i);
 			players1.push(goats[i]);
 			getAnimalBoxMap().put(goats[i], box10);
 			getAvailableGoats().add(goats[i]);
@@ -72,8 +75,7 @@ public class UIBoard extends Board implements Drawable {
 		UiBox box12 = (UiBox) getBoxes()[1][2];
 		Stack<Animal> players2 = new Stack<Animal>();
 		for(int i=5; i < 10; i++){
-			goats[i].setX(box12.getPosition().x + (UiBox.WIDTH / 2) - (UITiger.WIDTH / 2));
-			goats[i].setY(box12.getPosition().y + (UiBox.HEIGHT / 2) - (UITiger.HEIGHT / 2));
+			updateGoatPosition(goats, box12, i);
 			players2.push(goats[i]);
 			getAnimalBoxMap().put(goats[i], box12);
 			getAvailableGoats().add(goats[i]);
@@ -83,8 +85,7 @@ public class UIBoard extends Board implements Drawable {
 		UiBox box30 = (UiBox) getBoxes()[3][0];
 		Stack<Animal> players3 = new Stack<Animal>();
 		for(int i=10; i < 15; i++){
-			goats[i].setX(box30.getPosition().x + (UiBox.WIDTH / 2) - (UITiger.WIDTH / 2));
-			goats[i].setY(box30.getPosition().y + (UiBox.HEIGHT / 2) - (UITiger.HEIGHT / 2));
+			updateGoatPosition(goats, box30, i);
 			players3.push(goats[i]);
 			getAnimalBoxMap().put(goats[i], box30);
 			getAvailableGoats().add(goats[i]);
@@ -94,13 +95,75 @@ public class UIBoard extends Board implements Drawable {
 		UiBox box32 = (UiBox) getBoxes()[3][2];
 		Stack<Animal> players4 = new Stack<Animal>();
 		for(int i=15; i < 20; i++){
-			goats[i].setX(box32.getPosition().x + (UiBox.WIDTH / 2) - (UITiger.WIDTH / 2));
-			goats[i].setY(box32.getPosition().y + (UiBox.HEIGHT / 2) - (UITiger.HEIGHT / 2));
+			updateGoatPosition(goats, box32, i);
 			players4.push(goats[i]);
 			getAnimalBoxMap().put(goats[i], box32);
 			getAvailableGoats().add(goats[i]);
 		}
 		getBoxes()[3][2].setAnimals(players4);
+	}
+
+	public void updateBoxDetails(){
+		for(int i=0; i<5; i++){
+			for(int j=0; j<5; j++){
+				UiBox box = (UiBox) getBoxAt(i, j);
+				box.getPosition().x = X + (i * BoxSizeEnum.getValue(sizeFactorEnum).getWidth());
+				box.getPosition().y = Y + (j * BoxSizeEnum.getValue(sizeFactorEnum).getHeight());
+				
+				getBoxes()[i][j] = box;
+				if(AnimalType.NONE != box.getAnimalType()){
+					if(null != box.getAnimals() && box.getAnimals().size() > 0){
+						for (Animal animal : box.getAnimals()) {
+							if(null != animal && animal instanceof UIGoat){
+								((UIGoat)animal).setX(box.getPosition().x 
+										+ (BoxSizeEnum.getValue(sizeFactorEnum).getWidth() / 2) 
+										- (AnimalSizeEnum.getValue(sizeFactorEnum).getWidth() / 2));
+								((UIGoat)animal).setY(box.getPosition().y 
+										+ (BoxSizeEnum.getValue(sizeFactorEnum).getHeight() / 2) 
+										- (AnimalSizeEnum.getValue(sizeFactorEnum).getHeight() / 2));
+								((UIGoat)animal).setBgImage(GoatImageEnum.getValue(sizeFactorEnum).getImage());
+							}
+						}
+					} 
+					if(null != box.getAnimal()){
+						Animal animal = box.getAnimal();
+						if(null != animal && animal instanceof UIGoat){
+							((UIGoat)animal).setX(box.getPosition().x 
+									+ (BoxSizeEnum.getValue(sizeFactorEnum).getWidth() / 2) 
+									- (AnimalSizeEnum.getValue(sizeFactorEnum).getWidth() / 2));
+							((UIGoat)animal).setY(box.getPosition().y 
+									+ (BoxSizeEnum.getValue(sizeFactorEnum).getHeight() / 2) 
+									- (AnimalSizeEnum.getValue(sizeFactorEnum).getHeight() / 2));
+							((UIGoat)animal).setBgImage(GoatImageEnum.getValue(sizeFactorEnum).getImage());
+						}
+						else if(null != animal && animal instanceof UITiger){
+							((UITiger)animal).setX(box.getPosition().x 
+									+ (BoxSizeEnum.getValue(sizeFactorEnum).getWidth() / 2) 
+									- (AnimalSizeEnum.getValue(sizeFactorEnum).getWidth() / 2));
+							((UITiger)animal).setY(box.getPosition().y 
+									+ (BoxSizeEnum.getValue(sizeFactorEnum).getHeight() / 2) 
+									- (AnimalSizeEnum.getValue(sizeFactorEnum).getHeight() / 2));
+							((UITiger)animal).setBgImage(TigerImageEnum.getValue(sizeFactorEnum).getImage());
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+	/**
+	 * @param goats
+	 * @param box10
+	 * @param i
+	 */
+	public void updateGoatPosition(UIGoat[] goats, UiBox box10, int i) {
+		goats[i].setX(box10.getPosition().x 
+				+ (BoxSizeEnum.getValue(sizeFactorEnum).getWidth() / 2) 
+				- (AnimalSizeEnum.getValue(sizeFactorEnum).getWidth() / 2));
+		goats[i].setY(box10.getPosition().y 
+				+ (BoxSizeEnum.getValue(sizeFactorEnum).getHeight() / 2) 
+				- (AnimalSizeEnum.getValue(sizeFactorEnum).getHeight() / 2));;
 	}
 	
 	/* (non-Javadoc)
@@ -110,15 +173,23 @@ public class UIBoard extends Board implements Drawable {
 	protected void putTigers() {
 		UiBox box1 = (UiBox) getBoxes()[2][1];
 		UITiger tiger1 = (UITiger) getTigers()[0];
-		tiger1.setX(box1.getPosition().x + (UiBox.WIDTH / 2) - (UITiger.WIDTH / 2));
-		tiger1.setY(box1.getPosition().y + (UiBox.HEIGHT / 2) - (UITiger.HEIGHT / 2));
+		tiger1.setX(box1.getPosition().x 
+				+ (BoxSizeEnum.getValue(sizeFactorEnum).getWidth() / 2) 
+				- (AnimalSizeEnum.getValue(sizeFactorEnum).getWidth() / 2));
+		tiger1.setY(box1.getPosition().y 
+				+ (BoxSizeEnum.getValue(sizeFactorEnum).getHeight() / 2) 
+				- (AnimalSizeEnum.getValue(sizeFactorEnum).getHeight() / 2));
 		box1.setAnimal(tiger1);
 		getAnimalBoxMap().put(getTigers()[0], getBoxes()[2][1]);
 		
 		UiBox box2 = (UiBox) getBoxes()[2][3];
 		UITiger tiger2 = (UITiger) getTigers()[1];
-		tiger2.setX(box2.getPosition().x + (UiBox.WIDTH / 2) - (UITiger.WIDTH / 2));
-		tiger2.setY(box2.getPosition().y + (UiBox.HEIGHT / 2) - (UITiger.HEIGHT / 2));
+		tiger2.setX(box2.getPosition().x 
+				+ (BoxSizeEnum.getValue(sizeFactorEnum).getWidth() / 2) 
+				- (AnimalSizeEnum.getValue(sizeFactorEnum).getWidth() / 2));
+		tiger2.setY(box2.getPosition().y 
+				+ (BoxSizeEnum.getValue(sizeFactorEnum).getHeight() / 2) 
+				- (AnimalSizeEnum.getValue(sizeFactorEnum).getHeight() / 2));
 		box2.setAnimal(tiger2);
 		getAnimalBoxMap().put(getTigers()[1], getBoxes()[2][3]);
 	}
@@ -141,8 +212,10 @@ public class UIBoard extends Board implements Drawable {
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
 				final UiBox box = (UiBox) getBoxAt(i, j);
-				if((x >= box.getPosition().x && x <= box.getPosition().x + UiBox.WIDTH)
-						&& (y >= box.getPosition().y && y <= box.getPosition().y + UiBox.HEIGHT)){
+				if((x >= box.getPosition().x 
+						&& x <= box.getPosition().x + BoxSizeEnum.getValue(sizeFactorEnum).getWidth())
+						&& (y >= box.getPosition().y 
+								&& y <= box.getPosition().y + BoxSizeEnum.getValue(sizeFactorEnum).getHeight())){
 					return box;
 				}
 			}
@@ -273,8 +346,12 @@ public class UIBoard extends Board implements Drawable {
 	 * @param animal
 	 */
 	public void updateGoatPosition(UiBox box, Animal animal) {
-		((UIGoat)animal).setX(box.getPosition().x + (UiBox.WIDTH / 2) - (UIGoat.WIDTH / 2));
-		((UIGoat)animal).setY(box.getPosition().y + (UiBox.HEIGHT / 2) - (UIGoat.HEIGHT / 2));
+		((UIGoat)animal).setX(box.getPosition().x 
+				+ (BoxSizeEnum.getValue(sizeFactorEnum).getWidth() / 2) 
+				- (AnimalSizeEnum.getValue(sizeFactorEnum).getWidth() / 2));
+		((UIGoat)animal).setY(box.getPosition().y 
+				+ (BoxSizeEnum.getValue(sizeFactorEnum).getHeight() / 2) 
+				- (AnimalSizeEnum.getValue(sizeFactorEnum).getHeight() / 2));
 	}
 
 
@@ -283,8 +360,12 @@ public class UIBoard extends Board implements Drawable {
 	 * @param animal
 	 */
 	public void updateTigerPosition(UiBox box, Animal animal) {
-		((UITiger)animal).setX(box.getPosition().x + (UiBox.WIDTH / 2) - (UITiger.WIDTH / 2));
-		((UITiger)animal).setY(box.getPosition().y + (UiBox.HEIGHT / 2) - (UITiger.HEIGHT / 2));
+		((UITiger)animal).setX(box.getPosition().x 
+				+ (BoxSizeEnum.getValue(sizeFactorEnum).getWidth() / 2) 
+				- (AnimalSizeEnum.getValue(sizeFactorEnum).getWidth() / 2));
+		((UITiger)animal).setY(box.getPosition().y 
+				+ (BoxSizeEnum.getValue(sizeFactorEnum).getHeight() / 2) 
+				- (AnimalSizeEnum.getValue(sizeFactorEnum).getHeight() / 2));
 	}
 	
 	
