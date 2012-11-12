@@ -5,11 +5,16 @@
 package net.sf.bagh.bandhi.app;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.util.Random;
+
+import javax.swing.JScrollPane;
+
 import net.sf.bagh.bandhi.app.board.BoardBasePanel;
 import net.sf.bagh.bandhi.app.board.UIBoard;
 import net.sf.bagh.bandhi.app.board.UIGoat;
 import net.sf.bagh.bandhi.app.board.UITiger;
+import net.sf.bagh.bandhi.app.util.WindowUtil;
 import net.sf.bagh.bandhi.core.GameEngine;
 
 /**
@@ -18,14 +23,19 @@ import net.sf.bagh.bandhi.core.GameEngine;
  */
 public class GameFrame extends javax.swing.JFrame {
 
-    private BoardBasePanel boardBasePanel;
+    
     private static final GameEngine gameEngine = GameEngine.getEngine();
+    
+    private BoardBasePanel boardBasePanel;
+    private JScrollPane boardScrollPane;
     
     /**
      * Creates new form GameFrame
      */
     public GameFrame() {
         initComponents();
+        boardScrollPane = new JScrollPane();
+        WindowUtil.bringToCenter(this);
     }
 
     /**
@@ -40,6 +50,7 @@ public class GameFrame extends javax.swing.JFrame {
         startingAnimalButtonGroup = new javax.swing.ButtonGroup();
         tigerPlayedByButtonGroup = new javax.swing.ButtonGroup();
         goatPlayedByButtonGroup = new javax.swing.ButtonGroup();
+        boardSizeButtonGroup = new javax.swing.ButtonGroup();
         gameControlToolBar = new javax.swing.JToolBar();
         newGameButton = new javax.swing.JButton();
         jSeparator7 = new javax.swing.JToolBar.Separator();
@@ -51,6 +62,10 @@ public class GameFrame extends javax.swing.JFrame {
         redoButton = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JToolBar.Separator();
         hintButton = new javax.swing.JButton();
+        jSeparator12 = new javax.swing.JToolBar.Separator();
+        jLabel1 = new javax.swing.JLabel();
+        boardSizeSlider = new javax.swing.JSlider();
+        selectedBoardSizeLabel = new javax.swing.JLabel();
         boardContainerPanel = new javax.swing.JPanel();
         gameMenuBar = new javax.swing.JMenuBar();
         gameMenu = new javax.swing.JMenu();
@@ -82,6 +97,9 @@ public class GameFrame extends javax.swing.JFrame {
         goatPlayerMenu = new javax.swing.JMenu();
         goatByMouseMenuItem = new javax.swing.JRadioButtonMenuItem();
         goatByAutoMenuItem = new javax.swing.JRadioButtonMenuItem();
+        boardSizeMenu = new javax.swing.JMenu();
+        normalBoardRadioButtonMenuItem = new javax.swing.JRadioButtonMenuItem();
+        bigBoardRadioButtonMenuItem = new javax.swing.JRadioButtonMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         changePlayerNamesMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
@@ -162,6 +180,22 @@ public class GameFrame extends javax.swing.JFrame {
         hintButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         hintButton.addActionListener(formListener);
         gameControlToolBar.add(hintButton);
+        gameControlToolBar.add(jSeparator12);
+
+        jLabel1.setText("Board Size");
+        gameControlToolBar.add(jLabel1);
+
+        boardSizeSlider.setMaximum(4);
+        boardSizeSlider.setPaintLabels(true);
+        boardSizeSlider.setSnapToTicks(true);
+        boardSizeSlider.setToolTipText("Board Size");
+        boardSizeSlider.setValue(2);
+        boardSizeSlider.setMaximumSize(new java.awt.Dimension(200, 25));
+        boardSizeSlider.setMinimumSize(new java.awt.Dimension(200, 25));
+        gameControlToolBar.add(boardSizeSlider);
+
+        selectedBoardSizeLabel.setText("NORMAL");
+        gameControlToolBar.add(selectedBoardSizeLabel);
 
         getContentPane().add(gameControlToolBar, java.awt.BorderLayout.PAGE_START);
 
@@ -229,6 +263,7 @@ public class GameFrame extends javax.swing.JFrame {
 
         preferenceMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/settings.png"))); // NOI18N
         preferenceMenuItem.setText("Preference");
+        preferenceMenuItem.addActionListener(formListener);
         editMenu.add(preferenceMenuItem);
 
         gameMenuBar.add(editMenu);
@@ -291,6 +326,21 @@ public class GameFrame extends javax.swing.JFrame {
         goatPlayerMenu.add(goatByAutoMenuItem);
 
         settingsMenu.add(goatPlayerMenu);
+
+        boardSizeMenu.setText("Board Size");
+
+        boardSizeButtonGroup.add(normalBoardRadioButtonMenuItem);
+        normalBoardRadioButtonMenuItem.setSelected(true);
+        normalBoardRadioButtonMenuItem.setText("Normal");
+        normalBoardRadioButtonMenuItem.addActionListener(formListener);
+        boardSizeMenu.add(normalBoardRadioButtonMenuItem);
+
+        boardSizeButtonGroup.add(bigBoardRadioButtonMenuItem);
+        bigBoardRadioButtonMenuItem.setText("Big");
+        bigBoardRadioButtonMenuItem.addActionListener(formListener);
+        boardSizeMenu.add(bigBoardRadioButtonMenuItem);
+
+        settingsMenu.add(boardSizeMenu);
         settingsMenu.add(jSeparator4);
 
         changePlayerNamesMenuItem.setText("Change Player Names");
@@ -375,6 +425,9 @@ public class GameFrame extends javax.swing.JFrame {
             else if (evt.getSource() == redoMenuItem) {
                 GameFrame.this.redoMenuItemActionPerformed(evt);
             }
+            else if (evt.getSource() == preferenceMenuItem) {
+                GameFrame.this.preferenceMenuItemActionPerformed(evt);
+            }
             else if (evt.getSource() == showToolbarCheckBoxMenuItem) {
                 GameFrame.this.showToolbarCheckBoxMenuItemActionPerformed(evt);
             }
@@ -398,6 +451,12 @@ public class GameFrame extends javax.swing.JFrame {
             }
             else if (evt.getSource() == goatByAutoMenuItem) {
                 GameFrame.this.goatByAutoMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == normalBoardRadioButtonMenuItem) {
+                GameFrame.this.normalBoardRadioButtonMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == bigBoardRadioButtonMenuItem) {
+                GameFrame.this.bigBoardRadioButtonMenuItemActionPerformed(evt);
             }
             else if (evt.getSource() == changePlayerNamesMenuItem) {
                 GameFrame.this.changePlayerNamesMenuItemActionPerformed(evt);
@@ -524,11 +583,27 @@ public class GameFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_autoSelectStartPlayerRbMenuItemActionPerformed
 
+    private void normalBoardRadioButtonMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_normalBoardRadioButtonMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_normalBoardRadioButtonMenuItemActionPerformed
+
+    private void bigBoardRadioButtonMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bigBoardRadioButtonMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bigBoardRadioButtonMenuItemActionPerformed
+
+    private void preferenceMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preferenceMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_preferenceMenuItemActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JRadioButtonMenuItem autoSelectStartPlayerRbMenuItem;
+    private javax.swing.JRadioButtonMenuItem bigBoardRadioButtonMenuItem;
     private javax.swing.JPanel boardContainerPanel;
+    private javax.swing.ButtonGroup boardSizeButtonGroup;
+    private javax.swing.JMenu boardSizeMenu;
+    private javax.swing.JSlider boardSizeSlider;
     private javax.swing.JMenuItem changePlayerNamesMenuItem;
     private javax.swing.JMenu editMenu;
     private javax.swing.JButton endGameButton;
@@ -544,11 +619,13 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem helpMenuItem;
     private javax.swing.JButton hintButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
+    private javax.swing.JToolBar.Separator jSeparator12;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -561,11 +638,13 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem loadGameMenuItem;
     private javax.swing.JButton newGameButton;
     private javax.swing.JMenuItem newGameMenuItem;
+    private javax.swing.JRadioButtonMenuItem normalBoardRadioButtonMenuItem;
     private javax.swing.JMenuItem preferenceMenuItem;
     private javax.swing.JButton redoButton;
     private javax.swing.JMenuItem redoMenuItem;
     private javax.swing.JButton saveGameButton;
     private javax.swing.JMenuItem saveGameMenuItem;
+    private javax.swing.JLabel selectedBoardSizeLabel;
     private javax.swing.JMenu settingsMenu;
     private javax.swing.JCheckBoxMenuItem showToolbarCheckBoxMenuItem;
     private javax.swing.JRadioButtonMenuItem startByGoatMenuItem;
@@ -586,12 +665,6 @@ public class GameFrame extends javax.swing.JFrame {
 	 * Start a new Game
 	 */
 	public void startNewGame() {
-		
-		if(null != boardContainerPanel.getComponents()
-				&& boardContainerPanel.getComponents().length > 0)
-			boardContainerPanel.removeAll();
-		
-		boardBasePanel = new BoardBasePanel();
 		
 		if(startByTigerMenuItem.isSelected()){
 			gameEngine.setFirstPlayer( GameEngine.MANUAL_TIGER_PLAYER);
@@ -621,10 +694,53 @@ public class GameFrame extends javax.swing.JFrame {
 		}
 		UIBoard gameBoard = new UIBoard(tigers, goats);
 		gameEngine.setCurrentPlayer(gameEngine.getFirstPlayer());
+		if(null != boardContainerPanel.getComponents()
+				&& boardContainerPanel.getComponents().length > 0)
+			boardContainerPanel.removeAll();
+		boardBasePanel = new BoardBasePanel();
 		boardBasePanel.setGameBoard(gameBoard);
-		
-        boardContainerPanel.add(boardBasePanel, BorderLayout.CENTER);
+		boardContainerPanel.add(boardBasePanel, BorderLayout.CENTER);
         boardContainerPanel.updateUI();
+        
+		/*ScrollablePanel panel = new ScrollablePanel(new FlowLayout(FlowLayout.CENTER));
+        panel.setScrollableWidth( ScrollablePanel.ScrollableSizeHint.FIT );
+        panel.setScrollableHeight( ScrollablePanel.ScrollableSizeHint.NONE );
+        
+        panel.add(boardBasePanel);
+        
+        panel.setBackground(new java.awt.Color(104, 141, 189));
+        
+        panel.setScrollableBlockIncrement(
+            ScrollablePanel.HORIZONTAL, ScrollablePanel.IncrementType.PERCENT, 200);
+        panel.setScrollableBlockIncrement(
+            ScrollablePanel.VERTICAL, ScrollablePanel.IncrementType.PERCENT, 200);
+        
+        boardScrollPane.getViewport().setBackground(new java.awt.Color(104, 141, 189));
+        boardScrollPane.setViewportView(panel);
+		
+        boardContainerPanel.add(boardScrollPane, BorderLayout.CENTER);
+        boardContainerPanel.add(boardBasePanel, BorderLayout.CENTER);
+        boardContainerPanel.updateUI();*/
+        
+		/*NewGameDialog gameDialog = new NewGameDialog(this, true);
+		WindowUtil.bringCenterTo(gameDialog, this);
+		WindowOptions option = gameDialog.showDialog();
+		if(WindowOptions.OK == option){
+			
+			
+			
+			if(null != boardContainerPanel.getComponents()
+					&& boardContainerPanel.getComponents().length > 0)
+				boardContainerPanel.removeAll();
+			
+			boardBasePanel = new BoardBasePanel();
+			
+			
+			boardBasePanel.setGameBoard(gameBoard);
+			
+	        boardContainerPanel.add(boardBasePanel, BorderLayout.CENTER);
+	        boardContainerPanel.updateUI();
+		}*/
 	}
 	
 	

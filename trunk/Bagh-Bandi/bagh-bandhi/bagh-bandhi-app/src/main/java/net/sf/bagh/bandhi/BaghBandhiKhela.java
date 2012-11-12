@@ -9,7 +9,6 @@ import java.awt.Point;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import net.sf.bagh.bandhi.app.GameFrame;
 import net.sf.bagh.bandhi.app.board.BoardBasePanel;
@@ -44,12 +43,8 @@ public class BaghBandhiKhela {
         } 
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GameFrame().setVisible(true);
-            }
-        });
+        GameFrame frame = new GameFrame();
+        frame.setVisible(true);
     }
 
 	private static void loadStartupData() {

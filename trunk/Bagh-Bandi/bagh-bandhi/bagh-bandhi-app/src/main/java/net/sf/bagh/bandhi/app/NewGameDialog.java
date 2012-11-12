@@ -1,19 +1,23 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package net.sf.bagh.bandhi.app;
 
+import net.sf.bagh.bandhi.AppConstants;
 import net.sf.bagh.bandhi.core.GameEngine;
 
 /**
  *
- * @author soma
+ * @author Sabuj Das | sabuj.das@gmail.com
  */
 public class NewGameDialog extends javax.swing.JDialog {
 
-    private static final GameEngine gameEngine = GameEngine.getEngine();
+    /**
+	 * Generated serialVersionUID
+	 */
+	private static final long serialVersionUID = -780567772392235659L;
+	private static final GameEngine gameEngine = GameEngine.getEngine();
     
+	private WindowOptions selectedOption = WindowOptions.CANCEL;
+	
     /**
      * Creates new form NewGameDialog
      */
@@ -23,6 +27,11 @@ public class NewGameDialog extends javax.swing.JDialog {
         firstPlayerNameTextField.setText(gameEngine.getFirstPlayer().getName());
         secPlayerTextField.setText(gameEngine.getSecondPlayer().getName());
         
+    }
+    
+    public WindowOptions showDialog(){
+        setVisible(true);
+    	return selectedOption;
     }
 
     /**
@@ -38,6 +47,7 @@ public class NewGameDialog extends javax.swing.JDialog {
         firstPlayerAnimalsButtonGroup = new javax.swing.ButtonGroup();
         secPlayerAnimalsButtonGroup = new javax.swing.ButtonGroup();
         startByButtonGroup = new javax.swing.ButtonGroup();
+        boardSizeButtonGroup = new javax.swing.ButtonGroup();
         jPanel4 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -58,9 +68,17 @@ public class NewGameDialog extends javax.swing.JDialog {
         jLabel14 = new javax.swing.JLabel();
         cancelButton = new javax.swing.JButton();
         startButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        normalBoardSizeRadioButton = new javax.swing.JRadioButton();
+        bigBoardSizeRadioButton = new javax.swing.JRadioButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("New Game");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel4.setLayout(new java.awt.GridBagLayout());
 
@@ -100,6 +118,11 @@ public class NewGameDialog extends javax.swing.JDialog {
         firstPlayerAnimalsButtonGroup.add(firstTigerRadioButton);
         firstTigerRadioButton.setSelected(true);
         firstTigerRadioButton.setText("Tiger");
+        firstTigerRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                firstTigerRadioButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 1;
@@ -109,6 +132,11 @@ public class NewGameDialog extends javax.swing.JDialog {
 
         firstPlayerAnimalsButtonGroup.add(firstGoatRadioButton);
         firstGoatRadioButton.setText("Goat");
+        firstGoatRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                firstGoatRadioButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
@@ -153,6 +181,11 @@ public class NewGameDialog extends javax.swing.JDialog {
 
         secPlayerAnimalsButtonGroup.add(secTigerRadioButton);
         secTigerRadioButton.setText("Tiger");
+        secTigerRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                secTigerRadioButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
@@ -163,6 +196,11 @@ public class NewGameDialog extends javax.swing.JDialog {
         secPlayerAnimalsButtonGroup.add(secGoatRadioButton);
         secGoatRadioButton.setSelected(true);
         secGoatRadioButton.setText("Goat");
+        secGoatRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                secGoatRadioButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 5;
@@ -189,6 +227,11 @@ public class NewGameDialog extends javax.swing.JDialog {
         startByButtonGroup.add(startTigerRadioButton);
         startTigerRadioButton.setSelected(true);
         startTigerRadioButton.setText("Tiger");
+        startTigerRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startTigerRadioButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
@@ -198,6 +241,11 @@ public class NewGameDialog extends javax.swing.JDialog {
 
         startByButtonGroup.add(startGoatRadioButton);
         startGoatRadioButton.setText("Goat");
+        startGoatRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startGoatRadioButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 7;
@@ -206,7 +254,7 @@ public class NewGameDialog extends javax.swing.JDialog {
         jPanel4.add(startGoatRadioButton, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
@@ -214,32 +262,126 @@ public class NewGameDialog extends javax.swing.JDialog {
         jPanel4.add(jLabel14, gridBagConstraints);
 
         cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         jPanel4.add(cancelButton, gridBagConstraints);
 
         startButton.setText("Start Game");
+        startButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
         jPanel4.add(startButton, gridBagConstraints);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setText("Board Size");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(2, 4, 2, 4);
+        jPanel4.add(jLabel1, gridBagConstraints);
+
+        boardSizeButtonGroup.add(normalBoardSizeRadioButton);
+        normalBoardSizeRadioButton.setSelected(true);
+        normalBoardSizeRadioButton.setText("Normal");
+        normalBoardSizeRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                normalBoardSizeRadioButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 8;
+        jPanel4.add(normalBoardSizeRadioButton, gridBagConstraints);
+
+        boardSizeButtonGroup.add(bigBoardSizeRadioButton);
+        bigBoardSizeRadioButton.setText("Big");
+        bigBoardSizeRadioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bigBoardSizeRadioButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jPanel4.add(bigBoardSizeRadioButton, gridBagConstraints);
 
         getContentPane().add(jPanel4, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void firstTigerRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstTigerRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_firstTigerRadioButtonActionPerformed
+
+    private void firstGoatRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_firstGoatRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_firstGoatRadioButtonActionPerformed
+
+    private void secTigerRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secTigerRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_secTigerRadioButtonActionPerformed
+
+    private void secGoatRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secGoatRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_secGoatRadioButtonActionPerformed
+
+    private void startTigerRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startTigerRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_startTigerRadioButtonActionPerformed
+
+    private void startGoatRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startGoatRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_startGoatRadioButtonActionPerformed
+
+    private void normalBoardSizeRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_normalBoardSizeRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_normalBoardSizeRadioButtonActionPerformed
+
+    private void bigBoardSizeRadioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bigBoardSizeRadioButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bigBoardSizeRadioButtonActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        selectedOption = WindowOptions.CANCEL;
+        dispose();
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
+        selectedOption = WindowOptions.OK;
+        dispose();
+    }//GEN-LAST:event_startButtonActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        selectedOption = WindowOptions.CANCEL;
+    }//GEN-LAST:event_formWindowClosing
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton bigBoardSizeRadioButton;
+    private javax.swing.ButtonGroup boardSizeButtonGroup;
     private javax.swing.JButton cancelButton;
     private javax.swing.JRadioButton firstGoatRadioButton;
     private javax.swing.ButtonGroup firstPlayerAnimalsButtonGroup;
     private javax.swing.JTextField firstPlayerNameTextField;
     private javax.swing.JRadioButton firstTigerRadioButton;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -250,6 +392,7 @@ public class NewGameDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JRadioButton normalBoardSizeRadioButton;
     private javax.swing.JRadioButton secGoatRadioButton;
     private javax.swing.ButtonGroup secPlayerAnimalsButtonGroup;
     private javax.swing.JTextField secPlayerTextField;
