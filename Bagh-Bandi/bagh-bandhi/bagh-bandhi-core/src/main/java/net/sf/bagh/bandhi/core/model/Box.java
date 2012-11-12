@@ -281,7 +281,7 @@ public class Box {
 		return false;
 	}
 	
-	public boolean isEmptyNeighbour(Box other){
+	public boolean isEmptyNeighbor(Box other){
 		if(null == other){
 			return false;
 		}

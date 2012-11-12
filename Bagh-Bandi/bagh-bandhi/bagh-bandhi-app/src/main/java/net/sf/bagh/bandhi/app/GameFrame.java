@@ -5,7 +5,12 @@
 package net.sf.bagh.bandhi.app;
 
 import java.awt.BorderLayout;
+import java.util.Random;
 import net.sf.bagh.bandhi.app.board.BoardBasePanel;
+import net.sf.bagh.bandhi.app.board.UIBoard;
+import net.sf.bagh.bandhi.app.board.UIGoat;
+import net.sf.bagh.bandhi.app.board.UITiger;
+import net.sf.bagh.bandhi.core.GameEngine;
 
 /**
  *
@@ -14,14 +19,13 @@ import net.sf.bagh.bandhi.app.board.BoardBasePanel;
 public class GameFrame extends javax.swing.JFrame {
 
     private BoardBasePanel boardBasePanel;
+    private static final GameEngine gameEngine = GameEngine.getEngine();
     
     /**
      * Creates new form GameFrame
      */
     public GameFrame() {
         initComponents();
-        boardBasePanel = new BoardBasePanel();
-        boardContainerPanel.add(boardBasePanel, BorderLayout.CENTER);
     }
 
     /**
@@ -39,14 +43,14 @@ public class GameFrame extends javax.swing.JFrame {
         gameControlToolBar = new javax.swing.JToolBar();
         newGameButton = new javax.swing.JButton();
         jSeparator7 = new javax.swing.JToolBar.Separator();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        loadGameButton = new javax.swing.JButton();
+        saveGameButton = new javax.swing.JButton();
+        endGameButton = new javax.swing.JButton();
         jSeparator5 = new javax.swing.JToolBar.Separator();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        undoButton = new javax.swing.JButton();
+        redoButton = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JToolBar.Separator();
-        jButton7 = new javax.swing.JButton();
+        hintButton = new javax.swing.JButton();
         boardContainerPanel = new javax.swing.JPanel();
         gameMenuBar = new javax.swing.JMenuBar();
         gameMenu = new javax.swing.JMenu();
@@ -62,10 +66,14 @@ public class GameFrame extends javax.swing.JFrame {
         editMenu = new javax.swing.JMenu();
         undoMenuItem = new javax.swing.JMenuItem();
         redoMenuItem = new javax.swing.JMenuItem();
+        jSeparator11 = new javax.swing.JPopupMenu.Separator();
+        preferenceMenuItem = new javax.swing.JMenuItem();
         settingsMenu = new javax.swing.JMenu();
         showToolbarCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         jSeparator9 = new javax.swing.JPopupMenu.Separator();
         startingAnimalMenu = new javax.swing.JMenu();
+        autoSelectStartPlayerRbMenuItem = new javax.swing.JRadioButtonMenuItem();
+        jSeparator10 = new javax.swing.JPopupMenu.Separator();
         startByTigerMenuItem = new javax.swing.JRadioButtonMenuItem();
         startByGoatMenuItem = new javax.swing.JRadioButtonMenuItem();
         tigerPlayerMenu = new javax.swing.JMenu();
@@ -101,53 +109,59 @@ public class GameFrame extends javax.swing.JFrame {
         gameControlToolBar.add(newGameButton);
         gameControlToolBar.add(jSeparator7);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/load_game.png"))); // NOI18N
-        jButton2.setText("Load");
-        jButton2.setToolTipText("Load Game");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        gameControlToolBar.add(jButton2);
+        loadGameButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/load_game.png"))); // NOI18N
+        loadGameButton.setText("Load");
+        loadGameButton.setToolTipText("Load Game");
+        loadGameButton.setFocusable(false);
+        loadGameButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        loadGameButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        loadGameButton.addActionListener(formListener);
+        gameControlToolBar.add(loadGameButton);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_edit.gif"))); // NOI18N
-        jButton3.setText("Save");
-        jButton3.setToolTipText("Save Game");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        gameControlToolBar.add(jButton3);
+        saveGameButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_edit.gif"))); // NOI18N
+        saveGameButton.setText("Save");
+        saveGameButton.setToolTipText("Save Game");
+        saveGameButton.setFocusable(false);
+        saveGameButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        saveGameButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        saveGameButton.addActionListener(formListener);
+        gameControlToolBar.add(saveGameButton);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/end_game.png"))); // NOI18N
-        jButton4.setText("End");
-        jButton4.setToolTipText("End Game");
-        jButton4.setFocusable(false);
-        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        gameControlToolBar.add(jButton4);
+        endGameButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/end_game.png"))); // NOI18N
+        endGameButton.setText("End");
+        endGameButton.setToolTipText("End Game");
+        endGameButton.setFocusable(false);
+        endGameButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        endGameButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        endGameButton.addActionListener(formListener);
+        gameControlToolBar.add(endGameButton);
         gameControlToolBar.add(jSeparator5);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/undo.png"))); // NOI18N
-        jButton5.setText("Undo");
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        gameControlToolBar.add(jButton5);
+        undoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/undo.png"))); // NOI18N
+        undoButton.setText("Undo");
+        undoButton.setFocusable(false);
+        undoButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        undoButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        undoButton.addActionListener(formListener);
+        gameControlToolBar.add(undoButton);
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/redo.png"))); // NOI18N
-        jButton6.setText("Redo");
-        jButton6.setFocusable(false);
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        gameControlToolBar.add(jButton6);
+        redoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/redo.png"))); // NOI18N
+        redoButton.setText("Redo");
+        redoButton.setFocusable(false);
+        redoButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        redoButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        redoButton.addActionListener(formListener);
+        gameControlToolBar.add(redoButton);
         gameControlToolBar.add(jSeparator6);
 
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hint_bulb.png"))); // NOI18N
-        jButton7.setText("Hint");
-        jButton7.setToolTipText("Show Hint");
-        jButton7.setFocusable(false);
-        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        gameControlToolBar.add(jButton7);
+        hintButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hint_bulb.png"))); // NOI18N
+        hintButton.setText("Hint");
+        hintButton.setToolTipText("Show Hint");
+        hintButton.setFocusable(false);
+        hintButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        hintButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        hintButton.addActionListener(formListener);
+        gameControlToolBar.add(hintButton);
 
         getContentPane().add(gameControlToolBar, java.awt.BorderLayout.PAGE_START);
 
@@ -160,34 +174,40 @@ public class GameFrame extends javax.swing.JFrame {
         newGameMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         newGameMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new_game.gif"))); // NOI18N
         newGameMenuItem.setText("New");
+        newGameMenuItem.addActionListener(formListener);
         gameMenu.add(newGameMenuItem);
         gameMenu.add(jSeparator1);
 
         loadGameMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
         loadGameMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/load_game.png"))); // NOI18N
         loadGameMenuItem.setText("Load");
+        loadGameMenuItem.addActionListener(formListener);
         gameMenu.add(loadGameMenuItem);
 
         saveGameMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         saveGameMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_edit.gif"))); // NOI18N
         saveGameMenuItem.setText("Save");
+        saveGameMenuItem.addActionListener(formListener);
         gameMenu.add(saveGameMenuItem);
         gameMenu.add(jSeparator2);
 
         endGameMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         endGameMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/end_game.png"))); // NOI18N
         endGameMenuItem.setText("End Game");
+        endGameMenuItem.addActionListener(formListener);
         gameMenu.add(endGameMenuItem);
         gameMenu.add(jSeparator3);
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.ALT_MASK));
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hide.png"))); // NOI18N
         jMenuItem1.setText("Minimize to Tray ...");
+        jMenuItem1.addActionListener(formListener);
         gameMenu.add(jMenuItem1);
 
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit.png"))); // NOI18N
         exitMenuItem.setText("Exit");
+        exitMenuItem.addActionListener(formListener);
         gameMenu.add(exitMenuItem);
 
         gameMenuBar.add(gameMenu);
@@ -197,12 +217,19 @@ public class GameFrame extends javax.swing.JFrame {
         undoMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         undoMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/undo.png"))); // NOI18N
         undoMenuItem.setText("Undo");
+        undoMenuItem.addActionListener(formListener);
         editMenu.add(undoMenuItem);
 
         redoMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
         redoMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/redo.png"))); // NOI18N
         redoMenuItem.setText("Redo");
+        redoMenuItem.addActionListener(formListener);
         editMenu.add(redoMenuItem);
+        editMenu.add(jSeparator11);
+
+        preferenceMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/settings.png"))); // NOI18N
+        preferenceMenuItem.setText("Preference");
+        editMenu.add(preferenceMenuItem);
 
         gameMenuBar.add(editMenu);
 
@@ -210,18 +237,27 @@ public class GameFrame extends javax.swing.JFrame {
 
         showToolbarCheckBoxMenuItem.setSelected(true);
         showToolbarCheckBoxMenuItem.setText("Show Toolbar");
+        showToolbarCheckBoxMenuItem.addActionListener(formListener);
         settingsMenu.add(showToolbarCheckBoxMenuItem);
         settingsMenu.add(jSeparator9);
 
         startingAnimalMenu.setText("Starting Animal");
 
+        startingAnimalButtonGroup.add(autoSelectStartPlayerRbMenuItem);
+        autoSelectStartPlayerRbMenuItem.setText("Auto Select (Random)");
+        autoSelectStartPlayerRbMenuItem.addActionListener(formListener);
+        startingAnimalMenu.add(autoSelectStartPlayerRbMenuItem);
+        startingAnimalMenu.add(jSeparator10);
+
         startingAnimalButtonGroup.add(startByTigerMenuItem);
         startByTigerMenuItem.setSelected(true);
         startByTigerMenuItem.setText("Tiger");
+        startByTigerMenuItem.addActionListener(formListener);
         startingAnimalMenu.add(startByTigerMenuItem);
 
         startingAnimalButtonGroup.add(startByGoatMenuItem);
         startByGoatMenuItem.setText("Goat");
+        startByGoatMenuItem.addActionListener(formListener);
         startingAnimalMenu.add(startByGoatMenuItem);
 
         settingsMenu.add(startingAnimalMenu);
@@ -231,10 +267,12 @@ public class GameFrame extends javax.swing.JFrame {
         tigerPlayedByButtonGroup.add(tigerByMouseMenuItem);
         tigerByMouseMenuItem.setSelected(true);
         tigerByMouseMenuItem.setText("Mouse");
+        tigerByMouseMenuItem.addActionListener(formListener);
         tigerPlayerMenu.add(tigerByMouseMenuItem);
 
         tigerPlayedByButtonGroup.add(tigerByAutoMenuItem);
         tigerByAutoMenuItem.setText("Auto");
+        tigerByAutoMenuItem.addActionListener(formListener);
         tigerPlayerMenu.add(tigerByAutoMenuItem);
 
         settingsMenu.add(tigerPlayerMenu);
@@ -244,16 +282,19 @@ public class GameFrame extends javax.swing.JFrame {
         goatPlayedByButtonGroup.add(goatByMouseMenuItem);
         goatByMouseMenuItem.setSelected(true);
         goatByMouseMenuItem.setText("Mouse");
+        goatByMouseMenuItem.addActionListener(formListener);
         goatPlayerMenu.add(goatByMouseMenuItem);
 
         goatPlayedByButtonGroup.add(goatByAutoMenuItem);
         goatByAutoMenuItem.setText("Auto");
+        goatByAutoMenuItem.addActionListener(formListener);
         goatPlayerMenu.add(goatByAutoMenuItem);
 
         settingsMenu.add(goatPlayerMenu);
         settingsMenu.add(jSeparator4);
 
         changePlayerNamesMenuItem.setText("Change Player Names");
+        changePlayerNamesMenuItem.addActionListener(formListener);
         settingsMenu.add(changePlayerNamesMenuItem);
 
         gameMenuBar.add(settingsMenu);
@@ -263,15 +304,18 @@ public class GameFrame extends javax.swing.JFrame {
         helpMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         helpMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
         helpMenuItem.setText("Help");
+        helpMenuItem.addActionListener(formListener);
         helpMenu.add(helpMenuItem);
 
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hint_bulb.png"))); // NOI18N
         jMenuItem2.setText("Show Hint");
+        jMenuItem2.addActionListener(formListener);
         helpMenu.add(jMenuItem2);
         helpMenu.add(jSeparator8);
 
         aboutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/information.png"))); // NOI18N
         aboutMenuItem.setText("About");
+        aboutMenuItem.addActionListener(formListener);
         helpMenu.add(aboutMenuItem);
 
         gameMenuBar.add(helpMenu);
@@ -289,19 +333,205 @@ public class GameFrame extends javax.swing.JFrame {
             if (evt.getSource() == newGameButton) {
                 GameFrame.this.newGameButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == loadGameButton) {
+                GameFrame.this.loadGameButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveGameButton) {
+                GameFrame.this.saveGameButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == endGameButton) {
+                GameFrame.this.endGameButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == undoButton) {
+                GameFrame.this.undoButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == redoButton) {
+                GameFrame.this.redoButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == hintButton) {
+                GameFrame.this.hintButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == newGameMenuItem) {
+                GameFrame.this.newGameMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == loadGameMenuItem) {
+                GameFrame.this.loadGameMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == saveGameMenuItem) {
+                GameFrame.this.saveGameMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == endGameMenuItem) {
+                GameFrame.this.endGameMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == jMenuItem1) {
+                GameFrame.this.jMenuItem1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == exitMenuItem) {
+                GameFrame.this.exitMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == undoMenuItem) {
+                GameFrame.this.undoMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == redoMenuItem) {
+                GameFrame.this.redoMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == showToolbarCheckBoxMenuItem) {
+                GameFrame.this.showToolbarCheckBoxMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == autoSelectStartPlayerRbMenuItem) {
+                GameFrame.this.autoSelectStartPlayerRbMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == startByTigerMenuItem) {
+                GameFrame.this.startByTigerMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == startByGoatMenuItem) {
+                GameFrame.this.startByGoatMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == tigerByMouseMenuItem) {
+                GameFrame.this.tigerByMouseMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == tigerByAutoMenuItem) {
+                GameFrame.this.tigerByAutoMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == goatByMouseMenuItem) {
+                GameFrame.this.goatByMouseMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == goatByAutoMenuItem) {
+                GameFrame.this.goatByAutoMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == changePlayerNamesMenuItem) {
+                GameFrame.this.changePlayerNamesMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == helpMenuItem) {
+                GameFrame.this.helpMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == jMenuItem2) {
+                GameFrame.this.jMenuItem2ActionPerformed(evt);
+            }
+            else if (evt.getSource() == aboutMenuItem) {
+                GameFrame.this.aboutMenuItemActionPerformed(evt);
+            }
         }
     }// </editor-fold>//GEN-END:initComponents
 
     private void newGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameButtonActionPerformed
-        
+        startNewGame();
     }//GEN-LAST:event_newGameButtonActionPerformed
+
+	private void newGameMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameMenuItemActionPerformed
+        startNewGame();
+    }//GEN-LAST:event_newGameMenuItemActionPerformed
+
+    private void loadGameMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadGameMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loadGameMenuItemActionPerformed
+
+    private void saveGameMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveGameMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveGameMenuItemActionPerformed
+
+    private void endGameMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endGameMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_endGameMenuItemActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_exitMenuItemActionPerformed
+
+    private void undoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_undoMenuItemActionPerformed
+
+    private void redoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_redoMenuItemActionPerformed
+
+    private void showToolbarCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showToolbarCheckBoxMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_showToolbarCheckBoxMenuItemActionPerformed
+
+    private void startByTigerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startByTigerMenuItemActionPerformed
+        gameEngine.setFirstPlayer(GameEngine.MANUAL_TIGER_PLAYER);
+        gameEngine.setSecondPlayer(GameEngine.MANUAL_GOAT_PLAYER);
+    }//GEN-LAST:event_startByTigerMenuItemActionPerformed
+
+    private void startByGoatMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startByGoatMenuItemActionPerformed
+        gameEngine.setFirstPlayer(GameEngine.MANUAL_GOAT_PLAYER);
+        gameEngine.setSecondPlayer(GameEngine.MANUAL_TIGER_PLAYER);
+    }//GEN-LAST:event_startByGoatMenuItemActionPerformed
+
+    private void tigerByMouseMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tigerByMouseMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tigerByMouseMenuItemActionPerformed
+
+    private void tigerByAutoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tigerByAutoMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tigerByAutoMenuItemActionPerformed
+
+    private void goatByMouseMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goatByMouseMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_goatByMouseMenuItemActionPerformed
+
+    private void goatByAutoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goatByAutoMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_goatByAutoMenuItemActionPerformed
+
+    private void changePlayerNamesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changePlayerNamesMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_changePlayerNamesMenuItemActionPerformed
+
+    private void helpMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_helpMenuItemActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_aboutMenuItemActionPerformed
+
+    private void hintButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hintButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_hintButtonActionPerformed
+
+    private void loadGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadGameButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loadGameButtonActionPerformed
+
+    private void saveGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveGameButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveGameButtonActionPerformed
+
+    private void endGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endGameButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_endGameButtonActionPerformed
+
+    private void undoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_undoButtonActionPerformed
+
+    private void redoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_redoButtonActionPerformed
+
+    private void autoSelectStartPlayerRbMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoSelectStartPlayerRbMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_autoSelectStartPlayerRbMenuItemActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JRadioButtonMenuItem autoSelectStartPlayerRbMenuItem;
     private javax.swing.JPanel boardContainerPanel;
     private javax.swing.JMenuItem changePlayerNamesMenuItem;
     private javax.swing.JMenu editMenu;
+    private javax.swing.JButton endGameButton;
     private javax.swing.JMenuItem endGameMenuItem;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JToolBar gameControlToolBar;
@@ -313,15 +543,12 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JMenu goatPlayerMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem helpMenuItem;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
+    private javax.swing.JButton hintButton;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator10;
+    private javax.swing.JPopupMenu.Separator jSeparator11;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -330,10 +557,14 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator7;
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JPopupMenu.Separator jSeparator9;
+    private javax.swing.JButton loadGameButton;
     private javax.swing.JMenuItem loadGameMenuItem;
     private javax.swing.JButton newGameButton;
     private javax.swing.JMenuItem newGameMenuItem;
+    private javax.swing.JMenuItem preferenceMenuItem;
+    private javax.swing.JButton redoButton;
     private javax.swing.JMenuItem redoMenuItem;
+    private javax.swing.JButton saveGameButton;
     private javax.swing.JMenuItem saveGameMenuItem;
     private javax.swing.JMenu settingsMenu;
     private javax.swing.JCheckBoxMenuItem showToolbarCheckBoxMenuItem;
@@ -345,6 +576,56 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButtonMenuItem tigerByMouseMenuItem;
     private javax.swing.ButtonGroup tigerPlayedByButtonGroup;
     private javax.swing.JMenu tigerPlayerMenu;
+    private javax.swing.JButton undoButton;
     private javax.swing.JMenuItem undoMenuItem;
     // End of variables declaration//GEN-END:variables
+    
+    
+    
+    /**
+	 * Start a new Game
+	 */
+	public void startNewGame() {
+		
+		if(null != boardContainerPanel.getComponents()
+				&& boardContainerPanel.getComponents().length > 0)
+			boardContainerPanel.removeAll();
+		
+		boardBasePanel = new BoardBasePanel();
+		
+		if(startByTigerMenuItem.isSelected()){
+			gameEngine.setFirstPlayer( GameEngine.MANUAL_TIGER_PLAYER);
+			gameEngine.setSecondPlayer(GameEngine.MANUAL_GOAT_PLAYER);
+		} else if(startByGoatMenuItem.isSelected()){
+			gameEngine.setFirstPlayer( GameEngine.MANUAL_GOAT_PLAYER);
+			gameEngine.setSecondPlayer(GameEngine.MANUAL_TIGER_PLAYER);
+		} else if(autoSelectStartPlayerRbMenuItem.isSelected()){
+			Random random = new Random(1234567890);
+			int select = random.nextInt() % 2;
+			if(select == 0){
+				gameEngine.setFirstPlayer( GameEngine.MANUAL_TIGER_PLAYER);
+				gameEngine.setSecondPlayer(GameEngine.MANUAL_GOAT_PLAYER);
+			} else {
+				gameEngine.setFirstPlayer( GameEngine.MANUAL_GOAT_PLAYER);
+				gameEngine.setSecondPlayer(GameEngine.MANUAL_TIGER_PLAYER);
+			}
+		}
+		
+		UITiger[] tigers = new UITiger[2];
+		tigers[0] = new UITiger("T1", 1);
+		tigers[1] = new UITiger("T2", 2);
+		
+		UIGoat[] goats = new UIGoat[20];
+		for (int i = 0; i < goats.length; i++) {
+			goats[i] = new UIGoat("G", i+1);
+		}
+		UIBoard gameBoard = new UIBoard(tigers, goats);
+		gameEngine.setCurrentPlayer(gameEngine.getFirstPlayer());
+		boardBasePanel.setGameBoard(gameBoard);
+		
+        boardContainerPanel.add(boardBasePanel, BorderLayout.CENTER);
+        boardContainerPanel.updateUI();
+	}
+	
+	
 }

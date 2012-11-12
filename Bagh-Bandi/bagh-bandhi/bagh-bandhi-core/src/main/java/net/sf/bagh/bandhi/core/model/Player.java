@@ -14,6 +14,8 @@ public abstract class Player{
 
 	private String name;
 	private AnimalType animalType;
+	private Box currentBox;
+	private Box prevoiousBox;
 	
 	public Player(String name, AnimalType animalType) {
 		this.name = name;
@@ -46,6 +48,34 @@ public abstract class Player{
 	 */
 	public void setAnimalType(Animal.AnimalType animalType) {
 		this.animalType = animalType;
+	}
+
+	/**
+	 * @return the currentBox
+	 */
+	public Box getCurrentBox() {
+		return currentBox;
+	}
+
+	/**
+	 * @param currentBox the currentBox to set
+	 */
+	public void setCurrentBox(Box currentBox) {
+		this.currentBox = currentBox;
+	}
+
+	/**
+	 * @return the prevoiousBox
+	 */
+	public Box getPrevoiousBox() {
+		return prevoiousBox;
+	}
+
+	/**
+	 * @param prevoiousBox the prevoiousBox to set
+	 */
+	public void setPrevoiousBox(Box prevoiousBox) {
+		this.prevoiousBox = prevoiousBox;
 	}
 
 	/* (non-Javadoc)

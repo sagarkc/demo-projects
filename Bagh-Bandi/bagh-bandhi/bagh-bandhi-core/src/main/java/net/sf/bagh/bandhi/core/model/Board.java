@@ -401,6 +401,18 @@ public class Board {
 		
 		return animals;
 	}
+	
+	
+	
+	public boolean hasMoreCapturableMoves(Animal animal, Box box){
+		
+		return false;
+	}
+	
+	public List<Box> getAllCapturableMoves(Animal animal, Box box){
+		
+		return null;
+	}
 }
 
 

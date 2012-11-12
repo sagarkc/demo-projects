@@ -6,9 +6,11 @@ package net.sf.bagh.bandhi.app.board;
 import java.awt.Graphics;
 import java.util.Stack;
 
+import net.sf.bagh.bandhi.core.GameEngine;
 import net.sf.bagh.bandhi.core.model.Animal;
 import net.sf.bagh.bandhi.core.model.Board;
 import net.sf.bagh.bandhi.core.model.Goat;
+import net.sf.bagh.bandhi.core.model.PathOfMove;
 import net.sf.bagh.bandhi.core.model.Tiger;
 import net.sf.bagh.bandhi.core.model.Animal.AnimalType;
 
@@ -18,6 +20,8 @@ import net.sf.bagh.bandhi.core.model.Animal.AnimalType;
  */
 public class UIBoard extends Board implements Drawable {
 
+	private static final GameEngine gameEngine = GameEngine.getEngine();
+	
 	public static int X = 20;
 	public static int Y = 20;
 	public static int WIDTH = 670;
@@ -148,21 +152,54 @@ public class UIBoard extends Board implements Drawable {
 
 
 	/**
+	 * For the first move of any animal, if the move is to the next empty neighbor, then that move is possible.
+	 * For a tiger, at the first time, if it can capture a goat, that move is possible.
+	 * <br/>
+	 * For second time, only the Tiger can move if and only if the Tiger:
+	 * <ol>
+	 * 	<li>In the last move, the tiger captured a goat </li>
+	 * 	<li>The tiger is not moving back or not moving any other empty box
+	 * 		for the second time</li>
+	 * <li>The tiger can capture one more goat</li>
+	 * </ol>
+	 * 
 	 * @param previousSelectedBox
 	 * @param box
 	 * @return
 	 */
 	public boolean canBeMoved(UiBox fromBox, UiBox toBox) {
-		if(fromBox.isEmptyNeighbour(toBox)){
-			return true;
+		if(AnimalType.GOAT == fromBox.getAnimalType()){
+			if(gameEngine.isFirstMove(fromBox.getAnimal()) && fromBox.isEmptyNeighbor(toBox))
+				return true;
+			return false;
 		}
 		if(AnimalType.TIGER == fromBox.getAnimalType()){
-			UiBox uiBox = (UiBox) fromBox.getCommonNeighbourOnPath(toBox);
-			if(null != uiBox && AnimalType.GOAT == uiBox.getAnimalType()){
-				return true;
+			if(gameEngine.isFirstMove(fromBox.getAnimal()) ){
+				if(fromBox.isEmptyNeighbor(toBox))
+					return true;
+				UiBox uiBox = (UiBox) fromBox.getCommonNeighbourOnPath(toBox);
+				if(null != uiBox && AnimalType.GOAT == uiBox.getAnimalType()){
+					return true;
+				}
+			}
+			else {
+				PathOfMove lastMove = gameEngine.getLastMove(fromBox.getAnimal());
+				if(null != lastMove && null != lastMove.getCapturedAnimal()){
+					// if jumping back - NOT POSSIBLE
+					if(toBox.equals(lastMove.getMovedFromBox())){
+						return false;
+					}
+					// if going to empty neighbor - NOT POSSIBLE
+					if(fromBox.isEmptyNeighbor(toBox)){
+						return false;
+					}
+					UiBox uiBox = (UiBox) fromBox.getCommonNeighbourOnPath(toBox);
+					if(null != uiBox && AnimalType.GOAT == uiBox.getAnimalType()){
+						return true;
+					}
+				}
 			}
 		}
-		
 		return false;
 	}
 
@@ -173,24 +210,27 @@ public class UIBoard extends Board implements Drawable {
 	 */
 	public boolean move(UiBox fromBox, UiBox toBox) {
 		boolean success = false;
+		PathOfMove pathOfMove = new PathOfMove();
 		if(null != fromBox && null != toBox){
 			UiBox commonOnPath = (UiBox) fromBox.getCommonNeighbourOnPath(toBox);
 			if(AnimalType.TIGER == fromBox.getAnimalType()){
 				Animal animal = fromBox.getAnimal();
+				pathOfMove.setAnimal(animal);
 				toBox.setAnimal(animal);
 				fromBox.setAnimal(null);
 				if(null != animal && animal instanceof UITiger){
-					((UITiger)animal).setX(toBox.getPosition().x + (UiBox.WIDTH / 2) - (UITiger.WIDTH / 2));
-					((UITiger)animal).setY(toBox.getPosition().y + (UiBox.HEIGHT / 2) - (UITiger.HEIGHT / 2));
+					updateTigerPosition(toBox, animal);
 				}
 				if(null != commonOnPath && AnimalType.GOAT == commonOnPath.getAnimalType()){
 					if(commonOnPath.getAnimals() != null && commonOnPath.getAnimals().size() > 0){
 						Goat goat = (Goat) commonOnPath.getAnimals().pop();
 						getCapturedGoats().add(goat);
+						pathOfMove.setCapturedAnimal(goat);
 					} else {
 						Goat goat = (Goat) commonOnPath.getAnimal();
 						commonOnPath.setAnimal(null);
 						getCapturedGoats().add(goat);
+						pathOfMove.setCapturedAnimal(goat);
 					}
 				}
 				success = true;
@@ -198,27 +238,55 @@ public class UIBoard extends Board implements Drawable {
 				if(fromBox.getAnimals() != null && fromBox.getAnimals().size() > 0){
 					Animal animal = fromBox.getAnimals().pop();
 					toBox.setAnimal(animal);
+					pathOfMove.setAnimal(animal);
+					pathOfMove.setCapturedAnimal(null);
 					if(null != animal && animal instanceof UIGoat){
-						((UIGoat)animal).setX(toBox.getPosition().x + (UiBox.WIDTH / 2) - (UIGoat.WIDTH / 2));
-						((UIGoat)animal).setY(toBox.getPosition().y + (UiBox.HEIGHT / 2) - (UIGoat.HEIGHT / 2));
+						updateGoatPosition(toBox, animal);
 					}
 					success = true;
 				} else {
 					Animal animal = fromBox.getAnimal();
 					toBox.setAnimal(animal);
+					pathOfMove.setAnimal(animal);
+					pathOfMove.setCapturedAnimal(null);
 					fromBox.setAnimal(null);
 					if(null != animal && animal instanceof UIGoat){
-						((UIGoat)animal).setX(toBox.getPosition().x + (UiBox.WIDTH / 2) - (UIGoat.WIDTH / 2));
-						((UIGoat)animal).setY(toBox.getPosition().y + (UiBox.HEIGHT / 2) - (UIGoat.HEIGHT / 2));
+						updateGoatPosition(toBox, animal);
 					}
 					success = true;
 				}
 			}
 			
-			if(success)
+			if(success){
+				pathOfMove.setMovedFromBox(fromBox);
+				pathOfMove.setCurrentBox(toBox);
+				gameEngine.getMovePaths().push(pathOfMove);
 				System.out.println("Moved from " + fromBox + " To " + toBox);
+			}
 		}
 		return success;
 	}
+
+
+	/**
+	 * @param box
+	 * @param animal
+	 */
+	public void updateGoatPosition(UiBox box, Animal animal) {
+		((UIGoat)animal).setX(box.getPosition().x + (UiBox.WIDTH / 2) - (UIGoat.WIDTH / 2));
+		((UIGoat)animal).setY(box.getPosition().y + (UiBox.HEIGHT / 2) - (UIGoat.HEIGHT / 2));
+	}
+
+
+	/**
+	 * @param box
+	 * @param animal
+	 */
+	public void updateTigerPosition(UiBox box, Animal animal) {
+		((UITiger)animal).setX(box.getPosition().x + (UiBox.WIDTH / 2) - (UITiger.WIDTH / 2));
+		((UITiger)animal).setY(box.getPosition().y + (UiBox.HEIGHT / 2) - (UITiger.HEIGHT / 2));
+	}
+	
+	
 
 }
