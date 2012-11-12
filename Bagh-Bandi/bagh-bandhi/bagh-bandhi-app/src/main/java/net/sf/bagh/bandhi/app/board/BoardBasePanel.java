@@ -13,11 +13,19 @@ import java.awt.event.MouseMotionListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.GrayFilter;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import net.sf.bagh.bandhi.app.AnimalSizeEnum;
+import net.sf.bagh.bandhi.app.BoxSizeEnum;
+import net.sf.bagh.bandhi.app.GreenBoxImageEnum;
+import net.sf.bagh.bandhi.app.GreyBoxImageEnum;
+import net.sf.bagh.bandhi.app.GridSizeEnum;
+import net.sf.bagh.bandhi.app.OrangeBoxImageEnum;
+import net.sf.bagh.bandhi.app.RedBoxImageEnum;
 import net.sf.bagh.bandhi.core.GameEngine;
 import net.sf.bagh.bandhi.core.activity.Captureable;
 import net.sf.bagh.bandhi.core.model.Animal.AnimalType;
@@ -37,13 +45,16 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 	private static final long serialVersionUID = -3821322838306025737L;
 	
 	private static final GameEngine gameEngine = GameEngine.getEngine();
-	private static final int BOARD_WIDTH = 820;
-	private static final int BOARD_HEIGHT = 690;
+	
 	private static final int LEFT_MARGIN = 20;
 	private static final int RIGHT_MARGIN = 20;
-	private static final int GRID_HEIGHT = 650;
-	private static final int GRID_WIDTH = 650;
-	private static final int BOX_WIDTH = 130;
+	
+	private static final int BOARD_WIDTH = 820;
+	private static final int BOARD_HEIGHT = 690;
+	
+	//private static final int GRID_HEIGHT = 650;
+	//private static final int GRID_WIDTH = 650;
+	
 	private static final int INFO_BOX_WIDTH = 100;
 	private static final int INFO_BOX_HEIGHT = 650;
 	private static final int INFO_BOX_X = 690;
@@ -111,7 +122,9 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(new ImageIcon(getClass().getResource(
-				"/images/wood-plank.jpg")).getImage(), 20, 20, GRID_WIDTH, GRID_HEIGHT, null);
+				"/images/wood-plank.jpg")).getImage(), LEFT_MARGIN, RIGHT_MARGIN, 
+				GridSizeEnum.getValue(UIBoard.sizeFactorEnum).getWidth(), 
+				GridSizeEnum.getValue(UIBoard.sizeFactorEnum).getHeight(), null);
 		drawGrid(g2d);
 		drawBoard(g2d);
 	}
@@ -135,19 +148,21 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 	private void drawGrid(Graphics2D g){
 		int x1, y1, x2, y2;
 		x1 = y1 = LEFT_MARGIN;
-		x2 = x1 + GRID_WIDTH;
+		x2 = x1 + GridSizeEnum.getValue(UIBoard.sizeFactorEnum).getWidth();
 		y2 = y1;
-		//g.setColor(Color.GREEN);
-		g.setColor(new Color(0, 153, 51));
+		g.setColor(Color.BLACK);
+		//g.setColor(new Color(0, 153, 51));
 		for (int i = 0; i <= 5; i++) {
-			g.drawLine(x1, y1+(i * BOX_WIDTH), x2, y2+(i * BOX_WIDTH));
+			g.drawLine(x1, y1+(i * BoxSizeEnum.getValue(UIBoard.sizeFactorEnum).getHeight()), x2, 
+					y2+(i * BoxSizeEnum.getValue(UIBoard.sizeFactorEnum).getHeight()));
 		}
 		
 		x1 = x2 = LEFT_MARGIN;
 		y1 = x1 ;
-		y2 = y1 + GRID_WIDTH;
+		y2 = y1 + GridSizeEnum.getValue(UIBoard.sizeFactorEnum).getWidth();
 		for (int j = 0; j <= 5; j++) {
-			g.drawLine(x1+(j * BOX_WIDTH), y1, x2+(j * BOX_WIDTH), y2);
+			g.drawLine(x1+(j * BoxSizeEnum.getValue(UIBoard.sizeFactorEnum).getWidth()), y1, 
+					x2+(j * BoxSizeEnum.getValue(UIBoard.sizeFactorEnum).getWidth()), y2);
 		}
 		
 		g.setColor(Color.PINK);
@@ -227,15 +242,12 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 				if(moved){
 					winer = gameBoard.evalute();
 					previousSelectedBox.draw(getGraphics());
-					previousSelectedBox.setBgImage(new ImageIcon(getClass().getResource(
-							"/images/box_grey-128x128.png")) );
-					box.setBgImage(new ImageIcon(getClass().getResource(
-							"/images/box_grey-128x128.png")) );
+					previousSelectedBox.setBgImage(GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
+					box.setBgImage(GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
 					if(null != previousSelectedBox){
 						List<Box> previousNeighbours = previousSelectedBox.getEmptyNeighbours();
 						for (Box neighbour : previousNeighbours) {
-							((UiBox)neighbour).setBgImage(new ImageIcon(getClass().getResource(
-									"/images/box_grey-128x128.png")) );
+							((UiBox)neighbour).setBgImage(GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
 							((UiBox)neighbour).draw(getGraphics());
 						}
 					}
@@ -274,12 +286,10 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 		// clicked on board
 		else if(box == null ) {
 			if(null != previousSelectedBox){
-				previousSelectedBox.setBgImage(new ImageIcon(getClass().getResource(
-						"/images/box_grey-128x128.png")) );
+				previousSelectedBox.setBgImage(GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
 				List<Box> previousNeighbours = previousSelectedBox.getEmptyNeighbours();
 				for (Box neighbour : previousNeighbours) {
-					((UiBox)neighbour).setBgImage(new ImageIcon(getClass().getResource(
-							"/images/box_grey-128x128.png")) );
+					((UiBox)neighbour).setBgImage(GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
 					((UiBox)neighbour).draw(getGraphics());
 				}
 				previousSelectedBox.draw(getGraphics());
@@ -294,29 +304,26 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 	 */
 	public void selectBox(final UiBox box) {
 		if(null != previousSelectedBox){
-			previousSelectedBox.setBgImage(new ImageIcon(getClass().getResource(
-					"/images/box_grey-128x128.png")) );
+			previousSelectedBox.setBgImage(
+				GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage()	
+			);
 			List<Box> previousNeighbours = previousSelectedBox.getEmptyNeighbours();
 			for (Box neighbour : previousNeighbours) {
-				((UiBox)neighbour).setBgImage(new ImageIcon(getClass().getResource(
-						"/images/box_grey-128x128.png")) );
+				((UiBox)neighbour).setBgImage(GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
 				((UiBox)neighbour).draw(getGraphics());
 			}
 			previousSelectedBox.draw(getGraphics());
 		}
-		box.setBgImage(new ImageIcon(getClass().getResource(
-				"/images/box_orange-128x128.png")) );
+		box.setBgImage(OrangeBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
 		List<Box> selectedNeighbours = box.getEmptyNeighbours();
 		if(AnimalType.GOAT == box.getAnimalType()){
 			for (Box neighbour : selectedNeighbours) {
-				((UiBox)neighbour).setBgImage(new ImageIcon(getClass().getResource(
-						"/images/box_green-128x128.png")) );
+				((UiBox)neighbour).setBgImage(GreenBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
 				((UiBox)neighbour).draw(getGraphics());
 			}
 		} else if(AnimalType.TIGER == box.getAnimalType()){
 			for (Box neighbour : selectedNeighbours) {
-				((UiBox)neighbour).setBgImage(new ImageIcon(getClass().getResource(
-						"/images/box_red-128x128.png")) );
+				((UiBox)neighbour).setBgImage(RedBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
 				((UiBox)neighbour).draw(getGraphics());
 			}
 		} 
@@ -331,8 +338,8 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 			for (int i = 0; i < animals.size(); i++) {
 				if(null != animals.get(i) && animals.get(i) instanceof UIGoat){
 					UIGoat goat = (UIGoat) animals.get(i);
-					goat.setX(INFO_BOX_X + (INFO_BOX_WIDTH / 2) - (UIGoat.WIDTH / 2));
-					goat.setY(INFO_BOX_Y + (INFO_BOX_HEIGHT - ((i+1) * UIGoat.HEIGHT/2) ) - 25);
+					goat.setX(INFO_BOX_X + (INFO_BOX_WIDTH / 2) - AnimalSizeEnum.getValue(UIBoard.sizeFactorEnum).getWidth());
+					goat.setY(INFO_BOX_Y + (INFO_BOX_HEIGHT - ((i+1) * AnimalSizeEnum.getValue(UIBoard.sizeFactorEnum).getHeight()) ) - 25);
 					goat.draw(g);
 				}
 			}

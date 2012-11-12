@@ -10,6 +10,8 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.ImageIcon;
 
+import net.sf.bagh.bandhi.app.AnimalSizeEnum;
+import net.sf.bagh.bandhi.app.TigerImageEnum;
 import net.sf.bagh.bandhi.core.model.Tiger;
 
 /**
@@ -19,11 +21,8 @@ import net.sf.bagh.bandhi.core.model.Tiger;
 public class UITiger extends Tiger implements MouseListener,
 		MouseMotionListener, Drawable {
 
-	public static final int WIDTH = 48;
-	public static final int HEIGHT = 48;
 	private int x, y;
-	private ImageIcon bgImage = new ImageIcon(getClass().getResource(
-			"/images/circle_red-48x48.png"));
+	private ImageIcon bgImage = TigerImageEnum.getValue(UIBoard.sizeFactorEnum).getImage();
 
 	/**
 	 * 
@@ -69,6 +68,20 @@ public class UITiger extends Tiger implements MouseListener,
 		this.y = y;
 	}
 
+	/**
+	 * @return the bgImage
+	 */
+	public ImageIcon getBgImage() {
+		return bgImage;
+	}
+
+	/**
+	 * @param bgImage the bgImage to set
+	 */
+	public void setBgImage(ImageIcon bgImage) {
+		this.bgImage = bgImage;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -77,7 +90,9 @@ public class UITiger extends Tiger implements MouseListener,
 	public void draw(Graphics g) {
 		if(null == g)
 			return;
-		g.drawImage(bgImage.getImage(), x, y, 48, 48, null);
+		g.drawImage(bgImage.getImage(), x, y, 
+				AnimalSizeEnum.getValue(UIBoard.sizeFactorEnum).getWidth(), 
+				AnimalSizeEnum.getValue(UIBoard.sizeFactorEnum).getHeight(), null);
 		
 	}
 

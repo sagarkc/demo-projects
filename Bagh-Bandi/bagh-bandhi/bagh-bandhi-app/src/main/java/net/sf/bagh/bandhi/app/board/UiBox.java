@@ -6,15 +6,14 @@ package net.sf.bagh.bandhi.app.board;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.util.Stack;
 
 import javax.swing.ImageIcon;
 
-import org.omg.CosNaming.NamingContextExtPackage.AddressHelper;
-
+import net.sf.bagh.bandhi.app.BoxImageEnum;
+import net.sf.bagh.bandhi.app.BoxSizeEnum;
+import net.sf.bagh.bandhi.app.GreyBoxImageEnum;
+import net.sf.bagh.bandhi.app.ImageSizeEnum;
 import net.sf.bagh.bandhi.core.model.Animal;
 import net.sf.bagh.bandhi.core.model.Box;
 
@@ -24,8 +23,6 @@ import net.sf.bagh.bandhi.core.model.Box;
  */
 public class UiBox extends Box implements Drawable{
 
-	public static int WIDTH = 130;
-	public static int HEIGHT = 130;
 	
 	private Point position;
 	private ImageIcon bgImage;
@@ -36,8 +33,7 @@ public class UiBox extends Box implements Drawable{
 	public UiBox(int x, int y) {
 		super(x, y);
 		position = new Point();
-		bgImage = new ImageIcon(getClass().getResource(
-				"/images/box_grey-128x128.png"));
+		bgImage = GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage();
 		borderColor = Color.black;
 		borderThickness = 2;
 	}
@@ -102,7 +98,9 @@ public class UiBox extends Box implements Drawable{
 	public void draw(Graphics g) {
 		if(g == null)
 			return;
-		g.drawImage(bgImage.getImage(), position.x, position.y, 128, 128, null);
+		g.drawImage(bgImage.getImage(), position.x, position.y, 
+				ImageSizeEnum.getValue(UIBoard.sizeFactorEnum).getWidth(), 
+				ImageSizeEnum.getValue(UIBoard.sizeFactorEnum).getHeight(), null);
 		Stack<Animal> animals = getAnimals();
 		if(null != animals && animals.size() > 0){
 			Animal animal = animals.peek();

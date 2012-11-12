@@ -185,15 +185,18 @@ public class GameFrame extends javax.swing.JFrame {
         jLabel1.setText("Board Size");
         gameControlToolBar.add(jLabel1);
 
-        boardSizeSlider.setMaximum(4);
+        boardSizeSlider.setMaximum(5);
+        boardSizeSlider.setMinimum(1);
         boardSizeSlider.setPaintLabels(true);
         boardSizeSlider.setSnapToTicks(true);
         boardSizeSlider.setToolTipText("Board Size");
-        boardSizeSlider.setValue(2);
+        boardSizeSlider.setValue(3);
         boardSizeSlider.setMaximumSize(new java.awt.Dimension(200, 25));
         boardSizeSlider.setMinimumSize(new java.awt.Dimension(200, 25));
+        boardSizeSlider.addChangeListener(formListener);
         gameControlToolBar.add(boardSizeSlider);
 
+        selectedBoardSizeLabel.setForeground(new java.awt.Color(0, 0, 204));
         selectedBoardSizeLabel.setText("NORMAL");
         gameControlToolBar.add(selectedBoardSizeLabel);
 
@@ -377,7 +380,7 @@ public class GameFrame extends javax.swing.JFrame {
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements java.awt.event.ActionListener {
+    private class FormListener implements java.awt.event.ActionListener, javax.swing.event.ChangeListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if (evt.getSource() == newGameButton) {
@@ -469,6 +472,12 @@ public class GameFrame extends javax.swing.JFrame {
             }
             else if (evt.getSource() == aboutMenuItem) {
                 GameFrame.this.aboutMenuItemActionPerformed(evt);
+            }
+        }
+
+        public void stateChanged(javax.swing.event.ChangeEvent evt) {
+            if (evt.getSource() == boardSizeSlider) {
+                GameFrame.this.boardSizeSliderStateChanged(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
@@ -594,6 +603,17 @@ public class GameFrame extends javax.swing.JFrame {
     private void preferenceMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_preferenceMenuItemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_preferenceMenuItemActionPerformed
+
+    private void boardSizeSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_boardSizeSliderStateChanged
+        int val = boardSizeSlider.getValue();
+        UIBoard.sizeFactorEnum = SizeFactorEnum.getValue(val);
+        selectedBoardSizeLabel.setText("" + UIBoard.sizeFactorEnum.toString());
+        if(null != boardBasePanel){
+        	boardBasePanel.getGameBoard().updateBoxDetails();
+        	boardBasePanel.repaint();
+            boardBasePanel.updateUI();
+        }
+    }//GEN-LAST:event_boardSizeSliderStateChanged
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
