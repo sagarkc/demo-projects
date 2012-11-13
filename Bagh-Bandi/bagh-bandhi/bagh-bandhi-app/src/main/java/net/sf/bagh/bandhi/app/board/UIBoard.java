@@ -199,7 +199,6 @@ public class UIBoard extends Board implements Drawable {
 	 * @see net.sf.bagh.bandhi.app.board.Drawable#draw(java.awt.Graphics)
 	 */
 	public void draw(Graphics graphics) {
-		// TODO Auto-generated method stub
 		
 	}
 

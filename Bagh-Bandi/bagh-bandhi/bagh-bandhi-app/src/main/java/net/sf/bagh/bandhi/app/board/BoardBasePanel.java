@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
+import net.sf.bagh.bandhi.AppConstants;
 import net.sf.bagh.bandhi.app.AnimalSizeEnum;
 import net.sf.bagh.bandhi.app.BoxSizeEnum;
 import net.sf.bagh.bandhi.app.GreenBoxImageEnum;
@@ -243,11 +244,14 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 					winer = gameBoard.evalute();
 					previousSelectedBox.draw(getGraphics());
 					previousSelectedBox.setBgImage(GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
+					previousSelectedBox.setDefaultBackgroundColor();
 					box.setBgImage(GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
+					box.setDefaultBackgroundColor();
 					if(null != previousSelectedBox){
 						List<Box> previousNeighbours = previousSelectedBox.getEmptyNeighbours();
 						for (Box neighbour : previousNeighbours) {
 							((UiBox)neighbour).setBgImage(GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
+							((UiBox)neighbour).setDefaultBackgroundColor();
 							((UiBox)neighbour).draw(getGraphics());
 						}
 					}
@@ -307,23 +311,28 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 			previousSelectedBox.setBgImage(
 				GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage()	
 			);
+			previousSelectedBox.setDefaultBackgroundColor();
 			List<Box> previousNeighbours = previousSelectedBox.getEmptyNeighbours();
 			for (Box neighbour : previousNeighbours) {
 				((UiBox)neighbour).setBgImage(GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
+				((UiBox)neighbour).setDefaultBackgroundColor();
 				((UiBox)neighbour).draw(getGraphics());
 			}
 			previousSelectedBox.draw(getGraphics());
 		}
 		box.setBgImage(OrangeBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
+		box.setBackgroundColor(AppConstants.SELECTED_BACKGROUND);
 		List<Box> selectedNeighbours = box.getEmptyNeighbours();
 		if(AnimalType.GOAT == box.getAnimalType()){
 			for (Box neighbour : selectedNeighbours) {
 				((UiBox)neighbour).setBgImage(GreenBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
+				((UiBox)neighbour).setBackgroundColor(AppConstants.GOAT_MOVABLE_BACKGROUND);
 				((UiBox)neighbour).draw(getGraphics());
 			}
 		} else if(AnimalType.TIGER == box.getAnimalType()){
 			for (Box neighbour : selectedNeighbours) {
 				((UiBox)neighbour).setBgImage(RedBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
+				((UiBox)neighbour).setBackgroundColor(AppConstants.TIGER_MOVABLE_BACKGROUND);
 				((UiBox)neighbour).draw(getGraphics());
 			}
 		} 
