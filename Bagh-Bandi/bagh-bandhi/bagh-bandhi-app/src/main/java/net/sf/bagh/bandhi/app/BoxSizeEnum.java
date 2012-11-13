@@ -12,8 +12,8 @@ public enum BoxSizeEnum {
 	EXTRA_SHORT(SizeFactorEnum.EXTRA_SHORT, 32, 32), 
 	SHORT(SizeFactorEnum.SHORT, 48, 48),
 	NORMAL(SizeFactorEnum.NORMAL, 64, 64),
-	LARGE(SizeFactorEnum.LARGE, 130, 130), 
-	EXTRA_LARGE(SizeFactorEnum.EXTRA_LARGE, 0, 0);
+	LARGE(SizeFactorEnum.LARGE, 96, 96), 
+	EXTRA_LARGE(SizeFactorEnum.EXTRA_LARGE, 130, 130);
 	
 	private final SizeFactorEnum sizeFactor;
 	private final int width;
