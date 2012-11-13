@@ -7,13 +7,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.GrayFilter;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -67,7 +67,9 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 			.createCompoundBorder(BorderFactory.createMatteBorder(10, 10,
 					10, 10, new ImageIcon(getClass().getResource("/images/wood-plank-small.jpg"))), BorderFactory
 					.createLineBorder(new Color(0, 153, 51))));
-	private final Dimension boardSize = new Dimension(BOARD_WIDTH, BOARD_HEIGHT);
+	public static final Dimension boardSize = new Dimension(
+			GridSizeEnum.getValue(UIBoard.sizeFactorEnum).getWidth()+LEFT_MARGIN*2, 
+			GridSizeEnum.getValue(UIBoard.sizeFactorEnum).getHeight()+LEFT_MARGIN*2);
 	
 	private Color boardBGColor = Color.BLACK;
 	private UIBoard gameBoard ;
@@ -98,6 +100,16 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 		setBorder(boardBorder);
 	}
 	
+	/**
+	 * 
+	 */
+	public void updateSize() {
+		boardSize.width = GridSizeEnum.getValue(UIBoard.sizeFactorEnum).getWidth()+LEFT_MARGIN*2;
+		boardSize.height = GridSizeEnum.getValue(UIBoard.sizeFactorEnum).getHeight()+LEFT_MARGIN*2;
+		setMaximumSize(boardSize);
+		setMinimumSize(boardSize);
+		setPreferredSize(boardSize);
+	}
 	
 	/**
 	 * @return the gameBoard
@@ -120,13 +132,21 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 	 */
 	@Override
 	public void paint(Graphics g) {
-		super.paint(g);
+		RenderingHints hints = new RenderingHints(
+			    RenderingHints.KEY_ANTIALIASING,
+			    RenderingHints.VALUE_ANTIALIAS_ON);
+			hints.add(new RenderingHints(
+			            RenderingHints.KEY_RENDERING, 
+			RenderingHints.VALUE_RENDER_QUALITY));
+		
 		Graphics2D g2d = (Graphics2D) g;
+		g2d.setRenderingHints(hints);
+		super.paint(g2d);
 		g2d.drawImage(new ImageIcon(getClass().getResource(
 				"/images/wood-plank.jpg")).getImage(), LEFT_MARGIN, RIGHT_MARGIN, 
 				GridSizeEnum.getValue(UIBoard.sizeFactorEnum).getWidth(), 
 				GridSizeEnum.getValue(UIBoard.sizeFactorEnum).getHeight(), null);
-		drawGrid(g2d);
+		//drawGrid(g2d);
 		drawBoard(g2d);
 	}
 	
@@ -241,6 +261,8 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 				// do move
 				boolean moved = gameBoard.move(previousSelectedBox, box);
 				if(moved){
+					firePropertyChange("MOVE_SUCCESS", previousSelectedBox, box);
+					firePropertyChange("GOAT_COUNT", null, 5%3);
 					winer = gameBoard.evalute();
 					previousSelectedBox.draw(getGraphics());
 					previousSelectedBox.setBgImage(GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
@@ -274,7 +296,7 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 					if(!hasNextMove){
 						gameEngine.shiftNextPlayer();
 					}
-					drawCapturedAnimals(gameBoard.getCapturedGoats());
+					//drawCapturedAnimals(gameBoard.getCapturedGoats());
 					if(AnimalType.NONE != winer)
 						JOptionPane.showMessageDialog(this, "Winer is : " + winer);
 				} else {
@@ -400,6 +422,9 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 	public void mouseMoved(MouseEvent e) {
 		
 	}
+
+
+	
 	
 	
 }

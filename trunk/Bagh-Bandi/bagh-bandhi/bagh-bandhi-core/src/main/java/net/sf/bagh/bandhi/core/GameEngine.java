@@ -25,7 +25,7 @@ public final class GameEngine {
 	/* ----------------------------------------------------------------- */
 	
 	public static final Human MANUAL_TIGER_PLAYER = new Human("A", AnimalType.TIGER);
-	public static final Human MANUAL_GOAT_PLAYER = new Human("G", AnimalType.GOAT);
+	public static final Human MANUAL_GOAT_PLAYER = new Human("B", AnimalType.GOAT);
 	
 	private GameSimulator gameSimulator;
 	
@@ -38,6 +38,7 @@ public final class GameEngine {
 	private Stack<PathOfMove> movePaths = new Stack<PathOfMove>();
 	private Stack<PathOfMove> undoMovePaths = new Stack<PathOfMove>();
 	private Stack<PathOfMove> redoMovePaths = new Stack<PathOfMove>();
+	
 	
 	/* ----------------------------------------------------------------- */
 	

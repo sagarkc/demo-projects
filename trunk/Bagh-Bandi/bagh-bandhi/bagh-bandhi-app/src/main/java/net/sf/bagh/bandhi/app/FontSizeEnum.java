@@ -7,27 +7,25 @@ package net.sf.bagh.bandhi.app;
  * @author Sabuj Das | sabuj.das@gmail.com
  *
  */
-public enum GridSizeEnum {
+public enum FontSizeEnum {
 
-	EXTRA_SHORT(SizeFactorEnum.EXTRA_SHORT, 160, 160), 
-	SHORT(SizeFactorEnum.SHORT, 240, 240),
-	NORMAL(SizeFactorEnum.NORMAL, 320, 320),
-	LARGE(SizeFactorEnum.LARGE, 480, 480), 
-	EXTRA_LARGE(SizeFactorEnum.EXTRA_LARGE, 650, 650);
+	EXTRA_SHORT(SizeFactorEnum.EXTRA_SHORT, 9), 
+	SHORT(SizeFactorEnum.SHORT, 13),
+	NORMAL(SizeFactorEnum.NORMAL, 15),
+	LARGE(SizeFactorEnum.LARGE, 21), 
+	EXTRA_LARGE(SizeFactorEnum.EXTRA_LARGE, 25);
 	
 	private final SizeFactorEnum sizeFactor;
-	private final int width;
-	private final int height;
+	private final int size;
 	
 	/**
 	 * @param sizeFactor
 	 * @param width
 	 * @param height
 	 */
-	private GridSizeEnum(SizeFactorEnum sizeFactor, int width, int height) {
+	private FontSizeEnum(SizeFactorEnum sizeFactor, int size) {
 		this.sizeFactor = sizeFactor;
-		this.width = width;
-		this.height = height;
+		this.size = size;
 	}
 
 	/**
@@ -38,20 +36,13 @@ public enum GridSizeEnum {
 	}
 
 	/**
-	 * @return the width
+	 * @return the size
 	 */
-	public int getWidth() {
-		return width;
+	public int getSize() {
+		return size;
 	}
 
-	/**
-	 * @return the height
-	 */
-	public int getHeight() {
-		return height;
-	}
-	
-	public static GridSizeEnum getValue(SizeFactorEnum boardSize) {
+	public static FontSizeEnum getValue(SizeFactorEnum boardSize) {
 		if (SizeFactorEnum.EXTRA_SHORT == boardSize) {
 			return EXTRA_SHORT;
 		}

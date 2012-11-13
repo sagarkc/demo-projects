@@ -3,6 +3,8 @@
  */
 package net.sf.bagh.bandhi.app.board;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -10,8 +12,11 @@ import java.awt.event.MouseMotionListener;
 
 import javax.swing.ImageIcon;
 
+import net.sf.bagh.bandhi.BaghBandhiKhela;
 import net.sf.bagh.bandhi.app.AnimalSizeEnum;
+import net.sf.bagh.bandhi.app.FontSizeEnum;
 import net.sf.bagh.bandhi.app.GoatImageEnum;
+import net.sf.bagh.bandhi.app.util.DrawingUtil;
 import net.sf.bagh.bandhi.core.activity.Captureable;
 import net.sf.bagh.bandhi.core.model.Goat;
 
@@ -90,6 +95,17 @@ public class UIGoat extends Goat implements MouseListener, MouseMotionListener, 
 		g.drawImage(bgImage.getImage(), x, y, 
 				AnimalSizeEnum.getValue(UIBoard.sizeFactorEnum).getWidth(), 
 				AnimalSizeEnum.getValue(UIBoard.sizeFactorEnum).getHeight(), null);
+		g.setColor(Color.CYAN);
+		Font font = new Font(BaghBandhiKhela.bitstreamFont.getFontName(),
+				java.awt.Font.BOLD, FontSizeEnum.getValue(UIBoard.sizeFactorEnum).getSize());
+		g.setFont(font);
+		int textHeight = DrawingUtil.calculateTextHeight(g);
+		int textWidth = DrawingUtil.calculateTextWidth(g, getName()+getNumber());
+		g.drawString(getName()+getNumber(), 
+				x + (AnimalSizeEnum.getValue(UIBoard.sizeFactorEnum).getWidth() / 2) - (textWidth / 2) + 2, 
+				y + (AnimalSizeEnum.getValue(UIBoard.sizeFactorEnum).getHeight() / 2) + (textHeight / 4) -2  
+			);
+		
 	}
 
 	/* (non-Javadoc)

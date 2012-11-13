@@ -6,6 +6,7 @@ package net.sf.bagh.bandhi.app;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.beans.PropertyChangeListener;
 import java.util.Random;
 
 import javax.swing.JScrollPane;
@@ -21,7 +22,7 @@ import net.sf.bagh.bandhi.core.GameEngine;
  *
  * @author sabuj
  */
-public class GameFrame extends javax.swing.JFrame {
+public class GameFrame extends javax.swing.JFrame implements PropertyChangeListener{
 
     
     private static final GameEngine gameEngine = GameEngine.getEngine();
@@ -34,6 +35,7 @@ public class GameFrame extends javax.swing.JFrame {
      */
     public GameFrame() {
         initComponents();
+        addPropertyChangeListener(this);
         boardScrollPane = new JScrollPane();
         WindowUtil.bringToCenter(this);
     }
@@ -66,7 +68,19 @@ public class GameFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         boardSizeSlider = new javax.swing.JSlider();
         selectedBoardSizeLabel = new javax.swing.JLabel();
+        contentPanel = new javax.swing.JPanel();
+        statisticPanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        blockedTigerCountLabel = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        killedGoatsCountLabel = new javax.swing.JLabel();
+        jSeparator13 = new javax.swing.JSeparator();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         boardContainerPanel = new javax.swing.JPanel();
+        playerInfoPanel = new javax.swing.JPanel();
+        currentPlayerLabel = new javax.swing.JLabel();
         gameMenuBar = new javax.swing.JMenuBar();
         gameMenu = new javax.swing.JMenu();
         newGameMenuItem = new javax.swing.JMenuItem();
@@ -111,8 +125,9 @@ public class GameFrame extends javax.swing.JFrame {
         FormListener formListener = new FormListener();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Catch the Tiger (Bagh Bandhi Khela)");
-        setPreferredSize(new java.awt.Dimension(820, 760));
+        setTitle("Surround the Tiger (Bagh Bandhi Khela)");
+        setMinimumSize(new java.awt.Dimension(680, 520));
+        setPreferredSize(new java.awt.Dimension(680, 520));
 
         gameControlToolBar.setFloatable(false);
         gameControlToolBar.setRollover(true);
@@ -202,9 +217,99 @@ public class GameFrame extends javax.swing.JFrame {
 
         getContentPane().add(gameControlToolBar, java.awt.BorderLayout.PAGE_START);
 
-        boardContainerPanel.setMinimumSize(new java.awt.Dimension(820, 730));
-        boardContainerPanel.setLayout(new java.awt.BorderLayout());
-        getContentPane().add(boardContainerPanel, java.awt.BorderLayout.CENTER);
+        contentPanel.setBackground(new java.awt.Color(100, 144, 204));
+
+        statisticPanel.setBackground(new java.awt.Color(100, 144, 204));
+        statisticPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(" Game Statictic "));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/circle-red-24x24.png"))); // NOI18N
+        jLabel2.setText("Tigers Blocked");
+
+        blockedTigerCountLabel.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        blockedTigerCountLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        blockedTigerCountLabel.setText("0");
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/circle-blue-24x24.png"))); // NOI18N
+        jLabel4.setText("Goats Killed");
+
+        killedGoatsCountLabel.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        killedGoatsCountLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        killedGoatsCountLabel.setText("0");
+
+        jLabel3.setText("Movement:");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        javax.swing.GroupLayout statisticPanelLayout = new javax.swing.GroupLayout(statisticPanel);
+        statisticPanel.setLayout(statisticPanelLayout);
+        statisticPanelLayout.setHorizontalGroup(
+            statisticPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statisticPanelLayout.createSequentialGroup()
+                .addGroup(statisticPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(statisticPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(statisticPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(blockedTigerCountLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(killedGoatsCountLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, statisticPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+            .addComponent(jSeparator13)
+        );
+        statisticPanelLayout.setVerticalGroup(
+            statisticPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statisticPanelLayout.createSequentialGroup()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(blockedTigerCountLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(killedGoatsCountLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        boardContainerPanel.setBackground(new java.awt.Color(100, 144, 204));
+
+        playerInfoPanel.setBackground(new java.awt.Color(100, 144, 204));
+        playerInfoPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("  Current Player  "));
+        playerInfoPanel.add(currentPlayerLabel);
+
+        javax.swing.GroupLayout contentPanelLayout = new javax.swing.GroupLayout(contentPanel);
+        contentPanel.setLayout(contentPanelLayout);
+        contentPanelLayout.setHorizontalGroup(
+            contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(contentPanelLayout.createSequentialGroup()
+                .addComponent(boardContainerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(playerInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                    .addComponent(statisticPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        contentPanelLayout.setVerticalGroup(
+            contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(boardContainerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(contentPanelLayout.createSequentialGroup()
+                .addComponent(playerInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(statisticPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(contentPanel, java.awt.BorderLayout.CENTER);
 
         gameMenu.setText("Game");
 
@@ -610,6 +715,7 @@ public class GameFrame extends javax.swing.JFrame {
         selectedBoardSizeLabel.setText("" + UIBoard.sizeFactorEnum.toString());
         if(null != boardBasePanel){
         	boardBasePanel.getGameBoard().updateBoxDetails();
+        	boardBasePanel.updateSize();
         	boardBasePanel.repaint();
             boardBasePanel.updateUI();
         }
@@ -620,11 +726,14 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JRadioButtonMenuItem autoSelectStartPlayerRbMenuItem;
     private javax.swing.JRadioButtonMenuItem bigBoardRadioButtonMenuItem;
+    private javax.swing.JLabel blockedTigerCountLabel;
     private javax.swing.JPanel boardContainerPanel;
     private javax.swing.ButtonGroup boardSizeButtonGroup;
     private javax.swing.JMenu boardSizeMenu;
     private javax.swing.JSlider boardSizeSlider;
     private javax.swing.JMenuItem changePlayerNamesMenuItem;
+    private javax.swing.JPanel contentPanel;
+    private javax.swing.JLabel currentPlayerLabel;
     private javax.swing.JMenu editMenu;
     private javax.swing.JButton endGameButton;
     private javax.swing.JMenuItem endGameMenuItem;
@@ -640,12 +749,17 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem helpMenuItem;
     private javax.swing.JButton hintButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
     private javax.swing.JToolBar.Separator jSeparator12;
+    private javax.swing.JSeparator jSeparator13;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -654,11 +768,14 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator7;
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JPopupMenu.Separator jSeparator9;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel killedGoatsCountLabel;
     private javax.swing.JButton loadGameButton;
     private javax.swing.JMenuItem loadGameMenuItem;
     private javax.swing.JButton newGameButton;
     private javax.swing.JMenuItem newGameMenuItem;
     private javax.swing.JRadioButtonMenuItem normalBoardRadioButtonMenuItem;
+    private javax.swing.JPanel playerInfoPanel;
     private javax.swing.JMenuItem preferenceMenuItem;
     private javax.swing.JButton redoButton;
     private javax.swing.JMenuItem redoMenuItem;
@@ -671,6 +788,7 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButtonMenuItem startByTigerMenuItem;
     private javax.swing.ButtonGroup startingAnimalButtonGroup;
     private javax.swing.JMenu startingAnimalMenu;
+    private javax.swing.JPanel statisticPanel;
     private javax.swing.JRadioButtonMenuItem tigerByAutoMenuItem;
     private javax.swing.JRadioButtonMenuItem tigerByMouseMenuItem;
     private javax.swing.ButtonGroup tigerPlayedByButtonGroup;
@@ -679,7 +797,10 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem undoMenuItem;
     // End of variables declaration//GEN-END:variables
     
-    
+    public void propertyChange(java.beans.PropertyChangeEvent evt) {
+    	System.out.println(evt.getPropertyName());
+    	
+    };
     
     /**
 	 * Start a new Game
@@ -706,8 +827,8 @@ public class GameFrame extends javax.swing.JFrame {
 		}
 		
 		UITiger[] tigers = new UITiger[2];
-		tigers[0] = new UITiger("T1", 1);
-		tigers[1] = new UITiger("T2", 2);
+		tigers[0] = new UITiger("T", 1);
+		tigers[1] = new UITiger("T", 2);
 		
 		UIGoat[] goats = new UIGoat[20];
 		for (int i = 0; i < goats.length; i++) {
