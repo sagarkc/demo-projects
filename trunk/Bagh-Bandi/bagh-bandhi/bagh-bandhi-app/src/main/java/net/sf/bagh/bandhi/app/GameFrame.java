@@ -685,7 +685,8 @@ public class GameFrame extends javax.swing.JFrame {
 	 * Start a new Game
 	 */
 	public void startNewGame() {
-		
+		int val = boardSizeSlider.getValue();
+        UIBoard.sizeFactorEnum = SizeFactorEnum.getValue(val);
 		if(startByTigerMenuItem.isSelected()){
 			gameEngine.setFirstPlayer( GameEngine.MANUAL_TIGER_PLAYER);
 			gameEngine.setSecondPlayer(GameEngine.MANUAL_GOAT_PLAYER);
