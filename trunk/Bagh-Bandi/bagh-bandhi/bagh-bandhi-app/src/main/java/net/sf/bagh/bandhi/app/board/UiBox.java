@@ -10,6 +10,7 @@ import java.util.Stack;
 
 import javax.swing.ImageIcon;
 
+import net.sf.bagh.bandhi.AppConstants;
 import net.sf.bagh.bandhi.app.BoxImageEnum;
 import net.sf.bagh.bandhi.app.BoxSizeEnum;
 import net.sf.bagh.bandhi.app.GreyBoxImageEnum;
@@ -26,6 +27,7 @@ public class UiBox extends Box implements Drawable{
 	
 	private Point position;
 	private ImageIcon bgImage;
+	private Color backgroundColor;
 	private int borderThickness;
 	private Color borderColor;
 	
@@ -36,6 +38,11 @@ public class UiBox extends Box implements Drawable{
 		bgImage = GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage();
 		borderColor = Color.black;
 		borderThickness = 2;
+		if((x+y) % 2 == 0){
+			backgroundColor = AppConstants.DEFAULT_DARK_BACKGROUND;
+		} else {
+			backgroundColor = AppConstants.DEFAULT_LIGHT_BACKGROUND;
+		}
 	}
 
 
@@ -95,12 +102,29 @@ public class UiBox extends Box implements Drawable{
 		this.borderColor = borderColor;
 	}
 
+	public Color getBackgroundColor() {
+		return backgroundColor;
+	}
+
+
+	public void setBackgroundColor(Color backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
+
+
 	public void draw(Graphics g) {
 		if(g == null)
 			return;
-		g.drawImage(bgImage.getImage(), position.x, position.y, 
+		/*g.drawImage(bgImage.getImage(), position.x, position.y, 
 				ImageSizeEnum.getValue(UIBoard.sizeFactorEnum).getWidth(), 
-				ImageSizeEnum.getValue(UIBoard.sizeFactorEnum).getHeight(), null);
+				ImageSizeEnum.getValue(UIBoard.sizeFactorEnum).getHeight(), null);*/
+		
+		g.setColor(getBackgroundColor());
+		
+		g.fillRect(position.x, position.y, 
+				BoxSizeEnum.getValue(UIBoard.sizeFactorEnum).getWidth(), 
+				BoxSizeEnum.getValue(UIBoard.sizeFactorEnum).getHeight());
+		
 		Stack<Animal> animals = getAnimals();
 		if(null != animals && animals.size() > 0){
 			Animal animal = animals.peek();
@@ -129,6 +153,15 @@ public class UiBox extends Box implements Drawable{
 	 */
 	public void drawAll(Graphics g) {
 		
+	}
+
+
+	public void setDefaultBackgroundColor() {
+		if((getX()+getY()) % 2 == 0){
+			backgroundColor = AppConstants.DEFAULT_DARK_BACKGROUND;
+		} else {
+			backgroundColor = AppConstants.DEFAULT_LIGHT_BACKGROUND;
+		}
 	}
 
 
