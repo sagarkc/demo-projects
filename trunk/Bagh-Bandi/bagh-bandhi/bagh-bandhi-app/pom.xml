@@ -94,19 +94,20 @@
                                         <include name="${artifactId}-${release.version}.jar" />
                                     </fileset>
                                 </copy>
-<!--                                <copy todir="${release.dir}/${artifactId}-${release.version}/"
+                                <copy todir="${release.dir}/${artifactId}-${release.version}/"
                                       overwrite="true" failonerror="true" includeEmptyDirs="true">
                                     <fileset dir="${bin.dir}">
-                                        <include name="run-${release.version}.bat" />
-                                        <include name="run-${release.version}.sh" />
+                                        <include name="bagh-bandhi-${release.version}.exe" />
                                     </fileset>
                                 </copy>
+                                <!--
                                 <copy todir="${release.dir}/${artifactId}-${release.version}/help/"
                                       overwrite="true" failonerror="true" includeEmptyDirs="true">
                                     <fileset dir="${help.dir}">
                                         <include name="gsplit-help-${release.version}.html" />
                                     </fileset>
-                                </copy>-->
+                                </copy>
+                                -->
                             </tasks>
                         </configuration>
                         <goals>

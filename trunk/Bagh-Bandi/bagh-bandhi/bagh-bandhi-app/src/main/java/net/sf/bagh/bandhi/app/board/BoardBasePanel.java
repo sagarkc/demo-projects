@@ -20,8 +20,11 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 import net.sf.bagh.bandhi.AppConstants;
+import net.sf.bagh.bandhi.GameStatusEnum;
 import net.sf.bagh.bandhi.app.AnimalSizeEnum;
 import net.sf.bagh.bandhi.app.BoxSizeEnum;
+import net.sf.bagh.bandhi.app.GameStatusChangeEvent;
+import net.sf.bagh.bandhi.app.GameStatusChangeEventManager;
 import net.sf.bagh.bandhi.app.GreenBoxImageEnum;
 import net.sf.bagh.bandhi.app.GreyBoxImageEnum;
 import net.sf.bagh.bandhi.app.GridSizeEnum;
@@ -70,6 +73,7 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 	public static final Dimension boardSize = new Dimension(
 			GridSizeEnum.getValue(UIBoard.sizeFactorEnum).getWidth()+LEFT_MARGIN*2, 
 			GridSizeEnum.getValue(UIBoard.sizeFactorEnum).getHeight()+LEFT_MARGIN*2);
+	private static GameStatusChangeEventManager statusChangeEventManager = GameStatusChangeEventManager.getInstance();
 	
 	private Color boardBGColor = Color.BLACK;
 	private UIBoard gameBoard ;
@@ -248,7 +252,7 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 	public void makeMove(int x, int y) {
 		final UiBox box = gameBoard.getSelectedBox(x, y);
 		// select the box
-		if(null != box && box.hasAnimal() && box.getAnimalType() == gameEngine.getCurrentPlayer().getAnimalType()){
+		if(null != box && (box.hasAnimal() && box.getAnimalType() == gameEngine.getCurrentPlayer().getAnimalType())){
 			selectBox(box);
 			return;
 		}
@@ -279,6 +283,7 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 					}
 					previousSelectedBox.draw(getGraphics());
 					box.draw(getGraphics());
+					
 					previousSelectedBox = null;
 					boolean hasNextMove = false;
 					if(AnimalType.TIGER == box.getAnimalType()){
@@ -296,6 +301,9 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 					if(!hasNextMove){
 						gameEngine.shiftNextPlayer();
 					}
+					GameStatusChangeEvent event = new GameStatusChangeEvent(
+							this, GameStatusEnum.ANIMAL_MOVED, gameEngine.getLastMove());
+					statusChangeEventManager.fireGameStatusChangeEvent(event);
 					//drawCapturedAnimals(gameBoard.getCapturedGoats());
 					if(AnimalType.NONE != winer)
 						JOptionPane.showMessageDialog(this, "Winer is : " + winer);

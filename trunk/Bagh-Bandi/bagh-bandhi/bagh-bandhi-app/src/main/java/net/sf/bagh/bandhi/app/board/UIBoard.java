@@ -34,7 +34,8 @@ public class UIBoard extends Board implements Drawable {
 	
 	public UIBoard(Tiger[] tigers, Goat[] goats) {
 		super(tigers, goats);
-		sizeFactorEnum = SizeFactorEnum.NORMAL;
+		if(null == sizeFactorEnum)
+			sizeFactorEnum = SizeFactorEnum.NORMAL;
 		initBoard();
 	}
 

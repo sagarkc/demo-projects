@@ -1,0 +1,28 @@
+<launch4jConfig>
+  <dontWrapJar>true</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>.\bagh-bandhi-app-0.1.jar</jar>
+  <outfile>.\bagh-bandhi-0.1.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <customProcName>false</customProcName>
+  <stayAlive>false</stayAlive>
+  <manifest></manifest>
+  <icon>D:\SVN_HOME\demo-projects\Bagh-Bandi\bin\game-chip.ico</icon>
+  <classPath>
+    <mainClass>net.sf.bagh.bandhi.BaghBandhiKhela</mainClass>
+    <cp>lib/bagh-bandhi-core-0.1.jar</cp>
+  </classPath>
+  <jre>
+    <path></path>
+    <minVersion>1.6.0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <initialHeapSize>256</initialHeapSize>
+    <maxHeapSize>512</maxHeapSize>
+  </jre>
+</launch4jConfig>
