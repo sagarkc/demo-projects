@@ -28,7 +28,6 @@ public final class GameEngine {
 	public static final Human MANUAL_GOAT_PLAYER = new Human("B", AnimalType.GOAT);
 	
 	private GameSimulator gameSimulator;
-	
 	private Player currentPlayer = MANUAL_TIGER_PLAYER;
 	private Human firstPlayer = MANUAL_TIGER_PLAYER;
 	private Human secondPlayer = MANUAL_GOAT_PLAYER;
@@ -212,6 +211,16 @@ public final class GameEngine {
 			if(null != lastMove && animal.equals(lastMove.getAnimal())){
 				return lastMove;
 			}
+		}
+		return null;
+	}
+
+	/**
+	 * @param animalType
+	 */
+	public PathOfMove getLastMove() {
+		if(null != getMovePaths() && getMovePaths().size() > 0 ){
+			return getMovePaths().peek();
 		}
 		return null;
 	}
