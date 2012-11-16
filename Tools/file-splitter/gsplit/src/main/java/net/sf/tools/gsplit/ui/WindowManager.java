@@ -39,6 +39,8 @@ public final class WindowManager implements InternalFrameListener {
     protected static final String SHOW_LOG_WINDOW_TITLE = "Show Log";
     protected static final String APP_SETTINGS_WINDOW_TITLE = "Settings";
     
+    protected static final String SHOW_HELP_WINDOW_TITLE = "Help";
+    
     protected static final int FRAME_DISTANCE = 10;
     protected static final int FRAME_X = 10;
     protected static final int FRAME_Y = 10;

@@ -48,7 +48,7 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         setSize(800, 640);
         setMinimumSize(getSize());
         setIconImage((new ImageIcon(getClass()
-                .getResource("/images/file-splitter_16x16.png"))).getImage());
+                .getResource("/images/file-splitter-icon_24x24.png"))).getImage());
         WindowUtil.bringToCenter(this);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         initComponents();
@@ -705,7 +705,16 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_exploreLogFolderMenuItemActionPerformed
 
     private void helpMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpMenuItemActionPerformed
-        // TODO add your handling code here:
+        if (WINDOW_MANAGER.containsFrame(WindowManager.SHOW_HELP_WINDOW_TITLE)) {
+            WINDOW_MANAGER.showFrame(WindowManager.SHOW_HELP_WINDOW_TITLE);
+            return;
+        }
+        HelpViewerPanel panel = new HelpViewerPanel();
+        BaseInternalFrame baseInternalFrame = new BaseInternalFrame(panel);
+        baseInternalFrame.setTitle(WindowManager.SHOW_HELP_WINDOW_TITLE);
+        baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
+                .getResource("/images/help.png")));
+        WINDOW_MANAGER.addIFrame(baseInternalFrame);
     }//GEN-LAST:event_helpMenuItemActionPerformed
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed

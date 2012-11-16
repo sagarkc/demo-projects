@@ -125,7 +125,7 @@
                                 <copy todir="${release.dir}/${artifactId}-${release.version}/help/"
                                       overwrite="true" failonerror="true" includeEmptyDirs="true">
                                     <fileset dir="${help.dir}">
-                                        <include name="gsplit-help-${release.version}.html" />
+                                        <include name="*.*" />
                                     </fileset>
                                 </copy>
                             </tasks>

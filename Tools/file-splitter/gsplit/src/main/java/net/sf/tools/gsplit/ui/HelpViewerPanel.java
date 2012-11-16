@@ -4,6 +4,9 @@
  */
 package net.sf.tools.gsplit.ui;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
@@ -13,17 +16,25 @@ import javax.swing.text.html.HTMLEditorKit;
  */
 public class HelpViewerPanel extends javax.swing.JPanel {
 
-    private HTMLDocument htmlDocument;
-    private HTMLEditorKit htmlEditorKit;
-    
+
     /**
      * Creates new form HelpViewerPanel
      */
     public HelpViewerPanel() {
-        htmlDocument = new HTMLDocument();
-        htmlEditorKit = new HTMLEditorKit();
-        //htmlEditorKit.
         initComponents();
+        htmlEditorPane.setContentType("text/html");
+        
+        try {
+            File file = new File("./help/gsplit-help-0.0.2.html");
+            if(file.exists()){
+                htmlEditorPane.setPage("file:///"+file.getAbsoluteFile());
+            }
+            else {
+                htmlEditorPane.setText("<html>Could not find Help file </html>");
+            }
+        } catch (Exception e) {
+            htmlEditorPane.setText("<html>" + e.getMessage()+" </html>");
+        }
     }
 
     /**
@@ -35,23 +46,10 @@ public class HelpViewerPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        helpToolBar = new javax.swing.JToolBar();
-        refreshButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         htmlEditorPane = new javax.swing.JEditorPane();
 
         setLayout(new java.awt.BorderLayout());
-
-        helpToolBar.setFloatable(false);
-        helpToolBar.setRollover(true);
-
-        refreshButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reload_green.png"))); // NOI18N
-        refreshButton.setFocusable(false);
-        refreshButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        refreshButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        helpToolBar.add(refreshButton);
-
-        add(helpToolBar, java.awt.BorderLayout.PAGE_START);
 
         htmlEditorPane.setEditable(false);
         jScrollPane2.setViewportView(htmlEditorPane);
@@ -59,9 +57,7 @@ public class HelpViewerPanel extends javax.swing.JPanel {
         add(jScrollPane2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToolBar helpToolBar;
     private javax.swing.JEditorPane htmlEditorPane;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JButton refreshButton;
     // End of variables declaration//GEN-END:variables
 }
