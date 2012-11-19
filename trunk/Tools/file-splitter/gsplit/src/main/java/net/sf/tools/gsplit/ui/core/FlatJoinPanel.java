@@ -4,20 +4,279 @@
  */
 package net.sf.tools.gsplit.ui.core;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import net.sf.tools.gsplit.SplitterContext;
+import net.sf.tools.gsplit.WorkerTaskConstants;
+import net.sf.tools.gsplit.core.FlatFileJoiner;
+import net.sf.tools.gsplit.util.CollectionListModel;
+import net.sf.tools.gsplit.util.CollectionUtils;
+import net.sf.tools.gsplit.util.FileBrowserUtil;
+import net.sf.tools.gsplit.util.StringUtil;
+
+import org.apache.log4j.Logger;
+
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
  *
  */
-public class FlatJoinPanel extends javax.swing.JPanel {
+public class FlatJoinPanel extends javax.swing.JPanel implements PropertyChangeListener{
 
+	private static Logger logger = Logger.getLogger(FlatJoinPanel.class);
+	private static SplitterContext context = SplitterContext.getContext();
+	
+	private CollectionListModel<File> allPartsListModel;
+	private List<File> allPatrs;
+	private CollectionListModel<File> allFilesListModel;
+	private List<File> allFiles;
+	private FlatFileJoiner flatFileAutoJoiner;
+	private FlatFileJoiner flatFileManualJoiner;
+	
     /**
      * Creates new form SecureJoinPanel
      */
     public FlatJoinPanel() {
         initComponents();
+        allPatrs = new ArrayList<File>(0);
+        allFiles = new ArrayList<File>(0);
+        allPartsListModel = new CollectionListModel<File>(allPatrs);
+        allPartsList.setModel(allPartsListModel);
+        allFilesListModel = new CollectionListModel<File>(allFiles);
+        addedFilesList.setModel(allFilesListModel);
+        // auto panel
+        processProgressBar.setVisible(false);
+        stopButton.setVisible(false);
+        startButton.setEnabled(false);
+        selectedPartTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void removeUpdate(DocumentEvent e) {
+                updateAutoJoinStartButton();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                updateAutoJoinStartButton();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                updateAutoJoinStartButton();
+            }
+        });
+        targetFileTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void removeUpdate(DocumentEvent e) {
+                updateAutoJoinStartButton();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                updateAutoJoinStartButton();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                updateAutoJoinStartButton();
+            }
+        });
+        
+        // manual panel
+        manualProgressBar.setVisible(false);
+        manualStopButton.setVisible(false);
+        manualStartButton.setEnabled(false);
+        
+        manualTargetTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void removeUpdate(DocumentEvent e) {
+                updateManualJoinStartButton();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+                updateManualJoinStartButton();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+                updateManualJoinStartButton();
+            }
+        });
     }
 
+    private void updateAutoJoinStartButton() {
+        if (StringUtil.hasValidContent(selectedPartTextField.getText())
+                && StringUtil.hasValidContent(targetFileTextField.getText())) {
+            startButton.setEnabled(true);
+        } else {
+            startButton.setEnabled(false);
+        }
+    }
+    
+    private void updateManualJoinStartButton() {
+        if (StringUtil.hasValidContent(manualTargetTextField.getText())
+                && addedFilesList.getModel().getSize() > 0) {
+            manualStartButton.setEnabled(true);
+        } else {
+            manualStartButton.setEnabled(false);
+        }
+    }
+    
+    private void startAutoJoin(){
+    	synchronized (this) {
+    		flatFileAutoJoiner = new FlatFileJoiner();
+    		flatFileAutoJoiner.setSourceFiles(allPatrs);
+    		flatFileAutoJoiner.setTargetFile(new File(targetFileTextField.getText()));
+    		flatFileAutoJoiner.addPropertyChangeListener(this);
+    		flatFileAutoJoiner.execute();
+		}
+    }
+    
+    private void startManualJoin(){
+    	synchronized (this) {
+    		flatFileManualJoiner = new FlatFileJoiner();
+    		flatFileManualJoiner.setSourceFiles(allFiles);
+    		flatFileManualJoiner.setTargetFile(new File(manualTargetTextField.getText()));
+    		flatFileManualJoiner.addPropertyChangeListener(this);
+    		flatFileManualJoiner.execute();
+		}
+    }
+    
+    private void stopAutoJoin(){
+    	if(null != flatFileAutoJoiner){
+    		flatFileAutoJoiner.cancel(true);
+    	}
+    }
+    
+    private void stopManualJoin(){
+    	if(null != flatFileManualJoiner){
+    		flatFileManualJoiner.cancel(true);
+    	}
+    }
+    
+    /* (non-Javadoc)
+     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+    	String propertyName = evt.getPropertyName();
+    	if (evt.getSource().equals(flatFileAutoJoiner)) {
+            if (WorkerTaskConstants.TASK_STATUS_DONE.equals(propertyName)) {
+                Object newValue = evt.getNewValue();
+                processProgressBar.setValue(100);
+            	processProgressBar.updateUI();
+                JOptionPane.showMessageDialog(this,
+                        String.format("Completed in [ %10.2f ] seconds.",
+                        ((Long) newValue) / 1000.0));
+                startButton.setEnabled(true);
+                stopButton.setVisible(false);
+                processProgressBar.setVisible(false);
+                selectedPartTextField.setEditable(true);
+                targetFileTextField.setEditable(true);
+                browsePartButton.setEnabled(true);
+                browseTargetFileButton.setEnabled(true);
+            }
+            if (WorkerTaskConstants.TASK_STATUS_ABORT.equals(propertyName)) {
+                Object newValue = evt.getNewValue();
+                JOptionPane.showMessageDialog(this, "Join aborted by user");
+                startButton.setEnabled(true);
+                stopButton.setVisible(false);
+                processProgressBar.setVisible(false);
+                selectedPartTextField.setEditable(true);
+                targetFileTextField.setEditable(true);
+                browsePartButton.setEnabled(true);
+                browseTargetFileButton.setEnabled(true);
+            }
+            if (WorkerTaskConstants.PROPERTY_PROGRESS.equals(propertyName)) {
+                String type = evt.getNewValue().toString();
+                Object newProgress = evt.getNewValue();
+                if (null != newProgress && newProgress instanceof Integer) {
+                	processProgressBar.setValue((Integer) newProgress);
+                	processProgressBar.updateUI();
+                } else if (WorkerTaskConstants.TASK_STATUS_START.equals(newProgress)) {
+                	startButton.setEnabled(false);
+                	stopButton.setVisible(true);
+                	processProgressBar.setVisible(true);
+                	selectedPartTextField.setEditable(false);
+                	targetFileTextField.setEditable(false);
+                	browsePartButton.setEnabled(false);
+                	browseTargetFileButton.setEnabled(false);
+                }
+            }
+
+            if (WorkerTaskConstants.TASK_STATUS_FAILED.equals(propertyName)) {
+                Object newValue = evt.getNewValue();
+                JOptionPane.showMessageDialog(this, "Join failed for : " + newValue);
+                startButton.setEnabled(true);
+                stopButton.setVisible(false);
+                processProgressBar.setVisible(false);
+                selectedPartTextField.setEditable(true);
+                targetFileTextField.setEditable(true);
+                browsePartButton.setEnabled(true);
+                browseTargetFileButton.setEnabled(true);
+            }
+        } else if (evt.getSource().equals(flatFileManualJoiner)) {
+            if (WorkerTaskConstants.TASK_STATUS_DONE.equals(propertyName)) {
+                Object newValue = evt.getNewValue();
+                manualProgressBar.setValue(100);
+            	manualProgressBar.updateUI();
+                JOptionPane.showMessageDialog(this,
+                        String.format("Completed in [ %10.2f ] seconds.",
+                        ((Long) newValue) / 1000.0));
+                manualStartButton.setEnabled(true);
+                manualStopButton.setVisible(false);
+                manualProgressBar.setVisible(false);
+                manualTargetTextField.setEditable(true);
+                addFilesButton.setEnabled(true);
+                removeFilesButton.setEnabled(true);
+                browseManualTargetButton.setEnabled(true);
+                addedFilesList.setEnabled(true);
+            }
+            if (WorkerTaskConstants.TASK_STATUS_ABORT.equals(propertyName)) {
+                Object newValue = evt.getNewValue();
+                JOptionPane.showMessageDialog(this, "Join aborted by user");
+                manualStartButton.setEnabled(true);
+                manualStopButton.setVisible(false);
+                manualProgressBar.setVisible(false);
+                manualTargetTextField.setEditable(true);
+                addFilesButton.setEnabled(true);
+                removeFilesButton.setEnabled(true);
+                browseManualTargetButton.setEnabled(true);
+                addedFilesList.setEnabled(true);
+            }
+            if (WorkerTaskConstants.PROPERTY_PROGRESS.equals(propertyName)) {
+                String type = evt.getNewValue().toString();
+                Object newProgress = evt.getNewValue();
+                if (null != newProgress && newProgress instanceof Integer) {
+                	manualProgressBar.setValue((Integer) newProgress);
+                	manualProgressBar.updateUI();
+                } else if (WorkerTaskConstants.TASK_STATUS_START.equals(newProgress)) {
+                	manualStartButton.setEnabled(false);
+                	manualStopButton.setVisible(true);
+                	manualProgressBar.setVisible(true);
+                	manualTargetTextField.setEditable(false);
+                	addFilesButton.setEnabled(false);
+                	removeFilesButton.setEnabled(false);
+                	browseManualTargetButton.setEnabled(false);
+                	addedFilesList.setEnabled(false);
+                }
+            }
+
+            if (WorkerTaskConstants.TASK_STATUS_FAILED.equals(propertyName)) {
+                Object newValue = evt.getNewValue();
+                JOptionPane.showMessageDialog(this, "Join failed for : " + newValue);
+                manualStartButton.setEnabled(true);
+                manualStopButton.setVisible(false);
+                manualProgressBar.setVisible(false);
+                manualTargetTextField.setEditable(true);
+                addFilesButton.setEnabled(true);
+                removeFilesButton.setEnabled(true);
+                browseManualTargetButton.setEnabled(true);
+                addedFilesList.setEnabled(true);
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,6 +321,7 @@ public class FlatJoinPanel extends javax.swing.JPanel {
         manualStartButton = new javax.swing.JButton();
         moveUpButton = new javax.swing.JButton();
         moveDownButton = new javax.swing.JButton();
+        clearButton = new javax.swing.JButton();
 
         FormListener formListener = new FormListener();
 
@@ -209,19 +469,23 @@ public class FlatJoinPanel extends javax.swing.JPanel {
 
         jLabel6.setText("Files to Join");
 
+        addedFilesList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         addedFilesList.addListSelectionListener(formListener);
         jScrollPane2.setViewportView(addedFilesList);
 
         moveToTopButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/go-top.png"))); // NOI18N
+        moveToTopButton.setEnabled(false);
         moveToTopButton.addActionListener(formListener);
 
         moveToBottomButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/go-bottom.png"))); // NOI18N
+        moveToBottomButton.setEnabled(false);
         moveToBottomButton.addActionListener(formListener);
 
         addFilesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add.png"))); // NOI18N
         addFilesButton.addActionListener(formListener);
 
         removeFilesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
+        removeFilesButton.setEnabled(false);
         removeFilesButton.addActionListener(formListener);
 
         jLabel7.setText("Target File");
@@ -236,10 +500,16 @@ public class FlatJoinPanel extends javax.swing.JPanel {
         manualStartButton.addActionListener(formListener);
 
         moveUpButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/go-up.png"))); // NOI18N
+        moveUpButton.setEnabled(false);
         moveUpButton.addActionListener(formListener);
 
         moveDownButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/go-down.png"))); // NOI18N
+        moveDownButton.setEnabled(false);
         moveDownButton.addActionListener(formListener);
+
+        clearButton.setText("Clear");
+        clearButton.setEnabled(false);
+        clearButton.addActionListener(formListener);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -255,9 +525,11 @@ public class FlatJoinPanel extends javax.swing.JPanel {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(addFilesButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 234, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(clearButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(removeFilesButton))
-                            .addComponent(jScrollPane2))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,7 +554,7 @@ public class FlatJoinPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {addFilesButton, browseManualTargetButton, manualStartButton, manualStopButton, moveDownButton, moveToBottomButton, moveToTopButton, moveUpButton, removeFilesButton});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {addFilesButton, browseManualTargetButton, clearButton, manualStartButton, manualStopButton, moveDownButton, moveToBottomButton, moveToTopButton, moveUpButton, removeFilesButton});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,7 +576,8 @@ public class FlatJoinPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addFilesButton)
-                    .addComponent(removeFilesButton))
+                    .addComponent(removeFilesButton)
+                    .addComponent(clearButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -320,6 +593,8 @@ public class FlatJoinPanel extends javax.swing.JPanel {
                 .addComponent(manualStartButton)
                 .addContainerGap())
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {addFilesButton, clearButton, moveDownButton, moveToBottomButton, moveToTopButton, moveUpButton, removeFilesButton});
 
         flatJoinTabbedPane.addTab("Manual Join", jPanel2);
 
@@ -370,6 +645,9 @@ public class FlatJoinPanel extends javax.swing.JPanel {
             else if (evt.getSource() == moveDownButton) {
                 FlatJoinPanel.this.moveDownButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == clearButton) {
+                FlatJoinPanel.this.clearButtonActionPerformed(evt);
+            }
         }
 
         public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -380,60 +658,184 @@ public class FlatJoinPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void browsePartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browsePartButtonActionPerformed
-        // TODO add your handling code here:
+    	File selectedFile = FileBrowserUtil.openSingleFile(this, null, false, 
+    			context.getAppSettings().getLastAccessedPathName());
+        if (null != selectedFile) {
+        	allPatrs.clear();
+        	String extension = selectedFile.getName().substring(
+        			selectedFile.getName().lastIndexOf('.')+1
+        			).toLowerCase();
+        	if(extension.startsWith("part")){
+        		File dir = selectedFile.getParentFile();
+        		File[] files = dir.listFiles();
+        		if(null != files && files.length > 0){
+        			for (File file : files) {
+        				String ext = file.getName().substring(
+        	        			file.getName().lastIndexOf('.')+1
+        	        			).toLowerCase();
+        				if(ext.startsWith("part")){
+        					allPatrs.add(file);
+        				}
+					}
+        		}
+        	} else {
+        		JOptionPane.showMessageDialog(this, "Please select a .part* file");
+        		return;
+        	}
+        	
+        	Collections.sort(allPatrs);
+        	
+        	allPartsList.updateUI();
+        	selectedPartTextField.setText(selectedFile.getAbsolutePath());
+            context.getAppSettings().setLastAccessedPathName(selectedFile.getAbsolutePath());
+        }
     }//GEN-LAST:event_browsePartButtonActionPerformed
 
     private void browseTargetFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseTargetFileButtonActionPerformed
-        // TODO add your handling code here:
+    	File file = FileBrowserUtil.openSingleFile(this, null, false,
+                context.getAppSettings().getLastAccessedPathName());
+        if (null != file) {
+        	targetFileTextField.setText(file.getAbsolutePath());
+            context.getAppSettings().setLastAccessedPathName(file.getAbsolutePath());
+        }
     }//GEN-LAST:event_browseTargetFileButtonActionPerformed
 
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
-        // TODO add your handling code here:
+        stopAutoJoin();
     }//GEN-LAST:event_stopButtonActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        // TODO add your handling code here:
+        startAutoJoin();
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void moveToTopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveToTopButtonActionPerformed
-        // TODO add your handling code here:
+    	int index = addedFilesList.getSelectedIndex();
+        if(index >= 1){
+        	CollectionUtils.swapItems(allFiles, index, 0);
+        	addedFilesList.setSelectedIndex(0);
+        	addedFilesList.updateUI();
+        }
     }//GEN-LAST:event_moveToTopButtonActionPerformed
 
     private void moveUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveUpButtonActionPerformed
-        // TODO add your handling code here:
+        int index = addedFilesList.getSelectedIndex();
+        if(index >= 1){
+        	CollectionUtils.swapItems(allFiles, index, index-1);
+        	addedFilesList.setSelectedIndex(index-1);
+        	addedFilesList.updateUI();
+        }
+        
     }//GEN-LAST:event_moveUpButtonActionPerformed
 
     private void moveDownButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveDownButtonActionPerformed
-        // TODO add your handling code here:
+    	int index = addedFilesList.getSelectedIndex();
+        if(index >= 0 && index < allFiles.size()-1){
+        	CollectionUtils.swapItems(allFiles, index, index+1);
+        	addedFilesList.setSelectedIndex(index+1);
+        	addedFilesList.updateUI();
+        }
     }//GEN-LAST:event_moveDownButtonActionPerformed
 
     private void moveToBottomButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveToBottomButtonActionPerformed
-        // TODO add your handling code here:
+    	int index = addedFilesList.getSelectedIndex();
+        if(index >= 0 && index < allFiles.size()-1){
+        	CollectionUtils.swapItems(allFiles, index, allFiles.size()-1);
+        	addedFilesList.setSelectedIndex(allFiles.size()-1);
+        	addedFilesList.updateUI();
+        }
     }//GEN-LAST:event_moveToBottomButtonActionPerformed
 
     private void addFilesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addFilesButtonActionPerformed
-        // TODO add your handling code here:
+    	File[] selectedFiles = FileBrowserUtil.openMultipleFile(this, null, false, 
+    			context.getAppSettings().getLastAccessedPathName());
+        if (null != selectedFiles && selectedFiles.length > 0) {
+        	for (File file : selectedFiles) {
+        		allFiles.add(file);
+			}
+        	context.getAppSettings().setLastAccessedPathName(selectedFiles[0].getAbsolutePath());
+        }
+        addedFilesList.updateUI();
+        if(addedFilesList.getModel().getSize() > 0){
+        	clearButton.setEnabled(true);
+        } else {
+        	clearButton.setEnabled(false);
+        }
     }//GEN-LAST:event_addFilesButtonActionPerformed
 
     private void removeFilesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFilesButtonActionPerformed
-        // TODO add your handling code here:
+        int[] indeces = addedFilesList.getSelectedIndices();
+        if(null != indeces){
+        	for (int index : indeces) {
+        		allFiles.remove(index);
+			}
+        }
+        addedFilesList.updateUI();
+        if(addedFilesList.getModel().getSize() > 0){
+        	clearButton.setEnabled(true);
+        } else {
+        	clearButton.setEnabled(false);
+        }
     }//GEN-LAST:event_removeFilesButtonActionPerformed
 
     private void browseManualTargetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseManualTargetButtonActionPerformed
-        // TODO add your handling code here:
+    	File file = FileBrowserUtil.openSingleFile(this, null, false,
+                context.getAppSettings().getLastAccessedPathName());
+        if (null != file) {
+        	manualTargetTextField.setText(file.getAbsolutePath());
+            context.getAppSettings().setLastAccessedPathName(file.getAbsolutePath());
+        }
     }//GEN-LAST:event_browseManualTargetButtonActionPerformed
 
     private void manualStopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manualStopButtonActionPerformed
-        // TODO add your handling code here:
+        stopManualJoin();
     }//GEN-LAST:event_manualStopButtonActionPerformed
 
     private void manualStartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manualStartButtonActionPerformed
-        // TODO add your handling code here:
+        startManualJoin();
     }//GEN-LAST:event_manualStartButtonActionPerformed
 
     private void addedFilesListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_addedFilesListValueChanged
-        // TODO add your handling code here:
+        if(addedFilesList.getSelectedIndex() >= 0){
+            removeFilesButton.setEnabled(true);
+            if(addedFilesList.getSelectedIndex() > 0){
+            	moveUpButton.setEnabled(true);
+            	moveToTopButton.setEnabled(true);
+            } else {
+            	moveUpButton.setEnabled(false);
+            	moveToTopButton.setEnabled(false);
+            }
+            
+            if(addedFilesList.getSelectedIndex() < addedFilesList.getModel().getSize()-1){
+            	moveDownButton.setEnabled(true);
+                moveToBottomButton.setEnabled(true);
+            } else {
+            	moveDownButton.setEnabled(false);
+                moveToBottomButton.setEnabled(false);
+            }
+        } else {
+            removeFilesButton.setEnabled(false);
+            moveUpButton.setEnabled(false);
+            moveDownButton.setEnabled(false);
+            moveToBottomButton.setEnabled(false);
+            moveToTopButton.setEnabled(false);
+        }
     }//GEN-LAST:event_addedFilesListValueChanged
+
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+    	allFiles.clear();
+    	addedFilesList.updateUI();
+    	
+    	if(addedFilesList.getModel().getSize() > 0){
+        	clearButton.setEnabled(true);
+        } else {
+        	clearButton.setEnabled(false);
+        }
+    	removeFilesButton.setEnabled(false);
+        moveUpButton.setEnabled(false);
+        moveDownButton.setEnabled(false);
+        moveToBottomButton.setEnabled(false);
+        moveToTopButton.setEnabled(false);
+    }//GEN-LAST:event_clearButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addFilesButton;
@@ -442,6 +844,7 @@ public class FlatJoinPanel extends javax.swing.JPanel {
     private javax.swing.JButton browseManualTargetButton;
     private javax.swing.JButton browsePartButton;
     private javax.swing.JButton browseTargetFileButton;
+    private javax.swing.JButton clearButton;
     private javax.swing.JTabbedPane flatJoinTabbedPane;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

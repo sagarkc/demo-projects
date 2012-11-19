@@ -548,4 +548,28 @@ public final class CollectionUtils {
 		return data;
 	}
 
+	/**
+	 * Swaps 2 items
+	 * 
+	 * @param data
+	 * @param from
+	 * @param to
+	 */
+	public static <T> void swapItems(final List<T> data, int from, int to){
+		if(from == to)
+			return;
+		if (!hasElements(data))
+			return ;
+		if(from < 0 || from >= data.size() ){
+			throw new IllegalArgumentException("'from' must be within 0 to n-1");
+		}
+		if(to < 0 || to >= data.size() ){
+			throw new IllegalArgumentException("'to' must be within 0 to n-1");
+		}
+		
+		T temp = data.get(from);
+		data.set(from, data.get(to));
+		data.set(to, temp);
+	}
+	
 }

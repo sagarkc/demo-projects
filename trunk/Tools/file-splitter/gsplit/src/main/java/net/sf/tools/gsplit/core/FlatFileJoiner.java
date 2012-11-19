@@ -80,7 +80,7 @@ public class FlatFileJoiner extends SwingWorker<Void, Void> implements WorkerTas
 			int count = -1;
 			int writeCount = 0;
 			byte[] buffer = new byte[SplitterConstants.KB];
-			
+			int fileCount = 0;
 			for (File sourceFile : sourceFiles) {
 				
 				BufferedInputStream inputStream = null;
@@ -93,7 +93,7 @@ public class FlatFileJoiner extends SwingWorker<Void, Void> implements WorkerTas
 						writeCount += count;
 						if(isWorkerTask){
 							firePropertyChange(PROPERTY_PROGRESS, null, 
-									Math.min((int)((writeCount*1.0/sourceFiles.size()*1.0)*100.0), 100)
+									Math.min((int)((fileCount*1.0/sourceFiles.size()*1.0)*100.0), 100)
 									);
 						}
 					}
@@ -104,6 +104,7 @@ public class FlatFileJoiner extends SwingWorker<Void, Void> implements WorkerTas
 						} catch (IOException e) { }
 					}
 				}
+				fileCount ++;
 			}
 			
 		} finally {
