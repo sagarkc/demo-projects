@@ -1,0 +1,33 @@
+<launch4jConfig>
+  <dontWrapJar>true</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>.\gsplit-0.0.3.jar</jar>
+  <outfile>D:\SVN_HOME\demo-projects\Tools\file-splitter\bin\GSplit-0.0.3.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <customProcName>false</customProcName>
+  <stayAlive>false</stayAlive>
+  <manifest></manifest>
+  <icon>D:\SVN_HOME\demo-projects\Tools\file-splitter\bin\file-aplitter.ico</icon>
+  <classPath>
+    <mainClass>net.sf.tools.gsplit.GreenSplitter</mainClass>
+    <cp>lib/log4j-1.2.14.jar</cp>
+    <cp>lib/commons-logging-api-1.1.jar</cp>
+    <cp>lib/commons-logging-1.1.1.jar</cp>
+    <cp>lib/beansbinding-1.2.1.jar</cp>
+    <cp>lib/itextpdf-5.1.3.jar</cp>
+    <cp>lib/xmlworker-1.1.1.jar</cp>
+  </classPath>
+  <jre>
+    <path></path>
+    <minVersion>1.6.0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <initialHeapSize>64</initialHeapSize>
+    <maxHeapSize>128</maxHeapSize>
+  </jre>
+</launch4jConfig>
