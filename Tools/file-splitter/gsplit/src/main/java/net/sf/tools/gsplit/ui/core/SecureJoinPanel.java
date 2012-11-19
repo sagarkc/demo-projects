@@ -4,17 +4,157 @@
  */
 package net.sf.tools.gsplit.ui.core;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+
+import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import net.sf.tools.gsplit.SplitterContext;
+import net.sf.tools.gsplit.WorkerTaskConstants;
+import net.sf.tools.gsplit.core.SecureFileJoiner;
+import net.sf.tools.gsplit.util.ExtensionFileFilter;
+import net.sf.tools.gsplit.util.FileBrowserUtil;
+import net.sf.tools.gsplit.util.MetaDataFileView;
+import net.sf.tools.gsplit.util.StringUtil;
+
+import org.apache.log4j.Logger;
+
 /**
  *
  * @author SG1736
  */
-public class SecureJoinPanel extends javax.swing.JPanel {
+public class SecureJoinPanel extends javax.swing.JPanel implements PropertyChangeListener{
 
+    private static Logger logger = Logger.getLogger(SecureJoinPanel.class);
+    private static SplitterContext context = SplitterContext.getContext();
+    
+    private SecureFileJoiner fileAutoJoiner;
+    
     /**
      * Creates new form SecureJoinPanel
      */
     public SecureJoinPanel() {
         initComponents();
+        secureJoinProgressBar.setVisible(false);
+        secureJoinStopButton.setVisible(false);
+        secureJoinStartButton.setEnabled(false);
+        secureJoinSourceTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void removeUpdate(DocumentEvent e) {
+            	updateStartButton();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+            	updateStartButton();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+            	updateStartButton();
+            }
+        });
+        secureJoinTargetTextField.getDocument().addDocumentListener(new DocumentListener() {
+            public void removeUpdate(DocumentEvent e) {
+            	updateStartButton();
+            }
+
+            public void insertUpdate(DocumentEvent e) {
+            	updateStartButton();
+            }
+
+            public void changedUpdate(DocumentEvent e) {
+            	updateStartButton();
+            }
+        });
+    }
+    
+    private void updateStartButton(){
+    	if (StringUtil.hasValidContent(secureJoinSourceTextField.getText())
+                && StringUtil.hasValidContent(secureJoinTargetTextField.getText())) {
+            secureJoinStartButton.setEnabled(true);
+        } else {
+            secureJoinStartButton.setEnabled(false);
+        }
+    }
+    
+    private void startJoin(){
+    	synchronized (this) {
+            fileAutoJoiner = new SecureFileJoiner(
+                    secureJoinSourceTextField.getText(),
+                    secureJoinTargetTextField.getText());
+            fileAutoJoiner.addPropertyChangeListener(this);
+            fileAutoJoiner.execute();
+        }
+    }
+    
+    private void stopJoin(){
+    	if (null != fileAutoJoiner) {
+            fileAutoJoiner.cancel(true);
+        }
+    }
+    
+    
+    /* (non-Javadoc)
+     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+    	String propertyName = evt.getPropertyName();
+    	if (evt.getSource().equals(fileAutoJoiner)) {
+            if (WorkerTaskConstants.TASK_STATUS_DONE.equals(propertyName)) {
+                Object newValue = evt.getNewValue();
+                JOptionPane.showMessageDialog(this,
+                        String.format("Completed in [ %10.2f ] seconds.",
+                        ((Long) newValue) / 1000.0));
+                secureJoinStartButton.setEnabled(true);
+                secureJoinStopButton.setVisible(false);
+                secureJoinProgressBar.setVisible(false);
+                secureJoinSourceTextField.setEditable(true);
+                secureJoinTargetTextField.setEditable(true);
+                browseSecureJoinSourceButton.setEnabled(true);
+                browseSecureJoinTargetButton.setEnabled(true);
+            }
+            if (WorkerTaskConstants.TASK_STATUS_ABORT.equals(propertyName)) {
+                Object newValue = evt.getNewValue();
+                JOptionPane.showMessageDialog(this, "Join aborted by user");
+                secureJoinStartButton.setEnabled(true);
+                secureJoinStopButton.setVisible(false);
+                secureJoinProgressBar.setVisible(false);
+                secureJoinSourceTextField.setEditable(true);
+                secureJoinTargetTextField.setEditable(true);
+                browseSecureJoinSourceButton.setEnabled(true);
+                browseSecureJoinTargetButton.setEnabled(true);
+            }
+            if (WorkerTaskConstants.PROPERTY_PROGRESS.equals(propertyName)) {
+                String type = evt.getNewValue().toString();
+                Object newProgress = evt.getNewValue();
+                if (null != newProgress && newProgress instanceof Integer) {
+                    secureJoinProgressBar.setValue((Integer) newProgress);
+                    secureJoinProgressBar.updateUI();
+                } else if (WorkerTaskConstants.TASK_STATUS_START.equals(newProgress)) {
+                    secureJoinStartButton.setEnabled(false);
+                    secureJoinStopButton.setVisible(true);
+                    secureJoinProgressBar.setVisible(true);
+                    secureJoinSourceTextField.setEditable(false);
+                    secureJoinTargetTextField.setEditable(false);
+                    browseSecureJoinSourceButton.setEnabled(false);
+                    browseSecureJoinTargetButton.setEnabled(false);
+                }
+            }
+
+            if (WorkerTaskConstants.TASK_STATUS_FAILED.equals(propertyName)) {
+                Object newValue = evt.getNewValue();
+                JOptionPane.showMessageDialog(this, "Join failed for : " + newValue);
+                secureJoinStartButton.setEnabled(true);
+                secureJoinStopButton.setVisible(false);
+                secureJoinProgressBar.setVisible(false);
+                secureJoinSourceTextField.setEditable(true);
+                secureJoinTargetTextField.setEditable(true);
+                browseSecureJoinSourceButton.setEnabled(true);
+                browseSecureJoinTargetButton.setEnabled(true);
+            }
+        }
     }
 
     /**
@@ -32,14 +172,14 @@ public class SecureJoinPanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        autoJoinSourceTextField = new javax.swing.JTextField();
+        secureJoinSourceTextField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        autoJoinTargetTextField = new javax.swing.JTextField();
-        autoJoinProgressBar = new javax.swing.JProgressBar();
-        browseAutoJoinSourceButton = new javax.swing.JButton();
-        browseAutoJoinTargetButton = new javax.swing.JButton();
-        splitterStopButton1 = new javax.swing.JButton();
-        autoJoinStartButton = new javax.swing.JButton();
+        secureJoinTargetTextField = new javax.swing.JTextField();
+        secureJoinProgressBar = new javax.swing.JProgressBar();
+        browseSecureJoinSourceButton = new javax.swing.JButton();
+        browseSecureJoinTargetButton = new javax.swing.JButton();
+        secureJoinStopButton = new javax.swing.JButton();
+        secureJoinStartButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
 
         FormListener formListener = new FormListener();
@@ -92,7 +232,7 @@ public class SecureJoinPanel extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        jPanel1.add(autoJoinSourceTextField, gridBagConstraints);
+        jPanel1.add(secureJoinSourceTextField, gridBagConstraints);
 
         jLabel7.setText("Target File");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -107,50 +247,50 @@ public class SecureJoinPanel extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        jPanel1.add(autoJoinTargetTextField, gridBagConstraints);
+        jPanel1.add(secureJoinTargetTextField, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        jPanel1.add(autoJoinProgressBar, gridBagConstraints);
+        jPanel1.add(secureJoinProgressBar, gridBagConstraints);
 
-        browseAutoJoinSourceButton.setText("Browse");
-        browseAutoJoinSourceButton.addActionListener(formListener);
+        browseSecureJoinSourceButton.setText("Browse");
+        browseSecureJoinSourceButton.addActionListener(formListener);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        jPanel1.add(browseAutoJoinSourceButton, gridBagConstraints);
+        jPanel1.add(browseSecureJoinSourceButton, gridBagConstraints);
 
-        browseAutoJoinTargetButton.setText("Browse");
-        browseAutoJoinTargetButton.addActionListener(formListener);
+        browseSecureJoinTargetButton.setText("Browse");
+        browseSecureJoinTargetButton.addActionListener(formListener);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        jPanel1.add(browseAutoJoinTargetButton, gridBagConstraints);
+        jPanel1.add(browseSecureJoinTargetButton, gridBagConstraints);
 
-        splitterStopButton1.setText("Stop");
-        splitterStopButton1.addActionListener(formListener);
+        secureJoinStopButton.setText("Stop");
+        secureJoinStopButton.addActionListener(formListener);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        jPanel1.add(splitterStopButton1, gridBagConstraints);
+        jPanel1.add(secureJoinStopButton, gridBagConstraints);
 
-        autoJoinStartButton.setText("Start");
-        autoJoinStartButton.addActionListener(formListener);
+        secureJoinStartButton.setText("Start");
+        secureJoinStartButton.addActionListener(formListener);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
-        jPanel1.add(autoJoinStartButton, gridBagConstraints);
+        jPanel1.add(secureJoinStartButton, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -168,44 +308,51 @@ public class SecureJoinPanel extends javax.swing.JPanel {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == browseAutoJoinSourceButton) {
-                SecureJoinPanel.this.browseAutoJoinSourceButtonActionPerformed(evt);
+            if (evt.getSource() == browseSecureJoinSourceButton) {
+                SecureJoinPanel.this.browseSecureJoinSourceButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == browseAutoJoinTargetButton) {
-                SecureJoinPanel.this.browseAutoJoinTargetButtonActionPerformed(evt);
+            else if (evt.getSource() == browseSecureJoinTargetButton) {
+                SecureJoinPanel.this.browseSecureJoinTargetButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == splitterStopButton1) {
-                SecureJoinPanel.this.splitterStopButton1ActionPerformed(evt);
+            else if (evt.getSource() == secureJoinStopButton) {
+                SecureJoinPanel.this.secureJoinStopButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == autoJoinStartButton) {
-                SecureJoinPanel.this.autoJoinStartButtonActionPerformed(evt);
+            else if (evt.getSource() == secureJoinStartButton) {
+                SecureJoinPanel.this.secureJoinStartButtonActionPerformed(evt);
             }
         }
     }// </editor-fold>//GEN-END:initComponents
 
-    private void browseAutoJoinSourceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseAutoJoinSourceButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_browseAutoJoinSourceButtonActionPerformed
+    private void browseSecureJoinSourceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseSecureJoinSourceButtonActionPerformed
+    	File file = FileBrowserUtil.openSingleFile(this,
+                new ExtensionFileFilter(new String[]{".mdat"}, "Splitter Metadata file"), 
+                	false, context.getAppSettings().getLastAccessedPathName(), new MetaDataFileView());
+        if (null != file) {
+            secureJoinSourceTextField.setText(file.getAbsolutePath());
+            context.getAppSettings().setLastAccessedPathName(file.getAbsolutePath());
+        }
+    }//GEN-LAST:event_browseSecureJoinSourceButtonActionPerformed
 
-    private void browseAutoJoinTargetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseAutoJoinTargetButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_browseAutoJoinTargetButtonActionPerformed
+    private void browseSecureJoinTargetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseSecureJoinTargetButtonActionPerformed
+    	File file = FileBrowserUtil.openSingleFile(this, null, false,
+                context.getAppSettings().getLastAccessedPathName());
+        if (null != file) {
+            secureJoinTargetTextField.setText(file.getAbsolutePath());
+            context.getAppSettings().setLastAccessedPathName(file.getAbsolutePath());
+        }
+    }//GEN-LAST:event_browseSecureJoinTargetButtonActionPerformed
 
-    private void splitterStopButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_splitterStopButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_splitterStopButton1ActionPerformed
+    private void secureJoinStopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secureJoinStopButtonActionPerformed
+        stopJoin();
+    }//GEN-LAST:event_secureJoinStopButtonActionPerformed
 
-    private void autoJoinStartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoJoinStartButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_autoJoinStartButtonActionPerformed
+    private void secureJoinStartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_secureJoinStartButtonActionPerformed
+        startJoin();
+    }//GEN-LAST:event_secureJoinStartButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JProgressBar autoJoinProgressBar;
-    private javax.swing.JTextField autoJoinSourceTextField;
-    private javax.swing.JButton autoJoinStartButton;
-    private javax.swing.JTextField autoJoinTargetTextField;
-    private javax.swing.JButton browseAutoJoinSourceButton;
-    private javax.swing.JButton browseAutoJoinTargetButton;
+    private javax.swing.JButton browseSecureJoinSourceButton;
+    private javax.swing.JButton browseSecureJoinTargetButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -213,6 +360,10 @@ public class SecureJoinPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JButton splitterStopButton1;
+    private javax.swing.JProgressBar secureJoinProgressBar;
+    private javax.swing.JTextField secureJoinSourceTextField;
+    private javax.swing.JButton secureJoinStartButton;
+    private javax.swing.JButton secureJoinStopButton;
+    private javax.swing.JTextField secureJoinTargetTextField;
     // End of variables declaration//GEN-END:variables
 }

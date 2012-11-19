@@ -118,8 +118,8 @@
                                 <copy todir="${release.dir}/${artifactId}-${release.version}/"
                                       overwrite="true" failonerror="true" includeEmptyDirs="true">
                                     <fileset dir="${bin.dir}">
-                                        <include name="run-${release.version}.bat" />
                                         <include name="run-${release.version}.sh" />
+                                        <include name="GSplit-${release.version}.exe" />
                                     </fileset>
                                 </copy>
                                 <copy todir="${release.dir}/${artifactId}-${release.version}/help/"
