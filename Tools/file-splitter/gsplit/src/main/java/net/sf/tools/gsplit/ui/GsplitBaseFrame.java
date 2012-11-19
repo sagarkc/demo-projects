@@ -12,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import net.sf.tools.gsplit.ResourceBundleManager;
 import net.sf.tools.gsplit.SplitterConstants;
 import net.sf.tools.gsplit.SplitterContext;
@@ -77,12 +76,6 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         flatSplitButton = new javax.swing.JButton();
         flatJoinButton = new javax.swing.JButton();
         jSeparator7 = new javax.swing.JToolBar.Separator();
-        textMenu = new javax.swing.JMenu();
-        textSplitMenuItem = new javax.swing.JMenuItem();
-        textJoinMenuItem = new javax.swing.JMenuItem();
-        pdfMenu = new javax.swing.JMenu();
-        pdfSplitMenuItem = new javax.swing.JMenuItem();
-        pdfJoinMenuItem = new javax.swing.JMenuItem();
         xmlMenu = new javax.swing.JMenu();
         xmlSplitMenuItem = new javax.swing.JMenuItem();
         xmlJoinMenuItem = new javax.swing.JMenuItem();
@@ -111,6 +104,12 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         flatSplitMenuItem = new javax.swing.JMenuItem();
         flatJoinMenuItem = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        textMenu = new javax.swing.JMenu();
+        textSplitMenuItem = new javax.swing.JMenuItem();
+        textJoinMenuItem = new javax.swing.JMenuItem();
+        pdfMenu = new javax.swing.JMenu();
+        pdfSplitMenuItem = new javax.swing.JMenuItem();
+        pdfJoinMenuItem = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         minimize2trayMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -162,28 +161,6 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         flatJoinButton.setFocusable(false);
         flatJoinButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         flatJoinButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-
-        textMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/text-file.png"))); // NOI18N
-        textMenu.setText("Text");
-
-        textSplitMenuItem.setText(bundle.getString("GsplitBaseFrame.textSplitMenuItem.text")); // NOI18N
-        textSplitMenuItem.addActionListener(formListener);
-        textMenu.add(textSplitMenuItem);
-
-        textJoinMenuItem.setText(bundle.getString("GsplitBaseFrame.textJoinMenuItem.text")); // NOI18N
-        textJoinMenuItem.addActionListener(formListener);
-        textMenu.add(textJoinMenuItem);
-
-        pdfMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pdf.png"))); // NOI18N
-        pdfMenu.setText("PDF");
-
-        pdfSplitMenuItem.setText(bundle.getString("GsplitBaseFrame.pdfSplitMenuItem.text")); // NOI18N
-        pdfSplitMenuItem.addActionListener(formListener);
-        pdfMenu.add(pdfSplitMenuItem);
-
-        pdfJoinMenuItem.setText(bundle.getString("GsplitBaseFrame.pdfJoinMenuItem.text")); // NOI18N
-        pdfJoinMenuItem.addActionListener(formListener);
-        pdfMenu.add(pdfJoinMenuItem);
 
         xmlMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/xml.png"))); // NOI18N
         xmlMenu.setText("XML");
@@ -303,6 +280,32 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
         flatJoinMenuItem.addActionListener(formListener);
         fileMenu.add(flatJoinMenuItem);
         fileMenu.add(jSeparator2);
+
+        textMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/text-file.png"))); // NOI18N
+        textMenu.setText("Text");
+
+        textSplitMenuItem.setText(bundle.getString("GsplitBaseFrame.textSplitMenuItem.text")); // NOI18N
+        textSplitMenuItem.addActionListener(formListener);
+        textMenu.add(textSplitMenuItem);
+
+        textJoinMenuItem.setText(bundle.getString("GsplitBaseFrame.textJoinMenuItem.text")); // NOI18N
+        textJoinMenuItem.addActionListener(formListener);
+        textMenu.add(textJoinMenuItem);
+
+        fileMenu.add(textMenu);
+
+        pdfMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/pdf.png"))); // NOI18N
+        pdfMenu.setText("PDF");
+
+        pdfSplitMenuItem.setText(bundle.getString("GsplitBaseFrame.pdfSplitMenuItem.text")); // NOI18N
+        pdfSplitMenuItem.addActionListener(formListener);
+        pdfMenu.add(pdfSplitMenuItem);
+
+        pdfJoinMenuItem.setText(bundle.getString("GsplitBaseFrame.pdfJoinMenuItem.text")); // NOI18N
+        pdfJoinMenuItem.addActionListener(formListener);
+        pdfMenu.add(pdfJoinMenuItem);
+
+        fileMenu.add(pdfMenu);
         fileMenu.add(jSeparator4);
 
         minimize2trayMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.ALT_MASK));
@@ -418,12 +421,6 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
             else if (evt.getSource() == openLogFileMenuItem) {
                 GsplitBaseFrame.this.openLogFileMenuItemActionPerformed(evt);
             }
-            else if (evt.getSource() == textSplitMenuItem) {
-                GsplitBaseFrame.this.textSplitMenuItemActionPerformed(evt);
-            }
-            else if (evt.getSource() == textJoinMenuItem) {
-                GsplitBaseFrame.this.textJoinMenuItemActionPerformed(evt);
-            }
             else if (evt.getSource() == pdfSplitMenuItem) {
                 GsplitBaseFrame.this.pdfSplitMenuItemActionPerformed(evt);
             }
@@ -447,6 +444,12 @@ public class GsplitBaseFrame extends javax.swing.JFrame {
             }
             else if (evt.getSource() == flatJoinMenuItem) {
                 GsplitBaseFrame.this.flatJoinMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == textSplitMenuItem) {
+                GsplitBaseFrame.this.textSplitMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == textJoinMenuItem) {
+                GsplitBaseFrame.this.textJoinMenuItemActionPerformed(evt);
             }
             else if (evt.getSource() == minimize2trayMenuItem) {
                 GsplitBaseFrame.this.minimize2trayMenuItemActionPerformed(evt);
