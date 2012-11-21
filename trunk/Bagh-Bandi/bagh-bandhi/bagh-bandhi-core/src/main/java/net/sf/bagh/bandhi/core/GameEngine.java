@@ -35,10 +35,6 @@ public final class GameEngine {
 	private int currentPlayerIndex = 0;
 	
 	private Stack<PathOfMove> movePaths = new Stack<PathOfMove>();
-	private Stack<PathOfMove> undoMovePaths = new Stack<PathOfMove>();
-	private Stack<PathOfMove> redoMovePaths = new Stack<PathOfMove>();
-	
-	
 	/* ----------------------------------------------------------------- */
 	
 	
@@ -146,34 +142,6 @@ public final class GameEngine {
 	 */
 	public void setMovePaths(Stack<PathOfMove> movePaths) {
 		this.movePaths = movePaths;
-	}
-
-	/**
-	 * @return the undoMovePaths
-	 */
-	public Stack<PathOfMove> getUndoMovePaths() {
-		return undoMovePaths;
-	}
-
-	/**
-	 * @param undoMovePaths the undoMovePaths to set
-	 */
-	public void setUndoMovePaths(Stack<PathOfMove> undoMovePaths) {
-		this.undoMovePaths = undoMovePaths;
-	}
-
-	/**
-	 * @return the redoMovePaths
-	 */
-	public Stack<PathOfMove> getRedoMovePaths() {
-		return redoMovePaths;
-	}
-
-	/**
-	 * @param redoMovePaths the redoMovePaths to set
-	 */
-	public void setRedoMovePaths(Stack<PathOfMove> redoMovePaths) {
-		this.redoMovePaths = redoMovePaths;
 	}
 
 	public void shiftNextPlayer(){

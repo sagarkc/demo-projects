@@ -348,7 +348,7 @@ public class Board {
 
 	public AnimalType evalute(){
 		// all the goats are captured
-		if(availableGoats.size() == 0 && capturedGoats.size() == 20){
+		if(capturedGoats.size() == 20){
 			return AnimalType.TIGER;
 		}
 		Box box1 = animalBoxMap.get(tigers[0]);
@@ -377,10 +377,12 @@ public class Board {
 			if(fromBox.getAnimals() != null && fromBox.getAnimals().size() > 0){
 				Animal animal = fromBox.getAnimals().pop();
 				toBox.setAnimal(animal);
+				animalBoxMap.put(animal, toBox);
 				success = true;
 			} else {
 				Animal animal = fromBox.getAnimal();
 				toBox.setAnimal(animal);
+				animalBoxMap.put(animal, toBox);
 				fromBox.setAnimal(null);
 				success = true;
 			}

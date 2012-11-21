@@ -23,13 +23,13 @@ import net.sf.bagh.bandhi.AppConstants;
 import net.sf.bagh.bandhi.GameStatusEnum;
 import net.sf.bagh.bandhi.app.AnimalSizeEnum;
 import net.sf.bagh.bandhi.app.BoxSizeEnum;
-import net.sf.bagh.bandhi.app.GameStatusChangeEvent;
-import net.sf.bagh.bandhi.app.GameStatusChangeEventManager;
 import net.sf.bagh.bandhi.app.GreenBoxImageEnum;
 import net.sf.bagh.bandhi.app.GreyBoxImageEnum;
 import net.sf.bagh.bandhi.app.GridSizeEnum;
 import net.sf.bagh.bandhi.app.OrangeBoxImageEnum;
 import net.sf.bagh.bandhi.app.RedBoxImageEnum;
+import net.sf.bagh.bandhi.app.event.GameStatusChangeEvent;
+import net.sf.bagh.bandhi.app.event.GameStatusChangeEventManager;
 import net.sf.bagh.bandhi.core.GameEngine;
 import net.sf.bagh.bandhi.core.activity.Captureable;
 import net.sf.bagh.bandhi.core.model.Animal.AnimalType;
@@ -260,6 +260,12 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 		else if(null != box && null != previousSelectedBox
 				&& box.isEmpty() && !box.equals(previousSelectedBox)){
 			AnimalType winer = gameBoard.evalute();
+			// if there is any winer
+			if(AnimalType.NONE != winer){
+				GameStatusChangeEvent event = new GameStatusChangeEvent(
+						this, GameStatusEnum.ENDED, null, winer);
+				statusChangeEventManager.fireGameStatusChangeEvent(event);
+			}
 			// if the animal can be moved to this box
 			if(gameBoard.canBeMoved(previousSelectedBox, box) && AnimalType.NONE == winer){
 				// do move
@@ -268,6 +274,11 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 					firePropertyChange("MOVE_SUCCESS", previousSelectedBox, box);
 					firePropertyChange("GOAT_COUNT", null, 5%3);
 					winer = gameBoard.evalute();
+					if(AnimalType.NONE != winer){
+						GameStatusChangeEvent event = new GameStatusChangeEvent(
+								this, GameStatusEnum.ENDED, null, winer);
+						statusChangeEventManager.fireGameStatusChangeEvent(event);
+					}
 					previousSelectedBox.draw(getGraphics());
 					previousSelectedBox.setBgImage(GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
 					previousSelectedBox.setDefaultBackgroundColor();

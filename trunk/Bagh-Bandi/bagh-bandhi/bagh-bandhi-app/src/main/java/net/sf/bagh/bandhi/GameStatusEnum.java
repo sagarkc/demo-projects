@@ -10,7 +10,13 @@ package net.sf.bagh.bandhi;
 public enum GameStatusEnum {
 
 	ANIMAL_MOVED("ANIMAL_MOVED"),
-	ANIMAL_CAPTURED("ANIMAL_CAPTURED");
+	ANIMAL_CAPTURED("ANIMAL_CAPTURED"),
+	NEW_GAME("NEW_GAME"),
+	PLAYING("PLAYING"),
+	PAUSED("PAUSED"),
+	ENDED("ENDED"),
+	EXITED("EXITED"),
+	UNKNOWN("UNKNOWN");
 	
 	private final String status;
 

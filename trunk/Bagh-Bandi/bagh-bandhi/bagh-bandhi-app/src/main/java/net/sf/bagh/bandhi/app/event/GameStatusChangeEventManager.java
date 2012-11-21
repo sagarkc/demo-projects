@@ -1,10 +1,12 @@
 /**
  * 
  */
-package net.sf.bagh.bandhi.app;
+package net.sf.bagh.bandhi.app.event;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import net.sf.bagh.bandhi.GameStatusEnum;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
@@ -36,8 +38,21 @@ public final class GameStatusChangeEventManager {
 	}
 	
 	public synchronized void fireGameStatusChangeEvent(GameStatusChangeEvent changeEvent) {
+		if(null == changeEvent)
+			return;
+		if(null == changeEvent.getGameStatus()){
+			return;
+		}
 		for (GameStatusChangeListener listener : listeners) {
-			listener.animalMoved(changeEvent);
+			if(GameStatusEnum.NEW_GAME.equals(changeEvent.getGameStatus())){
+				listener.gameStarted(changeEvent);
+			}
+			if(GameStatusEnum.EXITED.equals(changeEvent.getGameStatus())){
+				listener.gameExited(changeEvent);
+			}
+			if(GameStatusEnum.ANIMAL_MOVED.equals(changeEvent.getGameStatus())){
+				listener.animalMoved(changeEvent);
+			}
 		}
 	}
 }

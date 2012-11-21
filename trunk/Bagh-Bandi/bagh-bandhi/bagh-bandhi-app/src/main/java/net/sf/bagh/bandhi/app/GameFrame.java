@@ -6,18 +6,38 @@ package net.sf.bagh.bandhi.app;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.beans.PropertyChangeListener;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.event.UndoableEditEvent;
 
 import net.sf.bagh.bandhi.BaghBandhiKhela;
+import net.sf.bagh.bandhi.DifficultyLevelEnum;
+import net.sf.bagh.bandhi.Game;
+import net.sf.bagh.bandhi.GamePlayManager;
 import net.sf.bagh.bandhi.GameStatusEnum;
 import net.sf.bagh.bandhi.app.board.BoardBasePanel;
 import net.sf.bagh.bandhi.app.board.UIBoard;
 import net.sf.bagh.bandhi.app.board.UIGoat;
 import net.sf.bagh.bandhi.app.board.UITiger;
+import net.sf.bagh.bandhi.app.event.GameStatusChangeEvent;
+import net.sf.bagh.bandhi.app.event.GameStatusChangeEventManager;
+import net.sf.bagh.bandhi.app.event.GameStatusChangeListener;
+import net.sf.bagh.bandhi.app.event.RedoMoveEvent;
+import net.sf.bagh.bandhi.app.event.RedoMoveEventListener;
+import net.sf.bagh.bandhi.app.event.RedoMoveEventManager;
+import net.sf.bagh.bandhi.app.event.UndoMoveEvent;
+import net.sf.bagh.bandhi.app.event.UndoMoveEventListener;
+import net.sf.bagh.bandhi.app.event.UndoMoveEventManager;
+import net.sf.bagh.bandhi.app.event.UndoableMoveEvent;
+import net.sf.bagh.bandhi.app.event.UndoableMoveEventManager;
+import net.sf.bagh.bandhi.app.event.UndoableMoveListener;
 import net.sf.bagh.bandhi.app.util.WindowUtil;
 import net.sf.bagh.bandhi.core.GameEngine;
 import net.sf.bagh.bandhi.core.model.Animal;
@@ -26,15 +46,25 @@ import net.sf.bagh.bandhi.core.model.Goat;
 import net.sf.bagh.bandhi.core.model.PathOfMove;
 import net.sf.bagh.bandhi.core.model.Tiger;
 
+import org.apache.log4j.Logger;
+
 /**
  *
  * @author sabuj
  */
 public class GameFrame extends javax.swing.JFrame implements PropertyChangeListener, 
-	GameStatusChangeListener
+	GameStatusChangeListener, UndoMoveEventListener, RedoMoveEventListener,
+	UndoableMoveListener
 {
+	private static Logger logger = Logger.getLogger(GameFrame.class);
     private static final GameEngine gameEngine = GameEngine.getEngine();
+    private static final GamePlayManager gamePlayManager = GamePlayManager.getInstance();
+    
     private static GameStatusChangeEventManager statusChangeEventManager = GameStatusChangeEventManager.getInstance();
+    private static UndoMoveEventManager undoMoveEventManager = UndoMoveEventManager.getInstance();
+    private static RedoMoveEventManager redoMoveEventManager = RedoMoveEventManager.getInstance();
+    private static UndoableMoveEventManager undoableMoveEventManager = UndoableMoveEventManager.getInstance();
+    
     private BoardBasePanel boardBasePanel;
     private JScrollPane boardScrollPane;
     private UIBoard gameBoard;
@@ -43,13 +73,34 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
      * Creates new form GameFrame
      */
     public GameFrame() {
-        initComponents();
+        
+    	initComponents();
         setIconImage((new ImageIcon(getClass()
                 .getResource("/images/game-chip-24x24.png"))).getImage());
         addPropertyChangeListener(this);
+        
         statusChangeEventManager.addGameStatusChangeListener(this);
+        undoMoveEventManager.addUndoMoveEventListener(this);
+        redoMoveEventManager.addRedoMoveEventListener(this);
+        undoableMoveEventManager.addUndoableMoveListener(this);
+        
         boardScrollPane = new JScrollPane();
         WindowUtil.bringToCenter(this);
+        Graphics g = getGraphics();
+        if(null != g){
+        	RenderingHints hints = new RenderingHints(
+    				RenderingHints.KEY_ANTIALIASING,
+    				RenderingHints.VALUE_ANTIALIAS_ON);
+    		hints.add(new RenderingHints(RenderingHints.KEY_RENDERING,
+    				RenderingHints.VALUE_RENDER_QUALITY));
+
+    		Graphics2D g2d = (Graphics2D) g;
+    		g2d.setRenderingHints(hints);
+    		update(g2d);
+        }
+        if(logger.isDebugEnabled()){
+        	logger.debug("Frame initialization complete");
+        }
     }
 
     /**
@@ -65,6 +116,7 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         tigerPlayedByButtonGroup = new javax.swing.ButtonGroup();
         goatPlayedByButtonGroup = new javax.swing.ButtonGroup();
         boardSizeButtonGroup = new javax.swing.ButtonGroup();
+        gameDifficultyButtonGroup = new javax.swing.ButtonGroup();
         gameControlToolBar = new javax.swing.JToolBar();
         newGameButton = new javax.swing.JButton();
         jSeparator7 = new javax.swing.JToolBar.Separator();
@@ -80,6 +132,8 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         jLabel1 = new javax.swing.JLabel();
         boardSizeSlider = new javax.swing.JSlider();
         selectedBoardSizeLabel = new javax.swing.JLabel();
+        jSeparator15 = new javax.swing.JToolBar.Separator();
+        evaluteCurrentGameButton = new javax.swing.JButton();
         contentPanel = new javax.swing.JPanel();
         statisticPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -100,6 +154,7 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         loadGameMenuItem = new javax.swing.JMenuItem();
         saveGameMenuItem = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        evaluteCurrentGameMenuItem = new javax.swing.JMenuItem();
         endGameMenuItem = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -112,6 +167,11 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         settingsMenu = new javax.swing.JMenu();
         showToolbarCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         jSeparator9 = new javax.swing.JPopupMenu.Separator();
+        difficultyMenu = new javax.swing.JMenu();
+        lowDifficultyRadioMenuItem = new javax.swing.JRadioButtonMenuItem();
+        moderateDifficultyRadioMenuItem = new javax.swing.JRadioButtonMenuItem();
+        highDifficultyRadioMenuItem = new javax.swing.JRadioButtonMenuItem();
+        jSeparator14 = new javax.swing.JPopupMenu.Separator();
         startingAnimalMenu = new javax.swing.JMenu();
         autoSelectStartPlayerRbMenuItem = new javax.swing.JRadioButtonMenuItem();
         jSeparator10 = new javax.swing.JPopupMenu.Separator();
@@ -130,7 +190,7 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         changePlayerNamesMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         helpMenuItem = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        showHintMenuItem = new javax.swing.JMenuItem();
         jSeparator8 = new javax.swing.JPopupMenu.Separator();
         aboutMenuItem = new javax.swing.JMenuItem();
 
@@ -166,6 +226,7 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         saveGameButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_edit.gif"))); // NOI18N
         saveGameButton.setText("Save");
         saveGameButton.setToolTipText("Save Game");
+        saveGameButton.setEnabled(false);
         saveGameButton.setFocusable(false);
         saveGameButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         saveGameButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -175,6 +236,7 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         endGameButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/end_game.png"))); // NOI18N
         endGameButton.setText("End");
         endGameButton.setToolTipText("End Game");
+        endGameButton.setEnabled(false);
         endGameButton.setFocusable(false);
         endGameButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         endGameButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -184,6 +246,7 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
 
         undoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/undo.png"))); // NOI18N
         undoButton.setText("Undo");
+        undoButton.setEnabled(false);
         undoButton.setFocusable(false);
         undoButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         undoButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -192,6 +255,7 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
 
         redoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/redo.png"))); // NOI18N
         redoButton.setText("Redo");
+        redoButton.setEnabled(false);
         redoButton.setFocusable(false);
         redoButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         redoButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -202,6 +266,7 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         hintButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hint_bulb.png"))); // NOI18N
         hintButton.setText("Hint");
         hintButton.setToolTipText("Show Hint");
+        hintButton.setEnabled(false);
         hintButton.setFocusable(false);
         hintButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         hintButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -218,6 +283,7 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         boardSizeSlider.setSnapToTicks(true);
         boardSizeSlider.setToolTipText("Board Size");
         boardSizeSlider.setValue(3);
+        boardSizeSlider.setEnabled(false);
         boardSizeSlider.setMaximumSize(new java.awt.Dimension(200, 25));
         boardSizeSlider.setMinimumSize(new java.awt.Dimension(200, 25));
         boardSizeSlider.addChangeListener(formListener);
@@ -226,6 +292,16 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         selectedBoardSizeLabel.setForeground(new java.awt.Color(0, 0, 204));
         selectedBoardSizeLabel.setText("NORMAL");
         gameControlToolBar.add(selectedBoardSizeLabel);
+        gameControlToolBar.add(jSeparator15);
+
+        evaluteCurrentGameButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/evalute-16x16.png"))); // NOI18N
+        evaluteCurrentGameButton.setText("Evalute");
+        evaluteCurrentGameButton.setEnabled(false);
+        evaluteCurrentGameButton.setFocusable(false);
+        evaluteCurrentGameButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        evaluteCurrentGameButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        evaluteCurrentGameButton.addActionListener(formListener);
+        gameControlToolBar.add(evaluteCurrentGameButton);
 
         getContentPane().add(gameControlToolBar, java.awt.BorderLayout.PAGE_START);
 
@@ -318,8 +394,8 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         contentPanelLayout.setHorizontalGroup(
             contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contentPanelLayout.createSequentialGroup()
-                .addComponent(boardContainerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(boardContainerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(statisticPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(playerInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -336,6 +412,7 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         getContentPane().add(contentPanel, java.awt.BorderLayout.CENTER);
 
         gameMenu.setText("Game");
+        gameMenu.addActionListener(formListener);
 
         newGameMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         newGameMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new_game.gif"))); // NOI18N
@@ -353,13 +430,21 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         saveGameMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         saveGameMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_edit.gif"))); // NOI18N
         saveGameMenuItem.setText("Save");
+        saveGameMenuItem.setEnabled(false);
         saveGameMenuItem.addActionListener(formListener);
         gameMenu.add(saveGameMenuItem);
         gameMenu.add(jSeparator2);
 
+        evaluteCurrentGameMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        evaluteCurrentGameMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/evalute-16x16.png"))); // NOI18N
+        evaluteCurrentGameMenuItem.setText("Evalute Current Game");
+        evaluteCurrentGameMenuItem.setEnabled(false);
+        gameMenu.add(evaluteCurrentGameMenuItem);
+
         endGameMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         endGameMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/end_game.png"))); // NOI18N
         endGameMenuItem.setText("End Game");
+        endGameMenuItem.setEnabled(false);
         endGameMenuItem.addActionListener(formListener);
         gameMenu.add(endGameMenuItem);
         gameMenu.add(jSeparator3);
@@ -383,12 +468,14 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         undoMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         undoMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/undo.png"))); // NOI18N
         undoMenuItem.setText("Undo");
+        undoMenuItem.setEnabled(false);
         undoMenuItem.addActionListener(formListener);
         editMenu.add(undoMenuItem);
 
         redoMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
         redoMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/redo.png"))); // NOI18N
         redoMenuItem.setText("Redo");
+        redoMenuItem.setEnabled(false);
         redoMenuItem.addActionListener(formListener);
         editMenu.add(redoMenuItem);
         editMenu.add(jSeparator11);
@@ -407,6 +494,28 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         showToolbarCheckBoxMenuItem.addActionListener(formListener);
         settingsMenu.add(showToolbarCheckBoxMenuItem);
         settingsMenu.add(jSeparator9);
+
+        difficultyMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/games-difficult-16x16.png"))); // NOI18N
+        difficultyMenu.setText("Game Difficulty");
+
+        gameDifficultyButtonGroup.add(lowDifficultyRadioMenuItem);
+        lowDifficultyRadioMenuItem.setSelected(true);
+        lowDifficultyRadioMenuItem.setText("Low");
+        lowDifficultyRadioMenuItem.addActionListener(formListener);
+        difficultyMenu.add(lowDifficultyRadioMenuItem);
+
+        gameDifficultyButtonGroup.add(moderateDifficultyRadioMenuItem);
+        moderateDifficultyRadioMenuItem.setText("Moderate");
+        moderateDifficultyRadioMenuItem.addActionListener(formListener);
+        difficultyMenu.add(moderateDifficultyRadioMenuItem);
+
+        gameDifficultyButtonGroup.add(highDifficultyRadioMenuItem);
+        highDifficultyRadioMenuItem.setText("High");
+        highDifficultyRadioMenuItem.addActionListener(formListener);
+        difficultyMenu.add(highDifficultyRadioMenuItem);
+
+        settingsMenu.add(difficultyMenu);
+        settingsMenu.add(jSeparator14);
 
         startingAnimalMenu.setText("Starting Animal");
 
@@ -489,10 +598,12 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         helpMenuItem.addActionListener(formListener);
         helpMenu.add(helpMenuItem);
 
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hint_bulb.png"))); // NOI18N
-        jMenuItem2.setText("Show Hint");
-        jMenuItem2.addActionListener(formListener);
-        helpMenu.add(jMenuItem2);
+        showHintMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        showHintMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hint_bulb.png"))); // NOI18N
+        showHintMenuItem.setText("Show Hint");
+        showHintMenuItem.setEnabled(false);
+        showHintMenuItem.addActionListener(formListener);
+        helpMenu.add(showHintMenuItem);
         helpMenu.add(jSeparator8);
 
         aboutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/information.png"))); // NOI18N
@@ -563,6 +674,15 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
             else if (evt.getSource() == showToolbarCheckBoxMenuItem) {
                 GameFrame.this.showToolbarCheckBoxMenuItemActionPerformed(evt);
             }
+            else if (evt.getSource() == lowDifficultyRadioMenuItem) {
+                GameFrame.this.lowDifficultyRadioMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == moderateDifficultyRadioMenuItem) {
+                GameFrame.this.moderateDifficultyRadioMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == highDifficultyRadioMenuItem) {
+                GameFrame.this.highDifficultyRadioMenuItemActionPerformed(evt);
+            }
             else if (evt.getSource() == autoSelectStartPlayerRbMenuItem) {
                 GameFrame.this.autoSelectStartPlayerRbMenuItemActionPerformed(evt);
             }
@@ -596,11 +716,17 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
             else if (evt.getSource() == helpMenuItem) {
                 GameFrame.this.helpMenuItemActionPerformed(evt);
             }
-            else if (evt.getSource() == jMenuItem2) {
-                GameFrame.this.jMenuItem2ActionPerformed(evt);
+            else if (evt.getSource() == showHintMenuItem) {
+                GameFrame.this.showHintMenuItemActionPerformed(evt);
             }
             else if (evt.getSource() == aboutMenuItem) {
                 GameFrame.this.aboutMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == gameMenu) {
+                GameFrame.this.gameMenuActionPerformed(evt);
+            }
+            else if (evt.getSource() == evaluteCurrentGameButton) {
+                GameFrame.this.evaluteCurrentGameButtonActionPerformed(evt);
             }
         }
 
@@ -628,10 +754,10 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
     }//GEN-LAST:event_saveGameMenuItemActionPerformed
 
     private void endGameMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endGameMenuItemActionPerformed
-        // TODO add your handling code here:
+        exitCurrentGame();
     }//GEN-LAST:event_endGameMenuItemActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+	private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -640,11 +766,11 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void undoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoMenuItemActionPerformed
-        // TODO add your handling code here:
+        gamePlayManager.undoLastMove();
     }//GEN-LAST:event_undoMenuItemActionPerformed
 
     private void redoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoMenuItemActionPerformed
-        // TODO add your handling code here:
+    	gamePlayManager.redoLastMove();
     }//GEN-LAST:event_redoMenuItemActionPerformed
 
     private void showToolbarCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showToolbarCheckBoxMenuItemActionPerformed
@@ -685,9 +811,9 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         // TODO add your handling code here:
     }//GEN-LAST:event_helpMenuItemActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void showHintMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showHintMenuItemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_showHintMenuItemActionPerformed
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         // TODO add your handling code here:
@@ -706,15 +832,15 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
     }//GEN-LAST:event_saveGameButtonActionPerformed
 
     private void endGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endGameButtonActionPerformed
-        // TODO add your handling code here:
+    	exitCurrentGame();
     }//GEN-LAST:event_endGameButtonActionPerformed
 
     private void undoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoButtonActionPerformed
-        // TODO add your handling code here:
+    	gamePlayManager.undoLastMove();
     }//GEN-LAST:event_undoButtonActionPerformed
 
     private void redoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoButtonActionPerformed
-        // TODO add your handling code here:
+    	gamePlayManager.redoLastMove();
     }//GEN-LAST:event_redoButtonActionPerformed
 
     private void autoSelectStartPlayerRbMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoSelectStartPlayerRbMenuItemActionPerformed
@@ -745,6 +871,26 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         }
     }//GEN-LAST:event_boardSizeSliderStateChanged
 
+    private void lowDifficultyRadioMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lowDifficultyRadioMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_lowDifficultyRadioMenuItemActionPerformed
+
+    private void moderateDifficultyRadioMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moderateDifficultyRadioMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_moderateDifficultyRadioMenuItemActionPerformed
+
+    private void highDifficultyRadioMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_highDifficultyRadioMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_highDifficultyRadioMenuItemActionPerformed
+
+    private void gameMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gameMenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_gameMenuActionPerformed
+
+    private void evaluteCurrentGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_evaluteCurrentGameButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_evaluteCurrentGameButtonActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
@@ -758,11 +904,15 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
     private javax.swing.JMenuItem changePlayerNamesMenuItem;
     private javax.swing.JPanel contentPanel;
     private javax.swing.JLabel currentPlayerLabel;
+    private javax.swing.JMenu difficultyMenu;
     private javax.swing.JMenu editMenu;
     private javax.swing.JButton endGameButton;
     private javax.swing.JMenuItem endGameMenuItem;
+    private javax.swing.JButton evaluteCurrentGameButton;
+    private javax.swing.JMenuItem evaluteCurrentGameMenuItem;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JToolBar gameControlToolBar;
+    private javax.swing.ButtonGroup gameDifficultyButtonGroup;
     private javax.swing.JMenu gameMenu;
     private javax.swing.JMenuBar gameMenuBar;
     private javax.swing.JRadioButtonMenuItem goatByAutoMenuItem;
@@ -771,19 +921,21 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
     private javax.swing.JMenu goatPlayerMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem helpMenuItem;
+    private javax.swing.JRadioButtonMenuItem highDifficultyRadioMenuItem;
     private javax.swing.JButton hintButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
     private javax.swing.JPopupMenu.Separator jSeparator11;
     private javax.swing.JToolBar.Separator jSeparator12;
     private javax.swing.JSeparator jSeparator13;
+    private javax.swing.JPopupMenu.Separator jSeparator14;
+    private javax.swing.JToolBar.Separator jSeparator15;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
@@ -795,6 +947,8 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
     private javax.swing.JLabel killedGoatsCountLabel;
     private javax.swing.JButton loadGameButton;
     private javax.swing.JMenuItem loadGameMenuItem;
+    private javax.swing.JRadioButtonMenuItem lowDifficultyRadioMenuItem;
+    private javax.swing.JRadioButtonMenuItem moderateDifficultyRadioMenuItem;
     private javax.swing.JTextArea movementTextArea;
     private javax.swing.JButton newGameButton;
     private javax.swing.JMenuItem newGameMenuItem;
@@ -807,6 +961,7 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
     private javax.swing.JMenuItem saveGameMenuItem;
     private javax.swing.JLabel selectedBoardSizeLabel;
     private javax.swing.JMenu settingsMenu;
+    private javax.swing.JMenuItem showHintMenuItem;
     private javax.swing.JCheckBoxMenuItem showToolbarCheckBoxMenuItem;
     private javax.swing.JRadioButtonMenuItem startByGoatMenuItem;
     private javax.swing.JRadioButtonMenuItem startByTigerMenuItem;
@@ -821,12 +976,128 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
     private javax.swing.JMenuItem undoMenuItem;
     // End of variables declaration//GEN-END:variables
     
+    
+    
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
     	System.out.println(evt.getPropertyName());
     	
     };
     
     /* (non-Javadoc)
+	 * @see net.sf.bagh.bandhi.app.GameStatusChangeListener#gameStarted(net.sf.bagh.bandhi.app.GameStatusChangeEvent)
+	 */
+	@Override
+	public void gameStarted(GameStatusChangeEvent event) {
+		if(GameStatusEnum.NEW_GAME.equals(event.getGameStatus())){
+			startingAnimalMenu.setEnabled(false);
+			tigerPlayerMenu.setEnabled(false);
+			goatPlayerMenu.setEnabled(false);
+			showHintMenuItem.setEnabled(true);
+			saveGameButton.setEnabled(true);
+			saveGameMenuItem.setEnabled(true);
+			endGameButton.setEnabled(true);
+			endGameMenuItem.setEnabled(true);
+			hintButton.setEnabled(true);
+			boardSizeSlider.setEnabled(true);
+		}
+	}
+
+
+	/* (non-Javadoc)
+	 * @see net.sf.bagh.bandhi.app.GameStatusChangeListener#gamePaused(net.sf.bagh.bandhi.app.GameStatusChangeEvent)
+	 */
+	@Override
+	public void gamePaused(GameStatusChangeEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sf.bagh.bandhi.app.GameStatusChangeListener#gameExited(net.sf.bagh.bandhi.app.GameStatusChangeEvent)
+	 */
+	@Override
+	public void gameExited(GameStatusChangeEvent event) {
+		if(GameStatusEnum.EXITED.equals(event.getGameStatus())){
+			gamePlayManager.removeGame();
+			if(null != boardContainerPanel.getComponents()
+					&& boardContainerPanel.getComponents().length > 0)
+				boardContainerPanel.removeAll();
+			boardContainerPanel.updateUI();
+			startingAnimalMenu.setEnabled(true);
+			tigerPlayerMenu.setEnabled(true);
+			goatPlayerMenu.setEnabled(true);
+			showHintMenuItem.setEnabled(true);
+			saveGameButton.setEnabled(false);
+			saveGameMenuItem.setEnabled(false);
+			endGameMenuItem.setEnabled(false);
+			endGameButton.setEnabled(false);
+			hintButton.setEnabled(false);
+			boardSizeSlider.setEnabled(false);
+			undoButton.setEnabled(false);
+			undoMenuItem.setEnabled(false);
+			redoButton.setEnabled(false);
+			redoMenuItem.setEnabled(false);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sf.bagh.bandhi.app.GameStatusChangeListener#gameEnded(net.sf.bagh.bandhi.app.GameStatusChangeEvent)
+	 */
+	@Override
+	public void gameEnded(GameStatusChangeEvent event) {
+		if(GameStatusEnum.ENDED.equals(event.getGameStatus())){
+			AnimalType winer = (AnimalType) event.getNewValue();
+			JOptionPane.showMessageDialog(this, "Winer is : " + winer);
+			gamePlayManager.removeGame();
+			if(null != boardContainerPanel.getComponents()
+					&& boardContainerPanel.getComponents().length > 0)
+				boardContainerPanel.removeAll();
+			boardContainerPanel.updateUI();
+			startingAnimalMenu.setEnabled(true);
+			tigerPlayerMenu.setEnabled(true);
+			goatPlayerMenu.setEnabled(true);
+			showHintMenuItem.setEnabled(true);
+			saveGameButton.setEnabled(false);
+			saveGameMenuItem.setEnabled(false);
+			endGameMenuItem.setEnabled(false);
+			endGameButton.setEnabled(false);
+			hintButton.setEnabled(false);
+			boardSizeSlider.setEnabled(false);
+			undoButton.setEnabled(false);
+			undoMenuItem.setEnabled(false);
+			redoButton.setEnabled(false);
+			redoMenuItem.setEnabled(false);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sf.bagh.bandhi.app.GameStatusChangeListener#gameSaved(net.sf.bagh.bandhi.app.GameStatusChangeEvent)
+	 */
+	@Override
+	public void gameSaved(GameStatusChangeEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sf.bagh.bandhi.app.GameStatusChangeListener#gameLoaded(net.sf.bagh.bandhi.app.GameStatusChangeEvent)
+	 */
+	@Override
+	public void gameLoaded(GameStatusChangeEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sf.bagh.bandhi.app.GameStatusChangeListener#animalCaptured(net.sf.bagh.bandhi.app.GameStatusChangeEvent)
+	 */
+	@Override
+	public void animalCaptured(GameStatusChangeEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
      * @see net.sf.bagh.bandhi.app.GameStatusChangeListener#animalMoved(net.sf.bagh.bandhi.app.GameStatusChangeEvent)
      */
     @Override
@@ -837,6 +1108,21 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
     			if(null != gameStatusChangeEvent.getOldValue() 
     					&& gameStatusChangeEvent.getOldValue() instanceof PathOfMove){
     				 PathOfMove lastMove = (PathOfMove) gameStatusChangeEvent.getOldValue();
+    				 gamePlayManager.addUndoablemove(lastMove);
+    				 if(gamePlayManager.canUndo()){
+    					 undoButton.setEnabled(true);
+    					 undoMenuItem.setEnabled(true);
+    				 } else {
+    					 undoButton.setEnabled(false);
+    					 undoMenuItem.setEnabled(false);
+    				 }
+    				 if(gamePlayManager.canRedo()){
+    					 redoButton.setEnabled(true);
+    					 redoMenuItem.setEnabled(true);
+    				 } else {
+    					 redoButton.setEnabled(false);
+    					 redoMenuItem.setEnabled(false);
+    				 }
     				 if(null != lastMove.getCapturedAnimal()){
     					 int count = gameBoard.getCapturedGoats().size();
     					 killedGoatsCountLabel.setText(""+count);
@@ -865,11 +1151,76 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
     	}
     }
     
-    /**
+    /* (non-Javadoc)
+	 * @see net.sf.bagh.bandhi.app.event.RedoMoveEventListener#redoComplete(net.sf.bagh.bandhi.app.event.RedoMoveEvent)
+	 */
+	@Override
+	public void redoComplete(RedoMoveEvent event) {
+		if(null != event){
+			Object data = event.getData();
+			if(null != data && data instanceof Integer){
+				int count = (Integer) data;
+				if(count > 0){
+					redoButton.setEnabled(true);
+					redoMenuItem.setEnabled(true);
+				} else {
+					redoButton.setEnabled(false);
+					redoMenuItem.setEnabled(false);
+				}
+			}
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see net.sf.bagh.bandhi.app.event.UndoMoveEventListener#undoComplete(net.sf.bagh.bandhi.app.event.UndoMoveEvent)
+	 */
+	@Override
+	public void undoComplete(UndoMoveEvent event) {
+		if(null != event){
+			Object data = event.getData();
+			if(null != data && data instanceof Integer){
+				int count = (Integer) data;
+				if(count > 0){
+					undoButton.setEnabled(true);
+					undoMenuItem.setEnabled(true);
+				} else {
+					undoButton.setEnabled(false);
+					undoMenuItem.setEnabled(false);
+				}
+			}
+		}
+	}
+
+	
+	@Override
+	public void undoableMoveHappened(UndoableMoveEvent event) {
+		
+	}
+	
+	
+
+	/**
 	 * Start a new Game
 	 */
 	public void startNewGame() {
+		logger.info("Starting new Game");
+		boolean replaceOldGame = false;
+		if(gamePlayManager.isGameInPlay()){
+			logger.info("A game is already in play...");
+			int option = JOptionPane.showConfirmDialog(this, "A game is already in play...\n" +
+					"Do you want to continue?");
+			if(JOptionPane.OK_OPTION == option){
+				replaceOldGame = true;
+			} else {
+				return;
+			}
+		}
+		
+		
 		int val = boardSizeSlider.getValue();
+		if(logger.isDebugEnabled()){
+			logger.debug("Board Size: "+SizeFactorEnum.getValue(val));
+		}
         UIBoard.sizeFactorEnum = SizeFactorEnum.getValue(val);
 		if(startByTigerMenuItem.isSelected()){
 			gameEngine.setFirstPlayer( GameEngine.MANUAL_TIGER_PLAYER);
@@ -889,6 +1240,10 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
 			}
 		}
 		
+		if(logger.isDebugEnabled()){
+			logger.debug("Starting player: " + gameEngine.getFirstPlayer().getAnimalType());
+		}
+		
 		UITiger[] tigers = new UITiger[2];
 		tigers[0] = new UITiger("T", 1);
 		tigers[1] = new UITiger("T", 2);
@@ -904,6 +1259,9 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
 		} else if(AnimalType.GOAT == gameEngine.getCurrentPlayer().getAnimalType()){
 			currentPlayerLabel.setIcon(GoatImageEnum.LARGE.getImage());
 		}
+		
+		Game game = new Game(DifficultyLevelEnum.LOW, gameBoard);
+		gamePlayManager.startNewGame(game, replaceOldGame);
 		if(null != boardContainerPanel.getComponents()
 				&& boardContainerPanel.getComponents().length > 0)
 			boardContainerPanel.removeAll();
@@ -911,6 +1269,8 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
 		boardBasePanel.setGameBoard(gameBoard);
 		boardContainerPanel.add(boardBasePanel, BorderLayout.CENTER);
         boardContainerPanel.updateUI();
+        GameStatusChangeEvent event = new GameStatusChangeEvent(this, GameStatusEnum.NEW_GAME, null, game);
+		GameStatusChangeEventManager.getInstance().fireGameStatusChangeEvent(event);
         
 		/*ScrollablePanel panel = new ScrollablePanel(new FlowLayout(FlowLayout.CENTER));
         panel.setScrollableWidth( ScrollablePanel.ScrollableSizeHint.FIT );
@@ -953,5 +1313,13 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
 		}*/
 	}
 	
-	
+	/**
+	 * 
+	 */
+	public void exitCurrentGame() {
+		if(gamePlayManager.isGameInPlay()){
+			GameStatusChangeEvent event = new GameStatusChangeEvent(this, GameStatusEnum.EXITED, null, null);
+			GameStatusChangeEventManager.getInstance().fireGameStatusChangeEvent(event);
+		}
+	}
 }
