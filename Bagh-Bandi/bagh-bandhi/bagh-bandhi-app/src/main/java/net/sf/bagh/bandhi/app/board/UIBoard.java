@@ -4,13 +4,18 @@
 package net.sf.bagh.bandhi.app.board;
 
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.Stack;
+
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
 
 import net.sf.bagh.bandhi.app.AnimalSizeEnum;
 import net.sf.bagh.bandhi.app.BoxSizeEnum;
 import net.sf.bagh.bandhi.app.GoatImageEnum;
 import net.sf.bagh.bandhi.app.SizeFactorEnum;
 import net.sf.bagh.bandhi.app.TigerImageEnum;
+import net.sf.bagh.bandhi.app.event.UndoableMove;
 import net.sf.bagh.bandhi.core.GameEngine;
 import net.sf.bagh.bandhi.core.model.Animal;
 import net.sf.bagh.bandhi.core.model.Board;
@@ -18,15 +23,17 @@ import net.sf.bagh.bandhi.core.model.Goat;
 import net.sf.bagh.bandhi.core.model.PathOfMove;
 import net.sf.bagh.bandhi.core.model.Tiger;
 import net.sf.bagh.bandhi.core.model.Animal.AnimalType;
+import net.sf.bagh.bandhi.core.util.PushStack;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
  *
  */
-public class UIBoard extends Board implements Drawable {
+public class UIBoard extends Board implements Drawable, Serializable, UndoableMove {
 
 	private static final GameEngine gameEngine = GameEngine.getEngine();
-	
+	private transient PushStack<PathOfMove> undoableMoves; 
+	private transient PushStack<PathOfMove> redoableMoves; 
 	public static int X = 20;
 	public static int Y = 20;
 	
@@ -37,6 +44,8 @@ public class UIBoard extends Board implements Drawable {
 		if(null == sizeFactorEnum)
 			sizeFactorEnum = SizeFactorEnum.NORMAL;
 		initBoard();
+		this.undoableMoves = new PushStack<PathOfMove>(difficultyLevel.getMaxUndoableMoves());
+		this.redoableMoves = new PushStack<PathOfMove>(difficultyLevel.getMaxUndoableMoves());
 	}
 
 
@@ -366,6 +375,66 @@ public class UIBoard extends Board implements Drawable {
 		((UITiger)animal).setY(box.getPosition().y 
 				+ (BoxSizeEnum.getValue(sizeFactorEnum).getHeight() / 2) 
 				- (AnimalSizeEnum.getValue(sizeFactorEnum).getHeight() / 2));
+	}
+
+
+	/**
+	 * @param lastMove
+	 * @return
+	 */
+	public boolean undoMove(PathOfMove lastMove) {
+		return false;
+	}
+
+
+	/**
+	 * @param lastMove
+	 * @return
+	 */
+	public boolean redoMove(PathOfMove lastMove) {
+		return false;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see net.sf.bagh.bandhi.app.event.UndoableMove#undo()
+	 */
+	@Override
+	public void undo() throws CannotUndoException {
+		
+		
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	/* (non-Javadoc)
+	 * @see net.sf.bagh.bandhi.app.event.UndoableMove#canUndo()
+	 */
+	@Override
+	public boolean canUndo() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see net.sf.bagh.bandhi.app.event.UndoableMove#redo()
+	 */
+	@Override
+	public void redo() throws CannotRedoException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	/* (non-Javadoc)
+	 * @see net.sf.bagh.bandhi.app.event.UndoableMove#canRedo()
+	 */
+	@Override
+	public boolean canRedo() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	

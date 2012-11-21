@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
+	debug="true">
+
+	<appender name="APP_LOG" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="./logs/Application.log" />
+		<param name="MaxFileSize" value="10MB" />
+		<param name="maxBackupIndex" value="10" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{dd-MMM-yyyy HH:mm:ss.SSS} %-5p %C{1}: %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="CONSOLE_LOG" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{dd/MM/yy HH:mm:ss} %-5p %C{1}: %m%n" />
+		</layout>
+	</appender>
+
+	<category name="net.sf.bagh.bandhi">
+		<priority value="DEBUG" />
+		<appender-ref ref="CONSOLE_LOG" />
+		<appender-ref ref="APP_LOG" />
+	</category>
+	
+</log4j:configuration>

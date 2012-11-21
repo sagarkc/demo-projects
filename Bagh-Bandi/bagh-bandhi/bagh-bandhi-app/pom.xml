@@ -98,8 +98,10 @@
                                       overwrite="true" failonerror="true" includeEmptyDirs="true">
                                     <fileset dir="${bin.dir}">
                                         <include name="bagh-bandhi-${release.version}.exe" />
+                                        <include name="log4j.xml" />
                                     </fileset>
                                 </copy>
+                                
                                 <!--
                                 <copy todir="${release.dir}/${artifactId}-${release.version}/help/"
                                       overwrite="true" failonerror="true" includeEmptyDirs="true">

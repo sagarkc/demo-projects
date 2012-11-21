@@ -125,12 +125,11 @@ public class UiBox extends Box implements Drawable{
 		if(g == null)
 			return;
 		RenderingHints hints = new RenderingHints(
-			    RenderingHints.KEY_ANTIALIASING,
-			    RenderingHints.VALUE_ANTIALIAS_ON);
-			hints.add(new RenderingHints(
-			            RenderingHints.KEY_RENDERING, 
-			RenderingHints.VALUE_RENDER_QUALITY));
-		
+				RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		hints.add(new RenderingHints(RenderingHints.KEY_RENDERING,
+				RenderingHints.VALUE_RENDER_QUALITY));
+
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHints(hints);
 		/*g.drawImage(bgImage.getImage(), position.x, position.y, 
@@ -164,7 +163,7 @@ public class UiBox extends Box implements Drawable{
 					java.awt.Font.BOLD, FontSizeEnum.getValue(UIBoard.sizeFactorEnum).getSize());
 			g2d.setFont(font);
 			int textHeight = DrawingUtil.calculateTextHeight(g);
-			int textWidth = DrawingUtil.calculateTextWidth(g, "" + animals.size());
+			int textWidth  = DrawingUtil.calculateTextWidth(g, "" + animals.size());
 			g2d.drawString("" + animals.size(), 
 					getPosition().x + 2, 
 					getPosition().y + ((int)(textHeight/1.5))  
