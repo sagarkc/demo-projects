@@ -9,16 +9,23 @@ import java.util.Stack;
 
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoableEditSupport;
 
 import net.sf.bagh.bandhi.app.AnimalSizeEnum;
 import net.sf.bagh.bandhi.app.BoxSizeEnum;
 import net.sf.bagh.bandhi.app.GoatImageEnum;
 import net.sf.bagh.bandhi.app.SizeFactorEnum;
 import net.sf.bagh.bandhi.app.TigerImageEnum;
+import net.sf.bagh.bandhi.app.event.RedoMoveEvent;
+import net.sf.bagh.bandhi.app.event.RedoMoveEventManager;
+import net.sf.bagh.bandhi.app.event.UndoMoveEvent;
+import net.sf.bagh.bandhi.app.event.UndoMoveEventManager;
 import net.sf.bagh.bandhi.app.event.UndoableMove;
+import net.sf.bagh.bandhi.app.undo.UndoMoveEdit;
 import net.sf.bagh.bandhi.core.GameEngine;
 import net.sf.bagh.bandhi.core.model.Animal;
 import net.sf.bagh.bandhi.core.model.Board;
+import net.sf.bagh.bandhi.core.model.Box;
 import net.sf.bagh.bandhi.core.model.Goat;
 import net.sf.bagh.bandhi.core.model.PathOfMove;
 import net.sf.bagh.bandhi.core.model.Tiger;
@@ -29,13 +36,13 @@ import net.sf.bagh.bandhi.core.util.PushStack;
  * @author Sabuj Das | sabuj.das@gmail.com
  *
  */
-public class UIBoard extends Board implements Drawable, Serializable, UndoableMove {
+public class UIBoard extends Board implements Drawable, Serializable {
 
 	private static final GameEngine gameEngine = GameEngine.getEngine();
-	private transient PushStack<PathOfMove> undoableMoves; 
-	private transient PushStack<PathOfMove> redoableMoves; 
+	
 	public static int X = 20;
 	public static int Y = 20;
+	private UndoableEditSupport undoMoveSupport;
 	
 	public static SizeFactorEnum sizeFactorEnum;
 	
@@ -43,10 +50,14 @@ public class UIBoard extends Board implements Drawable, Serializable, UndoableMo
 		super(tigers, goats);
 		if(null == sizeFactorEnum)
 			sizeFactorEnum = SizeFactorEnum.NORMAL;
+		undoMoveSupport = new UndoableEditSupport();
 		initBoard();
-		this.undoableMoves = new PushStack<PathOfMove>(difficultyLevel.getMaxUndoableMoves());
-		this.redoableMoves = new PushStack<PathOfMove>(difficultyLevel.getMaxUndoableMoves());
 	}
+
+	public UndoableEditSupport getUndoMoveSupport() {
+		return undoMoveSupport;
+	}
+
 
 
 	protected void initBoard() {
@@ -343,6 +354,8 @@ public class UIBoard extends Board implements Drawable, Serializable, UndoableMo
 				pathOfMove.setMovedFromBox(fromBox);
 				pathOfMove.setCurrentBox(toBox);
 				gameEngine.getMovePaths().push(pathOfMove);
+				UndoMoveEdit undoMoveEdit = new UndoMoveEdit(this, pathOfMove);
+				undoMoveSupport.postEdit(undoMoveEdit);
 				System.out.println("Moved from " + fromBox + " To " + toBox);
 			}
 		}
@@ -383,7 +396,10 @@ public class UIBoard extends Board implements Drawable, Serializable, UndoableMo
 	 * @return
 	 */
 	public boolean undoMove(PathOfMove lastMove) {
-		return false;
+		resetMove((UiBox)lastMove.getCurrentBox(), (UiBox)lastMove.getMovedFromBox(), lastMove.getCapturedAnimal());
+		UndoMoveEvent event = new UndoMoveEvent(this, null);
+		UndoMoveEventManager.getInstance().fireUndoMoveEvent(event);
+		return true;
 	}
 
 
@@ -392,50 +408,24 @@ public class UIBoard extends Board implements Drawable, Serializable, UndoableMo
 	 * @return
 	 */
 	public boolean redoMove(PathOfMove lastMove) {
-		return false;
+		resetMove((UiBox)lastMove.getMovedFromBox(), (UiBox)lastMove.getCurrentBox(), lastMove.getCapturedAnimal());
+		RedoMoveEvent event = new RedoMoveEvent(this, null);
+		RedoMoveEventManager.getInstance().fireRedoMoveEvent(event);
+		return true;
 	}
 
-
-	/* (non-Javadoc)
-	 * @see net.sf.bagh.bandhi.app.event.UndoableMove#undo()
+	/**
+	 * @param movedFromBox
+	 * @param currentBox
+	 * @param capturedAnimal
 	 */
-	@Override
-	public void undo() throws CannotUndoException {
-		
-		
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	/* (non-Javadoc)
-	 * @see net.sf.bagh.bandhi.app.event.UndoableMove#canUndo()
-	 */
-	@Override
-	public boolean canUndo() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	/* (non-Javadoc)
-	 * @see net.sf.bagh.bandhi.app.event.UndoableMove#redo()
-	 */
-	@Override
-	public void redo() throws CannotRedoException {
-		// TODO Auto-generated method stub
+	public void resetMove(UiBox fromBox, UiBox toBox,
+			Animal capturedAnimal) {
+		Animal animal = fromBox.getAnimal();
+		toBox.setAnimal(animal);
 		
 	}
 
-
-	/* (non-Javadoc)
-	 * @see net.sf.bagh.bandhi.app.event.UndoableMove#canRedo()
-	 */
-	@Override
-	public boolean canRedo() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	
 
