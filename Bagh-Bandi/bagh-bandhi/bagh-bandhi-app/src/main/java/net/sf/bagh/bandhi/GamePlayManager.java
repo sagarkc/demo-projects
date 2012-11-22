@@ -74,25 +74,13 @@ public final class GamePlayManager {
 	public void undoLastMove(){
 		if(!isGameInPlay())
 			return;
-		PathOfMove lastMove = game.getUndoableMoves().pop();
-		if(null == lastMove)
-			return;
-		boolean moved = game.getGameBoard().undoMove(lastMove);
-		game.getRedoableMoves().push(lastMove);
-		UndoMoveEvent event = new UndoMoveEvent(this, new Integer(game.getUndoableMoves().size()));
-		UndoMoveEventManager.getInstance().fireUndoMoveEvent(event);
+		game.undo();
 	}
 	
 	public void redoLastMove(){
 		if(!isGameInPlay())
 			return;
-		PathOfMove lastMove = game.getRedoableMoves().pop();
-		if(null == lastMove)
-			return;
-		boolean moved = game.getGameBoard().redoMove(lastMove);
-		game.getUndoableMoves().push(lastMove);
-		RedoMoveEvent event = new RedoMoveEvent(this, new Integer(game.getRedoableMoves().size()));
-		RedoMoveEventManager.getInstance().fireRedoMoveEvent(event);
+		game.redo();
 	}
 
 	/**
@@ -101,7 +89,7 @@ public final class GamePlayManager {
 	public boolean canUndo() {
 		if(!isGameInPlay())
 			return false;
-		return game.getUndoableMoves().size() > 0;
+		return game.canUndo();
 	}
 
 	/**
@@ -110,7 +98,7 @@ public final class GamePlayManager {
 	public boolean canRedo() {
 		if(!isGameInPlay())
 			return false;
-		return game.getRedoableMoves().size() > 0;
+		return game.canRedo();
 	}
 	
 	

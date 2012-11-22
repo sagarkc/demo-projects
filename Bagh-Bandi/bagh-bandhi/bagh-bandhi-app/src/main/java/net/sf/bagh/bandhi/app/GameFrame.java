@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
 
 import net.sf.bagh.bandhi.BaghBandhiKhela;
 import net.sf.bagh.bandhi.DifficultyLevelEnum;
@@ -38,6 +39,7 @@ import net.sf.bagh.bandhi.app.event.UndoMoveEventManager;
 import net.sf.bagh.bandhi.app.event.UndoableMoveEvent;
 import net.sf.bagh.bandhi.app.event.UndoableMoveEventManager;
 import net.sf.bagh.bandhi.app.event.UndoableMoveListener;
+import net.sf.bagh.bandhi.app.undo.MoveUndoManager;
 import net.sf.bagh.bandhi.app.util.WindowUtil;
 import net.sf.bagh.bandhi.core.GameEngine;
 import net.sf.bagh.bandhi.core.model.Animal;
@@ -54,7 +56,7 @@ import org.apache.log4j.Logger;
  */
 public class GameFrame extends javax.swing.JFrame implements PropertyChangeListener, 
 	GameStatusChangeListener, UndoMoveEventListener, RedoMoveEventListener,
-	UndoableMoveListener
+	UndoableEditListener
 {
 	private static Logger logger = Logger.getLogger(GameFrame.class);
     private static final GameEngine gameEngine = GameEngine.getEngine();
@@ -82,7 +84,6 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
         statusChangeEventManager.addGameStatusChangeListener(this);
         undoMoveEventManager.addUndoMoveEventListener(this);
         redoMoveEventManager.addRedoMoveEventListener(this);
-        undoableMoveEventManager.addUndoableMoveListener(this);
         
         boardScrollPane = new JScrollPane();
         WindowUtil.bringToCenter(this);
@@ -766,11 +767,13 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void undoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoMenuItemActionPerformed
-        gamePlayManager.undoLastMove();
+        //gamePlayManager.undoLastMove();
+    	MoveUndoManager.getInstance().undo();
     }//GEN-LAST:event_undoMenuItemActionPerformed
 
     private void redoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoMenuItemActionPerformed
-    	gamePlayManager.redoLastMove();
+    	//gamePlayManager.redoLastMove();
+    	MoveUndoManager.getInstance().redo();
     }//GEN-LAST:event_redoMenuItemActionPerformed
 
     private void showToolbarCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showToolbarCheckBoxMenuItemActionPerformed
@@ -836,11 +839,13 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
     }//GEN-LAST:event_endGameButtonActionPerformed
 
     private void undoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoButtonActionPerformed
-    	gamePlayManager.undoLastMove();
+    	//gamePlayManager.undoLastMove();
+    	MoveUndoManager.getInstance().undo();
     }//GEN-LAST:event_undoButtonActionPerformed
 
     private void redoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoButtonActionPerformed
-    	gamePlayManager.redoLastMove();
+    	//gamePlayManager.redoLastMove();
+    	MoveUndoManager.getInstance().redo();
     }//GEN-LAST:event_redoButtonActionPerformed
 
     private void autoSelectStartPlayerRbMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoSelectStartPlayerRbMenuItemActionPerformed
@@ -1156,18 +1161,8 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
 	 */
 	@Override
 	public void redoComplete(RedoMoveEvent event) {
-		if(null != event){
-			Object data = event.getData();
-			if(null != data && data instanceof Integer){
-				int count = (Integer) data;
-				if(count > 0){
-					redoButton.setEnabled(true);
-					redoMenuItem.setEnabled(true);
-				} else {
-					redoButton.setEnabled(false);
-					redoMenuItem.setEnabled(false);
-				}
-			}
+		if(null != boardBasePanel){
+			boardBasePanel.repaint();
 		}
 	}
 
@@ -1176,28 +1171,35 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
 	 */
 	@Override
 	public void undoComplete(UndoMoveEvent event) {
-		if(null != event){
-			Object data = event.getData();
-			if(null != data && data instanceof Integer){
-				int count = (Integer) data;
-				if(count > 0){
-					undoButton.setEnabled(true);
-					undoMenuItem.setEnabled(true);
-				} else {
-					undoButton.setEnabled(false);
-					undoMenuItem.setEnabled(false);
-				}
-			}
+		if(null != boardBasePanel){
+			boardBasePanel.repaint();
 		}
 	}
 
 	
+
 	@Override
-	public void undoableMoveHappened(UndoableMoveEvent event) {
-		
+	public void undoableEditHappened(UndoableEditEvent e) {
+		if(null != e && null != e.getEdit()){
+			if(e.getEdit().canUndo()){
+				undoButton.setEnabled(true);
+				undoMenuItem.setEnabled(true);
+			} else {
+				undoButton.setEnabled(false);
+				undoMenuItem.setEnabled(false);
+			}
+			
+			if(e.getEdit().canRedo()){
+				redoButton.setEnabled(true);
+				redoMenuItem.setEnabled(true);
+			} else {
+				redoButton.setEnabled(false);
+				redoMenuItem.setEnabled(false);
+			}
+			
+			MoveUndoManager.getInstance().addEdit(e.getEdit());
+		}
 	}
-	
-	
 
 	/**
 	 * Start a new Game
@@ -1253,6 +1255,7 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
 			goats[i] = new UIGoat("G", i+1);
 		}
 		gameBoard = new UIBoard(tigers, goats);
+		gameBoard.getUndoMoveSupport().addUndoableEditListener(this);
 		gameEngine.setCurrentPlayer(gameEngine.getFirstPlayer());
 		if(AnimalType.TIGER == gameEngine.getCurrentPlayer().getAnimalType()){
 			currentPlayerLabel.setIcon(TigerImageEnum.LARGE.getImage());

@@ -12,6 +12,9 @@ import javax.swing.undo.CannotUndoException;
  */
 public interface UndoableMove {
 
+	String UNDO_MOVE_NAME = "UNDO_MOVE";
+	String REDO_MOVE_NAME = "REDO_MOVE";
+	
 	void undo() throws CannotUndoException;
 	
 	boolean canUndo();
@@ -20,4 +23,5 @@ public interface UndoableMove {
 	
 	boolean canRedo();
 	
+	void die();
 }
