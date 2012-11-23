@@ -21,8 +21,10 @@ import net.sf.bagh.bandhi.app.event.RedoMoveEventManager;
 import net.sf.bagh.bandhi.app.event.UndoMoveEvent;
 import net.sf.bagh.bandhi.app.event.UndoMoveEventManager;
 import net.sf.bagh.bandhi.app.event.UndoableMove;
+import net.sf.bagh.bandhi.app.undo.MoveUndoManager;
 import net.sf.bagh.bandhi.app.undo.UndoMoveEdit;
 import net.sf.bagh.bandhi.core.GameEngine;
+import net.sf.bagh.bandhi.core.activity.Captureable;
 import net.sf.bagh.bandhi.core.model.Animal;
 import net.sf.bagh.bandhi.core.model.Board;
 import net.sf.bagh.bandhi.core.model.Box;
@@ -319,11 +321,13 @@ public class UIBoard extends Board implements Drawable, Serializable {
 						Goat goat = (Goat) commonOnPath.getAnimals().pop();
 						getCapturedGoats().add(goat);
 						pathOfMove.setCapturedAnimal(goat);
+						pathOfMove.setCapturedBox(commonOnPath);
 					} else {
 						Goat goat = (Goat) commonOnPath.getAnimal();
 						commonOnPath.setAnimal(null);
 						getCapturedGoats().add(goat);
 						pathOfMove.setCapturedAnimal(goat);
+						pathOfMove.setCapturedBox(commonOnPath);
 					}
 				}
 				success = true;
@@ -356,7 +360,9 @@ public class UIBoard extends Board implements Drawable, Serializable {
 				gameEngine.getMovePaths().push(pathOfMove);
 				UndoMoveEdit undoMoveEdit = new UndoMoveEdit(this, pathOfMove);
 				undoMoveSupport.postEdit(undoMoveEdit);
+				MoveUndoManager.getInstance().addEdit(undoMoveEdit);
 				System.out.println("Moved from " + fromBox + " To " + toBox);
+				updateBoxDetails();
 			}
 		}
 		return success;
@@ -396,9 +402,52 @@ public class UIBoard extends Board implements Drawable, Serializable {
 	 * @return
 	 */
 	public boolean undoMove(PathOfMove lastMove) {
-		resetMove((UiBox)lastMove.getCurrentBox(), (UiBox)lastMove.getMovedFromBox(), lastMove.getCapturedAnimal());
-		UndoMoveEvent event = new UndoMoveEvent(this, null);
+		if(null == lastMove){
+			return false;
+		}
+		Box from = lastMove.getCurrentBox();
+		Box to = lastMove.getMovedFromBox();
+		// if there was a capture happend in last move
+		if(null != lastMove.getCapturedAnimal()){
+			Animal animalToMove = from.getAnimal();
+			if(null != from.getAnimals() && from.getAnimals().size() > 0){
+				animalToMove = from.getAnimals().pop();
+			} else {
+				from.setAnimal(null);
+			}
+			Stack<Animal> toBoxAnimals = to.getAnimals();
+			if(null != toBoxAnimals && toBoxAnimals.size() > 0){
+				to.getAnimals().push(lastMove.getAnimal());
+			} else {
+				to.setAnimal(lastMove.getAnimal());
+			}
+			Stack<Animal> capturedBoxAnimals = lastMove.getCapturedBox().getAnimals();
+			if(null != capturedBoxAnimals && capturedBoxAnimals.size() > 0){
+				capturedBoxAnimals.push(lastMove.getCapturedAnimal());
+				getCapturedGoats().remove(lastMove.getCapturedAnimal());
+			} else {
+				lastMove.getCapturedBox().setAnimal(lastMove.getCapturedAnimal());
+				getCapturedGoats().remove(lastMove.getCapturedAnimal());
+			}
+		} else {
+			Animal animalToMove = from.getAnimal();
+			if(null != from.getAnimals() && from.getAnimals().size() > 0){
+				animalToMove = from.getAnimals().pop();
+			} else {
+				from.setAnimal(null);
+			}
+			Stack<Animal> animals = to.getAnimals();
+			if(null != animals && animals.size() > 0){
+				animals.push(lastMove.getAnimal());
+			} else {
+				to.setAnimal(lastMove.getAnimal());
+			}
+		}
+		/*UndoMoveEdit undoMoveEdit = new UndoMoveEdit(this, lastMove);
+		undoMoveSupport.postEdit(undoMoveEdit);*/
+		UndoMoveEvent event = new UndoMoveEvent(this, lastMove);
 		UndoMoveEventManager.getInstance().fireUndoMoveEvent(event);
+		updateBoxDetails();
 		return true;
 	}
 
@@ -408,24 +457,54 @@ public class UIBoard extends Board implements Drawable, Serializable {
 	 * @return
 	 */
 	public boolean redoMove(PathOfMove lastMove) {
-		resetMove((UiBox)lastMove.getMovedFromBox(), (UiBox)lastMove.getCurrentBox(), lastMove.getCapturedAnimal());
-		RedoMoveEvent event = new RedoMoveEvent(this, null);
+		if(null == lastMove)
+			return false;
+		// if there was a capture happend in last move
+		Box to = lastMove.getCurrentBox();
+		Box from = lastMove.getMovedFromBox();
+		// if there was a capture happend in last move
+		if(null != lastMove.getCapturedAnimal()){
+			Animal animalToMove = from.getAnimal();
+			if(null != from.getAnimals() && from.getAnimals().size() > 0){
+				animalToMove = from.getAnimals().pop();
+			} else {
+				from.setAnimal(null);
+			}
+			Stack<Animal> toBoxAnimals = to.getAnimals();
+			if(null != toBoxAnimals && toBoxAnimals.size() > 0){
+				to.getAnimals().push(lastMove.getAnimal());
+			} else {
+				to.setAnimal(lastMove.getAnimal());
+			}
+			Stack<Animal> capturedBoxAnimals = lastMove.getCapturedBox().getAnimals();
+			if(null != capturedBoxAnimals && capturedBoxAnimals.size() > 0){
+				capturedBoxAnimals.pop();
+				getCapturedGoats().add((Captureable) lastMove.getCapturedAnimal());
+			} else {
+				lastMove.getCapturedBox().setAnimal(null);
+				getCapturedGoats().add((Captureable) lastMove.getCapturedAnimal());
+			}
+		} else {
+			Animal animalToMove = from.getAnimal();
+			if(null != from.getAnimals() && from.getAnimals().size() > 0){
+				animalToMove = from.getAnimals().pop();
+			} else {
+				from.setAnimal(null);
+			}
+			Stack<Animal> animals = to.getAnimals();
+			if(null != animals && animals.size() > 0){
+				animals.push(lastMove.getAnimal());
+			} else {
+				to.setAnimal(lastMove.getAnimal());
+			}
+		}
+		RedoMoveEvent event = new RedoMoveEvent(this, lastMove);
 		RedoMoveEventManager.getInstance().fireRedoMoveEvent(event);
+		updateBoxDetails();
 		return true;
 	}
 
-	/**
-	 * @param movedFromBox
-	 * @param currentBox
-	 * @param capturedAnimal
-	 */
-	public void resetMove(UiBox fromBox, UiBox toBox,
-			Animal capturedAnimal) {
-		Animal animal = fromBox.getAnimal();
-		toBox.setAnimal(animal);
-		
-	}
-
+	
 	
 	
 

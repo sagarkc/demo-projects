@@ -443,6 +443,41 @@ public class BoardBasePanel extends JPanel implements MouseMotionListener, Mouse
 	}
 
 
+	/**
+	 * @param data
+	 */
+	public void reDraw(PathOfMove lastMove) {
+		if(null != lastMove){
+			UiBox box = (UiBox) lastMove.getCurrentBox();
+			box.draw(getGraphics());
+			List<Box> neighbors = box.getEmptyNeighbours();
+			for (Box neighbour : neighbors) {
+				((UiBox)neighbour).setBgImage(GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
+				((UiBox)neighbour).setDefaultBackgroundColor();
+				((UiBox)neighbour).draw(getGraphics());
+			}
+			if(null != lastMove.getCapturedBox()){
+				box = (UiBox) lastMove.getCapturedBox();
+				box.draw(getGraphics());
+				neighbors = box.getEmptyNeighbours();
+				for (Box neighbour : neighbors) {
+					((UiBox)neighbour).setBgImage(GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
+					((UiBox)neighbour).setDefaultBackgroundColor();
+					((UiBox)neighbour).draw(getGraphics());
+				}
+			}
+			box = (UiBox) lastMove.getMovedFromBox();
+			box.draw(getGraphics());
+			neighbors = box.getEmptyNeighbours();
+			for (Box neighbour : neighbors) {
+				((UiBox)neighbour).setBgImage(GreyBoxImageEnum.getValue(UIBoard.sizeFactorEnum).getImage());
+				((UiBox)neighbour).setDefaultBackgroundColor();
+				((UiBox)neighbour).draw(getGraphics());
+			}
+		}
+	}
+
+
 	
 	
 	

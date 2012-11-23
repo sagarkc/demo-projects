@@ -12,6 +12,7 @@ public class PathOfMove {
 
 	private Animal animal;
 	private Animal capturedAnimal;
+	private Box capturedBox;
 	private Box movedFromBox;
 	private Box currentBox;
 	/**
@@ -61,6 +62,12 @@ public class PathOfMove {
 	 */
 	public void setCurrentBox(Box currentBox) {
 		this.currentBox = currentBox;
+	}
+	public Box getCapturedBox() {
+		return capturedBox;
+	}
+	public void setCapturedBox(Box capturedBox) {
+		this.capturedBox = capturedBox;
 	}
 	
 	
