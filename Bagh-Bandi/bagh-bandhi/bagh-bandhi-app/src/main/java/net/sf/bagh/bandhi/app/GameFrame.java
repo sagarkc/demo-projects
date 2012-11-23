@@ -56,7 +56,7 @@ import org.apache.log4j.Logger;
  */
 public class GameFrame extends javax.swing.JFrame implements PropertyChangeListener, 
 	GameStatusChangeListener, UndoMoveEventListener, RedoMoveEventListener,
-	UndoableEditListener
+	UndoableEditListener, UndoableMoveListener
 {
 	private static Logger logger = Logger.getLogger(GameFrame.class);
     private static final GameEngine gameEngine = GameEngine.getEngine();
@@ -768,12 +768,27 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
 
     private void undoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoMenuItemActionPerformed
         //gamePlayManager.undoLastMove();
-    	MoveUndoManager.getInstance().undo();
+    	if(MoveUndoManager.getInstance().canUndo()){
+    		MoveUndoManager.getInstance().undo();
+    	}
+    	undoMenuItem.setEnabled(MoveUndoManager.getInstance().canUndo());
+    	undoButton.setEnabled(MoveUndoManager.getInstance().canUndo());
+    	
+    	redoMenuItem.setEnabled(MoveUndoManager.getInstance().canRedo());
+    	redoButton.setEnabled(MoveUndoManager.getInstance().canRedo());
+    	
     }//GEN-LAST:event_undoMenuItemActionPerformed
 
     private void redoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoMenuItemActionPerformed
     	//gamePlayManager.redoLastMove();
-    	MoveUndoManager.getInstance().redo();
+    	if(MoveUndoManager.getInstance().canRedo()){
+    		MoveUndoManager.getInstance().redo();
+    	}
+    	undoMenuItem.setEnabled(MoveUndoManager.getInstance().canUndo());
+    	undoButton.setEnabled(MoveUndoManager.getInstance().canUndo());
+    	
+    	redoMenuItem.setEnabled(MoveUndoManager.getInstance().canRedo());
+    	redoButton.setEnabled(MoveUndoManager.getInstance().canRedo());
     }//GEN-LAST:event_redoMenuItemActionPerformed
 
     private void showToolbarCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showToolbarCheckBoxMenuItemActionPerformed
@@ -840,12 +855,26 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
 
     private void undoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_undoButtonActionPerformed
     	//gamePlayManager.undoLastMove();
-    	MoveUndoManager.getInstance().undo();
+    	if(MoveUndoManager.getInstance().canUndo()){
+    		MoveUndoManager.getInstance().undo();
+    	}
+    	undoMenuItem.setEnabled(MoveUndoManager.getInstance().canUndo());
+    	undoButton.setEnabled(MoveUndoManager.getInstance().canUndo());
+    	
+    	redoMenuItem.setEnabled(MoveUndoManager.getInstance().canRedo());
+    	redoButton.setEnabled(MoveUndoManager.getInstance().canRedo());
     }//GEN-LAST:event_undoButtonActionPerformed
 
     private void redoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_redoButtonActionPerformed
     	//gamePlayManager.redoLastMove();
-    	MoveUndoManager.getInstance().redo();
+    	if(MoveUndoManager.getInstance().canRedo()){
+    		MoveUndoManager.getInstance().redo();
+    	}
+    	undoMenuItem.setEnabled(MoveUndoManager.getInstance().canUndo());
+    	undoButton.setEnabled(MoveUndoManager.getInstance().canUndo());
+    	
+    	redoMenuItem.setEnabled(MoveUndoManager.getInstance().canRedo());
+    	redoButton.setEnabled(MoveUndoManager.getInstance().canRedo());
     }//GEN-LAST:event_redoButtonActionPerformed
 
     private void autoSelectStartPlayerRbMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoSelectStartPlayerRbMenuItemActionPerformed
@@ -1154,6 +1183,7 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
     			
     		}
     	}
+    	
     }
     
     /* (non-Javadoc)
@@ -1161,9 +1191,24 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
 	 */
 	@Override
 	public void redoComplete(RedoMoveEvent event) {
-		if(null != boardBasePanel){
-			boardBasePanel.repaint();
+		if(null != boardBasePanel &&  null != event && null != event.getData()){
+			boardBasePanel.reDraw(event.getData());
+			boardBasePanel.updateUI();
 		}
+		gameEngine.shiftNextPlayer();
+		if(AnimalType.TIGER == gameEngine.getCurrentPlayer().getAnimalType()){
+			currentPlayerLabel.setIcon(TigerImageEnum.LARGE.getImage());
+			currentPlayerLabel.setText(gameEngine.getCurrentPlayer().getName());
+		} else if(AnimalType.GOAT == gameEngine.getCurrentPlayer().getAnimalType()){
+			currentPlayerLabel.setIcon(GoatImageEnum.LARGE.getImage());
+			currentPlayerLabel.setText(gameEngine.getCurrentPlayer().getName());
+		}
+		currentPlayerLabel.updateUI();
+		killedGoatsCountLabel.setText(""+gameBoard.getCapturedGoats().size());
+		undoMenuItem.setEnabled(MoveUndoManager.getInstance().canUndo());
+    	undoButton.setEnabled(MoveUndoManager.getInstance().canUndo());
+    	redoMenuItem.setEnabled(MoveUndoManager.getInstance().canRedo());
+    	redoButton.setEnabled(MoveUndoManager.getInstance().canRedo());
 	}
 
 	/* (non-Javadoc)
@@ -1171,16 +1216,36 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
 	 */
 	@Override
 	public void undoComplete(UndoMoveEvent event) {
-		if(null != boardBasePanel){
-			boardBasePanel.repaint();
+		if(null != boardBasePanel &&  null != event && null != event.getData()){
+			boardBasePanel.reDraw(event.getData());
+			boardBasePanel.updateUI();
 		}
+		gameEngine.shiftNextPlayer();
+		if(AnimalType.TIGER == gameEngine.getCurrentPlayer().getAnimalType()){
+			currentPlayerLabel.setIcon(TigerImageEnum.LARGE.getImage());
+			currentPlayerLabel.setText(gameEngine.getCurrentPlayer().getName());
+		} else if(AnimalType.GOAT == gameEngine.getCurrentPlayer().getAnimalType()){
+			currentPlayerLabel.setIcon(GoatImageEnum.LARGE.getImage());
+			currentPlayerLabel.setText(gameEngine.getCurrentPlayer().getName());
+		}
+		currentPlayerLabel.updateUI();
+		killedGoatsCountLabel.setText(""+gameBoard.getCapturedGoats().size());
+		undoMenuItem.setEnabled(MoveUndoManager.getInstance().canUndo());
+    	undoButton.setEnabled(MoveUndoManager.getInstance().canUndo());
+    	redoMenuItem.setEnabled(MoveUndoManager.getInstance().canRedo());
+    	redoButton.setEnabled(MoveUndoManager.getInstance().canRedo());
 	}
 
 	
 
 	@Override
+	public void undoableMoveHappened(UndoableMoveEvent event) {
+		
+	}
+
+	@Override
 	public void undoableEditHappened(UndoableEditEvent e) {
-		if(null != e && null != e.getEdit()){
+		/*if(null != e && null != e.getEdit()){
 			if(e.getEdit().canUndo()){
 				undoButton.setEnabled(true);
 				undoMenuItem.setEnabled(true);
@@ -1198,7 +1263,7 @@ public class GameFrame extends javax.swing.JFrame implements PropertyChangeListe
 			}
 			
 			MoveUndoManager.getInstance().addEdit(e.getEdit());
-		}
+		}*/
 	}
 
 	/**

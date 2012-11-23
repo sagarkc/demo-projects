@@ -113,8 +113,8 @@ public class Game implements Serializable, UndoableMove{
 		boolean moved = getGameBoard().undoMove(lastMove);
 		if(moved){
 			getRedoableMoves().push(lastMove);
-			UndoMoveEvent event = new UndoMoveEvent(this, new Integer(getUndoableMoves().size()));
-			UndoMoveEventManager.getInstance().fireUndoMoveEvent(event);
+			/*UndoMoveEvent event = new UndoMoveEvent(this, new Integer(getUndoableMoves().size()));
+			UndoMoveEventManager.getInstance().fireUndoMoveEvent(event);*/
 			hasBeenDone = false;
 		} else {
 			hasBeenDone = true;
@@ -137,8 +137,8 @@ public class Game implements Serializable, UndoableMove{
 		boolean moved = getGameBoard().redoMove(lastMove);
 		if(moved){
 			getUndoableMoves().push(lastMove);
-			RedoMoveEvent event = new RedoMoveEvent(this, new Integer(getRedoableMoves().size()));
-			RedoMoveEventManager.getInstance().fireRedoMoveEvent(event);
+			/*RedoMoveEvent event = new RedoMoveEvent(this, new Integer(getRedoableMoves().size()));
+			RedoMoveEventManager.getInstance().fireRedoMoveEvent(event);*/
 			hasBeenDone = true;
 		} else {
 			hasBeenDone = false;
