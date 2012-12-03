@@ -6,7 +6,7 @@ package net.sf.tools.gsplit.ui.core;
 
 /**
  *
- * @author SG1736
+ * @author Sabuj Das | sabuj.das@gmail.com
  */
 public class TextJoinPanel extends javax.swing.JPanel {
 
