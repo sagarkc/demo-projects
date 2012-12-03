@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package net.sf.tools.gsplit.ui.core;
 
 import java.beans.PropertyChangeEvent;
@@ -24,7 +21,7 @@ import net.sf.tools.gsplit.util.StringUtil;
 
 /**
  *
- * @author SG1736
+ * @author Sabuj Das | sabuj.das@gmail.com
  */
 public class FlatSplitPanel extends javax.swing.JPanel implements PropertyChangeListener {
 
