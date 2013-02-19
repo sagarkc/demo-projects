@@ -20,9 +20,18 @@
 	<div id="page-wrap">
 		<div id="inside">
 			<div id="top-panel">
+			&nbsp;
+			</div>
+			<div id="top-panel">
 				<tiles:insertAttribute name="baseToolbar"/>
 			</div>
-			
+			<div id="top-panel">
+			&nbsp;
+			</div>
+			<hr/>
+			<div id="top-panel">
+			&nbsp;
+			</div>
 			<div id="left-sidebar">
 				<tiles:insertAttribute name="leftNavigator"/>
 			</div>

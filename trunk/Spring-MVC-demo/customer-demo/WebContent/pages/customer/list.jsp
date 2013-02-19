@@ -8,8 +8,8 @@
 </div>
 
 <div>
-	<table style="width: 400px; min-height: 300px; border-style: dotted;" border="1">
-		<thead>
+	<table style="width: 400px; min-height: 300px; border-style: dotted;" border="0">
+		<thead style="background: #C4DEFC;">
 			<th><fmt:message key="customer.id"/></th>
 			<th><fmt:message key="customer.name"/></th>
 			<th><fmt:message key="customer.income"/></th>
@@ -32,5 +32,5 @@
 		</tbody>
 		
 	</table>
-
+https://github.com/SpringSource/spring-data-solr
 </div>
