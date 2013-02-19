@@ -28,7 +28,9 @@
 			</div>
 			
 			<div id="main-content">
+				<div id="home-content-wrapper">
 				<tiles:insertAttribute name="pageContent"/>
+				</div>
 			</div>
 			
 		</div>

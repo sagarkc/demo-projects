@@ -13,7 +13,7 @@
 
 	<!-- MVC -->
 	<mvc:annotation-driven />
-	<context:component-scan base-package="demo.customers.controllers" />
+	
 
 	<bean id="validator"
 		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />

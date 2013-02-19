@@ -8,4 +8,9 @@ public interface CustomerDao {
 
 	List<Customer> getAllCustomers();
 	
+	Customer  getByID(Long id);
+	
+	Customer save(Customer customer);
+	
+	Long delete(Long id);
 }
