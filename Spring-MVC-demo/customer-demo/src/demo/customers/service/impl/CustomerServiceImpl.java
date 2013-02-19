@@ -48,8 +48,9 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public CustomerVo save(CustomerVo customer) {
-		// TODO Auto-generated method stub
-		return null;
+		Customer cust = CustomerVoConverter.convertToModel(customer);
+		getCustomerDao().save(cust);
+		return customer;
 	}
 
 	@Override
