@@ -18,12 +18,12 @@
 		</thead>
 		<tbody>
 			<c:forEach items="${allCustomers }" var="cust">
-			<tr>
-				<td><c:out value="${cust.id }" /></td>
-				<td><c:out value="${cust.name }" /></td>
-				<td><c:out value="${cust.income }" /></td>
-				<td><c:out value="${cust.address }" /></td>
-				<td>
+			<tr style="min-height: 25px;">
+				<td style="min-height: 25px;"><c:out value="${cust.id }" /></td>
+				<td style="min-height: 25px;"><c:out value="${cust.name }" /></td>
+				<td style="min-height: 25px;"><c:out value="${cust.income }" /></td>
+				<td style="min-height: 25px;"><c:out value="${cust.address }" /></td>
+				<td style="min-height: 25px;">
 					<a href="cust/delete/<c:out value="${cust.id }" />.htm">Delete</a>
 				</td>
 			</tr>
@@ -32,5 +32,6 @@
 		</tbody>
 		
 	</table>
-https://github.com/SpringSource/spring-data-solr
+https://github.com/SpringSource/spring-data-solr 
+http://wiki.apache.org/solr/Solrj
 </div>

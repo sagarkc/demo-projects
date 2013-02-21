@@ -55,7 +55,7 @@ public class CustomerServiceImpl implements CustomerService{
 
 	@Override
 	public Long delete(Long id) {
-		// TODO Auto-generated method stub
+		getCustomerDao().delete(id);
 		return null;
 	}
 	

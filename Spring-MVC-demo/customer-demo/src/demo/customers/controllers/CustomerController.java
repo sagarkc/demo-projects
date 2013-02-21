@@ -31,7 +31,7 @@ public class CustomerController {
 		return "add-customer-view";
 	}
 	
-	@RequestMapping(value="/update/${customerId}", method=RequestMethod.GET)
+	@RequestMapping(value="/update/{customerId}", method=RequestMethod.GET)
 	public String showUpdatePage(@PathVariable Long customerId){
 		return "update-customer-view";
 	}
@@ -42,8 +42,9 @@ public class CustomerController {
 		return "redirect:/index.htm";
 	}
 	
-	@RequestMapping(value="/delete/${customerId}", method=RequestMethod.GET)
+	@RequestMapping(value="/delete/{customerId}", method=RequestMethod.GET)
 	public String delete(@PathVariable Long customerId){
+		getCustomerService().delete(customerId);
 		return "redirect:/index.htm";
 	}
 }
