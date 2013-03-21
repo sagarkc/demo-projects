@@ -50,7 +50,7 @@ public class JobLauncherDetails extends QuartzJobBean {
 	@SuppressWarnings("unchecked")
 	protected void executeInternal(JobExecutionContext context) {
 
-		long sleepTime = (long) (Math.random() * 5000);
+		/*long sleepTime = (long) (Math.random() * 5000);
 		// Sleep for a random amount of time to help prevent deadlock
 		System.out.println(Thread.currentThread().getName() + " sleeping for " + sleepTime);
 		try {
@@ -58,7 +58,7 @@ public class JobLauncherDetails extends QuartzJobBean {
 		} catch (InterruptedException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
-		}
+		}*/
 		Map<String, Object> jobDataMap = context.getMergedJobDataMap();
 		String jobName = (String) jobDataMap.get(JOB_NAME);
 		boolean emailEnabled = MapUtils.getBooleanValue(jobDataMap, "emailEnabled", true);
