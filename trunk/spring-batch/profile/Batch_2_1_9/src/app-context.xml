@@ -40,12 +40,12 @@
 			<list>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_01" />
-					<property name="cronExpression" value="0 0/1 * * * ?" />
+					<property name="cronExpression" value="0 0/2 * * * ?" />
 				</bean>
-				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
+				<!-- <bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_02" />
 					<property name="cronExpression" value="0/30 0/1 * * * ?" />
-				</bean>
+				</bean> -->
 			</list>
 		</property>
 	</bean>
@@ -77,7 +77,7 @@
 	</bean>
 	 
 	<bean id="jobRegistry" lazy-init="false" 
-		class="test.profile.batch.PrototypeMapJobRegistry" />
+		class="org.springframework.batch.core.configuration.support.MapJobRegistry" />
 	<bean
 		class="org.springframework.batch.core.configuration.support.AutomaticJobRegistrar">
 		<property name="applicationContextFactories">

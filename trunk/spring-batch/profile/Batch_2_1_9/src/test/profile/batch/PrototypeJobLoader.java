@@ -13,7 +13,6 @@ import org.springframework.batch.core.configuration.DuplicateJobException;
 import org.springframework.batch.core.configuration.JobFactory;
 import org.springframework.batch.core.configuration.JobRegistry;
 import org.springframework.batch.core.configuration.support.ApplicationContextFactory;
-import org.springframework.batch.core.configuration.support.ApplicationContextJobFactory;
 import org.springframework.batch.core.configuration.support.DefaultJobLoader;
 import org.springframework.batch.core.configuration.support.JobLoader;
 import org.springframework.batch.core.launch.NoSuchJobException;
@@ -25,10 +24,14 @@ public class PrototypeJobLoader implements JobLoader {
 
 	private JobRegistry jobRegistry;
 
-	private Map<ApplicationContextFactory, ConfigurableApplicationContext> contexts = new ConcurrentHashMap<ApplicationContextFactory, ConfigurableApplicationContext>();
+	private Map<ApplicationContextFactory, ConfigurableApplicationContext> contexts 
+		= new ConcurrentHashMap<ApplicationContextFactory, ConfigurableApplicationContext>();
 
-	private Map<ConfigurableApplicationContext, Collection<String>> contextToJobNames = new ConcurrentHashMap<ConfigurableApplicationContext, Collection<String>>();
+	private Map<ConfigurableApplicationContext, Collection<String>> contextToJobNames 
+		= new ConcurrentHashMap<ConfigurableApplicationContext, Collection<String>>();
 
+	private ConfigurableApplicationContext applicationContext;
+	
 	/**
 	 * Default constructor useful for declarative configuration.
 	 */
@@ -97,45 +100,24 @@ public class PrototypeJobLoader implements JobLoader {
 	}
 
 	private Collection<Job> doLoad(ApplicationContextFactory factory, boolean unregister) throws DuplicateJobException {
-
-		Collection<String> jobNamesBefore = jobRegistry.getJobNames();
-		ConfigurableApplicationContext context = factory.createApplicationContext();
-		Collection<String> jobNamesAfter = jobRegistry.getJobNames();
-		// Try to detect auto-registration (e.g. through a bean post processor)
-		boolean autoRegistrationDetected = jobNamesAfter.size() > jobNamesBefore.size();
-
-		Collection<String> jobsRegistered = new HashSet<String>();
-		if (autoRegistrationDetected) {
-			for (String name : jobNamesAfter) {
-				if (!jobNamesBefore.contains(name)) {
-					jobsRegistered.add(name);
-				}
-			}
+		if(null == applicationContext){
+			applicationContext = factory.createApplicationContext();
 		}
-
-		contexts.put(factory, context);
-		String[] names = context.getBeanNamesForType(Job.class);
-
+		contexts.put(factory, this.applicationContext);
+		Collection<String> jobsRegistered = new HashSet<String>();
+		String[] names = this.applicationContext.getBeanNamesForType(Job.class);
 		for (String name : names) {
-
-			if (!autoRegistrationDetected) {
-
-				Job job = (Job) context.getBean(name);
-				String jobName = job.getName();
-
-				// On reload try to unregister first
-				if (unregister) {
-					logger.debug("Unregistering job: " + jobName + " from context: " + context.getDisplayName());
-					jobRegistry.unregister(jobName);
-				}
-
-				logger.debug("Registering job: " + jobName + " from context: " + context.getDisplayName());
-				JobFactory jobFactory = new PrototypeContextJobFactory(jobName, factory);
-				jobRegistry.register(jobFactory);
-				jobsRegistered.add(jobName);
-
+			Job job = (Job) this.applicationContext.getBean(name);
+			String jobName = job.getName();
+			// On reload try to unregister first
+			if (unregister) {
+				logger.debug("Unregistering job: " + jobName + " from context: " + this.applicationContext.getDisplayName());
+				jobRegistry.unregister(jobName);
 			}
-
+			logger.debug("Registering job: " + jobName + " from context: " + this.applicationContext.getDisplayName());
+			JobFactory jobFactory = new PrototypeContextJobFactory(jobName, this.applicationContext);
+			jobRegistry.register(jobFactory);
+			jobsRegistered.add(jobName);
 		}
 
 		Collection<Job> result = new ArrayList<Job>();
@@ -150,7 +132,7 @@ public class PrototypeJobLoader implements JobLoader {
 
 		}
 
-		contextToJobNames.put(context, jobsRegistered);
+		contextToJobNames.put(this.applicationContext, jobsRegistered);
 
 		return result;
 

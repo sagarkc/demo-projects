@@ -12,7 +12,7 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<project.home>D:/SVN_HOME/demo-projects/trunk/spring-batch/xchanging</project.home>
+		<project.home>../../test1</project.home>
 		<reporting.output.directory>${project.home}/reportings</reporting.output.directory>
 		<findbugs.output.directory>${reporting.output.directory}/findbugs</findbugs.output.directory>
 		

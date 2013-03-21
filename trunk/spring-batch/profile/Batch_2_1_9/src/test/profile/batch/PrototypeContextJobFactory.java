@@ -2,14 +2,14 @@ package test.profile.batch;
 
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.configuration.JobFactory;
-import org.springframework.batch.core.configuration.support.ApplicationContextFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
 public class PrototypeContextJobFactory implements JobFactory {
 
 	private final String jobName;
-	private final ApplicationContextFactory applicationContextFactory;
+	private final ConfigurableApplicationContext applicationContext;
+	private Job job;
 	
 	/**
 	 * @param jobName the id of the {@link Job} in the application context to be
@@ -17,8 +17,8 @@ public class PrototypeContextJobFactory implements JobFactory {
 	 * @param applicationContextFactory a factory for an application context
 	 * containing a job with the job name provided
 	 */
-	public PrototypeContextJobFactory(String jobName, ApplicationContextFactory applicationContextFactory) {
-		this.applicationContextFactory = applicationContextFactory;
+	public PrototypeContextJobFactory(String jobName, ConfigurableApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
 		this.jobName = jobName;
 	}
 
@@ -29,9 +29,8 @@ public class PrototypeContextJobFactory implements JobFactory {
 	 * @see org.springframework.batch.core.configuration.JobFactory#createJob()
 	 */
 	public final Job createJob() {
-		System.gc();
-		ConfigurableApplicationContext context = applicationContextFactory.createApplicationContext();
-		return (Job) context.getBean(jobName, Job.class);
+		job = (Job) applicationContext.getBean(jobName, Job.class);
+		return job;
 	}
 	
 	/**
@@ -40,8 +39,7 @@ public class PrototypeContextJobFactory implements JobFactory {
 	 * @see JobFactory#getJobName()
 	 */
 	public String getJobName() {
-		ConfigurableApplicationContext context = applicationContextFactory.createApplicationContext();
-		Job job = (Job) context.getBean(jobName, Job.class);
+		job = (Job) this.applicationContext.getBean(jobName, Job.class);
 		return job.getName();
 	}
 
