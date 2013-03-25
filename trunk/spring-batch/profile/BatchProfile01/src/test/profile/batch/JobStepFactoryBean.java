@@ -9,40 +9,37 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-public class JobStepFactoryBean implements ApplicationContextAware, FactoryBean<TaskletStep>{
+public class JobStepFactoryBean implements ApplicationContextAware, FactoryBean<TaskletStep> {
 
-	private ApplicationContext applicationContext;
-	
-	private String stepName;
-	
-	public JobStepFactoryBean(String stepName) {
-		this.stepName = stepName;
-	}
+    private ApplicationContext applicationContext;
+    private String stepName;
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext)
-			throws BeansException {
-		this.applicationContext = applicationContext;
-	}
-	
-	public TaskletStep getStep(){
-		return this.applicationContext.getBean(stepName, TaskletStep.class);
-	}
+    public JobStepFactoryBean(String stepName) {
+        this.stepName = stepName;
+    }
 
-	@Override
-	public TaskletStep getObject() throws Exception {
-		return getStep();
-	}
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext)
+            throws BeansException {
+        this.applicationContext = applicationContext;
+    }
 
-	@Override
-	public Class<?> getObjectType() {
-		return TaskletStep.class;
-	}
+    public TaskletStep getStep() {
+        return (TaskletStep) this.applicationContext.getBean(stepName);
+    }
 
-	@Override
-	public boolean isSingleton() {
-		return false;
-	}
-	
-	 
+    @Override
+    public TaskletStep getObject() throws Exception {
+        return getStep();
+    }
+
+    @Override
+    public Class<?> getObjectType() {
+        return TaskletStep.class;
+    }
+
+    @Override
+    public boolean isSingleton() {
+        return false;
+    }
 }
