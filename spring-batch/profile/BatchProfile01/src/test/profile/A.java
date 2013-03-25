@@ -34,7 +34,10 @@ public class A implements InitializingBean, ItemReader<String> {
 	public String read() throws Exception, UnexpectedInputException,
 			ParseException {
 
-		
-		return "Hello from A...";
+		if (!hasRun) {
+			hasRun = true;
+			return "Hello from A...";
+		}
+		return null;
 	}
 }
