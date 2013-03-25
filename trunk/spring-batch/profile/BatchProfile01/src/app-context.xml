@@ -44,7 +44,7 @@
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_02" />
-					<property name="cronExpression" value="0 0/5 * * * ?" />
+					<property name="cronExpression" value="0 0/3 * * * ?" />
 				</bean> 
 			</list>
 		</property>
@@ -104,7 +104,7 @@
 	<bean id="simpleJob" class="org.springframework.batch.core.job.SimpleJob"
 		abstract="true" scope="prototype">
 		<property name="jobRepository" ref="jobRepository" />
-		<property name="restartable" value="true" />
+		<property name="restartable" value="false" />
 	</bean>
 	<bean id="simpleStep"
 		class="org.springframework.batch.core.step.item.SimpleStepFactoryBean"
@@ -113,6 +113,7 @@
 		<property name="jobRepository" ref="jobRepository" />
 		<property name="startLimit" value="100" />
 		<property name="commitInterval" value="1" />
+                <property name="allowStartIfComplete" value="false" />
 	</bean>
 	<bean id="jobDetail_Test_Hello_01" class="org.springframework.scheduling.quartz.JobDetailBean">
 		<property name="jobClass" value="test.profile.batch.JobLauncherDetails" />
