@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<!-- Default Main Template -->
+	<definition name="baseTemplate" template="/templates/base-layout.jsp">
+		<put-attribute name="title" value=":: Spring MVC | MySql :: " type="string" />
+		<put-attribute name="header" value="/pages/common/header.jsp"/>
+		<put-attribute name="baseToolbar" value="/pages/customer/tools.jsp"/>
+		<put-attribute name="leftNavigator" value="/pages/customer/actions.jsp"/>
+		<put-attribute name="pageContent" value=""/>
+		<put-attribute name="footer" value="/pages/common/footer.jsp"/>
+	</definition>
+	
+	<definition name="home-page-view" extends="baseTemplate">
+		<put-attribute name="pageContent" value="/pages/customer/list.jsp"/>
+	</definition>
+
+	<definition name="add-customer-view" extends="baseTemplate">
+		<put-attribute name="pageContent" value="/pages/customer/add.jsp"/>
+	</definition>
+	
+	<definition name="update-customer-view" extends="baseTemplate">
+		<put-attribute name="pageContent" value="/pages/customer/update.jsp"/>
+	</definition>
+	
+	<definition name="search-result-view" extends="baseTemplate">
+		<put-attribute name="pageContent" value="/pages/customer/search-result.jsp"/>
+	</definition>
+
+</tiles-definitions>
