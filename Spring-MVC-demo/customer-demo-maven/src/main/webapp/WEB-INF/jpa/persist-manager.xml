@@ -5,6 +5,7 @@
              version="1.0">
 
 	<persistence-unit name="customer.persistence.uinit" transaction-type="RESOURCE_LOCAL">
+		<class>com.gsi.demo.customers.model.Customer</class>
 	</persistence-unit>
 
 </persistence>
