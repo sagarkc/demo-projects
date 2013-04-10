@@ -1,0 +1,277 @@
+/* 
+    Document   : layout.css
+    Created on : Apr 10, 2013, 2:51:24 PM
+    Author     : sabujdas
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body {
+    color: #333333; 
+    padding:0px; 
+    margin:0px;
+    font-family: Trebuchet MS, Tahoma;
+    height: 100%;
+}
+
+body.blue-bg {
+    /*    background-color:#eeeeee;
+        background-image:url('../images/body-bg.png');
+        background-repeat:repeat-x;*/
+    background: -moz-linear-gradient(top,  rgba(30,87,153,1) 0%, rgba(125,185,232,0) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(100%,rgba(125,185,232,0))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#007db9e8',GradientType=0 ); /* IE6-9 */
+    background-repeat: repeat-x;
+}
+
+div { 
+    display: block;
+}
+
+h1 {
+    font-size: 1.6em;
+    color: #3D3D3D;
+    font-weight : normal;
+    padding:0px;
+    margin:0px 0px 10px 0px;
+    text-align:left;
+}
+
+h1.light {
+    padding:0px;
+    margin:0px 0px 10px 0px;
+    text-align:left;
+    color:#868585;
+}
+h1 A:link:hover, h1 A:visited:hover  {
+    font-weight:bold;
+}
+
+h2 {
+    font-size: 1.45em;
+    color: #ffffff;  
+    font-weight : normal; 
+    padding:5px 0px 2px 0px;
+    margin:0px 0px 5px 0px;
+    border-bottom:1px solid #D1d1d1; 
+    text-align:left; 
+    line-height:105% ;
+}
+
+h2 tt { color: #EE6B00; }
+h1 tt { color: #D20106; }
+h3 tt { color: #2D3F8E; }
+
+h3 {
+    font-size: 1.3em;color: #2D3F8E; font-weight : normal; padding:10px 0px 3px 0px;margin:0px;
+    text-align:left;
+}
+h4 {
+    font-size: 1.15em;color: #3D3D3D; font-weight : bold; padding:10px 0px 3px 0px;margin:0px; text-align:left;
+}
+h5 {
+    font-size: 1.15em;color: #1E2A60; font-weight : bold; padding:10px 0px 3px 0px;margin:0px;
+    color: #5E5966; text-align:left;
+}
+
+A:link, A:visited {
+    color: #23569d; font-weight : normal; text-decoration: none;
+}
+
+A:hover  {
+    color: #23569d; font-weight : normal; text-decoration : underline;
+}
+
+.nav A:link {
+    color: #23569d;
+}
+
+
+
+p {
+    margin:0px 0px 0px 0px;
+    padding:0px 0px 10px 0px;
+}
+
+pre {
+    background-color:#FFF8E4;
+    padding:10px;
+    font-size: 1.3em;
+    _font-size: 1.2em;
+}
+pre,samp,code,tt {
+    font-family: "Courier New", monospace;
+    font-size:1.1em;
+    color:black;
+}
+
+ol li {
+    margin-bottom:9px;margin-top:0px;
+    list-style: decimal;
+}
+
+ul li {
+    margin-bottom:10px;margin-top:0px;
+    list-style: disc;
+}
+
+ul {
+    padding-top:0px;
+    margin: 0px;
+    _margin-left: 15px;
+}
+ul li ul {margin-top:8px;}
+li p { margin:0px;padding:0px 0px 3px 0px;}
+/* TOC list styles */
+ul.toc {margin-bottom:15px;}
+ul.toc > ul {margin-bottom:0px;}
+ul.toc li {padding-top:0px; padding-bottom:0px; margin:0px 0px 4px 15px}
+#nav li {list-style: none;}
+img.box {
+    /*border: 1px solid #CCCCCC;} */
+    border: 1px solid #BBBBBB;}
+img.left {
+    margin-left:  0px;
+    margin-right: 	10px;
+    margin-bottom:  10px;
+    float:left;}
+img.right {
+    margin-right: 0px;
+    margin-left:  	10px;
+    margin-bottom:  10px;
+    float:right; }
+.margin-around {margin: 10px;}
+
+/* page content style */
+
+#page-wrap{
+    width:100%;
+
+    text-align: center;
+}
+
+#header-wrap{
+    height:43px;
+    /*    background-color: #367C2B;*/
+    color: #feffea;
+    padding:0px 10px 0px 10px;
+    margin:0px;
+    text-align: center;
+    font-size: 1.1em;
+
+/*    background: rgb(0,130,65);  Old browsers 
+    background: -moz-linear-gradient(top,  rgba(0,130,65,1) 0%, rgba(141,188,155,1) 100%);  FF3.6+ 
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,130,65,1)), color-stop(100%,rgba(141,188,155,1)));  Chrome,Safari4+ 
+    background: -webkit-linear-gradient(top,  rgba(0,130,65,1) 0%,rgba(141,188,155,1) 100%);  Chrome10+,Safari5.1+ 
+    background: -o-linear-gradient(top,  rgba(0,130,65,1) 0%,rgba(141,188,155,1) 100%);  Opera 11.10+ 
+    background: -ms-linear-gradient(top,  rgba(0,130,65,1) 0%,rgba(141,188,155,1) 100%);  IE10+ 
+    background: linear-gradient(to bottom,  rgba(0,130,65,1) 0%,rgba(141,188,155,1) 100%);  W3C 
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#008241', endColorstr='#8dbc9b',GradientType=0 );  IE6-9 */
+
+    background-image: url('../images/wood.jpg');
+    background-repeat: repeat-x;
+}
+
+#header-wrap h1{
+    color: #fafadf;
+}
+#header-wrap h2{
+    border: none;
+}
+#header-wrap h5{
+    border: none;
+    text-align: right;
+    color: #6eac2c;
+}
+
+#content-wrap {
+    width: 90%;
+    min-width: 911px;
+    background-color: white;
+    min-height: 250px;
+    border-color: #a7a0a7;
+    border-left: 1px solid #9ba0a1;
+    border-right: 1px solid #9ba0a1;
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#footer-wrap {
+    border-top: 1px solid #a7a0a7; 
+    height:35px;
+    font-size: 0.7em;
+    color: #e6f6fe;
+    bottom: 0px;
+
+/*    background: rgb(69,72,77);  Old browsers 
+    background: -moz-linear-gradient(top,  rgba(69,72,77,1) 0%, rgba(0,0,0,1) 100%);  FF3.6+ 
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(69,72,77,1)), color-stop(100%,rgba(0,0,0,1)));  Chrome,Safari4+ 
+    background: -webkit-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);  Chrome10+,Safari5.1+ 
+    background: -o-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);  Opera 11.10+ 
+    background: -ms-linear-gradient(top,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);  IE10+ 
+    background: linear-gradient(to bottom,  rgba(69,72,77,1) 0%,rgba(0,0,0,1) 100%);  W3C 
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#45484d', endColorstr='#000000',GradientType=0 );  IE6-9 */
+
+background: rgb(174,188,191); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(174,188,191,1) 0%, rgba(10,14,10,1) 5%, rgba(110,119,116,1) 5%, rgba(110,119,116,1) 9%, rgba(10,14,10,1) 100%, rgba(10,8,9,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(174,188,191,1)), color-stop(5%,rgba(10,14,10,1)), color-stop(5%,rgba(110,119,116,1)), color-stop(9%,rgba(110,119,116,1)), color-stop(100%,rgba(10,14,10,1)), color-stop(100%,rgba(10,8,9,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(174,188,191,1) 0%,rgba(10,14,10,1) 5%,rgba(110,119,116,1) 5%,rgba(110,119,116,1) 9%,rgba(10,14,10,1) 100%,rgba(10,8,9,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(174,188,191,1) 0%,rgba(10,14,10,1) 5%,rgba(110,119,116,1) 5%,rgba(110,119,116,1) 9%,rgba(10,14,10,1) 100%,rgba(10,8,9,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(174,188,191,1) 0%,rgba(10,14,10,1) 5%,rgba(110,119,116,1) 5%,rgba(110,119,116,1) 9%,rgba(10,14,10,1) 100%,rgba(10,8,9,1) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(174,188,191,1) 0%,rgba(10,14,10,1) 5%,rgba(110,119,116,1) 5%,rgba(110,119,116,1) 9%,rgba(10,14,10,1) 100%,rgba(10,8,9,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#aebcbf', endColorstr='#0a0809',GradientType=0 ); /* IE6-9 */
+
+
+    background-repeat: repeat-x;
+}
+#footer-wrap li a:link, #footer-wrap li a:visited, #footer-wrap li a:hover {
+    color:#fffeff;
+    text-decoration:none;
+}
+#footer-wrap ul {
+    margin:13px 0px 0px 45px;
+    padding: 0px 0px;
+}
+#footer-wrap li {
+    list-style: none;
+    float: left;
+    margin:0px;
+    padding:7px 20px 0px 0px;
+}
+
+
+#header-title{
+    width: 280px;
+    max-width: 280px;
+    float: left;
+    text-align: left;
+    height: 40px;
+    max-height: 40px;
+    margin-top: 5px;
+}
+#header-image{
+    width: 40px;
+    max-width: 40px;
+    float: left;
+    text-align: left;
+    height: 40px;
+    max-height: 40px;
+}
+
+#header-name{
+    width: auto;
+    height: auto;
+    text-align: right;
+}
+
+#header-name-text{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 0.8em;
+    color: #6eac2c;
+}
