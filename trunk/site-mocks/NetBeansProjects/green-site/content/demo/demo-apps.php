@@ -3,8 +3,8 @@
 <html>
     <head>
         <title>-:: GreenSource Innovation ::- DEMO</title>
-        <?php 
-            $selected_tab = 'DEMO';
+        <?php
+        $selected_tab = 'DEMO';
         ?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -16,34 +16,35 @@
     </head>
     <body >
         <div class="header">
-            <?php 
-                include '../../layout/header.php';
+            <?php
+            include '../../layout/header.php';
             ?>
         </div>
 
         <div class="body">
-            <div class="home">
-                <div class="blog">
+            <div class="gallery">
+                <div>
+                    <h2>Demo Applications</h2>
                     <div>
-                        <div>
-                            <a href="content/demo/demo-apps.php">Demo Applications</a>
-                            <p>
-                                This is a demo application. It is built on Spring MVC, JPA, Hibernate and MySql database.
-                            </p>
-                        </div>
 
                     </div>
-                    <div>
-                        <div>
-                            <a href="content/product/products.php" >All Products</a>
-                            <p>
-                                This is a demo application. It is built on Spring MVC, JPA, Hibernate and MySql database.
-                            </p>
-                        </div>
+                    <div class="paging">
+                        <span>Page 1 of 1</span>
 
                     </div>
-                    
                 </div>
+
+                <ul>
+                    <li>
+                        <a href="spring-mvc/Spring-mvc-details.php"><img src="spring-mvc/Spring_mvc_258x151.png" alt=""></a>
+                        <h4><a href="spring-mvc/Spring-mvc-details.php">Spring - MVC</a></h4>
+                        <p>
+                            This website template has been designed by Free Website Templates for you, for free.
+                        </p>
+                    </li>
+                    
+                    
+                </ul>
             </div>
         </div>
 

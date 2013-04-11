@@ -51,7 +51,7 @@
                         <div>
                             <a href="content/product/products.php" >All Products</a>
                             <p>
-                                This is a demo application. It is built on Spring MVC, JPA, Hibernate and MySql database.
+                                These are all free products/tools built on java.
                             </p>
                         </div>
 

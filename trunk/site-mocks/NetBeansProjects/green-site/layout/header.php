@@ -1,6 +1,6 @@
 <?php ?>
 <div>
-    <a href="/index.html" id="logo-image">
+    <a href="/index.php" id="logo-image">
         <img src="/assets/images/gsi-logo-48x48.png" alt="logo">
     </a>
     <a href="/index.html" id="logo-text">        
@@ -14,11 +14,11 @@
         <ul>
             <?php if($selected_tab == 'HOME'){ ?>
             <li class="selected">
-                <a href="index.html">Home</a>
+                <a href="/index.php">Home</a>
             </li>
             <?php } else {?>
             <li >
-                <a href="index.html">Home</a>
+                <a href="/index.php">Home</a>
             </li>
              <?php } ?>
             
@@ -40,6 +40,16 @@
             <?php } else {?>
             <li >
                 <a href="products.html">Our Products</a>
+            </li>
+             <?php } ?>
+            
+            <?php if($selected_tab == 'DEMO'){ ?>
+            <li class="selected">
+                <a href="/content/demo/demo-apps.php">Demo</a>
+            </li>
+            <?php } else {?>
+            <li >
+                <a href="/content/demo/demo-apps.php">Demo</a>
             </li>
              <?php } ?>
             
