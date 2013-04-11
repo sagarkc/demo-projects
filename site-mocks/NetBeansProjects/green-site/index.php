@@ -32,7 +32,7 @@
                         </p>
                         <h2>Plant A Tree. 
                             <br> Grow A Tree.
-                            <br> <br>Plant a Green Idea !!! 
+                            <br> <br><font style="color: #0f9a37;">Plant a Green Idea !!! </font><br/>
                             <br> <span>Save The Future.</span></h2>
                     </div>
                 </div>
