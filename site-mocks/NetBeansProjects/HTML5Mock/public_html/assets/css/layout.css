@@ -33,7 +33,7 @@ body.blue-bg {
 }
 
 div { 
-    
+    display: block;
 }
 
 h1 {
