@@ -4,22 +4,22 @@
 <div>
     <ul>
         <li>
-            <a href="index.html">Home</a>
+            <a href="/index.php">Home</a>
         </li>
         <li>
-            <a href="about.html">About</a>
+            <a href="#">About</a>
         </li>
         <li>
-            <a href="programs.html">Our Programs</a>
+            <a href="/content/product/products.php">Products</a>
         </li>
         <li>
-            <a href="gallery.html">Gallery</a>
+            <a href="/content/demo/demo-apps.php">Demo</a>
         </li>
         <li>
-            <a href="contact.html">Contact</a>
+            <a href="#">Contact</a>
         </li>
         <li>
-            <a href="blog.html">Blog</a>
+            <a href="#">Blog</a>
         </li>
     </ul>
     <p>

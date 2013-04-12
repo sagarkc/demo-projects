@@ -3,14 +3,14 @@
     <a href="/index.php" id="logo-image">
         <img src="/assets/images/gsi-logo-48x48.png" alt="logo">
     </a>
-    <a href="/index.html" id="logo-text">        
+    <a href="/index.php" id="logo-text">        
         <img src="/assets/images/gsi-text-logo.png" alt="logo-text">
     </a>
-    <a href="/index.html" id="logo-msg">        
+    <a href="/index.php" id="logo-msg">        
         Green Ideas of Invention
     </a>
     <div>
-        <a href="donate.html">donate</a>
+        <a href="/index.php">donate</a>
         <ul>
             <?php if($selected_tab == 'HOME'){ ?>
             <li class="selected">
@@ -25,21 +25,21 @@
             
             <?php if($selected_tab == 'ABOUT'){ ?>
             <li class="selected">
-                <a href="about.html">About</a>
+                <a href="#">About</a>
             </li>
             <?php } else {?>
             <li >
-                <a href="about.html">About</a>
+                <a href="#">About</a>
             </li>
              <?php } ?>
             
             <?php if($selected_tab == 'PRODUCTS'){ ?>
             <li class="selected">
-                <a href="products.html">Our Products</a>
+                <a href="/content/product/products.php">Products</a>
             </li>
             <?php } else {?>
             <li >
-                <a href="products.html">Our Products</a>
+                <a href="/content/product/products.php">Products</a>
             </li>
              <?php } ?>
             
@@ -55,21 +55,21 @@
             
             <?php if($selected_tab == 'CONTACT'){ ?>
             <li class="selected">
-                <a href="contact.html">Contact</a>
+                <a href="#">Contact</a>
             </li>
             <?php } else {?>
             <li >
-                <a href="contact.html">Contact</a>
+                <a href="#">Contact</a>
             </li>
              <?php } ?>
             
             <?php if($selected_tab == 'BLOG'){ ?>
             <li class="selected">
-                <a href="blog.html">Blog</a>
+                <a href="#">Blog</a>
             </li>
             <?php } else {?>
             <li >
-                <a href="blog.html">Blog</a>
+                <a href="#">Blog</a>
             </li>
              <?php } ?>
             
