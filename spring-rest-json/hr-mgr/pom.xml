@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>cm.gs.demo.hr</groupId>
+  <artifactId>hr-mgr</artifactId>
+  <version>${release.version}</version>
+  <packaging>pom</packaging>
+
+  <name>hr-mgr</name>
+  <inceptionYear>2013</inceptionYear>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<release.version>1.0</release.version>
+	<maven.test.skip>true</maven.test.skip>
+	<downloadSources>true</downloadSources>
+  </properties>
+
+  <dependencies>
+	<dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <locales>en,fr</locales>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <modules>
+    <module>hr-mgr-dao</module>
+    <module>hr-mgr-service</module>
+    <module>hr-mgr-web</module>
+    <module>hr-mgr-model</module>
+    <module>hr-mgr-common</module>
+  </modules>
+</project>

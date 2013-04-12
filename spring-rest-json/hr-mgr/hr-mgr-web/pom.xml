@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>cm.gs.demo.hr</groupId>
+    <artifactId>hr-mgr</artifactId>
+    <version>${release.version}</version>
+  </parent>
+  <groupId>cm.gs.demo.hr</groupId>
+  <artifactId>hr-mgr-web</artifactId>
+  <version>${release.version}</version>
+  <packaging>war</packaging>
+  <name>hr-mgr-web : Webapp</name>
+
+  <dependencies>
+	<dependency>
+      <groupId>cm.gs.demo.hr</groupId>
+      <artifactId>hr-mgr-common</artifactId>
+      <version>${release.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>cm.gs.demo.hr</groupId>
+      <artifactId>hr-mgr-model</artifactId>
+      <version>${release.version}</version>
+    </dependency>
+	<dependency>
+      <groupId>cm.gs.demo.hr</groupId>
+      <artifactId>hr-mgr-dao</artifactId>
+      <version>${release.version}</version>
+    </dependency>
+	<dependency>
+      <groupId>cm.gs.demo.hr</groupId>
+      <artifactId>hr-mgr-service</artifactId>
+      <version>${release.version}</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>hr-mgr</finalName>
+  </build>
+</project>
