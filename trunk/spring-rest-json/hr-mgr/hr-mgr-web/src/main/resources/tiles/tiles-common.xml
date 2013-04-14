@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<!-- Default Main Template -->
+	<definition name="baseTemplate" template="/templates/base-layout.jsp">
+		<put-attribute name="title" value=":: Spring MVC | REST | JSON :: " type="string" />
+		<put-attribute name="header" value="/pages/common/header.jsp"/>
+		<put-attribute name="actions" value=""/>
+		<put-attribute name="pageContent" value=""/>
+		<put-attribute name="footer" value="/pages/common/footer.jsp"/>
+	</definition>
+	
+	<definition name="home-page-view" extends="baseTemplate">
+		<put-attribute name="pageContent" value="/pages/hr/emp-list.jsp"/>
+	</definition>
+	
+	<definition name="dept-home-view" extends="baseTemplate">
+		<put-attribute name="actions" value="/pages/hr/dept-actions.jsp"/>
+		<put-attribute name="pageContent" value="/pages/hr/dept-list.jsp"/>
+	</definition>
+
+	
+	<definition name="emp-home-view" extends="baseTemplate">
+		<put-attribute name="actions" value="/pages/hr/emp-actions.jsp"/>
+		<put-attribute name="pageContent" value="/pages/hr/emp-list.jsp"/>
+	</definition>
+	
+	<definition name="search-page-view" extends="baseTemplate">
+		<put-attribute name="pageContent" value="/pages/hr/search-home.jsp"/>
+	</definition>
+
+	
+	<definition name="dept-add-view" extends="baseTemplate">
+		<put-attribute name="actions" value="/pages/hr/dept-actions.jsp"/>
+		<put-attribute name="pageContent" value="/pages/hr/dept-add.jsp"/>
+	</definition>
+
+</tiles-definitions>
