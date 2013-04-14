@@ -5,8 +5,8 @@
              version="1.0">
 
 	<persistence-unit name="hr.persistence.uinit" transaction-type="RESOURCE_LOCAL">
-		<class>cm.gs.demo.hr.model.entity.Employee</class>
-		<class>cm.gs.demo.hr.model.entity.Department</class>
+		<class>com.gs.demo.hr.model.entity.Employee</class>
+		<class>com.gs.demo.hr.model.entity.Department</class>
 	</persistence-unit>
 
 </persistence>

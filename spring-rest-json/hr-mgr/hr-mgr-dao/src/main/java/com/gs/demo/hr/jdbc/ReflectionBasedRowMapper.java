@@ -16,6 +16,8 @@ import java.util.Map;
 import org.springframework.beans.BeanUtils;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.gs.demo.hr.common.annotations.ResultSetColumn;
+
 
 
 /**

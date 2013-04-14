@@ -4,6 +4,7 @@
  */
 package com.gs.demo.hr.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,11 +54,29 @@ public class DepartmentServiceImpl implements DepartmentService{
 		return null;
 	}
 
+	
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
 	public PaginationResultVo<DepartmentVo> getPaginatedDepartments(
 			PaginationVo paginationVo) {
-		// TODO Auto-generated method stub
-		return null;
+		if(null == paginationVo){
+			return new PaginationResultVo<DepartmentVo>();
+		}
+		long limitFrom = (paginationVo.getPageNumber() - 1 ) * paginationVo.getResultPerPage();
+		long rowCount = paginationVo.getResultPerPage() ;
+		List<Department> deptList = departmentDao.getPagedDepertments(limitFrom, rowCount);
+		if(null == deptList){
+			deptList = new ArrayList<Department>(0);
+		}
+		
+		List<DepartmentVo> vos = DepartmentConverter.convertToVos(deptList);
+		
+		PaginationResultVo<DepartmentVo> paginationResultVo = new PaginationResultVo<DepartmentVo>();
+		paginationResultVo.setTotalRecords(departmentDao.getRowCount());
+		paginationResultVo.setPaginationVo(paginationVo);
+		paginationResultVo.setResult(vos);
+		
+		return paginationResultVo;
 	}
 
 	@Override

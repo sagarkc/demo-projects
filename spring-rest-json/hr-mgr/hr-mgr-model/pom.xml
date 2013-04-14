@@ -16,7 +16,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>cm.gs.demo.hr</groupId>
+			<groupId>com.gs.demo.hr</groupId>
 			<artifactId>hr-mgr-common</artifactId>
 			<version>${release.version}</version>
 		</dependency>
