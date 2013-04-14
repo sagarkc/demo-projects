@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gs.demo.hr.model.vo.DepartmentVo;
+import com.gs.demo.hr.model.vo.PaginationResultVo;
 import com.gs.demo.hr.model.vo.PaginationVo;
+import com.gs.demo.hr.service.DepartmentService;
 
 
 /**
@@ -39,7 +41,18 @@ public class DepartmentController {
 	@Autowired
 	private JsonOutputMapper flexigridJsonOutputMapper;
 	
+	@Autowired 
+	private DepartmentService departmentService;
 	
+	
+	public DepartmentService getDepartmentService() {
+		return departmentService;
+	}
+
+	public void setDepartmentService(DepartmentService departmentService) {
+		this.departmentService = departmentService;
+	}
+
 	public JsonOutputMapper getFlexigridJsonOutputMapper() {
 		return flexigridJsonOutputMapper;
 	}
@@ -68,13 +81,16 @@ public class DepartmentController {
 		PaginationVo pagination = new PaginationVo(pageNumber, resultPerPage, sortName, order, searchType, searchKey);
 		
 		
-		int fromIndex = (resultPerPage*pageNumber) - resultPerPage;
-		int toIndex = Math.min((resultPerPage*pageNumber), allDeptlist.size());
-		List<DepartmentVo> list = allDeptlist.subList(fromIndex, toIndex);
+		PaginationResultVo<DepartmentVo> paginationResultVo = departmentService.getPaginatedDepartments(pagination);
+		
 		
 		response.setContentType("application/json");
 		
-		FlexigridJsonCollection<DepartmentVo> jsonCollection = new FlexigridJsonCollection<DepartmentVo>(pageNumber, allDeptlist.size(), list);
+		FlexigridJsonCollection<DepartmentVo> jsonCollection 
+			= new FlexigridJsonCollection<DepartmentVo>(
+					pagination.getPageNumber(), 
+					paginationResultVo.getTotalRecords(), 
+					paginationResultVo.getResult());
 		
 		try {
 			response.getWriter().append(getFlexigridJsonOutputMapper().getJonOutput(jsonCollection));

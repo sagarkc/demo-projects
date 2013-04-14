@@ -10,7 +10,7 @@
 
 	<bean id="jqueryMessageContext" class="net.sf.jquery.tags.common.MessageContext" factory-method="getContext"/>
 	
-	<bean id="messageResolverService" class="cm.gs.demo.hr.web.service.MessageResolverServiceImpl" />
+	<bean id="messageResolverService" class="com.gs.demo.hr.web.service.MessageResolverServiceImpl" />
 	<bean id="jsonizerCommonContext" class="net.sf.jsonizer.core.JsonizerCommonContext" factory-method="getContext">
 		<property name="messageResolverService" ref="messageResolverService" />
 	</bean>
@@ -70,7 +70,7 @@
 						<bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
 							<property name="classesToBeBound">
 								<list>
-									<value>cm.gs.demo.hr.model.vo.DepartmentVo</value>
+									<value>com.gs.demo.hr.model.vo.DepartmentVo</value>
 								</list>
 							</property>
 						</bean>

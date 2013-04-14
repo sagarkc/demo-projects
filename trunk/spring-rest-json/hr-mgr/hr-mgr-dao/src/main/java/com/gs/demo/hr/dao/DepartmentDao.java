@@ -15,9 +15,13 @@ import com.gs.demo.hr.model.entity.Department;
  */
 public interface DepartmentDao {
 
+	public Long getRowCount();
+	
+	public Long getRowCount(String where);
+	
 	public List<Department> getAllDepertments();
 	
-	public List<Department> getPagedDepertments(long limitFrom, long limitTo);
+	public List<Department> getPagedDepertments(long limitFrom, long rowCount);
 	
 	public Long saveDepartment(Department department);
 	

@@ -19,6 +19,7 @@ import javax.persistence.Table;
 
 import com.gs.demo.hr.common.annotations.Conversion;
 import com.gs.demo.hr.common.annotations.FieldMapper;
+import com.gs.demo.hr.common.annotations.ResultSetColumn;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
@@ -40,7 +41,7 @@ public class Department {
 	private Set<Employee> employees = new HashSet<Employee>();
 
 	@FieldMapper(targetFieldName="id")
-	@resul
+	@ResultSetColumn(propertyName="id", mappedColumnName="DEPT_ID")
 	public Long getId() {
 		return id;
 	}
@@ -50,6 +51,7 @@ public class Department {
 	}
 
 	@FieldMapper(targetFieldName="name")
+	@ResultSetColumn(propertyName="name", mappedColumnName="DEPT_NAME")
 	public String getName() {
 		return name;
 	}
