@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_0.xsd">
+	<tlib-version>1.0</tlib-version>
+	
+	<short-name>Flexigrid : jQuery UI - Tag Library</short-name>
+	<uri>/net/sf/jquery/tags/flexigrid.tld</uri>
+	
+	
+	
+	<tag>
+		<name>flexigrid</name>
+		<tag-class>net.sf.jquery.tags.ui.flexigrid.view.FlexigridViewTag</tag-class>
+		<body-content>jsp</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+			<description>ID of the generated html tag</description>
+		</attribute>
+		
+		<attribute>
+			<name>url</name>
+			<required>true</required>
+			<description>target url</description>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>dataType</name>
+			<required>true</required>
+			<description>dataType</description>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sortname</name>
+			<required>false</required>
+			<description>sortname</description>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sortorder</name>
+			<required>false</required>
+			<description>sortorder</description>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>usepager</name>
+			<required>false</required>
+			<description>usepager</description>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>singleSelect</name>
+			<required>false</required>
+			<description>singleSelect</description>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<description>title</description>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>useRowPerPage</name>
+			<required>false</required>
+			<description>use row per page</description>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>rowPerPage</name>
+			<required>false</required>
+			<description>rp</description>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showTableToggleBtn</name>
+			<required>false</required>
+			<description>showTableToggleBtn</description>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<description>width</description>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+			<description>height</description>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+	</tag>
+	
+	<tag>
+		<name>column</name>
+		<tag-class>net.sf.jquery.tags.ui.flexigrid.view.FlexigridColumnViewTag</tag-class>
+		<body-content>jsp</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+		<scope>NESTED</scope>
+		<attribute>
+			<name>display</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>sortable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>align</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+	<tag>
+		<name>search</name>
+		<tag-class>net.sf.jquery.tags.ui.flexigrid.view.FlexigridSearchViewTag</tag-class>
+		<body-content>jsp</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+		<scope>NESTED</scope>
+		<attribute>
+			<name>display</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>isdefault</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
+</taglib>
