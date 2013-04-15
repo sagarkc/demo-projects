@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_0.xsd">
+	<tlib-version>1.0</tlib-version>
+	
+	<short-name>Datatable : jQuery UI - Tag Library</short-name>
+	<uri>/net/sf/jquery/tags/datatable.tld</uri>
+
+	<!-- <tag>
+		<name>jquery-datatable</name>
+		<tag-class>net.sf.jquery.tags.ui.datatable.DataTableViewTag</tag-class>
+		<body-content>jsp</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+		<attribute>
+			<name>htmlTagName</name>
+			<required>true</required>
+			<description>This value represents the target HTML tag name. This is a mandetory attribute.</description>
+		</attribute>
+		<attribute>
+			<name>source</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>This value collection of menus.</description>
+		</attribute>
+	</tag> -->
+
+</taglib>
