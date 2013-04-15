@@ -39,10 +39,10 @@ public class PaginationVo {
 			String order, String searchType, String searchKey) {
 		this.pageNumber = pageNumber;
 		this.resultPerPage = resultPerPage;
-		this.sortName = sortName;
-		this.order = order;
-		this.searchType = searchType;
-		this.searchKey = searchKey;
+		this.sortName = (null != sortName && !"".equals(sortName.trim())) ? sortName : null;
+		this.order = (null != order && !"".equals(order.trim())) ? order : null;
+		this.searchType = (null != searchType && !"".equals(searchType.trim())) ? searchType : null;
+		this.searchKey = (null != searchKey && !"".equals(searchKey.trim())) ? "'"+searchKey+"'" : null;
 	}
 
 

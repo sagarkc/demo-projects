@@ -64,7 +64,19 @@ public class DepartmentServiceImpl implements DepartmentService{
 		}
 		long limitFrom = (paginationVo.getPageNumber() - 1 ) * paginationVo.getResultPerPage();
 		long rowCount = paginationVo.getResultPerPage() ;
-		List<Department> deptList = departmentDao.getPagedDepertments(limitFrom, rowCount);
+		
+		List<Department> deptList = new ArrayList<Department>();
+		if(null != paginationVo.getSearchType() && null != paginationVo.getSearchKey()){
+			deptList = departmentDao.getPagedDepertments(
+					limitFrom, rowCount,
+					paginationVo.getSearchType() + " = " + paginationVo.getSearchKey(),
+					paginationVo.getSortName() + " " + paginationVo.getOrder()
+				);
+		} else {
+			deptList = departmentDao.getPagedDepertments(limitFrom, rowCount, 
+					paginationVo.getSortName() + " " + paginationVo.getOrder());
+		}
+		
 		if(null == deptList){
 			deptList = new ArrayList<Department>(0);
 		}

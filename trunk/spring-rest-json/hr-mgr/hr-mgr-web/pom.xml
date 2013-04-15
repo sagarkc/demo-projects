@@ -36,9 +36,9 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>com.gs.demo.hr</groupId>
+			<groupId>net.sf.gsi.jquery</groupId>
 			<artifactId>jquery-tags</artifactId>
-			<version>${release.version}</version>
+			<version>1.0</version>
 		</dependency>
 		
 		<dependency>

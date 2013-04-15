@@ -17,7 +17,7 @@
 <jquery-flexigrid:flexigrid id="departmentTable"
 	title="" 
 	url="department/list.htm" dataType="json"
-	sortname="userId" sortorder="asc"
+	sortname="id" sortorder="asc"
 	usepager="true" singleSelect="true"
 	useRowPerPage="true" rowPerPage="15"
 	showTableToggleBtn="true"

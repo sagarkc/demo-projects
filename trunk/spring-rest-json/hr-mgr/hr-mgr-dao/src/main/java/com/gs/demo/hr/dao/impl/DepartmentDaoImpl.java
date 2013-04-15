@@ -85,6 +85,41 @@ public class DepartmentDaoImpl extends HRCommonDaoImpl<Department, Long> impleme
 		return list;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.gs.demo.hr.dao.DepartmentDao#getPagedDepertments(long, long, java.lang.String)
+	 */
+	@Override
+	public List<Department> getPagedDepertments(long limitFrom, long rowCount,
+			String order) {
+		String sql = "select d from Department d order by d."+order;
+		
+		List<Department> list = 
+				getEntityManager().createQuery(sql)
+		         .setFirstResult((int)limitFrom) // offset
+		         .setMaxResults((int)rowCount) // limit
+		         .getResultList();
+		
+		return list;
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.gs.demo.hr.dao.DepartmentDao#getPagedDepertments(long, long, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<Department> getPagedDepertments(long limitFrom, long rowCount,
+			String where, String order) {
+		String sql = "select d from Department d where d." 
+			+ where + " order by d." + order;
+		
+		List<Department> list = 
+				getEntityManager().createQuery(sql)
+		         .setFirstResult((int)limitFrom) // offset
+		         .setMaxResults((int)rowCount) // limit
+		         .getResultList();
+		
+		return list;
+	}
+	
 	@Override
 	public Long saveDepartment(Department department) {
 		// TODO Auto-generated method stub

@@ -25,11 +25,5 @@ public class HomeController {
 		return "search-page-view";
 	}
 	
-	@RequestMapping(value="/employee", method=RequestMethod.GET)
-	public String employee(){
-		return "emp-home-view";
-	}
-	
-	
 	
 }
