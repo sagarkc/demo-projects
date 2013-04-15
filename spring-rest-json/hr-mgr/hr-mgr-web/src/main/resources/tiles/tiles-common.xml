@@ -38,5 +38,9 @@
 		<put-attribute name="actions" value="/pages/hr/dept-actions.jsp"/>
 		<put-attribute name="pageContent" value="/pages/hr/dept-add.jsp"/>
 	</definition>
+	<definition name="dept-edit-view" extends="baseTemplate">
+		<put-attribute name="actions" value="/pages/hr/dept-actions.jsp"/>
+		<put-attribute name="pageContent" value="/pages/hr/dept-edit.jsp"/>
+	</definition>
 
 </tiles-definitions>

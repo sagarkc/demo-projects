@@ -125,13 +125,17 @@ public class DepartmentController {
 	
 	@RequestMapping(value="/edit", method=RequestMethod.GET)
 	public String showEditDepartment(@RequestParam("selectedId") Long id, ModelMap modelMap){
-		modelMap.addAttribute("currentDepartment", new DepartmentVo());
-		return "dept-add-view";
+		DepartmentVo departmentVo = departmentService.getDepartmentById(id);
+		if(null != departmentVo)
+			modelMap.addAttribute("currentDepartment", departmentVo);
+		else
+			modelMap.addAttribute("currentDepartment", new DepartmentVo());
+		return "dept-edit-view";
 	}
 	
 	@RequestMapping(value="/save", method=RequestMethod.POST)
-	public String saveDepartment(@Valid DepartmentVo currentDepartment){
-		
+	public String saveDepartment(DepartmentVo currentDepartment){
+		departmentService.saveDepartment(currentDepartment);
 		return "redirect:/department.htm";
 	}
 	
