@@ -23,6 +23,10 @@ public interface DepartmentDao {
 	
 	public List<Department> getPagedDepertments(long limitFrom, long rowCount);
 	
+	public List<Department> getPagedDepertments(long limitFrom, long rowCount, String order);
+	
+	public List<Department> getPagedDepertments(long limitFrom, long rowCount, String where, String order);
+	
 	public Long saveDepartment(Department department);
 	
 	public Department getById(Long id);
