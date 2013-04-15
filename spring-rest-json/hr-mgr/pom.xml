@@ -18,7 +18,6 @@
 		<module>hr-mgr-web</module>
 		<module>hr-mgr-model</module>
 		<module>hr-mgr-common</module>
-		<module>jquery-tags</module>
 	</modules>
 	
 	<properties>
