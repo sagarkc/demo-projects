@@ -4,6 +4,9 @@
  */
 package com.gs.demo.hr.model.vo;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+
 import net.sf.jsonizer.annotation.JsonDynamicProperty;
 import net.sf.jsonizer.annotation.JsonObject;
 import net.sf.jsonizer.annotation.JsonProperty;
@@ -27,7 +30,8 @@ public class DepartmentVo implements Jsonizable{
 	@JsonProperty(order = 0)
 	private long id;
 	@JsonProperty(order = 1)
-	
+	@NotNull()
+	@Max(value=50)
 	private String name;
 
 	@FieldMapper(targetFieldName="id")

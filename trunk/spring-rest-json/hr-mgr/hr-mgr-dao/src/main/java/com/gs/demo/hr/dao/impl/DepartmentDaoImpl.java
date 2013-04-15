@@ -122,14 +122,13 @@ public class DepartmentDaoImpl extends HRCommonDaoImpl<Department, Long> impleme
 	
 	@Override
 	public Long saveDepartment(Department department) {
-		// TODO Auto-generated method stub
-		return null;
+		Department department2 = merge(department);
+		return department2.getId();
 	}
 
 	@Override
 	public Department getById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return getEntityManager().find(Department.class, id);
 	}
 
 	
