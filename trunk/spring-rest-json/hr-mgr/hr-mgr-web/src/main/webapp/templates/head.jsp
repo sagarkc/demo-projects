@@ -9,7 +9,7 @@
 <meta http-equiv="refresh" content="<%=session.getMaxInactiveInterval()%>;url=<%=request.getContextPath() %>/index.htm" />
 
 
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/assets/css/green-style.css" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/assets/css/one-column-liquid.css" />
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/assets/css/base-style.css" />
 
 

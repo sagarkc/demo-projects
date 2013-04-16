@@ -22,9 +22,17 @@
 		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 
 	<bean id="localeResolver"
-		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		class="com.gs.demo.hr.web.HrmgrLocaleResolver">
 		<property name="defaultLocale" value="en" />
 	</bean>
+	
+	<!-- <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" >
+		<property name="interceptors">
+		   <list>
+			<ref bean="localeChangeInterceptor" />
+		   </list>
+		</property>
+	</bean> -->
 	
 	<mvc:interceptors>
 		<!-- Example:: <a href="?countryCode=es">Spanish</a> -->
