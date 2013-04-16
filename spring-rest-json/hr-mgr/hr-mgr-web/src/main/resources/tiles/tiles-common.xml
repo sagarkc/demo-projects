@@ -15,7 +15,7 @@
 	</definition>
 	
 	<definition name="home-page-view" extends="baseTemplate">
-		<put-attribute name="pageContent" value="/pages/hr/emp-list.jsp"/>
+		<put-attribute name="pageContent" value="/pages/common/home.jsp"/>
 	</definition>
 	
 	<definition name="dept-home-view" extends="baseTemplate">

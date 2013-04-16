@@ -190,6 +190,10 @@ public class FlexigridViewTag extends AbstractViewTag implements
 	
 	@Override
 	public int doStartTag() throws JspException {
+		flexigrid = new Flexigrid();
+		tagContent = new StringBuffer();
+		columnModelContent = new StringBuffer();
+		sortItemsContent = new StringBuffer();
 		try {
 			pageContext.getOut().write(
 					new StringBuffer("<table id=\"")
