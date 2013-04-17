@@ -30,4 +30,6 @@ public interface DepartmentDao {
 	public Long saveDepartment(Department department);
 	
 	public Department getById(Long id);
+
+	public void deleteById(Long id);
 }

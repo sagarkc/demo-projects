@@ -21,7 +21,7 @@
 	usepager="true" singleSelect="true"
 	useRowPerPage="true" rowPerPage="15"
 	showTableToggleBtn="true"
-	width="600" height="300" >
+	width="800" height="300" >
 
 
 	<fg:column name="id" display="key:lbl.employee.list.id" width="50" sortable="true" align="center"/>
@@ -33,7 +33,9 @@
 	<fg:column name="releavingDate" display="key:lbl.employee.list.releavingDate" width="100" sortable="true" align="left"/>
 	
 	
-	<fg:column name="links" display="key:lbl.employee.list.actions" width="50" sortable="false" align="right"/>
+	<jquery-flexigrid:column name="link_a" display="" width="50" sortable="false" align="right"/>
+	<jquery-flexigrid:column name="link_b" display="" width="50" sortable="false" align="right"/>
+	<jquery-flexigrid:column name="link_c" display="" width="50" sortable="false" align="right"/>
 	
 	<fg:search name="firstName" display="key:lbl.employee.list.fname" isdefault="true" />
 	<fg:search name="lastName" display="key:lbl.employee.list.lname" isdefault="true"/>

@@ -19,8 +19,11 @@ import com.gs.demo.hr.common.annotations.FieldMapper;
  * 
  */
 @Conversion(targetClassName = "com.gs.demo.hr.model.entity.Employee")
-@JsonObject(dynamicProperties = { @JsonDynamicProperty(name = "links", textFormat = "<a href=\"employee/edit.htm?selectedId=%d\">%s</a>", propertyNames = {
-		"prop:id", "key:lbl.employee.edit" }) })
+@JsonObject(dynamicProperties = { 
+		@JsonDynamicProperty(name = "link_a", textFormat = "<a href=\"employee/edit.htm?selectedId=%d\">%s</a>", propertyNames = {"prop:id", "key:lbl.employee.edit" }),
+		@JsonDynamicProperty(name = "link_b", textFormat = "<a href=\"department/details.htm?selectedId=%d\">%s</a>", propertyNames = {"prop:id", "key:lbl.department.edit" }),
+		@JsonDynamicProperty(name = "link_c", textFormat = "<a href=\"department/delete.htm?selectedId=%d\">%s</a>",	propertyNames = {	"prop:id", "key:lbl.department.delete" })
+	})
 public class EmployeeVo implements Jsonizable {
 
 	public static final String DATE_FORMAT = "MM-dd-yyyy HH:mm:ss";

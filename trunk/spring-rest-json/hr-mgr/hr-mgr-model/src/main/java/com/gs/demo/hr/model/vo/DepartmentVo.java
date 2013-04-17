@@ -21,10 +21,19 @@ import com.gs.demo.hr.common.annotations.FieldMapper;
  */
 @Conversion(targetClassName="com.gs.demo.hr.model.entity.Department")
 @JsonObject(dynamicProperties = { 
-		@JsonDynamicProperty(name = "links", 
-				textFormat = "<a href=\"department/edit.htm?selectedId=%d\">%s</a>", 
+		@JsonDynamicProperty(name = "link_a", 
+				textFormat = "<a href=\"department/details.htm?selectedId=%d\">%s</a>", 
 				propertyNames = {
-					"prop:id", "key:lbl.department.edit" }) })
+					"prop:id", "key:lbl.department.view.details" }),
+		@JsonDynamicProperty(name = "link_b", 
+				textFormat = "<a href=\"department/details.htm?selectedId=%d\">%s</a>", 
+				propertyNames = {
+					"prop:id", "key:lbl.department.edit" }),
+		@JsonDynamicProperty(name = "link_c", 
+				textFormat = "<a href=\"department/delete.htm?selectedId=%d\">%s</a>", 
+				propertyNames = {
+					"prop:id", "key:lbl.department.delete" })
+		})
 public class DepartmentVo implements Jsonizable{
 
 	@JsonProperty(order = 0)

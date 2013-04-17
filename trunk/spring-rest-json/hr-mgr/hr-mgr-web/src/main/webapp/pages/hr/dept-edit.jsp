@@ -25,6 +25,7 @@
 		<div id="form-col-lbl"><fmt:message key="dept.form.dept.edit.label.id"/></div>
 		<div id="form-col-input">
 			<sf:label path="id" />
+			<sf:hidden path="id" />
 		</div>
 	</div>
 	<div id="form-row">

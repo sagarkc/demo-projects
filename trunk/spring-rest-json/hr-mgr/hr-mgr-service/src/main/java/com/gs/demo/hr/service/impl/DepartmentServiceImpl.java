@@ -104,6 +104,8 @@ public class DepartmentServiceImpl implements DepartmentService{
 		return getDepartmentDao().saveDepartment(department);
 	}
 	
-	
+	public void deleteDepartmentById(Long id){
+		getDepartmentDao().deleteById(id);
+	}
 	
 }

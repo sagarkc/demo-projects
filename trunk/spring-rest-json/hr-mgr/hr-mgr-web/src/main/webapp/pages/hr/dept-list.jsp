@@ -21,12 +21,14 @@
 	usepager="true" singleSelect="true"
 	useRowPerPage="true" rowPerPage="15"
 	showTableToggleBtn="true"
-	width="600" height="300">
+	width="400" height="150">
 
 
 	<jquery-flexigrid:column name="id" display="key:lbl.department.list.id" width="50" sortable="true" align="center"/>
 	<jquery-flexigrid:column name="name" display="key:lbl.department.list.name" width="100" sortable="true" align="left"/>
-	<jquery-flexigrid:column name="links" display="key:lbl.department.list.actions" width="50" sortable="false" align="right"/>
+	<jquery-flexigrid:column name="link_a" display="" width="50" sortable="false" align="right"/>
+	<jquery-flexigrid:column name="link_b" display="" width="50" sortable="false" align="right"/>
+	<jquery-flexigrid:column name="link_c" display="" width="50" sortable="false" align="right"/>
 	
 	<jquery-flexigrid:search name="name" display="key:lbl.department.list.name" isdefault="true"/>
 
