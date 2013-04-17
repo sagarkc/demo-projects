@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import net.sf.jquery.tags.ui.flexigrid.model.FlexigridConstants;
 import net.sf.jsonizer.core.FlexigridJsonCollection;
@@ -133,10 +132,21 @@ public class DepartmentController {
 		return "dept-edit-view";
 	}
 	
+	@RequestMapping(value="/delete", method=RequestMethod.GET)
+	public String deleteDepartment(@RequestParam("selectedId") Long id){
+		departmentService.deleteDepartmentById(id);
+		return "redirect:/department.htm";
+	}
+	
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	public String saveDepartment(DepartmentVo currentDepartment){
 		departmentService.saveDepartment(currentDepartment);
 		return "redirect:/department.htm";
 	}
 	
+	@RequestMapping(value="/viewDetails", method=RequestMethod.GET)
+	public String showViewDetails(@RequestParam("selectedId") Long id, ModelMap modelMap){
+		
+		return "dept-details-view";
+	}
 }

@@ -24,5 +24,7 @@ public interface DepartmentService {
 	public DepartmentVo getDepartmentById(Long id);
 	
 	public Long saveDepartment(DepartmentVo departmentVo);
+
+	public void deleteDepartmentById(Long id);
 	
 }

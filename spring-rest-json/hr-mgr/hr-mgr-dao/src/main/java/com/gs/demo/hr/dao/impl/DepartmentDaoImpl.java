@@ -131,6 +131,9 @@ public class DepartmentDaoImpl extends HRCommonDaoImpl<Department, Long> impleme
 		return getEntityManager().find(Department.class, id);
 	}
 
-	
+	@Override
+	public void deleteById(Long id) {
+		super.deleteById(id);
+	}
 	
 }
