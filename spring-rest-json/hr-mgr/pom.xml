@@ -11,7 +11,7 @@
 	<name>hr-mgr</name>
 	<inceptionYear>2013</inceptionYear>
 
-
+<!-- Modules -->
 	<modules>
 		<module>hr-mgr-dao</module>
 		<module>hr-mgr-service</module>
