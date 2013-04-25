@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 
 import com.gs.demo.hr.dao.DepartmentDao;
 import com.gs.demo.hr.impl.HRCommonDaoImpl;
-import com.gs.demo.hr.jdbc.ReflectionBasedRowMapper;
 import com.gs.demo.hr.model.entity.Department;
 
 /**
