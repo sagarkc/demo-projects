@@ -142,6 +142,14 @@ public class Employee {
 		this.manager = manager;
 	}
 
+	public Set<Employee> getSupervisedEmployees() {
+		return supervisedEmployees;
+	}
+
+	public void setSupervisedEmployees(Set<Employee> supervisedEmployees) {
+		this.supervisedEmployees = supervisedEmployees;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

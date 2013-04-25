@@ -28,3 +28,9 @@ String themeName = "dark-hive";
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/assets/flexigrid/css/flexigrid.pack.css" />
 <script type="text/javascript" src="<%=request.getContextPath() %>/assets/flexigrid/js/flexigrid.pack.js"></script>
 
+<script type="text/javascript" src="<%=request.getContextPath() %>/assets/js/jquery/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/assets/css/datatable/demo_table.css" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/assets/css/datatable/demo_table_jui.css" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/assets/css/datatable/jquery.dataTables_themeroller.css" />
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/assets/css/datatable/jquery.dataTables.css" />
+
