@@ -1,0 +1,2 @@
+serviceClass: com.gs.examples.gwt.two.client.service.ExampleService
+path: 4628FF28EB6DFF9263417BFA99A23D6D.gwt.rpc
