@@ -15,7 +15,7 @@ import com.gs.demo.gwt.spring.shared.evt.MessageUpdatedEvent;
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class GWTSpringOne implements EntryPoint, MessageUpdateListener {
-	private final CommonEventManager eventManager = new CommonEventManager();
+	private static final CommonEventManager eventManager = CommonEventManager.getInstance();
 	private Label helloLabel = new Label();
 	private Button button = new Button("Msg");
 	/**
@@ -24,7 +24,7 @@ public class GWTSpringOne implements EntryPoint, MessageUpdateListener {
 	public void onModuleLoad() {
 		VerticalPanel verticalPanel = new VerticalPanel();
 		verticalPanel.add(helloLabel);
-		
+		eventManager.addMessageUpdateListener(this);
 		button.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				handleButtonClick();
@@ -38,9 +38,8 @@ public class GWTSpringOne implements EntryPoint, MessageUpdateListener {
 	}
 	
 	private void handleButtonClick() {
-		eventManager.addMessageUpdateListener(this);
 		MessageUpdatedEvent evt = new MessageUpdatedEvent("Hello....");
-		eventManager.sendMessageUpdateEvent(evt);
+		eventManager.fireEvent(evt);
 	}
 	
 	public void seyHello(String msg){
