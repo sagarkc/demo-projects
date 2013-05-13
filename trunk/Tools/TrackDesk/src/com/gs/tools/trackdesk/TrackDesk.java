@@ -12,10 +12,7 @@ package com.gs.tools.trackdesk;
 
 import com.gs.tools.trackdesk.ui.TrackDeskFrame;
 import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 /**
