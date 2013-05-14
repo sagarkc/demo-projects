@@ -46,11 +46,37 @@ public class TrackDeskFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
+        taskViewButtonGroup = new javax.swing.ButtonGroup();
         baseToolBar = new javax.swing.JToolBar();
         newTaskToolButton = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jSeparator8 = new javax.swing.JToolBar.Separator();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jSeparator9 = new javax.swing.JToolBar.Separator();
         statusToolBar = new javax.swing.JToolBar();
         baseContainerPanel = new javax.swing.JPanel();
+        baseSplitPane = new javax.swing.JSplitPane();
+        leftControlPanel = new javax.swing.JPanel();
+        calendarPanel = new com.gs.tools.trackdesk.ui.CalendarPanel();
+        taskActionContentPanel = new javax.swing.JPanel();
+        contentViewToolBar = new javax.swing.JToolBar();
+        taskToggleButton = new javax.swing.JToggleButton();
+        notesToggleButton = new javax.swing.JToggleButton();
+        viewContainerPanel = new javax.swing.JPanel();
+        contentSplitPane = new javax.swing.JSplitPane();
+        taskListPanel = new javax.swing.JPanel();
+        taskListToolBar = new javax.swing.JToolBar();
+        jButton5 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        taskDetailsPanel = new javax.swing.JPanel();
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton6 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         baseMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         newTaskMenuItem = new javax.swing.JMenuItem();
@@ -82,14 +108,9 @@ public class TrackDeskFrame extends javax.swing.JFrame {
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         settingsMenuItem = new javax.swing.JMenuItem();
         viewMenu = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
-        jMenuItem14 = new javax.swing.JMenuItem();
+        helpMenu = new javax.swing.JMenu();
+        aboutMenuItem = new javax.swing.JMenuItem();
+        helpMenuItem = new javax.swing.JMenuItem();
 
         FormListener formListener = new FormListener();
 
@@ -103,26 +124,173 @@ public class TrackDeskFrame extends javax.swing.JFrame {
         baseToolBar.setRollover(true);
 
         newTaskToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/new_task.png"))); // NOI18N
+        newTaskToolButton.setToolTipText(bundle.getString("lbl.new.task.menu.item")); // NOI18N
         newTaskToolButton.setFocusable(false);
         newTaskToolButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         newTaskToolButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         baseToolBar.add(newTaskToolButton);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/note_new.gif"))); // NOI18N
+        jButton1.setToolTipText(bundle.getString("lbl.new.note.menu.item")); // NOI18N
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(formListener);
+        baseToolBar.add(jButton1);
+        baseToolBar.add(jSeparator8);
+
+        jButton2.setText("jButton2");
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        baseToolBar.add(jButton2);
+
+        jButton3.setText("jButton3");
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        baseToolBar.add(jButton3);
+
+        jButton4.setText("jButton4");
+        jButton4.setFocusable(false);
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        baseToolBar.add(jButton4);
+        baseToolBar.add(jSeparator9);
 
         getContentPane().add(baseToolBar, java.awt.BorderLayout.PAGE_START);
 
         statusToolBar.setRollover(true);
         getContentPane().add(statusToolBar, java.awt.BorderLayout.PAGE_END);
 
-        javax.swing.GroupLayout baseContainerPanelLayout = new javax.swing.GroupLayout(baseContainerPanel);
-        baseContainerPanel.setLayout(baseContainerPanelLayout);
-        baseContainerPanelLayout.setHorizontalGroup(
-            baseContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 682, Short.MAX_VALUE)
+        baseContainerPanel.setLayout(new java.awt.BorderLayout());
+
+        baseSplitPane.setOneTouchExpandable(true);
+
+        leftControlPanel.setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        leftControlPanel.add(calendarPanel, gridBagConstraints);
+
+        taskActionContentPanel.setLayout(new java.awt.BorderLayout());
+
+        contentViewToolBar.setFloatable(false);
+        contentViewToolBar.setRollover(true);
+
+        taskViewButtonGroup.add(taskToggleButton);
+        taskToggleButton.setSelected(true);
+        taskToggleButton.setText("Tsk");
+        taskToggleButton.setFocusable(false);
+        taskToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        taskToggleButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        contentViewToolBar.add(taskToggleButton);
+
+        taskViewButtonGroup.add(notesToggleButton);
+        notesToggleButton.setText("Nts");
+        notesToggleButton.setFocusable(false);
+        notesToggleButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        notesToggleButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        contentViewToolBar.add(notesToggleButton);
+
+        taskActionContentPanel.add(contentViewToolBar, java.awt.BorderLayout.PAGE_END);
+
+        javax.swing.GroupLayout viewContainerPanelLayout = new javax.swing.GroupLayout(viewContainerPanel);
+        viewContainerPanel.setLayout(viewContainerPanelLayout);
+        viewContainerPanelLayout.setHorizontalGroup(
+            viewContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 140, Short.MAX_VALUE)
         );
-        baseContainerPanelLayout.setVerticalGroup(
-            baseContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 372, Short.MAX_VALUE)
+        viewContainerPanelLayout.setVerticalGroup(
+            viewContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 321, Short.MAX_VALUE)
         );
+
+        taskActionContentPanel.add(viewContainerPanel, java.awt.BorderLayout.CENTER);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        leftControlPanel.add(taskActionContentPanel, gridBagConstraints);
+
+        baseSplitPane.setLeftComponent(leftControlPanel);
+
+        contentSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        taskListPanel.setBackground(new java.awt.Color(255, 255, 255));
+        taskListPanel.setLayout(new java.awt.GridBagLayout());
+
+        taskListToolBar.setFloatable(false);
+        taskListToolBar.setRollover(true);
+
+        jButton5.setText("jButton5");
+        jButton5.setFocusable(false);
+        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        taskListToolBar.add(jButton5);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 0);
+        taskListPanel.add(taskListToolBar, gridBagConstraints);
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        taskListPanel.add(jScrollPane1, gridBagConstraints);
+
+        contentSplitPane.setTopComponent(taskListPanel);
+
+        taskDetailsPanel.setLayout(new java.awt.BorderLayout());
+
+        jToolBar1.setRollover(true);
+
+        jButton6.setText("jButton6");
+        jButton6.setFocusable(false);
+        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton6);
+
+        taskDetailsPanel.add(jToolBar1, java.awt.BorderLayout.PAGE_START);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 533, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 402, Short.MAX_VALUE)
+        );
+
+        taskDetailsPanel.add(jPanel1, java.awt.BorderLayout.CENTER);
+
+        contentSplitPane.setRightComponent(taskDetailsPanel);
+
+        baseSplitPane.setRightComponent(contentSplitPane);
+
+        baseContainerPanel.add(baseSplitPane, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(baseContainerPanel, java.awt.BorderLayout.CENTER);
 
@@ -141,15 +309,18 @@ public class TrackDeskFrame extends javax.swing.JFrame {
         saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         saveMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/save_edit.gif"))); // NOI18N
         saveMenuItem.setText(bundle.getString("lbl.save.menu.item")); // NOI18N
+        saveMenuItem.setEnabled(false);
         fileMenu.add(saveMenuItem);
 
         saveAsMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/saveas_edit.gif"))); // NOI18N
         saveAsMenuItem.setText(bundle.getString("lbl.save.as.menu.item")); // NOI18N
+        saveAsMenuItem.setEnabled(false);
         fileMenu.add(saveAsMenuItem);
 
         saveAllMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         saveAllMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/saveall_edit.gif"))); // NOI18N
         saveAllMenuItem.setText(bundle.getString("lbl.save.all.menu.item")); // NOI18N
+        saveAllMenuItem.setEnabled(false);
         fileMenu.add(saveAllMenuItem);
         fileMenu.add(jSeparator2);
 
@@ -159,16 +330,19 @@ public class TrackDeskFrame extends javax.swing.JFrame {
 
         exportMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/export_wiz.gif"))); // NOI18N
         exportMenuItem.setText(bundle.getString("lbl.export.menu.item")); // NOI18N
+        exportMenuItem.setEnabled(false);
         fileMenu.add(exportMenuItem);
         fileMenu.add(jSeparator3);
 
         printPreviewMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/printpreview.gif"))); // NOI18N
         printPreviewMenuItem.setText(bundle.getString("lbl.print.preview.menu.item")); // NOI18N
+        printPreviewMenuItem.setEnabled(false);
         fileMenu.add(printPreviewMenuItem);
 
         printMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         printMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/print_edit.gif"))); // NOI18N
         printMenuItem.setText(bundle.getString("lbl.print.menu.item")); // NOI18N
+        printMenuItem.setEnabled(false);
         fileMenu.add(printMenuItem);
         fileMenu.add(jSeparator7);
 
@@ -190,43 +364,51 @@ public class TrackDeskFrame extends javax.swing.JFrame {
         undoMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         undoMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/undo.png"))); // NOI18N
         undoMenuItem.setText(bundle.getString("lbl.undo.menu.item")); // NOI18N
+        undoMenuItem.setEnabled(false);
         editMenu.add(undoMenuItem);
 
         redoMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
         redoMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/redo.png"))); // NOI18N
         redoMenuItem.setText(bundle.getString("lbl.redo.menu.item")); // NOI18N
+        redoMenuItem.setEnabled(false);
         editMenu.add(redoMenuItem);
         editMenu.add(jSeparator4);
 
         cutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
         cutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/cut_edit.gif"))); // NOI18N
         cutMenuItem.setText(bundle.getString("lbl.cut.menu.item")); // NOI18N
+        cutMenuItem.setEnabled(false);
         editMenu.add(cutMenuItem);
 
         copyMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
         copyMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/copy_edit.gif"))); // NOI18N
         copyMenuItem.setText(bundle.getString("lbl.copy.menu.item")); // NOI18N
+        copyMenuItem.setEnabled(false);
         editMenu.add(copyMenuItem);
 
         pasteMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
         pasteMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/paste.png"))); // NOI18N
         pasteMenuItem.setText(bundle.getString("lbl.paste.menu.item")); // NOI18N
+        pasteMenuItem.setEnabled(false);
         editMenu.add(pasteMenuItem);
 
         deleteMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0));
         deleteMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/delete.png"))); // NOI18N
         deleteMenuItem.setText(bundle.getString("lbl.delete.menu.item")); // NOI18N
+        deleteMenuItem.setEnabled(false);
         editMenu.add(deleteMenuItem);
         editMenu.add(jSeparator5);
 
         findMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
         findMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/find.gif"))); // NOI18N
         findMenuItem.setText(bundle.getString("lbl.find.menu.item")); // NOI18N
+        findMenuItem.setEnabled(false);
         editMenu.add(findMenuItem);
 
         replaceMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
         replaceMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/edit-replace.png"))); // NOI18N
         replaceMenuItem.setText(bundle.getString("lbl.replace.menu.item")); // NOI18N
+        replaceMenuItem.setEnabled(false);
         editMenu.add(replaceMenuItem);
         editMenu.add(jSeparator6);
 
@@ -238,32 +420,20 @@ public class TrackDeskFrame extends javax.swing.JFrame {
         baseMenuBar.add(editMenu);
 
         viewMenu.setText(bundle.getString("lbl.view.menu")); // NOI18N
-
-        jMenuItem7.setText("jMenuItem7");
-        viewMenu.add(jMenuItem7);
-
-        jMenuItem8.setText("jMenuItem8");
-        viewMenu.add(jMenuItem8);
-
-        jMenuItem9.setText("jMenuItem9");
-        viewMenu.add(jMenuItem9);
-
-        jMenuItem10.setText("jMenuItem10");
-        viewMenu.add(jMenuItem10);
-
-        jMenuItem11.setText("jMenuItem11");
-        viewMenu.add(jMenuItem11);
-
-        jMenuItem12.setText("jMenuItem12");
-        viewMenu.add(jMenuItem12);
-
-        jMenuItem13.setText("jMenuItem13");
-        viewMenu.add(jMenuItem13);
-
-        jMenuItem14.setText("jMenuItem14");
-        viewMenu.add(jMenuItem14);
-
         baseMenuBar.add(viewMenu);
+
+        helpMenu.setText(bundle.getString("lbl.help.menu")); // NOI18N
+
+        aboutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/Information.png"))); // NOI18N
+        aboutMenuItem.setText(bundle.getString("lbl.about.menu.item")); // NOI18N
+        helpMenu.add(aboutMenuItem);
+
+        helpMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        helpMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/help_contents.gif"))); // NOI18N
+        helpMenuItem.setText(bundle.getString("lbl.help.menu.item")); // NOI18N
+        helpMenu.add(helpMenuItem);
+
+        baseMenuBar.add(helpMenu);
 
         setJMenuBar(baseMenuBar);
 
@@ -275,7 +445,10 @@ public class TrackDeskFrame extends javax.swing.JFrame {
     private class FormListener implements java.awt.event.ActionListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == minimize2trayMenuItem) {
+            if (evt.getSource() == jButton1) {
+                TrackDeskFrame.this.jButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == minimize2trayMenuItem) {
                 TrackDeskFrame.this.minimize2trayMenuItemActionPerformed(evt);
             }
         }
@@ -292,11 +465,20 @@ public class TrackDeskFrame extends javax.swing.JFrame {
                 exitListener);
     }//GEN-LAST:event_minimize2trayMenuItemActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JPanel baseContainerPanel;
     private javax.swing.JMenuBar baseMenuBar;
+    private javax.swing.JSplitPane baseSplitPane;
     private javax.swing.JToolBar baseToolBar;
+    private com.gs.tools.trackdesk.ui.CalendarPanel calendarPanel;
+    private javax.swing.JSplitPane contentSplitPane;
+    private javax.swing.JToolBar contentViewToolBar;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
@@ -305,15 +487,17 @@ public class TrackDeskFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem exportMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuItem findMenuItem;
+    private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem helpMenuItem;
     private javax.swing.JMenuItem importMenuItem;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
-    private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
@@ -321,10 +505,16 @@ public class TrackDeskFrame extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
     private javax.swing.JPopupMenu.Separator jSeparator7;
+    private javax.swing.JToolBar.Separator jSeparator8;
+    private javax.swing.JToolBar.Separator jSeparator9;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JPanel leftControlPanel;
     private javax.swing.JMenuItem minimize2trayMenuItem;
     private javax.swing.JMenuItem newNoteMenuItem;
     private javax.swing.JMenuItem newTaskMenuItem;
     private javax.swing.JButton newTaskToolButton;
+    private javax.swing.JToggleButton notesToggleButton;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem printMenuItem;
     private javax.swing.JMenuItem printPreviewMenuItem;
@@ -335,7 +525,14 @@ public class TrackDeskFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JMenuItem settingsMenuItem;
     private javax.swing.JToolBar statusToolBar;
+    private javax.swing.JPanel taskActionContentPanel;
+    private javax.swing.JPanel taskDetailsPanel;
+    private javax.swing.JPanel taskListPanel;
+    private javax.swing.JToolBar taskListToolBar;
+    private javax.swing.JToggleButton taskToggleButton;
+    private javax.swing.ButtonGroup taskViewButtonGroup;
     private javax.swing.JMenuItem undoMenuItem;
+    private javax.swing.JPanel viewContainerPanel;
     private javax.swing.JMenu viewMenu;
     // End of variables declaration//GEN-END:variables
 
