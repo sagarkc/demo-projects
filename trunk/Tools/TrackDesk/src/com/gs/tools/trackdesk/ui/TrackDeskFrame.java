@@ -61,22 +61,12 @@ public class TrackDeskFrame extends javax.swing.JFrame {
         baseContainerPanel = new javax.swing.JPanel();
         baseSplitPane = new javax.swing.JSplitPane();
         leftControlPanel = new javax.swing.JPanel();
-        calendarPanel = new com.gs.tools.trackdesk.ui.CalendarPanel();
         taskActionContentPanel = new javax.swing.JPanel();
         contentViewToolBar = new javax.swing.JToolBar();
         taskToggleButton = new javax.swing.JToggleButton();
         notesToggleButton = new javax.swing.JToggleButton();
         viewContainerPanel = new javax.swing.JPanel();
-        contentSplitPane = new javax.swing.JSplitPane();
-        taskListPanel = new javax.swing.JPanel();
-        taskListToolBar = new javax.swing.JToolBar();
-        jButton5 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        taskDetailsPanel = new javax.swing.JPanel();
-        jToolBar1 = new javax.swing.JToolBar();
-        jButton6 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        rightContentPanelPanel = new javax.swing.JPanel();
         baseMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         newTaskMenuItem = new javax.swing.JMenuItem();
@@ -168,10 +158,6 @@ public class TrackDeskFrame extends javax.swing.JFrame {
         baseSplitPane.setOneTouchExpandable(true);
 
         leftControlPanel.setLayout(new java.awt.GridBagLayout());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        leftControlPanel.add(calendarPanel, gridBagConstraints);
 
         taskActionContentPanel.setLayout(new java.awt.BorderLayout());
 
@@ -203,7 +189,7 @@ public class TrackDeskFrame extends javax.swing.JFrame {
         );
         viewContainerPanelLayout.setVerticalGroup(
             viewContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 321, Short.MAX_VALUE)
+            .addGap(0, 461, Short.MAX_VALUE)
         );
 
         taskActionContentPanel.add(viewContainerPanel, java.awt.BorderLayout.CENTER);
@@ -218,77 +204,8 @@ public class TrackDeskFrame extends javax.swing.JFrame {
 
         baseSplitPane.setLeftComponent(leftControlPanel);
 
-        contentSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-
-        taskListPanel.setBackground(new java.awt.Color(255, 255, 255));
-        taskListPanel.setLayout(new java.awt.GridBagLayout());
-
-        taskListToolBar.setFloatable(false);
-        taskListToolBar.setRollover(true);
-
-        jButton5.setText("jButton5");
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        taskListToolBar.add(jButton5);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 2, 0);
-        taskListPanel.add(taskListToolBar, gridBagConstraints);
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        taskListPanel.add(jScrollPane1, gridBagConstraints);
-
-        contentSplitPane.setTopComponent(taskListPanel);
-
-        taskDetailsPanel.setLayout(new java.awt.BorderLayout());
-
-        jToolBar1.setRollover(true);
-
-        jButton6.setText("jButton6");
-        jButton6.setFocusable(false);
-        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton6);
-
-        taskDetailsPanel.add(jToolBar1, java.awt.BorderLayout.PAGE_START);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 533, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 402, Short.MAX_VALUE)
-        );
-
-        taskDetailsPanel.add(jPanel1, java.awt.BorderLayout.CENTER);
-
-        contentSplitPane.setRightComponent(taskDetailsPanel);
-
-        baseSplitPane.setRightComponent(contentSplitPane);
+        rightContentPanelPanel.setLayout(new java.awt.BorderLayout());
+        baseSplitPane.setRightComponent(rightContentPanelPanel);
 
         baseContainerPanel.add(baseSplitPane, java.awt.BorderLayout.CENTER);
 
@@ -352,7 +269,7 @@ public class TrackDeskFrame extends javax.swing.JFrame {
         minimize2trayMenuItem.addActionListener(formListener);
         fileMenu.add(minimize2trayMenuItem);
 
-        exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.ALT_MASK));
+        exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/exit.png"))); // NOI18N
         exitMenuItem.setText(bundle.getString("lbl.exit.menu.item")); // NOI18N
         fileMenu.add(exitMenuItem);
@@ -476,8 +393,6 @@ public class TrackDeskFrame extends javax.swing.JFrame {
     private javax.swing.JMenuBar baseMenuBar;
     private javax.swing.JSplitPane baseSplitPane;
     private javax.swing.JToolBar baseToolBar;
-    private com.gs.tools.trackdesk.ui.CalendarPanel calendarPanel;
-    private javax.swing.JSplitPane contentSplitPane;
     private javax.swing.JToolBar contentViewToolBar;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
@@ -494,10 +409,6 @@ public class TrackDeskFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
@@ -507,8 +418,6 @@ public class TrackDeskFrame extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JToolBar.Separator jSeparator8;
     private javax.swing.JToolBar.Separator jSeparator9;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JPanel leftControlPanel;
     private javax.swing.JMenuItem minimize2trayMenuItem;
     private javax.swing.JMenuItem newNoteMenuItem;
@@ -520,15 +429,13 @@ public class TrackDeskFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem printPreviewMenuItem;
     private javax.swing.JMenuItem redoMenuItem;
     private javax.swing.JMenuItem replaceMenuItem;
+    private javax.swing.JPanel rightContentPanelPanel;
     private javax.swing.JMenuItem saveAllMenuItem;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JMenuItem settingsMenuItem;
     private javax.swing.JToolBar statusToolBar;
     private javax.swing.JPanel taskActionContentPanel;
-    private javax.swing.JPanel taskDetailsPanel;
-    private javax.swing.JPanel taskListPanel;
-    private javax.swing.JToolBar taskListToolBar;
     private javax.swing.JToggleButton taskToggleButton;
     private javax.swing.ButtonGroup taskViewButtonGroup;
     private javax.swing.JMenuItem undoMenuItem;
@@ -552,26 +459,29 @@ public class TrackDeskFrame extends javax.swing.JFrame {
             final SystemTray tray = SystemTray.getSystemTray();
             MouseListener mouseListener = new MouseListener() {
                 public void mouseClicked(MouseEvent e) {
-                    if (MouseEvent.BUTTON1 == e.getButton() && e.getClickCount() == 2) {
+                    if (MouseEvent.BUTTON1 == e.getButton() 
+                            && e.getClickCount() == 2) {
                         tray.remove(trayIcon);
                         frame.setVisible(true);
                     }
                 }
 
                 public void mouseEntered(MouseEvent e) {
-                    System.out.println("Tray Icon - Mouse entered!");
+                    
                 }
 
                 public void mouseExited(MouseEvent e) {
-                    System.out.println("Tray Icon - Mouse exited!");
+                    
                 }
 
                 public void mousePressed(MouseEvent e) {
-                    System.out.println("Tray Icon - Mouse pressed!");
+                    
+                    
                 }
 
                 public void mouseReleased(MouseEvent e) {
-                    System.out.println("Tray Icon - Mouse released!");
+                    
+                    
                 }
             };
 
