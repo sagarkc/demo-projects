@@ -11,12 +11,50 @@
 package com.gs.tools.trackdesk.ui;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Sabuj Das | sabuj.das@gmail.com
  */
 public interface UiConstants {
+    public static class Fonts{
+        public static final String FONT_PATH = "/com/gs/tools/trackdesk/fonts";
+        
+        public static final Font TAHOMA_PLAIN;
+        public static final Font TAHOMA_BOLD;
+        public static final Font VERA_MONO;
+        static{
+            Font font = Font.decode(Font.SANS_SERIF);
+            try {
+                 font = Font.createFont(Font.TRUETYPE_FONT,
+                        UiConstants.class.getResourceAsStream(FONT_PATH 
+                         + File.separator + "TAHOMA.TTF" ));
+            } catch (Exception ex) { }
+            TAHOMA_PLAIN = font;
+            
+            try {
+                 font = Font.createFont(Font.TRUETYPE_FONT,
+                        UiConstants.class.getResourceAsStream(FONT_PATH 
+                         + File.separator + "TAHOMABD.TTF" ));
+            } catch (Exception ex) { }
+            TAHOMA_BOLD = font;
+            
+            try {
+                 font = Font.createFont(Font.TRUETYPE_FONT,
+                        UiConstants.class.getResourceAsStream(FONT_PATH 
+                         + File.separator + "VeraMono.ttf" ));
+            } catch (Exception ex) { }
+            VERA_MONO = font;
+        }
+        
+    }
+    
     interface CalendarColors{
 		Color BACKGROUND = new Color(220,235,252);;
 		

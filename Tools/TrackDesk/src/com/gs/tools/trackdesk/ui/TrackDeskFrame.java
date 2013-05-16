@@ -10,6 +10,7 @@
 
 package com.gs.tools.trackdesk.ui;
 
+import com.gs.tools.trackdesk.ui.dlg.SettingsDialog;
 import com.gs.utils.swing.window.WindowUtil;
 import java.awt.AWTException;
 import java.awt.Frame;
@@ -332,6 +333,7 @@ public class TrackDeskFrame extends javax.swing.JFrame {
         settingsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
         settingsMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/gs/tools/trackdesk/images/settings.png"))); // NOI18N
         settingsMenuItem.setText(bundle.getString("lbl.settings.menu.item")); // NOI18N
+        settingsMenuItem.addActionListener(formListener);
         editMenu.add(settingsMenuItem);
 
         baseMenuBar.add(editMenu);
@@ -368,6 +370,9 @@ public class TrackDeskFrame extends javax.swing.JFrame {
             else if (evt.getSource() == minimize2trayMenuItem) {
                 TrackDeskFrame.this.minimize2trayMenuItemActionPerformed(evt);
             }
+            else if (evt.getSource() == settingsMenuItem) {
+                TrackDeskFrame.this.settingsMenuItemActionPerformed(evt);
+            }
         }
     }// </editor-fold>//GEN-END:initComponents
 
@@ -385,6 +390,12 @@ public class TrackDeskFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void settingsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsMenuItemActionPerformed
+        SettingsDialog dialog = new SettingsDialog(this, true);
+        WindowUtil.bringCenterTo(dialog, this);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_settingsMenuItemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
