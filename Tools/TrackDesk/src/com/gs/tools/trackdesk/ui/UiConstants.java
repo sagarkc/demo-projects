@@ -75,6 +75,14 @@ public interface UiConstants {
         Color DAY_NAME_TEXT = new Color(117,128,165);
         Color DAY_TEXT = new Color(0,0,0);
 	}
+    
+    interface HeaderColors{
+		Color OUTTER_BORDER = new Color(125,162,206);
+		Color INNER_BORDER = new Color(222,237,254);
+		Color GRAD_TOP = Color.decode("0xDCEBFC");//new Color(220,235,252); //DCEBFC
+		Color GRAD_BOTTOM = Color.decode("0xC1DBFC");//new Color(193,219,252);
+        Color TEXT_COLOR = new Color(0,0,0);
+	}
 	
 	interface MenuContentColors{
 		Color BACKGROUND = Color.decode("0xFAFDFE");
@@ -87,7 +95,7 @@ public interface UiConstants {
 		
 	}
 	
-	interface MenuTabColors{
+	interface TabColors{
 		Color BACKGROUND = Color.decode("0x186337");
 		Color FOREGROUND = Color.BLACK;
 		

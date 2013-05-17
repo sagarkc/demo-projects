@@ -69,17 +69,17 @@ public class HeaderPanel extends javax.swing.JPanel {
 		int x = 0, y = 0, w = getWidth(), h = getHeight();
 		int arch = 0;
 		g2.setPaintMode();
-		g2.setColor(UiConstants.CalendarColors.SELECTION_OUTTER_BORDER);
+		g2.setColor(UiConstants.HeaderColors.OUTTER_BORDER);
 		g2.drawRoundRect(x, y, w, h, arch, arch);
-		g2.setColor(UiConstants.CalendarColors.SELECTION_INNER_BORDER);
+		g2.setColor(UiConstants.HeaderColors.INNER_BORDER);
 		g2.drawRoundRect(x+1, y+1, w-2, h-2, arch, arch);
         
         RoundRectangle2D r = new RoundRectangle2D.Double(x+2, y+2, w-3, h-3,arch,arch);
 		GradientPaint gp = new GradientPaint(
 				0, 0,
-				UiConstants.CalendarColors.SELECTION_GRAD_TOP, 
+				UiConstants.HeaderColors.GRAD_TOP, 
 				0, 55,
-				UiConstants.CalendarColors.SELECTION_GRAD_BOTTOM, true);
+				UiConstants.HeaderColors.GRAD_BOTTOM, true);
 		
 		g2.setPaint(gp);
 		g2.fill(r);
