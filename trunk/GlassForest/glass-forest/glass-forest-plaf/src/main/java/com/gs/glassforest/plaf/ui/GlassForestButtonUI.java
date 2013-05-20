@@ -34,11 +34,7 @@ import com.gs.glassforest.util.GlassForestUtils;
  *
  */
 public class GlassForestButtonUI extends BasicButtonUI {
-    // NOTE: These are not really needed, but at this point we can't pull
-    // them. Their values are updated purely for historical reasons.
-    protected Color focusColor;
-    protected Color selectColor;
-    protected Color disabledTextColor;
+    
 
     private static final Object GLASS_FOREST_BUTTON_UI_KEY = new Object();
 
@@ -75,24 +71,6 @@ public class GlassForestButtonUI extends BasicButtonUI {
     }
 
 
-    // ********************************
-    //         Default Accessors
-    // ********************************
-    protected Color getSelectColor() {
-        selectColor = UIManager.getColor(getPropertyPrefix() + "select");
-        return selectColor;
-    }
-
-    protected Color getDisabledTextColor() {
-        disabledTextColor = UIManager.getColor(getPropertyPrefix() +
-                                               "disabledText");
-        return disabledTextColor;
-    }
-
-    protected Color getFocusColor() {
-        focusColor = UIManager.getColor(getPropertyPrefix() + "focus");
-        return focusColor;
-    }
 
     // ********************************
     //          Paint
