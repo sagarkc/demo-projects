@@ -11,8 +11,12 @@
 package com.gs.tools.trackdesk.ui.dlg;
 
 import com.gs.tools.trackdesk.ui.HeaderPanel;
+import com.gs.tools.trackdesk.ui.UiConstants;
+import com.gs.tools.trackdesk.ui.theme.ButtonUI;
 import com.gs.tools.trackdesk.ui.theme.TabGradientUI;
+import com.gs.tools.trackdesk.ui.theme.TrackDeskPanelUI;
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 /**
  *
@@ -24,10 +28,17 @@ public class SettingsDialog extends javax.swing.JDialog {
     /** Creates new form SettingsDialog */
     public SettingsDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        setBackground(UiConstants.PanelColors.BACKGROUND);
         initComponents();
         
-        add(headerPanel, BorderLayout.NORTH);
-        //jTabbedPane1.setUI(new TabGradientUI(jTabbedPane1));
+        basePanel.setUI(new TrackDeskPanelUI(basePanel));
+        
+        basePanel.add(headerPanel, BorderLayout.NORTH);
+        settingsTabbedPane.setUI(new TabGradientUI(settingsTabbedPane));
+        jPanel1.setUI(new TrackDeskPanelUI(jPanel1));
+        jPanel2.setUI(new TrackDeskPanelUI(jPanel2));
+        
+        jButton1.setUI(new ButtonUI(jButton1));
     }
 
     /** This method is called from within the constructor to
@@ -39,8 +50,13 @@ public class SettingsDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        basePanel = new javax.swing.JPanel();
+        settingsTabbedPane = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -49,14 +65,34 @@ public class SettingsDialog extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("com/gs/tools/trackdesk/i18n/Message"); // NOI18N
         setTitle(bundle.getString("lbl.settings.window.title")); // NOI18N
+        setMinimumSize(new java.awt.Dimension(480, 350));
+        setPreferredSize(new java.awt.Dimension(480, 350));
 
-        jTabbedPane1.addTab("tab1", jPanel2);
-        jTabbedPane1.addTab("tab2", jPanel3);
-        jTabbedPane1.addTab("tab3", jPanel1);
-        jTabbedPane1.addTab("tab4", jPanel4);
-        jTabbedPane1.addTab("tab5", jPanel5);
+        basePanel.setLayout(new java.awt.BorderLayout());
 
-        getContentPane().add(jTabbedPane1, java.awt.BorderLayout.CENTER);
+        settingsTabbedPane.setBackground(new java.awt.Color(102, 204, 255));
+
+        jButton1.setText("jButton1");
+        jPanel2.add(jButton1);
+
+        jButton2.setText("jButton2");
+        jPanel2.add(jButton2);
+
+        jButton3.setText("jButton3");
+        jPanel2.add(jButton3);
+
+        jButton4.setText("jButton4");
+        jPanel2.add(jButton4);
+
+        settingsTabbedPane.addTab("General", jPanel2);
+        settingsTabbedPane.addTab("tab2", jPanel3);
+        settingsTabbedPane.addTab("tab3", jPanel1);
+        settingsTabbedPane.addTab("tab4", jPanel4);
+        settingsTabbedPane.addTab("tab5", jPanel5);
+
+        basePanel.add(settingsTabbedPane, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(basePanel, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -65,12 +101,17 @@ public class SettingsDialog extends javax.swing.JDialog {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel basePanel;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane settingsTabbedPane;
     // End of variables declaration//GEN-END:variables
 
 }
