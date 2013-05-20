@@ -12,14 +12,9 @@ import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
-import static javax.swing.SwingConstants.BOTTOM;
-import static javax.swing.SwingConstants.LEFT;
-import static javax.swing.SwingConstants.RIGHT;
-import static javax.swing.SwingConstants.TOP;
 import javax.swing.plaf.ComponentUI;
 
 import javax.swing.plaf.UIResource;
-import javax.swing.plaf.basic.BasicGraphicsUtils;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import javax.swing.text.View;
 
@@ -29,7 +24,7 @@ public class TabGradientUI extends BasicTabbedPaneUI {
 
     private static final int ADDED_TAB_HEIGTH = 2;
     private static final int ADDED_TAB_WIDTH = 10;
-    private static final int SPACE_BETWEEN_TAB = 2;
+    private static final int SPACE_BETWEEN_TAB = 1;
 
     public static ComponentUI createUI(JComponent c) {
         return new TabGradientUI((JTabbedPane) c);

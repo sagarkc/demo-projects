@@ -1,0 +1,22 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.gs.glassforest</groupId>
+	<artifactId>glass-forest</artifactId>
+	<version>${release.version}</version>
+	<packaging>pom</packaging>
+	<name>glass-forest</name>
+
+	<properties>
+		<maven.test.skip>true</maven.test.skip>
+	
+		<jdk.version>1.5</jdk.version>
+		<release.version>0.1</release.version>
+		<release.dir>../../dist</release.dir>
+	</properties>
+
+	<modules>
+		<module>glass-forest-plaf</module>
+		<module>glass-forest-demo</module>
+	</modules>
+</project>
