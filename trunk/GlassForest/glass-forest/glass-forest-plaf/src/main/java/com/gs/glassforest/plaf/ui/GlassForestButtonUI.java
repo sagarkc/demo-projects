@@ -43,13 +43,13 @@ public class GlassForestButtonUI extends BasicButtonUI {
     // ********************************
     public static ComponentUI createUI(JComponent c) {
         AppContext appContext = AppContext.getAppContext();
-        GlassForestButtonUI metalButtonUI =
+        GlassForestButtonUI buttonUI =
                 (GlassForestButtonUI) appContext.get(GLASS_FOREST_BUTTON_UI_KEY);
-        if (metalButtonUI == null) {
-            metalButtonUI = new GlassForestButtonUI();
-            appContext.put(GLASS_FOREST_BUTTON_UI_KEY, metalButtonUI);
+        if (buttonUI == null) {
+            buttonUI = new GlassForestButtonUI();
+            appContext.put(GLASS_FOREST_BUTTON_UI_KEY, buttonUI);
         }
-        return metalButtonUI;
+        return buttonUI;
     }
 
     // ********************************
