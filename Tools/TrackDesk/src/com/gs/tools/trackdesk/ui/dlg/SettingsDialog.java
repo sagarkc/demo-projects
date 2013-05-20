@@ -38,7 +38,7 @@ public class SettingsDialog extends javax.swing.JDialog {
         jPanel1.setUI(new TrackDeskPanelUI(jPanel1));
         jPanel2.setUI(new TrackDeskPanelUI(jPanel2));
         
-        jButton1.setUI(new ButtonUI(jButton1));
+        jButton1.setUI(new ButtonUI());
     }
 
     /** This method is called from within the constructor to
