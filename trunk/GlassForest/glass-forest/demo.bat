@@ -1,0 +1,1 @@
+java -jar ..\dist\0.1\glass-forest-demo-0.1.jar
