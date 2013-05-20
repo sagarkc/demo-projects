@@ -1,6 +1,5 @@
 package com.gs.tools.trackdesk.ui.theme;
 
-import com.gs.tools.trackdesk.ui.UiConstants.MenuContentColors;
 import com.gs.tools.trackdesk.ui.UiConstants.TabColors;
 import java.awt.Color;
 import java.awt.Font;
@@ -13,9 +12,14 @@ import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
+import static javax.swing.SwingConstants.BOTTOM;
+import static javax.swing.SwingConstants.LEFT;
+import static javax.swing.SwingConstants.RIGHT;
+import static javax.swing.SwingConstants.TOP;
 import javax.swing.plaf.ComponentUI;
 
 import javax.swing.plaf.UIResource;
+import javax.swing.plaf.basic.BasicGraphicsUtils;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import javax.swing.text.View;
 
@@ -25,7 +29,7 @@ public class TabGradientUI extends BasicTabbedPaneUI {
 
     private static final int ADDED_TAB_HEIGTH = 2;
     private static final int ADDED_TAB_WIDTH = 10;
-    private static final int SPACE_BETWEEN_TAB = 1;
+    private static final int SPACE_BETWEEN_TAB = 2;
 
     public static ComponentUI createUI(JComponent c) {
         return new TabGradientUI((JTabbedPane) c);
@@ -60,6 +64,8 @@ public class TabGradientUI extends BasicTabbedPaneUI {
         selectedTabPadInsets.right = SPACE_BETWEEN_TAB;
     }
 
+    
+    
     @Override
     protected void paintTabBorder(Graphics graphics, int tabPlacement, int tabIndex,
             int x, int y, int w, int h, boolean isSelected) {
@@ -69,12 +75,17 @@ public class TabGradientUI extends BasicTabbedPaneUI {
         Graphics2D g = (Graphics2D) graphics;
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-
-        g.setColor((isSelected ? TabColors.SELECTED_OUTTER_BORDER : TabColors.OUTTER_BORDER));
-        g.drawRect(x, y, w, h);
-
-        g.setColor((isSelected ? TabColors.SELECTED_INNER_BORDER : TabColors.INNER_BORDER));
-        g.drawRect(x + 1, y + 1, w - 1, h - 1);
+        
+        if(isSelected){
+            g.setColor(TabColors.SELECTED_OUTTER_BORDER);
+            g.drawRect(x, y, w, h);
+            g.setColor(TabColors.SELECTED_INNER_BORDER);
+            g.drawRect(x + 1, y + 1, w - 1, h - 1);
+        } else {
+            g.setColor(TabColors.BORDER);
+            g.drawRect(x, y, w, h);
+        }
+        
     }
 
     @Override
@@ -88,16 +99,29 @@ public class TabGradientUI extends BasicTabbedPaneUI {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-        Rectangle2D r = new Rectangle2D.Double(x + 2, y + 2, w - 3, h - 3);
-        GradientPaint gp = new GradientPaint(
-                0, 0,
-                (isSelected ? TabColors.SELECTED_BG_GRAD_TOP : MenuContentColors.BACKGROUND_GRAD_TOP),
-                0, h / 2,
-                (isSelected ? TabColors.SELECTED_BG_GRAD_BOTTOM : MenuContentColors.BACKGROUND_GRAD_BOTTOM),
-                true);
+        if(isSelected){
+            Rectangle2D r = new Rectangle2D.Double(x + 2, y + 2, w - 3, h - 3);
+            GradientPaint gp = new GradientPaint(
+                    0, 0,
+                    TabColors.SELECTED_BG_GRAD_TOP,
+                    0, h / 2,
+                    TabColors.SELECTED_BG_GRAD_BOTTOM,
+                    true);
 
-        g.setPaint(gp);
-        g.fill(r);
+            g.setPaint(gp);
+            g.fill(r);
+        } else {
+            Rectangle2D r = new Rectangle2D.Double(x + 1, y + 1, w - 1, h - 1);
+            GradientPaint gp = new GradientPaint(
+                    0, 0,
+                    TabColors.BACKGROUND_GRAD_TOP,
+                    0, h / 2,
+                    TabColors.BACKGROUND_GRAD_BOTTOM,
+                    true);
+
+            g.setPaint(gp);
+            g.fill(r);
+        }
 
     }
 

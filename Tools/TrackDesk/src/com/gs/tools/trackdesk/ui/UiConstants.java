@@ -54,6 +54,30 @@ public interface UiConstants {
         }
         
     }
+    interface PanelColors{
+        Color BACKGROUND = Color.decode("0xA4C3EB");
+    }
+    
+    interface ButtonsColors{
+        Color BACKGROUND = Color.decode("0xA4C3EB");
+        
+        Color HOVER_BORDER = Color.decode("0xFFBD69");
+        Color HOVER_GRAD_TOP = Color.decode("0xFFF5CC");
+        Color HOVER_GRAD_BOTTOM = Color.decode("0xFFDA75");
+        
+        Color BORDER = Color.decode("0x60A1E2");
+        Color GRAD_TOP = Color.decode("0xE3EFFF");
+        Color GRAD_BOTTOM = Color.decode("0xB1D3FF");
+        
+        Color SELECTED_FOREGROUND = Color.decode("0xF2F6F0");
+		Color SELECTED_BG_GRAD_TOP = Color.decode("0x4BA231");
+		Color SELECTED_BG_GRAD_BOTTOM = Color.decode("0x287D2B");
+		Color SELECTED_OUTTER_BORDER = Color.decode("0x186337");
+		Color SELECTED_INNER_BORDER = Color.decode("0x64BA43");
+        
+        
+    }
+    
     
     interface CalendarColors{
 		Color BACKGROUND = new Color(220,235,252);;
@@ -77,9 +101,9 @@ public interface UiConstants {
 	}
     
     interface HeaderColors{
-		Color OUTTER_BORDER = new Color(125,162,206);
-		Color INNER_BORDER = new Color(222,237,254);
-		Color GRAD_TOP = Color.decode("0xDCEBFC");//new Color(220,235,252); //DCEBFC
+		Color OUTTER_BORDER = Color.decode("0x3E7F93");//new Color(125,162,206);
+		Color INNER_BORDER = Color.decode("0x3E7F93");//new Color(222,237,254);
+		Color GRAD_TOP = Color.decode("0x3E7F93");//new Color(220,235,252); //DCEBFC
 		Color GRAD_BOTTOM = Color.decode("0xC1DBFC");//new Color(193,219,252);
         Color TEXT_COLOR = new Color(0,0,0);
 	}
@@ -87,8 +111,8 @@ public interface UiConstants {
 	interface MenuContentColors{
 		Color BACKGROUND = Color.decode("0xFAFDFE");
 		
-		Color BACKGROUND_GRAD_TOP = Color.decode("0xF7F7F9");;
-		Color BACKGROUND_GRAD_BOTTOM = Color.decode("0xE6EDF6");;
+		Color BACKGROUND_GRAD_TOP = Color.decode("0x459DC4");;
+		Color BACKGROUND_GRAD_BOTTOM = Color.decode("0x0078AE");;
 		
 		Color OUTTER_BORDER = Color.decode("0xAECFF7");
 		Color INNER_BORDER = Color.decode("0xFAFDFE");
@@ -96,16 +120,22 @@ public interface UiConstants {
 	}
 	
 	interface TabColors{
-		Color BACKGROUND = Color.decode("0x186337");
+		Color BACKGROUND = Color.decode("0x3E7F93");
 		Color FOREGROUND = Color.BLACK;
 		
 		Color SELECTED_FOREGROUND = Color.decode("0xF2F6F0");
 		Color SELECTED_BG_GRAD_TOP = Color.decode("0x4BA231");
-		Color SELECTED_BG_GRAD_BOTTOM = Color.decode("0x287D2B");;
+		Color SELECTED_BG_GRAD_BOTTOM = Color.decode("0x287D2B");
 		Color SELECTED_OUTTER_BORDER = Color.decode("0x186337");
 		Color SELECTED_INNER_BORDER = Color.decode("0x64BA43");
+        
+        Color BACKGROUND_GRAD_TOP = Color.decode("0xB4D4F4");
+		Color BACKGROUND_GRAD_BOTTOM = Color.decode("0xB4D4F4");
 		
-		Color OUTTER_BORDER = Color.decode("0xAECFF7");
-		Color INNER_BORDER = Color.decode("0xFAFDFE");
+        Color HOVER_BG_GRAD_TOP = Color.decode("0xD1E2F2");
+		Color HOVER_BG_GRAD_BOTTOM = Color.decode("0xD1E2F2");
+		Color HOVER_BORDER = Color.decode("0x78AEE5");
+        
+		Color BORDER = Color.decode("0x60A1E2");
 	}
 }
