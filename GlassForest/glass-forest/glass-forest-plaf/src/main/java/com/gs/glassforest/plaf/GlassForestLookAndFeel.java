@@ -46,6 +46,9 @@ import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicLookAndFeel;
 import javax.swing.plaf.metal.MetalIconFactory;
 import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.synth.Region;
+import javax.swing.plaf.synth.SynthStyle;
+import javax.swing.plaf.synth.SynthStyleFactory;
 import javax.swing.text.DefaultEditorKit;
 
 import sun.awt.AppContext;
@@ -110,6 +113,10 @@ public class GlassForestLookAndFeel extends BasicLookAndFeel {
 	 */
 	private static boolean useSystemFonts;
 
+	@Override public void initialize() {
+        super.initialize();
+    }
+	
 	public String getName() {
 		return GLASS_FOREST;
 	}
@@ -249,6 +256,8 @@ public class GlassForestLookAndFeel extends BasicLookAndFeel {
                "ToolTipUI", uiPackageName + "GlassForestToolTipUI",
                   "TreeUI", uiPackageName + "GlassForestTreeUI",
               "RootPaneUI", uiPackageName + "GlassForestRootPaneUI",
+               "SpinnerUI", uiPackageName + "GlassForestSpinnerUI",
+                 "PanelUI", uiPackageName + "GlassForestPanelUI",
      };
 
 		table.putDefaults(uiDefaults);

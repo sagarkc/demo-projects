@@ -26,7 +26,10 @@ public class GlassForestDemo {
      */
     public static void main(String args[]) {
         try {
-            UIManager.setLookAndFeel(GlassForestLookAndFeel.class.getCanonicalName());
+        	UIManager.installLookAndFeel(GlassForestLookAndFeel.GLASS_FOREST, 
+        			GlassForestLookAndFeel.class.getCanonicalName()
+        			);
+            UIManager.setLookAndFeel(new GlassForestLookAndFeel());
         } catch (Exception ex) {
         	ex.printStackTrace();
         	try {
@@ -34,14 +37,7 @@ public class GlassForestDemo {
 			} catch( Exception e) {
 			}
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GlassForestFrame().setVisible(true);
-            }
-        });
+        new GlassForestFrame().setVisible(true);
     }
 
 }

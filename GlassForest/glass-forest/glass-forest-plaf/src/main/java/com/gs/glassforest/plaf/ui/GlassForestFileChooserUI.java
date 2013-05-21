@@ -4,19 +4,25 @@
  * This document cannot be copied, modified or re-distributed without prior 
  * permission from the author.
  *  ---------------------------------------------------------------------------* 
- * Type     : com.gs.glassforest.plaf.ui.GlassForestButtonUI
- * Date     : May 20, 2013
+ * Type     : com.gs.glassforest.plaf.ui.GlassForestFileChooserUI
+ * Date     : May 21, 2013
  */
 package com.gs.glassforest.plaf.ui;
 
-import javax.swing.plaf.metal.MetalButtonUI;
+import javax.swing.JFileChooser;
+import javax.swing.plaf.metal.MetalFileChooserUI;
 
 /**
  * @author Sabuj Das
  *
  */
-public class GlassForestButtonUI extends MetalButtonUI {
-    
+public class GlassForestFileChooserUI extends MetalFileChooserUI {
 
-    
+	/**
+	 * @param filechooser
+	 */
+	public GlassForestFileChooserUI(JFileChooser filechooser) {
+		super(filechooser);
+	}
+
 }
