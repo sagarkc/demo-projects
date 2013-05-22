@@ -51,17 +51,17 @@ public interface UiConstants {
         
     }
     interface PanelColors{
-        Color BACKGROUND = Color.decode("0xA4C3EB");
+        Color BACKGROUND = Color.WHITE;//Color.decode("0xA4C3EB");
     }
     
     interface ButtonsColors{
         Color BACKGROUND = Color.decode("0xA4C3EB");
         
-        Color HOVER_BORDER = Color.decode("0xFFBD69");
-        Color HOVER_GRAD_TOP = Color.decode("0xFFF5CC");
+        Color HOVER_BORDER = Color.decode("0xFA980D");
+        Color HOVER_GRAD_TOP = Color.decode("0xFFBD69");
         Color HOVER_GRAD_BOTTOM = Color.decode("0xFFDA75");
         
-        Color BORDER = Color.decode("0x60A1E2");
+        Color BORDER = Color.RED;//Color.decode("0x186337");
         Color GRAD_TOP = Color.decode("0xE3EFFF");
         Color GRAD_BOTTOM = Color.decode("0xB1D3FF");
         
@@ -71,7 +71,11 @@ public interface UiConstants {
 		Color SELECTED_OUTTER_BORDER = Color.decode("0x186337");
 		Color SELECTED_INNER_BORDER = Color.decode("0x64BA43");
         
-        
+        Color FOCUS_COLOR = Color.decode("0x00FF00");
+
+		Color ENABLED_FB = Color.BLACK;
+		Color PRESSED_FG = Color.WHITE;
+		Color DISABLED_FG = Color.GRAY;
     }
     
     

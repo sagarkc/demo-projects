@@ -9,8 +9,6 @@
  */
 package com.gs.glassforest.plaf.ui;
 
-import com.gs.glassforest.plaf.UiConstants;
-import com.gs.glassforest.plaf.UiConstants.TabColors;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -21,14 +19,18 @@ import java.awt.LayoutManager;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
+
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
-import javax.swing.plaf.metal.MetalTabbedPaneUI;
 import javax.swing.text.View;
+
 import sun.swing.SwingUtilities2;
+
+import com.gs.glassforest.plaf.UiConstants;
+import com.gs.glassforest.plaf.UiConstants.TabColors;
 
 /**
  * @author Sabuj Das

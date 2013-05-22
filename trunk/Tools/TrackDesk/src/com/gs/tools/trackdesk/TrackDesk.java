@@ -10,6 +10,8 @@
 
 package com.gs.tools.trackdesk;
 
+import com.gs.glassforest.plaf.GlassForestLookAndFeel;
+import com.gs.glassforest.plaf.ui.GlassForestLabelUI;
 import com.gs.tools.trackdesk.ui.TrackDeskFrame;
 import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 import javax.swing.UIManager;
@@ -29,22 +31,23 @@ public class TrackDesk {
     public static void main(String args[]) {
         try {
             if(OS_TYPE.indexOf("win") >= 0){
-                UIManager.setLookAndFeel(WindowsLookAndFeel.class.getCanonicalName());
+                UIManager.setLookAndFeel(GlassForestLookAndFeel.class.getCanonicalName());
             } else {
                 UIManager.setLookAndFeel(NimbusLookAndFeel.class.getCanonicalName());
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             try {
                 UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
             } catch (Exception ex1) {
                 
             }
         }
-        
+        new TrackDeskFrame().setVisible(true);
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TrackDeskFrame().setVisible(true);
+                
             }
         });
     }
