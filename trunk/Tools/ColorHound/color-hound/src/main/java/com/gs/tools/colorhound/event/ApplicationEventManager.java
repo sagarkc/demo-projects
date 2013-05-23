@@ -13,6 +13,7 @@ package com.gs.tools.colorhound.event;
 import java.util.ArrayList;
 import java.util.EventObject;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,8 +23,8 @@ import java.util.Map;
 public class ApplicationEventManager {
 
     private static ApplicationEventManager instance;
-    private Map<Class, BaseEventListener> listeners 
-            = new HashMap<Class,BaseEventListener>(0);
+    private Map<Class, List<BaseEventListener>> allListeners 
+            = new HashMap<Class, List<BaseEventListener>>(0);
     
     private ApplicationEventManager() {
     }
@@ -41,26 +42,39 @@ public class ApplicationEventManager {
 
     public synchronized void registerListener(final Class eventType, 
             final BaseEventListener listener){
-        listeners.put(eventType, listener);
+        if(null == allListeners.get(eventType)){
+            allListeners.put(eventType, new ArrayList<BaseEventListener>());
+        }
+        allListeners.get(eventType).add(listener);
     }
     
     public synchronized void unregisterListener(final Class eventType){
-        listeners.remove(eventType);
+        allListeners.remove(eventType);
     }
     
     public synchronized void fireEvent(ApplicationEvent event) {
 		if(null == event)
 			return;
-		BaseEventListener listener = listeners.get(event.getClass());
-        if(null != listener){
-            if(event.getClass() == ColorGrabEvent.class){
-                fireColorGrabEvent((ColorGrabEvent)event, 
-                        (ColorGrabListener)listener);
+		List<BaseEventListener> listeners = allListeners.get(event.getClass());
+        if(null != listeners){
+            for (BaseEventListener listener : listeners) {
+                if(event.getClass() == ColorGrabEvent.class){
+                    fireColorGrabEvent((ColorGrabEvent)event, 
+                            (ColorGrabListener)listener);
+                }
+                if(event.getClass() == ColorDetectEvent.class){
+                    fireColorDetectEvent((ColorDetectEvent)event, 
+                            (ColorDetectListener)listener);
+                }
             }
         }
 	}
     
-    public synchronized void fireColorGrabEvent(ColorGrabEvent event, ColorGrabListener listener){
+    private synchronized void fireColorGrabEvent(ColorGrabEvent event, ColorGrabListener listener){
         listener.colorGrabbed(event);
+    }
+
+    private void fireColorDetectEvent(ColorDetectEvent event, ColorDetectListener listener) {
+        listener.colorDetected(event);
     }
  }

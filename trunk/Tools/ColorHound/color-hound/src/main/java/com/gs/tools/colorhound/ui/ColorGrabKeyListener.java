@@ -27,20 +27,17 @@ public class ColorGrabKeyListener implements KeyListener{
     
     
     public void keyTyped(KeyEvent evt) {
-        System.out.println("keyTyped: " + evt.getKeyCode());
-        if(KeyEvent.CTRL_MASK == evt.getModifiers()
-                && KeyEvent.VK_G == evt.getKeyCode()){
-            System.out.println("grab");
-            
-        }
+        
     }
 
     public void keyPressed(KeyEvent evt) {
-        System.out.println("keyTyped: " + evt.getKeyCode());
+        
+        
     }
 
     public void keyReleased(KeyEvent evt) {
-        System.out.println("keyTyped: " + evt.getKeyCode());
+        
+        
     }
 
     
