@@ -21,6 +21,7 @@ import sun.swing.SwingUtilities2;
 
 import com.gs.glassforest.core.GlassForestFontDesktopProperty;
 import com.gs.glassforest.plaf.GlassForestLookAndFeel;
+import com.gs.glassforest.plaf.UiConstants;
 
 /**
  * @author Sabuj Das
@@ -51,12 +52,12 @@ public class DefaultGlassForestTheme extends GlassForestTheme{
      * Names of the fonts to use.
      */
     private static final String[] fontNames = {
-        Font.DIALOG,
-        Font.DIALOG,
-        Font.DIALOG,
-        Font.DIALOG,
-        Font.DIALOG,
-        Font.DIALOG
+    	UiConstants.Fonts.DEFAULT_FONT.getFontName(),
+    	UiConstants.Fonts.DEFAULT_FONT.getFontName(),
+    	UiConstants.Fonts.DEFAULT_FONT.getFontName(),
+    	UiConstants.Fonts.DEFAULT_FONT.getFontName(),
+    	UiConstants.Fonts.DEFAULT_FONT.getFontName(),
+    	UiConstants.Fonts.DEFAULT_FONT.getFontName()
     };
     
     /**

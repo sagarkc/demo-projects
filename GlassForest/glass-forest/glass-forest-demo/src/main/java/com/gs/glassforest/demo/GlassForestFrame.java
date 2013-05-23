@@ -37,6 +37,7 @@ public class GlassForestFrame extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jButton19 = new javax.swing.JButton();
+        jButton19.setRolloverEnabled(true);
         jButton20 = new javax.swing.JButton();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel7 = new javax.swing.JPanel();

@@ -21,7 +21,7 @@ import java.io.File;
 public interface UiConstants {
     public static class Fonts{
         public static final String FONT_PATH = "/com/gs/glassforest/fonts";
-        
+        public static final Font DEFAULT_FONT;
         public static final Font TAHOMA_PLAIN;
         public static final Font TAHOMA_BOLD;
         public static final Font VERA_MONO;
@@ -33,7 +33,7 @@ public interface UiConstants {
                          + File.separator + "TAHOMA.TTF" ));
             } catch (Exception ex) { }
             TAHOMA_PLAIN = font;
-            
+            DEFAULT_FONT = TAHOMA_PLAIN.deriveFont(Font.PLAIN, 11.0F);
             try {
                  font = Font.createFont(Font.TRUETYPE_FONT,
                         UiConstants.class.getResourceAsStream(FONT_PATH 
@@ -58,12 +58,12 @@ public interface UiConstants {
         Color BACKGROUND = Color.decode("0xA4C3EB");
         
         Color HOVER_BORDER = Color.decode("0xFA980D");
-        Color HOVER_GRAD_TOP = Color.decode("0xFFBD69");
-        Color HOVER_GRAD_BOTTOM = Color.decode("0xFFDA75");
+        Color HOVER_GRAD_TOP = new Color(131, 185, 255);//Color.decode("0xFFBD69");
+        Color HOVER_GRAD_BOTTOM = new Color(59, 151, 58);//Color.decode("0xFFDA75");
         
         Color BORDER = Color.RED;//Color.decode("0x186337");
-        Color GRAD_TOP = Color.decode("0xE3EFFF");
-        Color GRAD_BOTTOM = Color.decode("0xB1D3FF");
+        Color GRAD_TOP = Color.decode("0xB4D4F4");
+        Color GRAD_BOTTOM = Color.decode("0xB4D4F4");
         
         Color SELECTED_FOREGROUND = Color.decode("0xF2F6F0");
 		Color SELECTED_BG_GRAD_TOP = Color.decode("0x4BA231");
