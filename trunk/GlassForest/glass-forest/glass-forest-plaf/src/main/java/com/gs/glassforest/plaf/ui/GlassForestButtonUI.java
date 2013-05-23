@@ -100,8 +100,7 @@ public class GlassForestButtonUI extends BasicButtonUI {
     	int w = c.getWidth();
 		int h = c.getHeight();
 		Graphics2D g = (Graphics2D) graphics;
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
+        GlassForestUtils.addRendererHint(g);
         g.setColor(UiConstants.ButtonsColors.BORDER);
 		g.drawRect(0, 0, w, h);
         Rectangle2D r = new Rectangle2D.Double(1, 1, w - 1, h - 1);
@@ -177,7 +176,7 @@ public class GlassForestButtonUI extends BasicButtonUI {
         ButtonModel model = b.getModel();
         FontMetrics fm = SwingUtilities2.getFontMetrics(b, g);
         int mnemonicIndex = b.getDisplayedMnemonicIndex();
-
+        GlassForestUtils.addRendererHint((Graphics2D) g);
         /* Draw the Text */
         if(model.isEnabled() && !(model.isArmed() || model.isPressed())) {
             /*** paint the text normally */
@@ -210,8 +209,7 @@ public class GlassForestButtonUI extends BasicButtonUI {
     		int x = 0;//b.getX();
     		int y = 0;//b.getY();
     		Graphics2D g = (Graphics2D) graphics;
-            g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON);
+    		GlassForestUtils.addRendererHint(g);
             
     		g.setColor(UiConstants.ButtonsColors.SELECTED_OUTTER_BORDER);
     		g.drawRect(0, 0, w, h);
@@ -232,8 +230,7 @@ public class GlassForestButtonUI extends BasicButtonUI {
     protected void paintFocus(Graphics graphics, AbstractButton b,
                               Rectangle viewRect, Rectangle textRect, Rectangle iconRect){
     	Graphics2D g = (Graphics2D) graphics;
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
+        GlassForestUtils.addRendererHint(g);
         Rectangle focusRect = new Rectangle(2, 2, b.getWidth()-4, b.getHeight()-4);
         g.setColor(UiConstants.ButtonsColors.FOCUS_COLOR);
         BasicGraphicsUtils.drawDashedRect(g, (int)focusRect.getX(), (int)focusRect.getY(),
@@ -247,7 +244,7 @@ public class GlassForestButtonUI extends BasicButtonUI {
         ButtonModel model = b.getModel();
         FontMetrics fm = SwingUtilities2.getFontMetrics(c, g);
         int mnemIndex = b.getDisplayedMnemonicIndex();
-
+        GlassForestUtils.addRendererHint((Graphics2D) g);
         /* Draw the Text */
         if(model.isEnabled()) {
             /*** paint the text normally */

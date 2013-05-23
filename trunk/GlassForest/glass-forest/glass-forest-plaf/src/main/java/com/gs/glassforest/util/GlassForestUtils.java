@@ -15,6 +15,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.image.FilteredImageSource;
 import java.awt.image.ImageProducer;
@@ -34,6 +35,17 @@ import sun.swing.ImageIconUIResource;
  */
 public class GlassForestUtils {
 
+	public static void addRendererHint(final Graphics2D graphics){
+		if(graphics == null)
+			return;
+		RenderingHints hints = new RenderingHints(
+				RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		hints.add(new RenderingHints(RenderingHints.KEY_RENDERING,
+				RenderingHints.VALUE_RENDER_QUALITY));
+		graphics.setRenderingHints(hints);
+	}
+	
 	public static Icon getDisabledButtonIcon(Image image) {
 		Object[] range = (Object[]) UIManager.get("Button.disabledGrayRange");
 		int min = 180;
