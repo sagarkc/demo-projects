@@ -69,20 +69,23 @@ implements ColorGrabListener{
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        redRgbTextField = new javax.swing.JTextField();
+        greenRgbTextField = new javax.swing.JTextField();
+        blueRgbTextField = new javax.swing.JTextField();
+        cssRgbTextField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jTextField5 = new javax.swing.JTextField();
+        hexColorTextField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         enlargedPanel = new javax.swing.JPanel();
         colorSourceTabbedPane = new javax.swing.JTabbedPane();
-        jPanel2 = new javax.swing.JPanel();
+        imageViewerPanel = new javax.swing.JPanel();
+        imageControlToolBar = new javax.swing.JToolBar();
+        openImageButton = new javax.swing.JButton();
+        imageContainerPanel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         baseMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
@@ -100,7 +103,7 @@ implements ColorGrabListener{
         addKeyListener(formListener);
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("i18n/Message"); // NOI18N
-        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("lbl.palette.panel.header"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(153, 153, 255))); // NOI18N
+        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("lbl.palette.panel.header"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(153, 153, 255))); // NOI18N
 
         paletteToolBar.setFloatable(false);
         paletteToolBar.setRollover(true);
@@ -162,23 +165,31 @@ implements ColorGrabListener{
 
         jLabel4.setText("HEX");
 
-        jTextField1.setMinimumSize(new java.awt.Dimension(50, 20));
-        jTextField1.setPreferredSize(new java.awt.Dimension(50, 20));
+        redRgbTextField.setForeground(java.awt.Color.red);
+        redRgbTextField.setMinimumSize(new java.awt.Dimension(50, 20));
+        redRgbTextField.setPreferredSize(new java.awt.Dimension(50, 20));
 
-        jTextField2.setMinimumSize(new java.awt.Dimension(50, 20));
-        jTextField2.setPreferredSize(new java.awt.Dimension(50, 20));
+        greenRgbTextField.setForeground(java.awt.Color.green);
+        greenRgbTextField.setMinimumSize(new java.awt.Dimension(50, 20));
+        greenRgbTextField.setPreferredSize(new java.awt.Dimension(50, 20));
 
-        jTextField3.setMinimumSize(new java.awt.Dimension(50, 20));
-        jTextField3.setPreferredSize(new java.awt.Dimension(50, 20));
+        blueRgbTextField.setForeground(java.awt.Color.blue);
+        blueRgbTextField.setMinimumSize(new java.awt.Dimension(50, 20));
+        blueRgbTextField.setPreferredSize(new java.awt.Dimension(50, 20));
+
+        cssRgbTextField.addActionListener(formListener);
 
         jButton1.setText(bundle.getString("lbl.copy.button")); // NOI18N
         jButton1.setEnabled(false);
+        jButton1.addActionListener(formListener);
 
         jButton2.setText(bundle.getString("lbl.copy.button")); // NOI18N
         jButton2.setEnabled(false);
+        jButton2.addActionListener(formListener);
 
         jButton3.setText(bundle.getString("lbl.copy.button")); // NOI18N
         jButton3.setEnabled(false);
+        jButton3.addActionListener(formListener);
 
         jLabel6.setText(bundle.getString("lbl.rgb")); // NOI18N
 
@@ -196,11 +207,11 @@ implements ColorGrabListener{
                             .addGroup(colorDetailsPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField5))
+                                .addComponent(hexColorTextField))
                             .addGroup(colorDetailsPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField4)))
+                                .addComponent(cssRgbTextField)))
                         .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(colorDetailsPanelLayout.createSequentialGroup()
                                 .addGap(8, 8, 8)
@@ -216,21 +227,21 @@ implements ColorGrabListener{
                                 .addComponent(jLabel1))
                             .addGroup(colorDetailsPanelLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(redRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(colorDetailsPanelLayout.createSequentialGroup()
                                 .addGap(16, 16, 16)
                                 .addComponent(jLabel2))
                             .addGroup(colorDetailsPanelLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(greenRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(colorDetailsPanelLayout.createSequentialGroup()
                                 .addGap(16, 16, 16)
                                 .addComponent(jLabel3))
                             .addGroup(colorDetailsPanelLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(blueRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1)))
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -247,33 +258,33 @@ implements ColorGrabListener{
                 .addContainerGap()
                 .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(redRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(greenRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(blueRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addGap(4, 4, 4)
-                .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(hexColorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cssRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(jButton3))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2, jButton3, jLabel4, jLabel6, jLabel7, jTextField1, jTextField2, jTextField3, jTextField4, jTextField5});
+        colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {blueRgbTextField, cssRgbTextField, greenRgbTextField, hexColorTextField, jButton1, jButton2, jButton3, jLabel4, jLabel6, jLabel7, redRgbTextField});
 
         colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3});
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Enlarged"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("lbl.enlarged.header"))); // NOI18N
 
         enlargedPanel.setBackground(new java.awt.Color(255, 255, 255));
         enlargedPanel.setMaximumSize(new java.awt.Dimension(100, 100));
@@ -305,18 +316,34 @@ implements ColorGrabListener{
             .addComponent(enlargedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        imageViewerPanel.setLayout(new java.awt.BorderLayout());
+
+        imageControlToolBar.setFloatable(false);
+        imageControlToolBar.setRollover(true);
+
+        openImageButton.setText(bundle.getString("lbl.open.image.button")); // NOI18N
+        openImageButton.setFocusable(false);
+        openImageButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        openImageButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        openImageButton.addActionListener(formListener);
+        imageControlToolBar.add(openImageButton);
+
+        imageViewerPanel.add(imageControlToolBar, java.awt.BorderLayout.PAGE_START);
+
+        javax.swing.GroupLayout imageContainerPanelLayout = new javax.swing.GroupLayout(imageContainerPanel);
+        imageContainerPanel.setLayout(imageContainerPanelLayout);
+        imageContainerPanelLayout.setHorizontalGroup(
+            imageContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 682, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 271, Short.MAX_VALUE)
+        imageContainerPanelLayout.setVerticalGroup(
+            imageContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 245, Short.MAX_VALUE)
         );
 
-        colorSourceTabbedPane.addTab(bundle.getString("lbl.image.tab.title"), jPanel2); // NOI18N
+        imageViewerPanel.add(imageContainerPanel, java.awt.BorderLayout.CENTER);
+
+        colorSourceTabbedPane.addTab(bundle.getString("lbl.image.tab.title"), imageViewerPanel); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -326,7 +353,7 @@ implements ColorGrabListener{
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 271, Short.MAX_VALUE)
+            .addGap(0, 268, Short.MAX_VALUE)
         );
 
         colorSourceTabbedPane.addTab("tab2", jPanel3);
@@ -390,14 +417,29 @@ implements ColorGrabListener{
     private class FormListener implements java.awt.event.ActionListener, java.awt.event.KeyListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == deleteColorButton) {
-                ColorHoundBaseFrame.this.deleteColorButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == addColorButton) {
+            if (evt.getSource() == addColorButton) {
                 ColorHoundBaseFrame.this.addColorButtonActionPerformed(evt);
             }
             else if (evt.getSource() == editColorButton) {
                 ColorHoundBaseFrame.this.editColorButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == deleteColorButton) {
+                ColorHoundBaseFrame.this.deleteColorButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton1) {
+                ColorHoundBaseFrame.this.jButton1ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton2) {
+                ColorHoundBaseFrame.this.jButton2ActionPerformed(evt);
+            }
+            else if (evt.getSource() == jButton3) {
+                ColorHoundBaseFrame.this.jButton3ActionPerformed(evt);
+            }
+            else if (evt.getSource() == openImageButton) {
+                ColorHoundBaseFrame.this.openImageButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == cssRgbTextField) {
+                ColorHoundBaseFrame.this.cssRgbTextFieldActionPerformed(evt);
             }
         }
 
@@ -440,20 +482,47 @@ implements ColorGrabListener{
         // TODO add your handling code here:
     }//GEN-LAST:event_editColorButtonActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void openImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openImageButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_openImageButtonActionPerformed
+
+    private void cssRgbTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cssRgbTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cssRgbTextFieldActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addColorButton;
     private javax.swing.JPanel baseContentPanel;
     private javax.swing.JMenuBar baseMenuBar;
+    private javax.swing.JTextField blueRgbTextField;
     private javax.swing.JPanel colorDetailsPanel;
     private javax.swing.JTabbedPane colorSourceTabbedPane;
+    private javax.swing.JTextField cssRgbTextField;
     private javax.swing.JButton deleteColorButton;
     private javax.swing.JButton editColorButton;
     private javax.swing.JPanel enlargedPanel;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
+    private javax.swing.JTextField greenRgbTextField;
+    private javax.swing.JTextField hexColorTextField;
     private javax.swing.JMenuItem hideMenuItem;
+    private javax.swing.JPanel imageContainerPanel;
+    private javax.swing.JToolBar imageControlToolBar;
+    private javax.swing.JPanel imageViewerPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -466,20 +535,16 @@ implements ColorGrabListener{
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JPanel leftPanel;
     private javax.swing.JMenuItem newMenuItem;
+    private javax.swing.JButton openImageButton;
     private javax.swing.JPanel paletteContentPanel;
     private javax.swing.JComboBox paletteListComboBox;
     private javax.swing.JToolBar paletteToolBar;
+    private javax.swing.JTextField redRgbTextField;
     // End of variables declaration//GEN-END:variables
 
     public void colorGrabbed(ColorGrabEvent event) {
