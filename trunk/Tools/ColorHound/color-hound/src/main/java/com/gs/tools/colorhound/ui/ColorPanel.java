@@ -10,14 +10,12 @@
 
 package com.gs.tools.colorhound.ui;
 
-import com.gs.tools.colorhound.event.ApplicationEventManager;
-import com.gs.tools.colorhound.event.ColorGrabEvent;
-import com.gs.tools.colorhound.event.ColorGrabListener;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.plaf.basic.BasicGraphicsUtils;
