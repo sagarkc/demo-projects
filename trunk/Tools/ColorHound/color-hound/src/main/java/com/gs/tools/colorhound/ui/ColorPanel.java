@@ -10,6 +10,8 @@
 
 package com.gs.tools.colorhound.ui;
 
+import com.gs.tools.colorhound.event.ApplicationEventManager;
+import com.gs.tools.colorhound.event.ColorPanelSelectedEvent;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -27,6 +29,7 @@ import javax.swing.plaf.basic.BasicGraphicsUtils;
 public class ColorPanel extends JPanel implements MouseListener{
 
     private final JPanel parentPanel;
+    private final String paletteName;
     private Color selectedColor;
     private String colorHexCode;
     private boolean selected = false;
@@ -36,8 +39,9 @@ public class ColorPanel extends JPanel implements MouseListener{
     private boolean colorGrabbed = false;
     
 
-    public ColorPanel(JPanel parent) {
+    public ColorPanel(JPanel parent, String paletteName) {
         this.parentPanel = parent;
+        this.paletteName = paletteName;
         selectedColor = Color.WHITE;
         colorHexCode = Color.BLACK.toString();
         Dimension d = new Dimension(MAX_WIDTH, MAX_HEIGHT);
@@ -64,10 +68,14 @@ public class ColorPanel extends JPanel implements MouseListener{
 
     public void mouseClicked(MouseEvent e) {
         selected = true;
-        ColorPanelManager.getInstance().selectPanel(this);
+        ColorPaletteManager.getInstance().selectPanel(paletteName, this);
         updateUI();
         parentPanel.updateUI();
-        
+        ColorPanelSelectedEvent event = new ColorPanelSelectedEvent
+                (false, selected, this);
+        if(colorGrabbed)
+            event.setSelectedColor(selectedColor);
+        ApplicationEventManager.getInstance().fireEvent(event);
     }
 
     public void mousePressed(MouseEvent e) {
