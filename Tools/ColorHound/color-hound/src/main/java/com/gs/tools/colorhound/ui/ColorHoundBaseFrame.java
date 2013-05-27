@@ -13,6 +13,8 @@ package com.gs.tools.colorhound.ui;
 import com.gs.tools.colorhound.event.ApplicationEventManager;
 import com.gs.tools.colorhound.event.ColorGrabEvent;
 import com.gs.tools.colorhound.event.ColorGrabListener;
+import com.gs.tools.colorhound.event.ColorPanelSelectedEvent;
+import com.gs.tools.colorhound.event.ColorPanelSelectedEventListener;
 import com.gs.tools.colorhound.event.ExternalEventListener;
 import java.awt.AWTEvent;
 import java.awt.ComponentOrientation;
@@ -20,6 +22,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 /**
@@ -27,7 +30,7 @@ import javax.swing.JScrollPane;
  * @author Sabuj Das | sabuj.das@gmail.com
  */
 public class ColorHoundBaseFrame extends javax.swing.JFrame 
-implements ColorGrabListener{
+    implements ColorGrabListener, ColorPanelSelectedEventListener{
 
     private ApplicationEventManager eventManager 
             = ApplicationEventManager.getInstance();
@@ -42,7 +45,8 @@ implements ColorGrabListener{
             externalEventListener, 
             AWTEvent.KEY_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK);
         
-        
+        ApplicationEventManager.getInstance().registerListener(
+                ColorPanelSelectedEvent.class, this);
     }
 
     /** This method is called from within the constructor to
@@ -103,7 +107,7 @@ implements ColorGrabListener{
         addKeyListener(formListener);
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("i18n/Message"); // NOI18N
-        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("lbl.palette.panel.header"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(153, 153, 255))); // NOI18N
+        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("lbl.palette.panel.header"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(153, 153, 255))); // NOI18N
 
         paletteToolBar.setFloatable(false);
         paletteToolBar.setRollover(true);
@@ -114,10 +118,13 @@ implements ColorGrabListener{
         paletteListComboBox.setMaximumSize(new java.awt.Dimension(280, 32767));
         paletteListComboBox.setMinimumSize(new java.awt.Dimension(180, 20));
         paletteListComboBox.setPreferredSize(new java.awt.Dimension(280, 20));
+        paletteListComboBox.addItemListener(formListener);
+        paletteListComboBox.addPropertyChangeListener(formListener);
         paletteToolBar.add(paletteListComboBox);
         paletteToolBar.add(jSeparator2);
 
         addColorButton.setText(bundle.getString("lbl.add.color.button")); // NOI18N
+        addColorButton.setEnabled(false);
         addColorButton.setFocusable(false);
         addColorButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         addColorButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -125,6 +132,7 @@ implements ColorGrabListener{
         paletteToolBar.add(addColorButton);
 
         editColorButton.setText(bundle.getString("lbl.edit.color.button")); // NOI18N
+        editColorButton.setEnabled(false);
         editColorButton.setFocusable(false);
         editColorButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         editColorButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -132,6 +140,7 @@ implements ColorGrabListener{
         paletteToolBar.add(editColorButton);
 
         deleteColorButton.setText(bundle.getString("lbl.delete.color.button")); // NOI18N
+        deleteColorButton.setEnabled(false);
         deleteColorButton.setFocusable(false);
         deleteColorButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         deleteColorButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -338,7 +347,7 @@ implements ColorGrabListener{
         );
         imageContainerPanelLayout.setVerticalGroup(
             imageContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 245, Short.MAX_VALUE)
+            .addGap(0, 248, Short.MAX_VALUE)
         );
 
         imageViewerPanel.add(imageContainerPanel, java.awt.BorderLayout.CENTER);
@@ -353,7 +362,7 @@ implements ColorGrabListener{
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 268, Short.MAX_VALUE)
+            .addGap(0, 271, Short.MAX_VALUE)
         );
 
         colorSourceTabbedPane.addTab("tab2", jPanel3);
@@ -393,6 +402,7 @@ implements ColorGrabListener{
         fileMenu.setText(bundle.getString("lbl.file.menu")); // NOI18N
 
         newMenuItem.setText(bundle.getString("lbl.new.menu.item")); // NOI18N
+        newMenuItem.addActionListener(formListener);
         fileMenu.add(newMenuItem);
         fileMenu.add(jSeparator1);
 
@@ -414,7 +424,7 @@ implements ColorGrabListener{
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements java.awt.event.ActionListener, java.awt.event.KeyListener {
+    private class FormListener implements java.awt.event.ActionListener, java.awt.event.ItemListener, java.awt.event.KeyListener, java.beans.PropertyChangeListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if (evt.getSource() == addColorButton) {
@@ -425,6 +435,9 @@ implements ColorGrabListener{
             }
             else if (evt.getSource() == deleteColorButton) {
                 ColorHoundBaseFrame.this.deleteColorButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == cssRgbTextField) {
+                ColorHoundBaseFrame.this.cssRgbTextFieldActionPerformed(evt);
             }
             else if (evt.getSource() == jButton1) {
                 ColorHoundBaseFrame.this.jButton1ActionPerformed(evt);
@@ -438,8 +451,14 @@ implements ColorGrabListener{
             else if (evt.getSource() == openImageButton) {
                 ColorHoundBaseFrame.this.openImageButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == cssRgbTextField) {
-                ColorHoundBaseFrame.this.cssRgbTextFieldActionPerformed(evt);
+            else if (evt.getSource() == newMenuItem) {
+                ColorHoundBaseFrame.this.newMenuItemActionPerformed(evt);
+            }
+        }
+
+        public void itemStateChanged(java.awt.event.ItemEvent evt) {
+            if (evt.getSource() == paletteListComboBox) {
+                ColorHoundBaseFrame.this.paletteListComboBoxItemStateChanged(evt);
             }
         }
 
@@ -457,6 +476,12 @@ implements ColorGrabListener{
 
         public void keyTyped(java.awt.event.KeyEvent evt) {
         }
+
+        public void propertyChange(java.beans.PropertyChangeEvent evt) {
+            if (evt.getSource() == paletteListComboBox) {
+                ColorHoundBaseFrame.this.paletteListComboBoxPropertyChange(evt);
+            }
+        }
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -468,18 +493,32 @@ implements ColorGrabListener{
     }//GEN-LAST:event_formKeyReleased
 
     private void deleteColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteColorButtonActionPerformed
-        // TODO add your handling code here:
+        if(null != ColorPaletteManager.getInstance().getSelectPanel()){
+            paletteContentPanel.remove(ColorPaletteManager.getInstance().getSelectPanel());
+            paletteContentPanel.updateUI();
+            ColorPaletteManager.getInstance().removeSelectedPanel(getPaletteName());
+            ColorPanelSelectedEvent event = new ColorPanelSelectedEvent
+                (true, false, this);
+            ApplicationEventManager.getInstance().fireEvent(event);
+        }
     }//GEN-LAST:event_deleteColorButtonActionPerformed
 
     private void addColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addColorButtonActionPerformed
-        ColorPanel colorPanel = new ColorPanel(paletteContentPanel);
-        ColorPanelManager.getInstance().addPanel(colorPanel);
-        paletteContentPanel.add(colorPanel, FlowLayout.LEFT);
-        paletteContentPanel.updateUI();
+        String palette = getPaletteName();
+        if(!"".equals(palette)){
+            ColorPanel colorPanel = new ColorPanel(paletteContentPanel, getPaletteName());
+            ColorPaletteManager.getInstance().addPanel(getPaletteName(), colorPanel);
+            paletteContentPanel.add(colorPanel, FlowLayout.LEFT);
+            paletteContentPanel.updateUI();
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Plase add a Palette...");
+        }
+        
     }//GEN-LAST:event_addColorButtonActionPerformed
 
     private void editColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editColorButtonActionPerformed
-        // TODO add your handling code here:
+    	ColorPaletteManager.getInstance().makeSelectedColorPanelEditable(getPaletteName());
     }//GEN-LAST:event_editColorButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -501,6 +540,20 @@ implements ColorGrabListener{
     private void cssRgbTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cssRgbTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cssRgbTextFieldActionPerformed
+
+    private void newMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMenuItemActionPerformed
+        String name = JOptionPane.showInputDialog(this, "Enter a Palette Name: ");
+        ColorPaletteManager.getInstance().addPalette(name);
+        paletteListComboBox.addItem(name);
+    }//GEN-LAST:event_newMenuItemActionPerformed
+
+    private void paletteListComboBoxPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_paletteListComboBoxPropertyChange
+        addColorButton.setEnabled(true);
+    }//GEN-LAST:event_paletteListComboBoxPropertyChange
+
+    private void paletteListComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_paletteListComboBoxItemStateChanged
+        
+    }//GEN-LAST:event_paletteListComboBoxItemStateChanged
 
     
 
@@ -551,6 +604,26 @@ implements ColorGrabListener{
         System.out.println(event.getNewValue());
     }
 
+    
+    public String getPaletteName(){
+        return (null != paletteListComboBox.getSelectedItem())
+                ? paletteListComboBox.getSelectedItem().toString() : "";
+    }
+
+    public void colorPanelSelected(ColorPanelSelectedEvent event) {
+        if(event.getNewValue()){
+            editColorButton.setEnabled(true);
+            deleteColorButton.setEnabled(true);
+            if(event.getSelectedColor() != null){
+                redRgbTextField.setText(""+event.getSelectedColor().getRed());
+                greenRgbTextField.setText(""+event.getSelectedColor().getGreen());
+                blueRgbTextField.setText(""+event.getSelectedColor().getBlue());
+            }
+        } else {
+            editColorButton.setEnabled(false);
+            deleteColorButton.setEnabled(false);
+        }
+    }
     
     
 }
