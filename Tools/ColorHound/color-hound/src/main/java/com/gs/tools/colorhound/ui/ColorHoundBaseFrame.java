@@ -15,15 +15,18 @@ import com.gs.tools.colorhound.ColorPalette;
 import com.gs.tools.colorhound.event.AppSettingsChangedEvent;
 import com.gs.tools.colorhound.event.AppSettingsChangedListener;
 import com.gs.tools.colorhound.event.ApplicationEventManager;
+import com.gs.tools.colorhound.event.ColorDetectEvent;
+import com.gs.tools.colorhound.event.ColorDetectListener;
 import com.gs.tools.colorhound.event.ColorGrabEvent;
 import com.gs.tools.colorhound.event.ColorGrabListener;
 import com.gs.tools.colorhound.event.ColorPanelSelectedEvent;
 import com.gs.tools.colorhound.event.ColorPanelSelectedEventListener;
 import com.gs.tools.colorhound.event.ExternalEventListener;
+import com.gs.tools.colorhound.event.MouseInfoChangeEvent;
+import com.gs.tools.colorhound.event.MouseInfoChangedListener;
 import com.gs.tools.colorhound.util.GraphicsUtil;
 import com.gs.utils.enums.DisplayTypeEnum;
 import com.gs.utils.swing.display.DisplayUtils;
-import com.gs.utils.swing.ScrollablePanel;
 import com.gs.utils.swing.file.ExtensionFileFilter;
 import com.gs.utils.swing.file.FileBrowserUtil;
 import com.gs.utils.swing.window.WindowUtil;
@@ -32,12 +35,16 @@ import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
+import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MenuItem;
 import java.awt.MenuShortcut;
 import java.awt.PopupMenu;
+import java.awt.Rectangle;
+import java.awt.Robot;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
@@ -52,10 +59,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -63,13 +73,11 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import javax.swing.Scrollable;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -79,7 +87,8 @@ import javax.swing.event.DocumentListener;
  */
 public class ColorHoundBaseFrame extends javax.swing.JFrame 
     implements ColorGrabListener, ColorPanelSelectedEventListener,
-        AppSettingsChangedListener, ClipboardOwner {
+        AppSettingsChangedListener, ClipboardOwner, ColorDetectListener,
+        MouseInfoChangedListener{
 
     private final ImageIcon frameIcon = new ImageIcon(getClass().getResource(
                "/images/color-hound-24x24.png"));
@@ -93,24 +102,36 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
             }
         };
     private ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/Message");
-    
-    
+    private static final Toolkit TOOLKIT = Toolkit.getDefaultToolkit();
+    private MouseWatcher mouseWatcher = new MouseWatcher();
+    private Timer mouseWatchTimer = new Timer();
+    private boolean enlargePanelEnabled = true;
+    private EnlargedImagePanel enlargedImagePanel;
     
     /** Creates new form ColorHoundBaseFrame */
     public ColorHoundBaseFrame() {
         initComponents();
+        enlargedImagePanel = new EnlargedImagePanel();
+        enlargedPanel.add(enlargedImagePanel, BorderLayout.CENTER);
         setIconImage(frameIcon.getImage());
         WindowUtil.bringToCenter(this);
         ExternalEventListener externalEventListener
                 = new ExternalEventListener();
-        Toolkit.getDefaultToolkit().addAWTEventListener(
+        TOOLKIT.addAWTEventListener(
             externalEventListener, 
-            AWTEvent.KEY_EVENT_MASK | AWTEvent.MOUSE_MOTION_EVENT_MASK);
+            AWTEvent.KEY_EVENT_MASK + AWTEvent.MOUSE_EVENT_MASK
+                + AWTEvent.MOUSE_MOTION_EVENT_MASK);
+        
+        
         
         ApplicationEventManager.getInstance().registerListener(
                 ColorPanelSelectedEvent.class, this);
         ApplicationEventManager.getInstance().registerListener(
+                ColorDetectEvent.class, this);
+        ApplicationEventManager.getInstance().registerListener(
                 AppSettingsChangedEvent.class, this);
+        ApplicationEventManager.getInstance().registerListener(
+                MouseInfoChangeEvent.class, this);
         
         appContext.load();
         List<ColorPalette> colorPalettes = appContext.getColorPalettes();
@@ -187,10 +208,15 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         jLabel7 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         enlargedPanel = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        ratioSlider = new javax.swing.JSlider();
+        ratioLabel = new javax.swing.JLabel();
         colorSourceTabbedPane = new javax.swing.JTabbedPane();
         imageViewerPanel = new javax.swing.JPanel();
         imageControlToolBar = new javax.swing.JToolBar();
         openImageButton = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JToolBar.Separator();
+        captureDesktopButton = new javax.swing.JButton();
         imageContainerPanel = new javax.swing.JPanel();
         logContentPanel = new javax.swing.JPanel();
         baseMenuBar = new javax.swing.JMenuBar();
@@ -201,6 +227,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         toolsMenu = new javax.swing.JMenu();
+        enableEnlargeAreaChkMenuItem = new javax.swing.JCheckBoxMenuItem();
         settingsMenuItem = new javax.swing.JMenuItem();
 
         FormListener formListener = new FormListener();
@@ -215,7 +242,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
 
         baseSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
-        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("lbl.palette.panel.header"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(153, 153, 255))); // NOI18N
+        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("lbl.palette.panel.header"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(153, 153, 255))); // NOI18N
 
         paletteToolBar.setFloatable(false);
         paletteToolBar.setRollover(true);
@@ -293,7 +320,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         leftPanelLayout.setHorizontalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(paletteToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addComponent(paletteContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+            .addComponent(paletteContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
         );
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -430,36 +457,48 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
 
         colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3});
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("lbl.enlarged.header"))); // NOI18N
-
         enlargedPanel.setBackground(new java.awt.Color(255, 255, 255));
         enlargedPanel.setMaximumSize(new java.awt.Dimension(200, 100));
         enlargedPanel.setMinimumSize(new java.awt.Dimension(200, 100));
         enlargedPanel.setPreferredSize(new java.awt.Dimension(200, 100));
+        enlargedPanel.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout enlargedPanelLayout = new javax.swing.GroupLayout(enlargedPanel);
-        enlargedPanel.setLayout(enlargedPanelLayout);
-        enlargedPanelLayout.setHorizontalGroup(
-            enlargedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
-        );
-        enlargedPanelLayout.setVerticalGroup(
-            enlargedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        jLabel6.setText("Size");
+
+        ratioSlider.setMajorTickSpacing(2);
+        ratioSlider.setMaximum(16);
+        ratioSlider.setMinimum(1);
+        ratioSlider.setSnapToTicks(true);
+        ratioSlider.setValue(1);
+        ratioSlider.addChangeListener(formListener);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(enlargedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(enlargedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ratioSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ratioLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(enlargedPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ratioSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ratioLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(enlargedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
         );
 
         javax.swing.GroupLayout topPanelLayout = new javax.swing.GroupLayout(topPanel);
@@ -470,7 +509,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                 .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(colorDetailsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
@@ -483,8 +522,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                     .addGroup(topPanelLayout.createSequentialGroup()
                         .addComponent(colorDetailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         baseSplitPane.setTopComponent(topPanel);
@@ -500,6 +538,14 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         openImageButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         openImageButton.addActionListener(formListener);
         imageControlToolBar.add(openImageButton);
+        imageControlToolBar.add(jSeparator3);
+
+        captureDesktopButton.setText(bundle.getString("lbl.capture.desktop.button")); // NOI18N
+        captureDesktopButton.setFocusable(false);
+        captureDesktopButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        captureDesktopButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        captureDesktopButton.addActionListener(formListener);
+        imageControlToolBar.add(captureDesktopButton);
 
         imageViewerPanel.add(imageControlToolBar, java.awt.BorderLayout.PAGE_START);
 
@@ -516,7 +562,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         );
         logContentPanelLayout.setVerticalGroup(
             logContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 326, Short.MAX_VALUE)
+            .addGap(0, 323, Short.MAX_VALUE)
         );
 
         colorSourceTabbedPane.addTab(bundle.getString("lbl.log.tab.title"), logContentPanel); // NOI18N
@@ -531,7 +577,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         );
         baseContentPanelLayout.setVerticalGroup(
             baseContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(baseSplitPane)
+            .addComponent(baseSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
         );
 
         getContentPane().add(baseContentPanel, java.awt.BorderLayout.CENTER);
@@ -564,6 +610,11 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
 
         toolsMenu.setText(bundle.getString("lbl.tools.menu")); // NOI18N
 
+        enableEnlargeAreaChkMenuItem.setSelected(true);
+        enableEnlargeAreaChkMenuItem.setText(bundle.getString("lbl.enableEnlargeAreaChkMenuItem")); // NOI18N
+        enableEnlargeAreaChkMenuItem.addActionListener(formListener);
+        toolsMenu.add(enableEnlargeAreaChkMenuItem);
+
         settingsMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/settings.png"))); // NOI18N
         settingsMenuItem.setText(bundle.getString("lbl.settings.menu.item")); // NOI18N
         settingsMenuItem.addActionListener(formListener);
@@ -578,7 +629,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements java.awt.event.ActionListener, java.awt.event.ItemListener, java.awt.event.KeyListener, java.awt.event.WindowListener, java.beans.PropertyChangeListener {
+    private class FormListener implements java.awt.event.ActionListener, java.awt.event.ItemListener, java.awt.event.KeyListener, java.awt.event.WindowListener, java.beans.PropertyChangeListener, javax.swing.event.ChangeListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if (evt.getSource() == paletteListComboBox) {
@@ -628,6 +679,12 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
             }
             else if (evt.getSource() == settingsMenuItem) {
                 ColorHoundBaseFrame.this.settingsMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == captureDesktopButton) {
+                ColorHoundBaseFrame.this.captureDesktopButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == enableEnlargeAreaChkMenuItem) {
+                ColorHoundBaseFrame.this.enableEnlargeAreaChkMenuItemActionPerformed(evt);
             }
         }
 
@@ -684,6 +741,12 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                 ColorHoundBaseFrame.this.paletteListComboBoxPropertyChange(evt);
             }
         }
+
+        public void stateChanged(javax.swing.event.ChangeEvent evt) {
+            if (evt.getSource() == ratioSlider) {
+                ColorHoundBaseFrame.this.ratioSliderStateChanged(evt);
+            }
+        }
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -725,6 +788,12 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
 
     private void editColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editColorButtonActionPerformed
     	ColorPaletteManager.getInstance().makeSelectedColorPanelEditable(getPaletteName());
+        if(enlargePanelEnabled 
+                    && ColorPaletteManager.getInstance().isSelectedPanelEditable(getPaletteName())){
+                mouseWatchTimer.schedule(mouseWatcher, 0, 500L);
+        } else {
+            mouseWatchTimer.cancel();
+        }
     }//GEN-LAST:event_editColorButtonActionPerformed
 
     private void rgbCopyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rgbCopyButtonActionPerformed
@@ -909,6 +978,84 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         
     }//GEN-LAST:event_openImageButtonActionPerformed
 
+    private void captureDesktopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_captureDesktopButtonActionPerformed
+        final TrayIcon trayIcon = minimizeToTray(this, 
+                frameIcon.getImage(), exitListener);
+        try {
+			Thread.sleep(500);
+			BufferedImage image = null;
+			Toolkit toolkit = Toolkit.getDefaultToolkit();
+            
+			Rectangle screenRectangle=new Rectangle(toolkit.getScreenSize());
+			Robot robot=new Robot();
+			image = robot.createScreenCapture(screenRectangle);
+			if(null != image){
+                
+                imageContainerPanel.removeAll();
+                ImagePanel imagePanel = new ImagePanel(image);
+
+                final JScrollPane imagePanelScrollPane = new JScrollPane(imagePanel);
+                final int increment = 50;
+                imagePanelScrollPane.getVerticalScrollBar().setUnitIncrement(increment);
+                KeyStroke kUp = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0);
+                KeyStroke kDown = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0);
+                imagePanelScrollPane.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+                        kUp, "actionWhenKeyUp");
+                imagePanelScrollPane.getActionMap().put("actionWhenKeyUp",
+                        new AbstractAction("keyUpAction") {
+
+                            private static final long serialVersionUID = 1L;
+
+                            public void actionPerformed(ActionEvent e) {
+                                final JScrollBar bar = imagePanelScrollPane.getVerticalScrollBar();
+                                int currentValue = bar.getValue();
+                                bar.setValue(currentValue - increment);
+                            }
+                        });
+                imagePanelScrollPane.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+                        kDown, "actionWhenKeyDown");
+                imagePanelScrollPane.getActionMap().put("actionWhenKeyDown",
+                        new AbstractAction("keyDownAction") {
+
+                            private static final long serialVersionUID = 1L;
+
+                            public void actionPerformed(ActionEvent e) {
+                                final JScrollBar bar = imagePanelScrollPane.getVerticalScrollBar();
+                                int currentValue = bar.getValue();
+                                bar.setValue(currentValue + increment);
+                            }
+                        });
+                imageContainerPanel.add(imagePanelScrollPane, BorderLayout.CENTER);
+                imageContainerPanel.updateUI();
+                
+            }
+			Thread.sleep(500);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		if (SystemTray.isSupported() && null != trayIcon) {
+			// get the SystemTray instance
+			SystemTray tray = SystemTray.getSystemTray();
+			tray.remove(trayIcon);
+			this.setVisible(true);
+		}
+    }//GEN-LAST:event_captureDesktopButtonActionPerformed
+
+    private void enableEnlargeAreaChkMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enableEnlargeAreaChkMenuItemActionPerformed
+        if(enableEnlargeAreaChkMenuItem.isSelected()){
+            enlargePanelEnabled = true;
+            mouseWatchTimer.schedule(mouseWatcher, 0, 500L);
+        } else {
+            enlargePanelEnabled = false;
+            mouseWatchTimer.cancel();
+        }
+    }//GEN-LAST:event_enableEnlargeAreaChkMenuItemActionPerformed
+
+    private void ratioSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_ratioSliderStateChanged
+        ratioLabel.setText(""+ratioSlider.getValue());
+    }//GEN-LAST:event_ratioSliderStateChanged
+
     public TrayIcon minimizeToTray(final Frame frame, final Image image, ActionListener exitListener) {
         final PopupMenu popup = new PopupMenu();
         final TrayIcon trayIcon = new TrayIcon(image, frame.getTitle(), popup);
@@ -1018,6 +1165,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     private javax.swing.JMenuBar baseMenuBar;
     private javax.swing.JSplitPane baseSplitPane;
     private javax.swing.JTextField blueRgbTextField;
+    private javax.swing.JButton captureDesktopButton;
     private javax.swing.JPanel colorDetailsPanel;
     private javax.swing.JTabbedPane colorSourceTabbedPane;
     private javax.swing.JButton cssCopyButton;
@@ -1026,6 +1174,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     private javax.swing.JButton deletePaletteButton;
     private javax.swing.JButton editColorButton;
     private javax.swing.JMenu editMenu;
+    private javax.swing.JCheckBoxMenuItem enableEnlargeAreaChkMenuItem;
     private javax.swing.JPanel enlargedPanel;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
@@ -1041,10 +1190,12 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JPanel leftPanel;
     private javax.swing.JPanel logContentPanel;
     private javax.swing.JMenuItem newMenuItem;
@@ -1052,6 +1203,8 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     private javax.swing.JPanel paletteContentPanel;
     private javax.swing.JComboBox paletteListComboBox;
     private javax.swing.JToolBar paletteToolBar;
+    private javax.swing.JLabel ratioLabel;
+    private javax.swing.JSlider ratioSlider;
     private javax.swing.JTextField redRgbTextField;
     private javax.swing.JButton rgbCopyButton;
     private javax.swing.JMenuItem settingsMenuItem;
@@ -1059,6 +1212,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     private javax.swing.JPanel topPanel;
     // End of variables declaration//GEN-END:variables
 
+    @Override
     public void colorGrabbed(ColorGrabEvent event) {
         System.out.println(event.getNewValue());
     }
@@ -1068,9 +1222,13 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         return (null != paletteListComboBox.getSelectedItem())
                 ? paletteListComboBox.getSelectedItem().toString() : "";
     }
-
+    
+    @Override
     public void colorPanelSelected(ColorPanelSelectedEvent event) {
         if(event.getNewValue()){
+            if(enlargePanelEnabled 
+                    && ColorPaletteManager.getInstance().isSelectedPanelEditable(getPaletteName()))
+                mouseWatchTimer.schedule(mouseWatcher, 0, 500L);
             editColorButton.setEnabled(true);
             deleteColorButton.setEnabled(true);
             if(event.getSelectedColor() != null){
@@ -1081,17 +1239,58 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                 cssRgbTextField.setText(GraphicsUtil.encodeColorForCss(event.getSelectedColor()));
             }
         } else {
+            mouseWatchTimer.cancel();
             editColorButton.setEnabled(false);
             deleteColorButton.setEnabled(false);
         }
     }
 
+    @Override
     public void appSettingsChanged(AppSettingsChangedEvent event) {
         
     }
 
+    @Override
     public void lostOwnership(Clipboard clipboard, Transferable contents) {
         
+    }
+
+    @Override
+    public void colorDetected(ColorDetectEvent event) {
+        
+    }
+
+    @Override
+    public void mouseInfoChanged(MouseInfoChangeEvent event) {
+        if(null != event.getNewLocation()
+                && enlargePanelEnabled
+                && ColorPaletteManager.getInstance().isSelectedPanelEditable(getPaletteName())){
+            
+            try {
+                Robot robot = new Robot();
+                int x = (int)event.getNewLocation().getX();
+                int y = (int)event.getNewLocation().getY();
+                int w = 40;
+                int h = 20;
+                
+                Color color = robot.getPixelColor(x, y);
+                if(null != color){
+                    ColorDetectEvent cde = new ColorDetectEvent(null, color, this);
+                    eventManager.fireEvent(cde);
+                }
+                x = Math.max(0, x-20);
+                y = Math.max(0, y-10);
+                
+                BufferedImage img = robot.createScreenCapture(
+                        new Rectangle(x, y, w, h)
+                     );
+                if(null != img){
+                    enlargedImagePanel.setImage(img);
+                }
+            } catch (AWTException ex) {
+                
+            }
+        }
     }
     
     

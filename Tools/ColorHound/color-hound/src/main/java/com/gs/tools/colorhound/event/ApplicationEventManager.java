@@ -23,10 +23,10 @@ import java.util.Map;
 public class ApplicationEventManager {
 
     private static ApplicationEventManager instance;
-    private Map<Class, List<BaseEventListener>> allListeners 
-            = new HashMap<Class, List<BaseEventListener>>(0);
+    private Map<Class, List<BaseEventListener>> allListeners;
     
     private ApplicationEventManager() {
+        this.allListeners = new HashMap<Class, List<BaseEventListener>>();
     }
 
     public static ApplicationEventManager getInstance() {
@@ -74,6 +74,10 @@ public class ApplicationEventManager {
                     fireAppSettingsChangedEvent((AppSettingsChangedEvent)event, 
                             (AppSettingsChangedListener)listener);
                 }
+                if(event.getClass() == MouseInfoChangeEvent.class){
+                    fireMouseInfoChangeEvent((MouseInfoChangeEvent)event, 
+                            (MouseInfoChangedListener)listener);
+                }
             }
         }
 	}
@@ -92,5 +96,9 @@ public class ApplicationEventManager {
 
     private void fireAppSettingsChangedEvent(AppSettingsChangedEvent event, AppSettingsChangedListener listener) {
         listener.appSettingsChanged(event);
+    }
+
+    private void fireMouseInfoChangeEvent(MouseInfoChangeEvent mouseInfoChangeEvent, MouseInfoChangedListener mouseInfoChangedListener) {
+        mouseInfoChangedListener.mouseInfoChanged(mouseInfoChangeEvent);
     }
  }
