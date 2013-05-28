@@ -1,13 +1,12 @@
-/** ---------------------------------------------------------------------------*
+/**
+ * ---------------------------------------------------------------------------*
  * Copyright Sabuj Das | sabuj.das@gmail.com all rights reserved.
  * <br/>
- * This document cannot be copied, modified or re-distributed without prior 
+ * This document cannot be copied, modified or re-distributed without prior
  * permission from the author.
- *  ---------------------------------------------------------------------------* 
- * Type     : com.gs.tools.colorhound.ui.ImagePanel
- * Date     : May 23, 2013
+ * ---------------------------------------------------------------------------*
+ * Type : com.gs.tools.colorhound.ui.ImagePanel Date : May 23, 2013
  */
-
 package com.gs.tools.colorhound.ui;
 
 import com.gs.tools.colorhound.event.ApplicationEventManager;
@@ -16,14 +15,11 @@ import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Robot;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.geom.Rectangle2D;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
@@ -34,10 +30,24 @@ public class ImagePanel extends JPanel implements MouseListener {
 
     private Image image;
     private ColorGrabKeyListener colorGrabKeyListener;
-    private ApplicationEventManager eventManager 
-            = ApplicationEventManager.getInstance();
-    public ImagePanel() {
-        
+    private ApplicationEventManager eventManager = ApplicationEventManager.getInstance();
+
+    public ImagePanel(String img) {
+		this(new ImageIcon(img).getImage());
+	}
+    
+    public ImagePanel(Image image) {
+        if (null == image) {
+            throw new IllegalArgumentException("Image must be provided");
+        }
+        this.image = image;
+        setBackground(new Color(255, 255, 255));
+        Dimension size = new Dimension(image.getWidth(null), image.getHeight(null));
+        setPreferredSize(size);
+        setMinimumSize(size);
+        setMaximumSize(size);
+        setSize(size);
+        setLayout(null);
     }
 
     public Image getImage() {
@@ -52,47 +62,29 @@ public class ImagePanel extends JPanel implements MouseListener {
         java.awt.Robot robot;
         try {
             robot = new Robot();
-            ColorGrabEvent cge = new ColorGrabEvent(null, robot.getPixelColor(e.getX(), e.getY()), this);
-        eventManager.fireEvent(cge);
+            ColorGrabEvent cge = new ColorGrabEvent(null, 
+                    robot.getPixelColor(e.getX(), e.getY()), this);
+            eventManager.fireEvent(cge);
         } catch (AWTException ex) {
-            
         }
-        
+
     }
 
     public void mousePressed(MouseEvent e) {
-        
     }
 
     public void mouseReleased(MouseEvent e) {
-        
     }
 
     public void mouseEntered(MouseEvent e) {
-        
     }
 
     public void mouseExited(MouseEvent e) {
-        
     }
 
     @Override
-    public void paintComponent(Graphics g){
- g.setColor(Color.red);
-            super.paintComponent(g);
-            Graphics2D g2 = (Graphics2D) g;
-            double leftX = 10;
-            double topY = 10;
-            double width = 600;
-            double height = 600;
-            Rectangle2D rect = new Rectangle2D.Double(leftX, topY, width, height);
-            g2.draw(rect);
-        }
-    
-
-
-    
-    
-    
+    public void paintComponent(Graphics g) {
+		g.drawImage(image, 0, 0, null);
+	}
     
 }
