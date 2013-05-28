@@ -23,9 +23,13 @@ import com.gs.tools.colorhound.event.ExternalEventListener;
 import com.gs.tools.colorhound.util.GraphicsUtil;
 import com.gs.utils.enums.DisplayTypeEnum;
 import com.gs.utils.swing.display.DisplayUtils;
+import com.gs.utils.swing.ScrollablePanel;
+import com.gs.utils.swing.file.ExtensionFileFilter;
+import com.gs.utils.swing.file.FileBrowserUtil;
 import com.gs.utils.swing.window.WindowUtil;
 import java.awt.AWTEvent;
 import java.awt.AWTException;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
@@ -47,13 +51,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.Scrollable;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -77,6 +87,8 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
             }
         };
     private ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/Message");
+    
+    
     
     /** Creates new form ColorHoundBaseFrame */
     public ColorHoundBaseFrame() {
@@ -166,7 +178,6 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         hexCopyButton = new javax.swing.JButton();
         cssCopyButton = new javax.swing.JButton();
         hexColorTextField = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         enlargedPanel = new javax.swing.JPanel();
@@ -175,7 +186,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         imageControlToolBar = new javax.swing.JToolBar();
         openImageButton = new javax.swing.JButton();
         imageContainerPanel = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        logContentPanel = new javax.swing.JPanel();
         baseMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         newMenuItem = new javax.swing.JMenuItem();
@@ -276,7 +287,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         leftPanelLayout.setHorizontalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(paletteToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addComponent(paletteContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+            .addComponent(paletteContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
         );
         leftPanelLayout.setVerticalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,7 +322,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         greenRgbTextField.setPreferredSize(new java.awt.Dimension(50, 20));
 
         blueRgbTextField.setEditable(false);
-        blueRgbTextField.setBackground(new java.awt.Color(0, 0, 0));
+        blueRgbTextField.setBackground(new java.awt.Color(255, 255, 255));
         blueRgbTextField.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         blueRgbTextField.setForeground(java.awt.Color.blue);
         blueRgbTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -338,8 +349,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         hexColorTextField.setEditable(false);
         hexColorTextField.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         hexColorTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-
-        jLabel6.setText(bundle.getString("lbl.rgb")); // NOI18N
+        hexColorTextField.addActionListener(formListener);
 
         jLabel7.setText("CSS");
 
@@ -348,68 +358,55 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         colorDetailsPanelLayout.setHorizontalGroup(
             colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(colorDetailsPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(4, 4, 4)
                 .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(colorDetailsPanelLayout.createSequentialGroup()
                         .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(colorDetailsPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(hexColorTextField))
-                            .addGroup(colorDetailsPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cssRgbTextField)))
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel4))
+                        .addGap(2, 2, 2)
                         .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(colorDetailsPanelLayout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(cssCopyButton))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, colorDetailsPanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(hexCopyButton))))
+                            .addComponent(hexColorTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                            .addComponent(cssRgbTextField))
+                        .addGap(2, 2, 2)
+                        .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(hexCopyButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cssCopyButton, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(colorDetailsPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(colorDetailsPanelLayout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jLabel1))
-                            .addGroup(colorDetailsPanelLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(redRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(16, 16, 16)
+                        .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(redRgbTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(greenRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                        .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(colorDetailsPanelLayout.createSequentialGroup()
-                                .addComponent(blueRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rgbCopyButton))
-                            .addComponent(jLabel3))))
-                .addContainerGap())
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, colorDetailsPanelLayout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(blueRgbTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(2, 2, 2)
+                        .addComponent(rgbCopyButton)))
+                .addGap(2, 2, 2))
         );
 
-        colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4, jLabel6, jLabel7});
+        colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel4, jLabel7});
 
         colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cssCopyButton, hexCopyButton, rgbCopyButton});
 
         colorDetailsPanelLayout.setVerticalGroup(
             colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(colorDetailsPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(2, 2, 2)
                 .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
                     .addComponent(redRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(greenRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(blueRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rgbCopyButton))
                 .addGap(4, 4, 4)
-                .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(hexColorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -420,10 +417,10 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                     .addComponent(cssRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(cssCopyButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(2, 2, 2))
         );
 
-        colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {blueRgbTextField, cssCopyButton, cssRgbTextField, greenRgbTextField, hexColorTextField, hexCopyButton, jLabel4, jLabel6, jLabel7, redRgbTextField, rgbCopyButton});
+        colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {blueRgbTextField, cssCopyButton, cssRgbTextField, greenRgbTextField, hexColorTextField, hexCopyButton, jLabel4, jLabel7, redRgbTextField, rgbCopyButton});
 
         colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3});
 
@@ -450,9 +447,9 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(enlargedPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -467,8 +464,9 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                 .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addGroup(topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(colorDetailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(colorDetailsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0))
         );
         topPanelLayout.setVerticalGroup(
             topPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -480,7 +478,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                         .addComponent(colorDetailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 11, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         baseSplitPane.setTopComponent(topPanel);
@@ -499,33 +497,23 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
 
         imageViewerPanel.add(imageControlToolBar, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout imageContainerPanelLayout = new javax.swing.GroupLayout(imageContainerPanel);
-        imageContainerPanel.setLayout(imageContainerPanelLayout);
-        imageContainerPanelLayout.setHorizontalGroup(
-            imageContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 722, Short.MAX_VALUE)
-        );
-        imageContainerPanelLayout.setVerticalGroup(
-            imageContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 226, Short.MAX_VALUE)
-        );
-
+        imageContainerPanel.setLayout(new java.awt.BorderLayout());
         imageViewerPanel.add(imageContainerPanel, java.awt.BorderLayout.CENTER);
 
         colorSourceTabbedPane.addTab(bundle.getString("lbl.image.tab.title"), imageViewerPanel); // NOI18N
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 722, Short.MAX_VALUE)
+        javax.swing.GroupLayout logContentPanelLayout = new javax.swing.GroupLayout(logContentPanel);
+        logContentPanel.setLayout(logContentPanelLayout);
+        logContentPanelLayout.setHorizontalGroup(
+            logContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 724, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 249, Short.MAX_VALUE)
+        logContentPanelLayout.setVerticalGroup(
+            logContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 326, Short.MAX_VALUE)
         );
 
-        colorSourceTabbedPane.addTab("tab2", jPanel3);
+        colorSourceTabbedPane.addTab(bundle.getString("lbl.log.tab.title"), logContentPanel); // NOI18N
 
         baseSplitPane.setRightComponent(colorSourceTabbedPane);
 
@@ -616,6 +604,9 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
             }
             else if (evt.getSource() == cssCopyButton) {
                 ColorHoundBaseFrame.this.cssCopyButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == hexColorTextField) {
+                ColorHoundBaseFrame.this.hexColorTextFieldActionPerformed(evt);
             }
             else if (evt.getSource() == openImageButton) {
                 ColorHoundBaseFrame.this.openImageButtonActionPerformed(evt);
@@ -752,10 +743,6 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         clipboard.setContents(stringSelection , this );
     }//GEN-LAST:event_cssCopyButtonActionPerformed
 
-    private void openImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openImageButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_openImageButtonActionPerformed
-
     private void cssRgbTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cssRgbTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cssRgbTextFieldActionPerformed
@@ -861,6 +848,34 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
             minimizeToTray(this, frameIcon.getImage(), exitListener);
         }
     }//GEN-LAST:event_formWindowIconified
+
+    private void hexColorTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hexColorTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_hexColorTextFieldActionPerformed
+
+    private void openImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openImageButtonActionPerformed
+        File file = FileBrowserUtil.openSingleFile(this, 
+                new ExtensionFileFilter(new String[]{"jpeg","jpg", 
+                    "png", "gif"}, "Image files..."), 
+                false);
+        if(null != file && file.exists()){
+            try {
+                imageContainerPanel.removeAll();
+                ScrollablePanel sp = new ScrollablePanel();
+                
+                ImagePanel imagePanel = new ImagePanel(file.getCanonicalPath());
+                sp.add(imagePanel);
+                JScrollPane imagePanelScrollPane = new JScrollPane(imagePanel);
+                imagePanelScrollPane.setPreferredSize(imagePanel.getPreferredSize());
+                imagePanelScrollPane.setViewportView(imagePanel);
+                imageContainerPanel.add(sp, BorderLayout.CENTER);
+                imageContainerPanel.updateUI();
+            } catch (IOException ex) {
+                
+            }
+        }
+        
+    }//GEN-LAST:event_openImageButtonActionPerformed
 
     public TrayIcon minimizeToTray(final Frame frame, final Image image, ActionListener exitListener) {
         final PopupMenu popup = new PopupMenu();
@@ -994,13 +1009,12 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JPanel leftPanel;
+    private javax.swing.JPanel logContentPanel;
     private javax.swing.JMenuItem newMenuItem;
     private javax.swing.JButton openImageButton;
     private javax.swing.JPanel paletteContentPanel;

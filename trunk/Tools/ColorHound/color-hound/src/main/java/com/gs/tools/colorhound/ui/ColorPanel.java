@@ -11,14 +11,17 @@
 package com.gs.tools.colorhound.ui;
 
 import com.gs.tools.colorhound.event.ApplicationEventManager;
+import com.gs.tools.colorhound.event.ColorGrabEvent;
 import com.gs.tools.colorhound.event.ColorPanelSelectedEvent;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
+import javax.swing.JColorChooser;
 import javax.swing.JPanel;
 import javax.swing.plaf.basic.BasicGraphicsUtils;
 
@@ -38,6 +41,8 @@ public class ColorPanel extends JPanel implements MouseListener{
     private final static int MAX_HEIGHT = 34;
     private boolean colorGrabbed = false;
     
+    private final ResourceBundle resourceBundle 
+            = ResourceBundle.getBundle("i18n/Message");
 
     public ColorPanel(JPanel parent, String paletteName) {
         this.parentPanel = parent;
@@ -51,7 +56,7 @@ public class ColorPanel extends JPanel implements MouseListener{
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         setLayout(null);
         addMouseListener(this);
-        
+        setToolTipText(resourceBundle.getString("tip.color.panel.info"));
     }
 
     public JPanel getParentPanel() {
@@ -67,15 +72,30 @@ public class ColorPanel extends JPanel implements MouseListener{
     }
 
     public void mouseClicked(MouseEvent e) {
-        selected = true;
-        ColorPaletteManager.getInstance().selectPanel(paletteName, this);
-        updateUI();
-        parentPanel.updateUI();
-        ColorPanelSelectedEvent event = new ColorPanelSelectedEvent
-                (false, selected, this);
-        if(colorGrabbed)
-            event.setSelectedColor(selectedColor);
-        ApplicationEventManager.getInstance().fireEvent(event);
+        if(MouseEvent.BUTTON1 == e.getButton()){
+            selected = true;
+            ColorPaletteManager.getInstance().selectPanel(paletteName, this);
+            updateUI();
+            parentPanel.updateUI();
+            ColorPanelSelectedEvent event = new ColorPanelSelectedEvent
+                    (false, selected, this);
+            if(colorGrabbed)
+                event.setSelectedColor(selectedColor);
+            ApplicationEventManager.getInstance().fireEvent(event);
+        } else if(MouseEvent.BUTTON3 == e.getButton()){
+            Color newColor = JColorChooser.showDialog(this, 
+                    resourceBundle.getString("lbl.color.chooser.title"), 
+                    selectedColor);
+            if(null != newColor){
+                selectedColor = newColor;
+                colorGrabbed = true;
+                ApplicationEventManager.getInstance().fireEvent(
+                        new ColorGrabEvent(selectedColor, selectedColor, this)
+                        );
+                updateUI();
+                parentPanel.updateUI();
+            }
+        }
     }
 
     public void mousePressed(MouseEvent e) {
