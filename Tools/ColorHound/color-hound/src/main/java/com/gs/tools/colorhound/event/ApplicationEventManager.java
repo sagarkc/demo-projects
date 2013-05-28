@@ -70,6 +70,10 @@ public class ApplicationEventManager {
                     fireColorPanelSelectedEvent((ColorPanelSelectedEvent)event, 
                             (ColorPanelSelectedEventListener)listener);
                 }
+                if(event.getClass() == AppSettingsChangedEvent.class){
+                    fireAppSettingsChangedEvent((AppSettingsChangedEvent)event, 
+                            (AppSettingsChangedListener)listener);
+                }
             }
         }
 	}
@@ -84,5 +88,9 @@ public class ApplicationEventManager {
 
     private void fireColorPanelSelectedEvent(ColorPanelSelectedEvent event, ColorPanelSelectedEventListener listener) {
         listener.colorPanelSelected(event);
+    }
+
+    private void fireAppSettingsChangedEvent(AppSettingsChangedEvent event, AppSettingsChangedListener listener) {
+        listener.appSettingsChanged(event);
     }
  }
