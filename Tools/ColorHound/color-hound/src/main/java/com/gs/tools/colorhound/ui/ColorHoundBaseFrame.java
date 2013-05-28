@@ -10,20 +10,47 @@
 
 package com.gs.tools.colorhound.ui;
 
+import com.gs.tools.colorhound.ApplicationContext;
+import com.gs.tools.colorhound.ColorPalette;
 import com.gs.tools.colorhound.event.ApplicationEventManager;
 import com.gs.tools.colorhound.event.ColorGrabEvent;
 import com.gs.tools.colorhound.event.ColorGrabListener;
 import com.gs.tools.colorhound.event.ColorPanelSelectedEvent;
 import com.gs.tools.colorhound.event.ColorPanelSelectedEventListener;
 import com.gs.tools.colorhound.event.ExternalEventListener;
+import com.gs.tools.colorhound.util.GraphicsUtil;
+import com.gs.utils.swing.window.WindowUtil;
 import java.awt.AWTEvent;
+import java.awt.AWTException;
+import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.MenuItem;
+import java.awt.MenuShortcut;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
 import java.awt.Toolkit;
+import java.awt.TrayIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.text.DecimalFormat;
+import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -32,13 +59,18 @@ import javax.swing.JScrollPane;
 public class ColorHoundBaseFrame extends javax.swing.JFrame 
     implements ColorGrabListener, ColorPanelSelectedEventListener{
 
-    private ApplicationEventManager eventManager 
+    private final ImageIcon frameIcon = new ImageIcon(getClass().getResource(
+               "/images/color-hound-24x24.png"));
+    private static ApplicationContext appContext 
+            = ApplicationContext.getContext();
+    private static ApplicationEventManager eventManager 
             = ApplicationEventManager.getInstance();
     
     /** Creates new form ColorHoundBaseFrame */
     public ColorHoundBaseFrame() {
         initComponents();
-        
+        setIconImage(frameIcon.getImage());
+        WindowUtil.bringToCenter(this);
         ExternalEventListener externalEventListener
                 = new ExternalEventListener();
         Toolkit.getDefaultToolkit().addAWTEventListener(
@@ -47,8 +79,35 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         
         ApplicationEventManager.getInstance().registerListener(
                 ColorPanelSelectedEvent.class, this);
+        
+        appContext.load();
+        List<ColorPalette> colorPalettes = appContext.getColorPalettes();
+        if(null != colorPalettes && colorPalettes.size() > 0){
+            for (ColorPalette colorPalette : colorPalettes) {
+                ColorPaletteManager.getInstance().addPalette(
+                        colorPalette.getName());
+                paletteListComboBox.addItem(colorPalette.getName());
+                List<String> colorCodes = colorPalette.getColorCodes();
+                if(null != colorCodes && colorCodes.size() > 0){
+                    ColorPanel colorPanel = new ColorPanel(paletteContentPanel, 
+                            colorPalette.getName());
+                    ColorPaletteManager.getInstance().addPanel(
+                            colorPalette.getName(), colorPanel);
+                } 
+            }
+            paletteListComboBox.setSelectedIndex(0);
+            paletteContentPanel.updateUI();
+        }
+        
+        redRgbTextField.getDocument().addDocumentListener(new DocumentChangeListener(redRgbTextField, rgbCopyButton));
+        greenRgbTextField.getDocument().addDocumentListener(new DocumentChangeListener(greenRgbTextField, rgbCopyButton));
+        blueRgbTextField.getDocument().addDocumentListener(new DocumentChangeListener(blueRgbTextField, rgbCopyButton));
+        
+        hexColorTextField.getDocument().addDocumentListener(new DocumentChangeListener(hexColorTextField, hexCopyButton));
+        cssRgbTextField.getDocument().addDocumentListener(new DocumentChangeListener(cssRgbTextField, cssCopyButton));
     }
 
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -63,6 +122,8 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         paletteToolBar = new javax.swing.JToolBar();
         jLabel5 = new javax.swing.JLabel();
         paletteListComboBox = new javax.swing.JComboBox();
+        addPaletteButton = new javax.swing.JButton();
+        deletePaletteButton = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
         addColorButton = new javax.swing.JButton();
         editColorButton = new javax.swing.JButton();
@@ -77,9 +138,9 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         greenRgbTextField = new javax.swing.JTextField();
         blueRgbTextField = new javax.swing.JTextField();
         cssRgbTextField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        rgbCopyButton = new javax.swing.JButton();
+        hexCopyButton = new javax.swing.JButton();
+        cssCopyButton = new javax.swing.JButton();
         hexColorTextField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -101,13 +162,15 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
 
         FormListener formListener = new FormListener();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("i18n/Message"); // NOI18N
+        setTitle(bundle.getString("lbl.frame.title")); // NOI18N
         setMinimumSize(new java.awt.Dimension(730, 480));
         setPreferredSize(new java.awt.Dimension(730, 480));
+        addWindowListener(formListener);
         addKeyListener(formListener);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("i18n/Message"); // NOI18N
-        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("lbl.palette.panel.header"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(153, 153, 255))); // NOI18N
+        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("lbl.palette.panel.header"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(153, 153, 255))); // NOI18N
 
         paletteToolBar.setFloatable(false);
         paletteToolBar.setRollover(true);
@@ -116,14 +179,34 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         paletteToolBar.add(jLabel5);
 
         paletteListComboBox.setMaximumSize(new java.awt.Dimension(280, 32767));
-        paletteListComboBox.setMinimumSize(new java.awt.Dimension(180, 20));
-        paletteListComboBox.setPreferredSize(new java.awt.Dimension(280, 20));
+        paletteListComboBox.setMinimumSize(new java.awt.Dimension(100, 20));
+        paletteListComboBox.setPreferredSize(new java.awt.Dimension(100, 20));
         paletteListComboBox.addItemListener(formListener);
+        paletteListComboBox.addActionListener(formListener);
         paletteListComboBox.addPropertyChangeListener(formListener);
         paletteToolBar.add(paletteListComboBox);
+
+        addPaletteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new_palette.png"))); // NOI18N
+        addPaletteButton.setToolTipText(bundle.getString("tip.add.palette.button")); // NOI18N
+        addPaletteButton.setFocusable(false);
+        addPaletteButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        addPaletteButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        addPaletteButton.addActionListener(formListener);
+        paletteToolBar.add(addPaletteButton);
+
+        deletePaletteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete_palette.png"))); // NOI18N
+        deletePaletteButton.setToolTipText(bundle.getString("tip.delete.palette.button")); // NOI18N
+        deletePaletteButton.setEnabled(false);
+        deletePaletteButton.setFocusable(false);
+        deletePaletteButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        deletePaletteButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        deletePaletteButton.addActionListener(formListener);
+        paletteToolBar.add(deletePaletteButton);
         paletteToolBar.add(jSeparator2);
 
+        addColorButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add_color.png"))); // NOI18N
         addColorButton.setText(bundle.getString("lbl.add.color.button")); // NOI18N
+        addColorButton.setToolTipText(bundle.getString("tip.add.color.button")); // NOI18N
         addColorButton.setEnabled(false);
         addColorButton.setFocusable(false);
         addColorButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -131,7 +214,9 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         addColorButton.addActionListener(formListener);
         paletteToolBar.add(addColorButton);
 
+        editColorButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit_color.png"))); // NOI18N
         editColorButton.setText(bundle.getString("lbl.edit.color.button")); // NOI18N
+        editColorButton.setToolTipText(bundle.getString("tip.edit.selected.color.button")); // NOI18N
         editColorButton.setEnabled(false);
         editColorButton.setFocusable(false);
         editColorButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -139,7 +224,9 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         editColorButton.addActionListener(formListener);
         paletteToolBar.add(editColorButton);
 
+        deleteColorButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete_color.png"))); // NOI18N
         deleteColorButton.setText(bundle.getString("lbl.delete.color.button")); // NOI18N
+        deleteColorButton.setToolTipText(bundle.getString("tip.delete.color.button")); // NOI18N
         deleteColorButton.setEnabled(false);
         deleteColorButton.setFocusable(false);
         deleteColorButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -174,31 +261,47 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
 
         jLabel4.setText("HEX");
 
+        redRgbTextField.setEditable(false);
+        redRgbTextField.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         redRgbTextField.setForeground(java.awt.Color.red);
+        redRgbTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         redRgbTextField.setMinimumSize(new java.awt.Dimension(50, 20));
         redRgbTextField.setPreferredSize(new java.awt.Dimension(50, 20));
 
+        greenRgbTextField.setEditable(false);
+        greenRgbTextField.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         greenRgbTextField.setForeground(java.awt.Color.green);
+        greenRgbTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         greenRgbTextField.setMinimumSize(new java.awt.Dimension(50, 20));
         greenRgbTextField.setPreferredSize(new java.awt.Dimension(50, 20));
 
+        blueRgbTextField.setEditable(false);
+        blueRgbTextField.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         blueRgbTextField.setForeground(java.awt.Color.blue);
+        blueRgbTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         blueRgbTextField.setMinimumSize(new java.awt.Dimension(50, 20));
         blueRgbTextField.setPreferredSize(new java.awt.Dimension(50, 20));
 
+        cssRgbTextField.setEditable(false);
+        cssRgbTextField.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cssRgbTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         cssRgbTextField.addActionListener(formListener);
 
-        jButton1.setText(bundle.getString("lbl.copy.button")); // NOI18N
-        jButton1.setEnabled(false);
-        jButton1.addActionListener(formListener);
+        rgbCopyButton.setText(bundle.getString("lbl.copy.button")); // NOI18N
+        rgbCopyButton.setEnabled(false);
+        rgbCopyButton.addActionListener(formListener);
 
-        jButton2.setText(bundle.getString("lbl.copy.button")); // NOI18N
-        jButton2.setEnabled(false);
-        jButton2.addActionListener(formListener);
+        hexCopyButton.setText(bundle.getString("lbl.copy.button")); // NOI18N
+        hexCopyButton.setEnabled(false);
+        hexCopyButton.addActionListener(formListener);
 
-        jButton3.setText(bundle.getString("lbl.copy.button")); // NOI18N
-        jButton3.setEnabled(false);
-        jButton3.addActionListener(formListener);
+        cssCopyButton.setText(bundle.getString("lbl.copy.button")); // NOI18N
+        cssCopyButton.setEnabled(false);
+        cssCopyButton.addActionListener(formListener);
+
+        hexColorTextField.setEditable(false);
+        hexColorTextField.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        hexColorTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         jLabel6.setText(bundle.getString("lbl.rgb")); // NOI18N
 
@@ -224,10 +327,10 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                         .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(colorDetailsPanelLayout.createSequentialGroup()
                                 .addGap(8, 8, 8)
-                                .addComponent(jButton3))
+                                .addComponent(cssCopyButton))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, colorDetailsPanelLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2))))
+                                .addComponent(hexCopyButton))))
                     .addGroup(colorDetailsPanelLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,14 +355,14 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(blueRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)))
+                                .addComponent(rgbCopyButton)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4, jLabel6, jLabel7});
 
-        colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3});
+        colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cssCopyButton, hexCopyButton, rgbCopyButton});
 
         colorDetailsPanelLayout.setVerticalGroup(
             colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,7 +373,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                     .addComponent(redRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(greenRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(blueRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(rgbCopyButton))
                 .addGap(4, 4, 4)
                 .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -280,31 +383,31 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                 .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(hexColorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
-                    .addComponent(jButton2))
+                    .addComponent(hexCopyButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cssRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
-                    .addComponent(jButton3))
+                    .addComponent(cssCopyButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {blueRgbTextField, cssRgbTextField, greenRgbTextField, hexColorTextField, jButton1, jButton2, jButton3, jLabel4, jLabel6, jLabel7, redRgbTextField});
+        colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {blueRgbTextField, cssCopyButton, cssRgbTextField, greenRgbTextField, hexColorTextField, hexCopyButton, jLabel4, jLabel6, jLabel7, redRgbTextField, rgbCopyButton});
 
         colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel1, jLabel2, jLabel3});
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("lbl.enlarged.header"))); // NOI18N
 
         enlargedPanel.setBackground(new java.awt.Color(255, 255, 255));
-        enlargedPanel.setMaximumSize(new java.awt.Dimension(100, 100));
-        enlargedPanel.setMinimumSize(new java.awt.Dimension(100, 100));
-        enlargedPanel.setPreferredSize(new java.awt.Dimension(100, 100));
+        enlargedPanel.setMaximumSize(new java.awt.Dimension(200, 100));
+        enlargedPanel.setMinimumSize(new java.awt.Dimension(200, 100));
+        enlargedPanel.setPreferredSize(new java.awt.Dimension(200, 100));
 
         javax.swing.GroupLayout enlargedPanelLayout = new javax.swing.GroupLayout(enlargedPanel);
         enlargedPanel.setLayout(enlargedPanelLayout);
         enlargedPanelLayout.setHorizontalGroup(
             enlargedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 200, Short.MAX_VALUE)
         );
         enlargedPanelLayout.setVerticalGroup(
             enlargedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,7 +450,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         );
         imageContainerPanelLayout.setVerticalGroup(
             imageContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 248, Short.MAX_VALUE)
+            .addGap(0, 245, Short.MAX_VALUE)
         );
 
         imageViewerPanel.add(imageContainerPanel, java.awt.BorderLayout.CENTER);
@@ -362,7 +465,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 271, Short.MAX_VALUE)
+            .addGap(0, 268, Short.MAX_VALUE)
         );
 
         colorSourceTabbedPane.addTab("tab2", jPanel3);
@@ -401,15 +504,23 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
 
         fileMenu.setText(bundle.getString("lbl.file.menu")); // NOI18N
 
+        newMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        newMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new_palette.png"))); // NOI18N
         newMenuItem.setText(bundle.getString("lbl.new.menu.item")); // NOI18N
         newMenuItem.addActionListener(formListener);
         fileMenu.add(newMenuItem);
         fileMenu.add(jSeparator1);
 
+        hideMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.ALT_MASK));
+        hideMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hide.png"))); // NOI18N
         hideMenuItem.setText(bundle.getString("lbl.hide.menu.item")); // NOI18N
+        hideMenuItem.addActionListener(formListener);
         fileMenu.add(hideMenuItem);
 
+        exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit.png"))); // NOI18N
         exitMenuItem.setText(bundle.getString("lbl.exit.menu.item")); // NOI18N
+        exitMenuItem.addActionListener(formListener);
         fileMenu.add(exitMenuItem);
 
         baseMenuBar.add(fileMenu);
@@ -424,10 +535,13 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements java.awt.event.ActionListener, java.awt.event.ItemListener, java.awt.event.KeyListener, java.beans.PropertyChangeListener {
+    private class FormListener implements java.awt.event.ActionListener, java.awt.event.ItemListener, java.awt.event.KeyListener, java.awt.event.WindowListener, java.beans.PropertyChangeListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            if (evt.getSource() == addColorButton) {
+            if (evt.getSource() == paletteListComboBox) {
+                ColorHoundBaseFrame.this.paletteListComboBoxActionPerformed(evt);
+            }
+            else if (evt.getSource() == addColorButton) {
                 ColorHoundBaseFrame.this.addColorButtonActionPerformed(evt);
             }
             else if (evt.getSource() == editColorButton) {
@@ -439,20 +553,32 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
             else if (evt.getSource() == cssRgbTextField) {
                 ColorHoundBaseFrame.this.cssRgbTextFieldActionPerformed(evt);
             }
-            else if (evt.getSource() == jButton1) {
-                ColorHoundBaseFrame.this.jButton1ActionPerformed(evt);
+            else if (evt.getSource() == rgbCopyButton) {
+                ColorHoundBaseFrame.this.rgbCopyButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == jButton2) {
-                ColorHoundBaseFrame.this.jButton2ActionPerformed(evt);
+            else if (evt.getSource() == hexCopyButton) {
+                ColorHoundBaseFrame.this.hexCopyButtonActionPerformed(evt);
             }
-            else if (evt.getSource() == jButton3) {
-                ColorHoundBaseFrame.this.jButton3ActionPerformed(evt);
+            else if (evt.getSource() == cssCopyButton) {
+                ColorHoundBaseFrame.this.cssCopyButtonActionPerformed(evt);
             }
             else if (evt.getSource() == openImageButton) {
                 ColorHoundBaseFrame.this.openImageButtonActionPerformed(evt);
             }
             else if (evt.getSource() == newMenuItem) {
                 ColorHoundBaseFrame.this.newMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == hideMenuItem) {
+                ColorHoundBaseFrame.this.hideMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == exitMenuItem) {
+                ColorHoundBaseFrame.this.exitMenuItemActionPerformed(evt);
+            }
+            else if (evt.getSource() == addPaletteButton) {
+                ColorHoundBaseFrame.this.addPaletteButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == deletePaletteButton) {
+                ColorHoundBaseFrame.this.deletePaletteButtonActionPerformed(evt);
             }
         }
 
@@ -475,6 +601,30 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         }
 
         public void keyTyped(java.awt.event.KeyEvent evt) {
+        }
+
+        public void windowActivated(java.awt.event.WindowEvent evt) {
+        }
+
+        public void windowClosed(java.awt.event.WindowEvent evt) {
+        }
+
+        public void windowClosing(java.awt.event.WindowEvent evt) {
+            if (evt.getSource() == ColorHoundBaseFrame.this) {
+                ColorHoundBaseFrame.this.formWindowClosing(evt);
+            }
+        }
+
+        public void windowDeactivated(java.awt.event.WindowEvent evt) {
+        }
+
+        public void windowDeiconified(java.awt.event.WindowEvent evt) {
+        }
+
+        public void windowIconified(java.awt.event.WindowEvent evt) {
+        }
+
+        public void windowOpened(java.awt.event.WindowEvent evt) {
         }
 
         public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -521,17 +671,17 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     	ColorPaletteManager.getInstance().makeSelectedColorPanelEditable(getPaletteName());
     }//GEN-LAST:event_editColorButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void rgbCopyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rgbCopyButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_rgbCopyButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void hexCopyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hexCopyButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_hexCopyButtonActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void cssCopyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cssCopyButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_cssCopyButtonActionPerformed
 
     private void openImageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openImageButtonActionPerformed
         // TODO add your handling code here:
@@ -545,40 +695,187 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         String name = JOptionPane.showInputDialog(this, "Enter a Palette Name: ");
         ColorPaletteManager.getInstance().addPalette(name);
         paletteListComboBox.addItem(name);
+        paletteListComboBox.setSelectedItem(name);
     }//GEN-LAST:event_newMenuItemActionPerformed
 
     private void paletteListComboBoxPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_paletteListComboBoxPropertyChange
-        addColorButton.setEnabled(true);
+        //System.out.println("paletteListComboBoxPropertyChange");
     }//GEN-LAST:event_paletteListComboBoxPropertyChange
 
     private void paletteListComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_paletteListComboBoxItemStateChanged
-        
+        //System.out.println("paletteListComboBoxItemStateChanged");
     }//GEN-LAST:event_paletteListComboBoxItemStateChanged
 
+    private void paletteListComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paletteListComboBoxActionPerformed
+        if(null != paletteListComboBox.getSelectedItem()){
+            String selectedPaletteName = paletteListComboBox.getSelectedItem().toString();
+            final List<ColorPanel> cps = 
+                ColorPaletteManager.getInstance().getAllColorPanels(
+                selectedPaletteName
+                );
+            if(null != cps){
+                paletteContentPanel.removeAll();
+                for (ColorPanel cp : cps) {
+                    paletteContentPanel.add(cp);
+                }
+                paletteContentPanel.updateUI();
+            }
+            addColorButton.setEnabled(true);
+            deletePaletteButton.setEnabled(true);
+        } else {
+            addColorButton.setEnabled(false);
+            deletePaletteButton.setEnabled(false);
+            editColorButton.setEnabled(false);
+            deleteColorButton.setEnabled(false);
+            paletteContentPanel.removeAll();
+            paletteContentPanel.updateUI();
+            ColorPaletteManager.getInstance().removeSelection();
+        }
+        
+    }//GEN-LAST:event_paletteListComboBoxActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        ActionListener exitListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        };
+        minimizeToTray(this, frameIcon.getImage(), exitListener);
+    }//GEN-LAST:event_formWindowClosing
+
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+        if(!appContext.getApplicationSettings().isDoNotShowExitDialog()){
+            int opt = JOptionPane.showConfirmDialog(this, "Do you want to exit the program?");
+            if(JOptionPane.YES_OPTION == opt){
+                appContext.save();
+                System.exit(0);
+            }
+        } else {
+            appContext.save();
+            System.exit(0);
+        }
+    }//GEN-LAST:event_exitMenuItemActionPerformed
+
+    private void hideMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hideMenuItemActionPerformed
+        ActionListener exitListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        };
+        minimizeToTray(this, frameIcon.getImage(), exitListener);
+    }//GEN-LAST:event_hideMenuItemActionPerformed
+
+    private void addPaletteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPaletteButtonActionPerformed
+        newMenuItemActionPerformed(evt);
+    }//GEN-LAST:event_addPaletteButtonActionPerformed
+
+    private void deletePaletteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletePaletteButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deletePaletteButtonActionPerformed
+
+    public TrayIcon minimizeToTray(final Frame frame, final Image image, ActionListener exitListener) {
+        final PopupMenu popup = new PopupMenu();
+        final TrayIcon trayIcon = new TrayIcon(image, frame.getTitle(), popup);
+
+        ActionListener actionListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                trayIcon.displayMessage("Action Event",
+                        "An Action Event Has Been Performed!",
+                        TrayIcon.MessageType.INFO);
+            }
+        };
+        if (SystemTray.isSupported()) {
+            // get the SystemTray instance
+            final SystemTray tray = SystemTray.getSystemTray();
+            MouseListener mouseListener = new MouseListener() {
+                public void mouseClicked(MouseEvent e) {
+                    if (MouseEvent.BUTTON1 == e.getButton() 
+                            && e.getClickCount() == 2) {
+                        tray.remove(trayIcon);
+                        frame.setVisible(true);
+                    }
+                }
+
+                public void mouseEntered(MouseEvent e) {
+                    
+                }
+
+                public void mouseExited(MouseEvent e) {
+                    
+                }
+
+                public void mousePressed(MouseEvent e) {
+                    
+                    
+                }
+
+                public void mouseReleased(MouseEvent e) {
+                    
+                    
+                }
+            };
+
+
+
+
+            MenuItem restoreItem = new MenuItem("Restore");
+            restoreItem.setShortcut(new MenuShortcut('R'));
+            restoreItem.addActionListener(
+                    new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    tray.remove(trayIcon);
+                    frame.setVisible(true);
+                }
+            });
+            popup.add(restoreItem);
+
+            MenuItem exitItem = new MenuItem("Exit");
+            exitItem.addActionListener(exitListener);
+            popup.add(exitItem);
+
+            trayIcon.setImageAutoSize(true);
+            trayIcon.addActionListener(actionListener);
+            trayIcon.addMouseListener(mouseListener);
+
+            try {
+                tray.add(trayIcon);
+                frame.setVisible(false);
+            } catch (AWTException e) {
+                System.err.println("TrayIcon could not be added.");
+            }
+
+            return trayIcon;
+        } else {
+            // disable tray option in your application or
+            // perform other actions
+        }
+        return null;
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addColorButton;
+    private javax.swing.JButton addPaletteButton;
     private javax.swing.JPanel baseContentPanel;
     private javax.swing.JMenuBar baseMenuBar;
     private javax.swing.JTextField blueRgbTextField;
     private javax.swing.JPanel colorDetailsPanel;
     private javax.swing.JTabbedPane colorSourceTabbedPane;
+    private javax.swing.JButton cssCopyButton;
     private javax.swing.JTextField cssRgbTextField;
     private javax.swing.JButton deleteColorButton;
+    private javax.swing.JButton deletePaletteButton;
     private javax.swing.JButton editColorButton;
     private javax.swing.JPanel enlargedPanel;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JTextField greenRgbTextField;
     private javax.swing.JTextField hexColorTextField;
+    private javax.swing.JButton hexCopyButton;
     private javax.swing.JMenuItem hideMenuItem;
     private javax.swing.JPanel imageContainerPanel;
     private javax.swing.JToolBar imageControlToolBar;
     private javax.swing.JPanel imageViewerPanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -598,6 +895,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     private javax.swing.JComboBox paletteListComboBox;
     private javax.swing.JToolBar paletteToolBar;
     private javax.swing.JTextField redRgbTextField;
+    private javax.swing.JButton rgbCopyButton;
     // End of variables declaration//GEN-END:variables
 
     public void colorGrabbed(ColorGrabEvent event) {
@@ -618,6 +916,8 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                 redRgbTextField.setText(""+event.getSelectedColor().getRed());
                 greenRgbTextField.setText(""+event.getSelectedColor().getGreen());
                 blueRgbTextField.setText(""+event.getSelectedColor().getBlue());
+                hexColorTextField.setText(GraphicsUtil.encodeColor(event.getSelectedColor()));
+                cssRgbTextField.setText(GraphicsUtil.encodeColorForCss(event.getSelectedColor()));
             }
         } else {
             editColorButton.setEnabled(false);
@@ -626,4 +926,40 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     }
     
     
+    
+    private class DocumentChangeListener implements DocumentListener{
+
+        private final JTextField sourceField;
+        private final JButton targetButton;
+
+        public DocumentChangeListener(JTextField sourceField, JButton targetButton) {
+            this.sourceField = sourceField;
+            this.targetButton = targetButton;
+        }
+        
+        public void insertUpdate(DocumentEvent e) {
+            if(null != sourceField && !"".equals(sourceField.getText())){
+                targetButton.setEnabled(true);
+            } else {
+                targetButton.setEnabled(true);
+            }
+        }
+
+        public void removeUpdate(DocumentEvent e) {
+            if(null != sourceField && !"".equals(sourceField.getText())){
+                targetButton.setEnabled(true);
+            } else {
+                targetButton.setEnabled(true);
+            }
+        }
+
+        public void changedUpdate(DocumentEvent e) {
+            if(null != sourceField && !"".equals(sourceField.getText())){
+                targetButton.setEnabled(true);
+            } else {
+                targetButton.setEnabled(true);
+            }
+        }
+        
+    }
 }

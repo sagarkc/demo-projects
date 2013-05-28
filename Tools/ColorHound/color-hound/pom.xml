@@ -22,5 +22,10 @@
             <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.gs.utils</groupId>
+            <artifactId>gs-utils</artifactId>
+            <version>1.0.02.2010</version>
+        </dependency>
     </dependencies>
 </project>

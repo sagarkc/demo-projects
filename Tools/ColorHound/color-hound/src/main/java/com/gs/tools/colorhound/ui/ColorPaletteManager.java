@@ -9,6 +9,7 @@ import com.gs.tools.colorhound.event.ColorDetectEvent;
 import com.gs.tools.colorhound.event.ColorDetectListener;
 import com.gs.tools.colorhound.event.ColorGrabEvent;
 import com.gs.tools.colorhound.event.ColorGrabListener;
+import com.gs.tools.colorhound.event.ColorPanelSelectedEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -55,6 +56,7 @@ public class ColorPaletteManager implements ColorGrabListener, ColorDetectListen
                 && !"".equals(paletteName)
                 && ! isPaletteExists(paletteName)){
             paletteNames.add(paletteName);
+            colorPanelPaletteMap.put(paletteName, new ArrayList<ColorPanel>());
         }
     }
     
@@ -139,6 +141,16 @@ public class ColorPaletteManager implements ColorGrabListener, ColorDetectListen
 
     public ColorPanel getSelectPanel() {
         return selectedPanel;
+    }
+
+    public void removeSelection() {
+        selectedPanel = null;
+        
+        eventManager.fireEvent(new ColorPanelSelectedEvent(Boolean.FALSE, Boolean.FALSE, instance));
+    }
+
+    public Set<String> getAllPaletteNames() {
+        return paletteNames;
     }
     
     
