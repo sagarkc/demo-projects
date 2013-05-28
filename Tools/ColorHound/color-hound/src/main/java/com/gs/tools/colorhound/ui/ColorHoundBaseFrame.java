@@ -49,6 +49,7 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -57,12 +58,17 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.Scrollable;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -861,14 +867,40 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         if(null != file && file.exists()){
             try {
                 imageContainerPanel.removeAll();
-                ScrollablePanel sp = new ScrollablePanel();
-                
                 ImagePanel imagePanel = new ImagePanel(file.getCanonicalPath());
-                sp.add(imagePanel);
-                JScrollPane imagePanelScrollPane = new JScrollPane(imagePanel);
-                imagePanelScrollPane.setPreferredSize(imagePanel.getPreferredSize());
-                imagePanelScrollPane.setViewportView(imagePanel);
-                imageContainerPanel.add(sp, BorderLayout.CENTER);
+
+                final JScrollPane imagePanelScrollPane = new JScrollPane(imagePanel);
+        		final int increment = 50;
+        		imagePanelScrollPane.getVerticalScrollBar().setUnitIncrement(increment);
+        		KeyStroke kUp = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0);
+        		KeyStroke kDown = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0);
+        		imagePanelScrollPane.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+        				kUp, "actionWhenKeyUp");
+        		imagePanelScrollPane.getActionMap().put("actionWhenKeyUp",
+        				new AbstractAction("keyUpAction") {
+
+        					private static final long serialVersionUID = 1L;
+
+        					public void actionPerformed(ActionEvent e) {
+        						final JScrollBar bar = imagePanelScrollPane.getVerticalScrollBar();
+        						int currentValue = bar.getValue();
+        						bar.setValue(currentValue - increment);
+        					}
+        				});
+        		imagePanelScrollPane.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+        				kDown, "actionWhenKeyDown");
+        		imagePanelScrollPane.getActionMap().put("actionWhenKeyDown",
+        				new AbstractAction("keyDownAction") {
+
+        					private static final long serialVersionUID = 1L;
+
+        					public void actionPerformed(ActionEvent e) {
+        						final JScrollBar bar = imagePanelScrollPane.getVerticalScrollBar();
+        						int currentValue = bar.getValue();
+        						bar.setValue(currentValue + increment);
+        					}
+        				});
+        		imageContainerPanel.add(imagePanelScrollPane, BorderLayout.CENTER);
                 imageContainerPanel.updateUI();
             } catch (IOException ex) {
                 
