@@ -138,6 +138,7 @@ public class ApplicationContext {
         ColorPaletteManager cpm = ColorPaletteManager.getInstance();
         Set<String> palNames = cpm.getAllPaletteNames();
         if(null != palNames){
+            colorPalettes = new ArrayList<ColorPalette>();
             for (String name : palNames) {
                 ColorPalette cp = new ColorPalette();
                 cp.setName(name);
@@ -152,7 +153,7 @@ public class ApplicationContext {
         ObjectOutputStream dataOutputStream = null;
         try{
             dataOutputStream = new ObjectOutputStream(
-                    new FileOutputStream(dataFile));
+                    new FileOutputStream(dataFile, false));
             dataOutputStream.writeObject(colorPalettes);
         } catch (Exception e){
             throw new RuntimeException(e);
@@ -171,7 +172,7 @@ public class ApplicationContext {
         ObjectOutputStream settingOutputStream = null;
         try{
             settingOutputStream = new ObjectOutputStream(
-                    new FileOutputStream(settingFile));
+                    new FileOutputStream(settingFile, false));
             settingOutputStream.writeObject(applicationSettings);
         } catch (Exception e){
             throw new RuntimeException(e);

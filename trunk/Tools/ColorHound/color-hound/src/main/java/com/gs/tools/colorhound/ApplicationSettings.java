@@ -14,6 +14,9 @@ import java.io.Serializable;
 public class ApplicationSettings implements Serializable{
     
     private boolean doNotShowExitDialog = true;
+    private boolean closeToHide = true;
+    private boolean hideWhenMinimized = true;
+    private boolean alwaysOnTop = true;
     private String appDataPath ;
     private String appSettingsPath ;
     
@@ -48,6 +51,39 @@ public class ApplicationSettings implements Serializable{
     public void setAppSettingsPath(String appSettingsPath) {
         this.appSettingsPath = appSettingsPath;
     }
+
+    public boolean isCloseToHide() {
+        return closeToHide;
+    }
+
+    public void setCloseToHide(boolean closeToHide) {
+        this.closeToHide = closeToHide;
+    }
+
+    public boolean isHideWhenMinimized() {
+        return hideWhenMinimized;
+    }
+
+    public void setHideWhenMinimized(boolean hideWhenMinimized) {
+        this.hideWhenMinimized = hideWhenMinimized;
+    }
+
+    public boolean isAlwaysOnTop() {
+        return alwaysOnTop;
+    }
+
+    public void setAlwaysOnTop(boolean alwaysOnTop) {
+        this.alwaysOnTop = alwaysOnTop;
+    }
     
-    
+    public void copySettings(ApplicationSettings settings){
+        if(null == settings)
+            return;
+        doNotShowExitDialog = settings.isDoNotShowExitDialog();
+        closeToHide = settings.isCloseToHide();
+        hideWhenMinimized = settings.isHideWhenMinimized();
+        alwaysOnTop = settings.isAlwaysOnTop();
+        appDataPath = settings.getAppDataPath();
+        appSettingsPath = settings.getAppSettingsPath();
+    }
 }

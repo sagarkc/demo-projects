@@ -9,6 +9,7 @@
 *
 */
 
+import com.gs.tools.colorhound.ui.ColorPanel;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -40,11 +41,34 @@ public class FlowLayoutDemo extends JFrame{
         RtoLbutton.setActionCommand(RtoL);
         
         //Add buttons to the experiment layout
-        compsToExperiment.add(new JButton("Button 1"));
-        compsToExperiment.add(new JButton("Button 2"));
-        compsToExperiment.add(new JButton("Button 3"));
-        compsToExperiment.add(new JButton("Long-Named Button 4"));
-        compsToExperiment.add(new JButton("5"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
+        compsToExperiment.add(new ColorPanel(compsToExperiment, "A"));
         //Left to right component orientation is selected by default
         compsToExperiment.setComponentOrientation(
                 ComponentOrientation.LEFT_TO_RIGHT);
