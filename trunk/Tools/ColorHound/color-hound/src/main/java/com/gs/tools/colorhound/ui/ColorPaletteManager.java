@@ -152,6 +152,10 @@ public class ColorPaletteManager implements ColorGrabListener, ColorDetectListen
     public Set<String> getAllPaletteNames() {
         return paletteNames;
     }
+
+    boolean isSelectedPanelEditable(String paletteName) {
+        return (null != selectedPanel && !selectedPanel.isColorGrabbed());
+    }
     
     
 }

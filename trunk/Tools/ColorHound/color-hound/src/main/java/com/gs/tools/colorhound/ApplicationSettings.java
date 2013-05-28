@@ -13,7 +13,11 @@ import java.io.Serializable;
  */
 public class ApplicationSettings implements Serializable{
     
-    private boolean doNotShowExitDialog = true;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3122703035986274992L;
+	private boolean doNotShowExitDialog = true;
     private boolean closeToHide = true;
     private boolean hideWhenMinimized = true;
     private boolean alwaysOnTop = true;

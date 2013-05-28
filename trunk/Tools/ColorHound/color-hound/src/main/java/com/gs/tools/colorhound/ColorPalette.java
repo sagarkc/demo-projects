@@ -15,7 +15,11 @@ import java.util.List;
  */
 public class ColorPalette implements Serializable{
     
-    private String name;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8851654449004277988L;
+	private String name;
     private List<String> colorCodes;
     transient List<Color> colors;
 
