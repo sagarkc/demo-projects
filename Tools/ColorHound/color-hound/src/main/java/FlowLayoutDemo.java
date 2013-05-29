@@ -98,7 +98,7 @@ public class FlowLayoutDemo extends JFrame{
                 compsToExperiment.repaint();
             }
         });
-        pane.add(compsToExperiment, BorderLayout.CENTER);
+        pane.add(new JScrollPane(compsToExperiment), BorderLayout.CENTER);
         pane.add(controls, BorderLayout.SOUTH); ;
     }
     

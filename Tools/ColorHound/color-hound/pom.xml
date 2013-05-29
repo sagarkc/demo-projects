@@ -56,7 +56,7 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${release.dir}/${artifactId}-${version}/lib/</outputDirectory>
+                            <outputDirectory>${release.dir}/${project.artifactId}-${project.version}/lib/</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
@@ -75,23 +75,22 @@
                         <configuration>
                             <tasks>
                                 <!-- Coping JAR to release directory -->
-                                <copy todir="${release.dir}/${artifactId}-${version}/"
+                                <copy todir="${release.dir}/${project.artifactId}-${project.version}/"
                                       overwrite="true" failonerror="true" includeEmptyDirs="true">
                                     <fileset dir="target">
-                                        <include name="${artifactId}-${version}.jar" />
+                                        <include name="${project.artifactId}-${project.version}.jar" />
+                                    </fileset>
+                                </copy>
+                                
+                                
+                                <copy todir="${release.dir}/${project.artifactId}-${project.version}/"
+                                      overwrite="true" failonerror="true" includeEmptyDirs="true">
+                                    <fileset dir="${bin.dir}">
+                                        <include name="ColorHound-${project.version}.exe" />
                                     </fileset>
                                 </copy>
                                 
                                 <!--
-                                <copy todir="${release.dir}/${artifactId}-${release.version}/"
-                                      overwrite="true" failonerror="true" includeEmptyDirs="true">
-                                    <fileset dir="${bin.dir}">
-                                        <include name="bagh-bandhi-${release.version}.exe" />
-                                        <include name="log4j.xml" />
-                                    </fileset>
-                                </copy>
-                                
-                                
                                 <copy todir="${release.dir}/${artifactId}-${release.version}/help/"
                                       overwrite="true" failonerror="true" includeEmptyDirs="true">
                                     <fileset dir="${help.dir}">
@@ -113,21 +112,53 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.test.skip>true</maven.test.skip>
         <release.dir>../dist/</release.dir>
+        <bin.dir>../bin/</bin.dir>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>com.gs.utils</groupId>
             <artifactId>gs-utils</artifactId>
             <version>1.0.02.2010</version>
             <type>jar</type>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging-api</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>xml-apis</artifactId>
+                    <groupId>xml-apis</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>sax</artifactId>
+                    <groupId>sax</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>castor</artifactId>
+                    <groupId>castor</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>xercesImpl</artifactId>
+                    <groupId>xerces</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>poi</artifactId>
+                    <groupId>org.apache.poi</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-lang</artifactId>
+                    <groupId>commons-lang</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        
     </dependencies>
 </project>

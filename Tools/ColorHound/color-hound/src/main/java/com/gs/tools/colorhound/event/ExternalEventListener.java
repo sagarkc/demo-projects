@@ -27,7 +27,6 @@ public class ExternalEventListener implements AWTEventListener {
         if (null == location) {
             return;
         }
-        System.out.println("Location: "+location);
         if (event instanceof KeyEvent) {
             KeyEvent evt = (KeyEvent) event;
             if (KeyEvent.CTRL_MASK == evt.getModifiers()

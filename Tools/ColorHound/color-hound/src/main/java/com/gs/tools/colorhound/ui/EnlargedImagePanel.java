@@ -10,17 +10,23 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicGraphicsUtils;
 
 /**
  *
  * @author Sabuj
  */
-public class EnlargedImagePanel extends JPanel{
+public class EnlargedImagePanel extends JPanel implements ChangeListener{
 
+    public static final int WIDTH = 200;
+    public static final int HEIGHT = 100;
     private final Color LINE_COLOR = Color.decode("0xFF988F");
     private Image image;
     private Dimension d = new Dimension(200, 100);
+    private int ratio = 14;
     
     public EnlargedImagePanel() {
         setDoubleBuffered(true);
@@ -39,13 +45,29 @@ public class EnlargedImagePanel extends JPanel{
             super.paint(g);
         }
         g.setColor(LINE_COLOR);
-        BasicGraphicsUtils.drawDashedRect(g, 100, 0, 0, 100);
-        //BasicGraphicsUtils.drawDashedRect(g, 0, 50, 200, 0);
+        int x, y;
+        int w = Math.max(2, ratio);
+        int h = w;
+        x = WIDTH/2 ;
+        y = HEIGHT/2 - h/2;
+        //BasicGraphicsUtils.drawDashedRect(g, x, y, w, h);
+        g.drawRect(x, y, h, h);
     }
 
     public void setImage(Image image) {
         this.image = image;
         repaint();
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        if(e.getSource() instanceof JSlider){
+            JSlider slider = (JSlider) e.getSource();
+            String name = slider.getAccessibleContext().getAccessibleName();
+            if(ColorHoundBaseFrame.ENLARGE_RATIO_SLIDER.equals(name)){
+                ratio = slider.getValue();
+            }
+        }
     }
     
     
