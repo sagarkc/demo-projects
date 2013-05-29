@@ -317,7 +317,7 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="paletteToolBar" pref="486" max="32767" attributes="0"/>
+                          <Component id="paletteToolBar" pref="490" max="32767" attributes="0"/>
                           <Component id="paletteContentScrollPane" alignment="0" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
@@ -425,6 +425,11 @@
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
                         <Container class="javax.swing.JPanel" name="paletteContentPanel">
+                          <Properties>
+                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="0" green="0" red="0" type="rgb"/>
+                            </Property>
+                          </Properties>
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
                             <Property name="alignment" type="int" value="0"/>

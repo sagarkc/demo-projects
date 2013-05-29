@@ -87,7 +87,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         MouseInfoChangedListener{
 
     private final ImageIcon frameIcon = new ImageIcon(getClass().getResource(
-               "/images/color-hound-24x24.png"));
+               "/images/color-hound-24x24_1.png"));
     private static ApplicationContext appContext 
             = ApplicationContext.getContext();
     private static ApplicationEventManager eventManager 
@@ -286,7 +286,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         baseSplitPane.addComponentListener(formListener);
         baseSplitPane.addPropertyChangeListener(formListener);
 
-        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("lbl.palette.panel.header"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(153, 153, 255))); // NOI18N
+        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("lbl.palette.panel.header"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(153, 153, 255))); // NOI18N
 
         paletteToolBar.setFloatable(false);
         paletteToolBar.setRollover(true);
@@ -327,6 +327,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         deleteColorButton.addActionListener(formListener);
         paletteToolBar.add(deleteColorButton);
 
+        paletteContentPanel.setBackground(new java.awt.Color(0, 0, 0));
         paletteContentPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
         paletteContentScrollPane.setViewportView(paletteContentPanel);
 
@@ -334,7 +335,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         leftPanel.setLayout(leftPanelLayout);
         leftPanelLayout.setHorizontalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(paletteToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+            .addComponent(paletteToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
             .addComponent(paletteContentScrollPane)
         );
         leftPanelLayout.setVerticalGroup(
