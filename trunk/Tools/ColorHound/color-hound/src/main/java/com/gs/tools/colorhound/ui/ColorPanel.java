@@ -14,6 +14,7 @@ import com.gs.tools.colorhound.event.ApplicationEventManager;
 import com.gs.tools.colorhound.event.ColorGrabEvent;
 import com.gs.tools.colorhound.event.ColorPanelSelectedEvent;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
@@ -37,8 +38,8 @@ public class ColorPanel extends JPanel implements MouseListener{
     private String colorHexCode;
     private boolean selected = false;
     
-    private final static int MAX_WIDTH = 34;
-    private final static int MAX_HEIGHT = 34;
+    public final static int MAX_WIDTH = 45;
+    public final static int MAX_HEIGHT = 45;
     private boolean colorGrabbed = false;
     
     private final ResourceBundle resourceBundle 
@@ -82,7 +83,7 @@ public class ColorPanel extends JPanel implements MouseListener{
             if(colorGrabbed)
                 event.setSelectedColor(selectedColor);
             ApplicationEventManager.getInstance().fireEvent(event);
-        } else if(MouseEvent.BUTTON3 == e.getButton()){
+        } else if(MouseEvent.BUTTON3 == e.getButton() ){
             Color newColor = JColorChooser.showDialog(this, 
                     resourceBundle.getString("lbl.color.chooser.title"), 
                     selectedColor);
@@ -107,20 +108,20 @@ public class ColorPanel extends JPanel implements MouseListener{
     }
 
     public void mouseEntered(MouseEvent e) {
-        
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     public void mouseExited(MouseEvent e) {
-        
+        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     @Override
     public void paint(Graphics g) {
-        g.setColor((selected ? Color.ORANGE : Color.BLUE));
+        g.setColor((selected ? Color.MAGENTA : Color.BLUE));
         BasicGraphicsUtils.drawDashedRect(g, 0, 0, MAX_WIDTH, MAX_HEIGHT);
         if(null != selectedColor){
             g.setColor(selectedColor);
-            g.fillRect(4, 4, MAX_WIDTH-7, MAX_HEIGHT-7);
+            g.fillRect(4, 4, MAX_WIDTH-8, MAX_HEIGHT-8);
         }
     }
 
