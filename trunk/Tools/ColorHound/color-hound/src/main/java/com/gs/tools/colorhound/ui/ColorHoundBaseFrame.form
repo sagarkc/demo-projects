@@ -317,7 +317,7 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="paletteToolBar" pref="486" max="32767" attributes="0"/>
+                          <Component id="paletteToolBar" pref="490" max="32767" attributes="0"/>
                           <Component id="paletteContentScrollPane" alignment="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
@@ -916,7 +916,7 @@
                                               <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                           </Group>
-                                          <Component id="jScrollPane2" pref="192" max="32767" attributes="0"/>
+                                          <Component id="jScrollPane2" pref="194" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="textScanProgressBar" min="-2" max="-2" attributes="0"/>
@@ -960,6 +960,9 @@
                             <Property name="focusable" type="boolean" value="false"/>
                             <Property name="horizontalTextPosition" type="int" value="0"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cleatTextButtonActionPerformed"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>

@@ -58,13 +58,15 @@ public class ColorPaletteManager implements ColorGrabListener, ColorDetectListen
         return paletteNames.contains(paletteName);
     }
     
-    public void addPalette(String paletteName){
+    public boolean addPalette(String paletteName){
         if(null != paletteName 
                 && !"".equals(paletteName)
                 && ! isPaletteExists(paletteName)){
             paletteNames.add(paletteName);
             colorPanelPaletteMap.put(paletteName, new ArrayList<ColorPanel>());
+            return true;
         }
+        return false;
     }
     
     public List<ColorPanel> getAllColorPanels(String paletteName){

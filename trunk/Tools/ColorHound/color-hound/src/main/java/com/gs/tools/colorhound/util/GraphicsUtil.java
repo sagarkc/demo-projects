@@ -31,4 +31,9 @@ public final class GraphicsUtil {
                 color.getGreen(), 
                 color.getBlue()).toUpperCase();
     }
+
+    public static String encodeColor(int r, int g, int b) {
+        return "0x"+String.format("%02x%02x%02x", 
+                r,g,b).toUpperCase();
+    }
 }
