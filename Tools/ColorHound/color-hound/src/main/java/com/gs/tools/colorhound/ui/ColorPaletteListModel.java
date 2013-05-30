@@ -19,7 +19,7 @@ import javax.swing.event.ListDataListener;
  *
  * @author Sabuj Das | sabuj.das@gmail.com
  */
-public class ColorPaletteListModel implements ListModel<String>{
+public class ColorPaletteListModel implements ListModel{
 
     private final List<String> colorCodeList;
 

@@ -1,7 +1,7 @@
 <launch4jConfig>
-  <dontWrapJar>true</dontWrapJar>
+  <dontWrapJar>false</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>.\color-hound-1.0.jar</jar>
+  <jar>D:\SVN_HOME\demo-projects\trunk\Tools\ColorHound\dist\color-hound-1.0\color-hound-1.0.jar</jar>
   <outfile>D:\SVN_HOME\demo-projects\trunk\Tools\ColorHound\dist\color-hound-1.0\ColorHound-1.0.exe</outfile>
   <errTitle></errTitle>
   <cmdLine></cmdLine>

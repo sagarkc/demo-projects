@@ -13,11 +13,11 @@ package com.gs.tools.colorhound.ui;
 import com.gs.tools.colorhound.ColorPalette;
 import com.gs.tools.colorhound.WorkerTaskConstants;
 import static com.gs.tools.colorhound.WorkerTaskConstants.TASK_STATUS_START;
-import java.util.ArrayList;
-import java.util.List;
+import com.gs.tools.colorhound.util.GraphicsUtil;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.SwingWorker;
+import org.apache.commons.lang.StringUtils;
 
 /**
  *
@@ -53,8 +53,17 @@ public class TextScanWorker extends SwingWorker<Void, Void>
                     Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
             match = pattern.matcher(sourceText);
             while(match.find()){
-                int g = match.groupCount();
-                match.group(1);
+                String rgb = sourceText.substring(
+                        match.start(), match.end());
+                rgb = StringUtils.substringBetween(rgb, "(", ")");
+                String rgbs[] = rgb.split(",");
+                if(rgbs.length != 3)
+                    continue;
+                colorPalette.add(GraphicsUtil.encodeColor(
+                        Integer.parseInt(rgbs[0]),
+                        Integer.parseInt(rgbs[1]),
+                        Integer.parseInt(rgbs[2])
+                        ));
             }
 		} catch (Exception e) {
 			firePropertyChange(TASK_STATUS_FAILED, null, e.getMessage());
@@ -70,21 +79,5 @@ public class TextScanWorker extends SwingWorker<Void, Void>
 	}
 
     
-    public static void main(String[] a){
-        String s = "hello color:#3423aa; hello:qwewre; #AA3456 ldfkjdlkfjg";
-        List<String> ss = new ArrayList<String>();
-        try {
-            Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6,6}",
-                    Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-            Matcher match = pattern.matcher(s);
-            while(match.find()){
-                ss.add(s.substring(
-                        match.start()+1, match.end()));
-                
-            }
-        } catch (Exception e) {
-        }
-        System.out.println(ss.size());
-    }
     
 }

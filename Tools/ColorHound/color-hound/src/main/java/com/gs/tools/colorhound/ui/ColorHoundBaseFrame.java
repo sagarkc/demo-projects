@@ -326,7 +326,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         baseSplitPane.addComponentListener(formListener);
         baseSplitPane.addPropertyChangeListener(formListener);
 
-        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("lbl.palette.panel.header"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(153, 153, 255))); // NOI18N
+        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("lbl.palette.panel.header"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(153, 153, 255))); // NOI18N
 
         paletteToolBar.setFloatable(false);
         paletteToolBar.setRollover(true);
@@ -375,7 +375,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         leftPanel.setLayout(leftPanelLayout);
         leftPanelLayout.setHorizontalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(paletteToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+            .addComponent(paletteToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
             .addComponent(paletteContentScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         leftPanelLayout.setVerticalGroup(
@@ -639,6 +639,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         cleatTextButton.setText(bundle.getString("lbl.clear.text.area.button")); // NOI18N
         cleatTextButton.setFocusable(false);
         cleatTextButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        cleatTextButton.addActionListener(formListener);
         textPanelToolBar.add(cleatTextButton);
 
         sourceTextTextArea.setColumns(20);
@@ -708,7 +709,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                             .addGroup(textPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textScanProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -841,6 +842,15 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
             else if (evt.getSource() == captureDesktopButton) {
                 ColorHoundBaseFrame.this.captureDesktopButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == openTextFileButton) {
+                ColorHoundBaseFrame.this.openTextFileButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == scanTextButton) {
+                ColorHoundBaseFrame.this.scanTextButtonActionPerformed(evt);
+            }
+            else if (evt.getSource() == sourceTextUseSamePaletteChkbx) {
+                ColorHoundBaseFrame.this.sourceTextUseSamePaletteChkbxActionPerformed(evt);
+            }
             else if (evt.getSource() == newMenuItem) {
                 ColorHoundBaseFrame.this.newMenuItemActionPerformed(evt);
             }
@@ -859,14 +869,8 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
             else if (evt.getSource() == enableRealtimeViewChkMenuItem) {
                 ColorHoundBaseFrame.this.enableRealtimeViewChkMenuItemActionPerformed(evt);
             }
-            else if (evt.getSource() == sourceTextUseSamePaletteChkbx) {
-                ColorHoundBaseFrame.this.sourceTextUseSamePaletteChkbxActionPerformed(evt);
-            }
-            else if (evt.getSource() == scanTextButton) {
-                ColorHoundBaseFrame.this.scanTextButtonActionPerformed(evt);
-            }
-            else if (evt.getSource() == openTextFileButton) {
-                ColorHoundBaseFrame.this.openTextFileButtonActionPerformed(evt);
+            else if (evt.getSource() == cleatTextButton) {
+                ColorHoundBaseFrame.this.cleatTextButtonActionPerformed(evt);
             }
         }
 
@@ -1323,7 +1327,8 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     private void openTextFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTextFileButtonActionPerformed
         File file = FileBrowserUtil.openSingleFile(this, 
              new ExtensionFileFilter(
-                new String[]{"txt", "html", "xml"}, "text/html/xml")
+                new String[]{"txt", "html", "xml",
+                "css", "xhtml", "htm"}, "text/html/xml")
              , false);
         if(null != file && file.exists() && file.canRead()){
             try {
@@ -1333,6 +1338,12 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
             }
         }
     }//GEN-LAST:event_openTextFileButtonActionPerformed
+
+    private void cleatTextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleatTextButtonActionPerformed
+        sourceTextTextArea.setText("");
+        colorPickedJList.setModel(new ColorPaletteListModel(new ArrayList<String>()));
+        colorPickedJList.updateUI();
+    }//GEN-LAST:event_cleatTextButtonActionPerformed
 
     
 
@@ -1683,7 +1694,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     
     private void addColorPalette(ColorPalette colorPalette) {
         if(null != colorPalette && colorPalette.getColorCodes().size() > 0){
-            ColorPaletteManager.getInstance().addPalette(colorPalette.getName());
+            boolean added = ColorPaletteManager.getInstance().addPalette(colorPalette.getName());
             for(String code: colorPalette.getColorCodes()){
                 ColorPanel colorPanel = new ColorPanel(
                         paletteContentPanel, colorPalette.getName());
@@ -1693,7 +1704,11 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                 ColorPaletteManager.getInstance().addPanel(colorPalette.getName(), 
                         colorPanel);
             }
+            if(added){
+                paletteListComboBox.addItem(colorPalette.getName());
+            }
             paletteListComboBox.setSelectedItem(colorPalette.getName());
+            paletteListComboBox.updateUI();
             resizePaletteContentPanel();
             paletteContentPanel.updateUI();
         }

@@ -23,7 +23,7 @@ public class ColorPaletteListCellRenderer extends DefaultListCellRenderer{
 
         
     public Component getListCellRendererComponent(
-        JList<?> list,
+        JList list,
         Object value,
         int index,
         boolean isSelected,
