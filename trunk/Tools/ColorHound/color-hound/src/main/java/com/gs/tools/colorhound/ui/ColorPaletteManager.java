@@ -4,18 +4,21 @@
  */
 package com.gs.tools.colorhound.ui;
 
+import com.gs.tools.colorhound.ColorPalette;
 import com.gs.tools.colorhound.event.ApplicationEventManager;
 import com.gs.tools.colorhound.event.ColorDetectEvent;
 import com.gs.tools.colorhound.event.ColorDetectListener;
 import com.gs.tools.colorhound.event.ColorGrabEvent;
 import com.gs.tools.colorhound.event.ColorGrabListener;
 import com.gs.tools.colorhound.event.ColorPanelSelectedEvent;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.swing.JPanel;
 
 /**
  *
@@ -45,6 +48,10 @@ public class ColorPaletteManager implements ColorGrabListener, ColorDetectListen
             }
         }
         return instance;
+    }
+
+    public void setColorPanelPaletteMap(Map<String, List<ColorPanel>> colorPanelPaletteMap) {
+        this.colorPanelPaletteMap = colorPanelPaletteMap;
     }
 
     public boolean isPaletteExists(String paletteName){
@@ -145,8 +152,8 @@ public class ColorPaletteManager implements ColorGrabListener, ColorDetectListen
 
     public void removeSelection() {
         selectedPanel = null;
-        
-        eventManager.fireEvent(new ColorPanelSelectedEvent(Boolean.FALSE, Boolean.FALSE, instance));
+        eventManager.fireEvent(new ColorPanelSelectedEvent(
+                Boolean.FALSE, Boolean.FALSE, instance));
     }
 
     public Set<String> getAllPaletteNames() {
@@ -161,6 +168,13 @@ public class ColorPaletteManager implements ColorGrabListener, ColorDetectListen
         return (null != colorPanelPaletteMap.get(paletteName)
                 ? colorPanelPaletteMap.get(paletteName).size() : 0);
     }
+
+    public void deletePalette(String paletteName) {
+        paletteNames.remove(paletteName);
+        colorPanelPaletteMap.remove(paletteName);
+    }
+
+    
     
     
 }
