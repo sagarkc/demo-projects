@@ -37,6 +37,7 @@ import sun.swing.SwingUtilities2;
 
 import com.gs.glassforest.plaf.UiConstants;
 import com.gs.glassforest.util.GlassForestUtils;
+import javax.swing.BorderFactory;
 
 /**
  * @author Sabuj Das
@@ -63,6 +64,10 @@ public class GlassForestButtonUI extends BasicButtonUI {
 	
 	private String layout(AbstractButton b, FontMetrics fm, int width,
 			int height) {
+        int w = b.getWidth();
+		int h = b.getHeight();
+        //b.setBorder(BorderFactory.createEmptyBorder(20, 20, 0, 0));
+        //b.setBorderPainted(false);
 		Insets i = b.getInsets();
 		viewRect.x = i.left;
 		viewRect.y = i.top;
@@ -103,7 +108,7 @@ public class GlassForestButtonUI extends BasicButtonUI {
         GlassForestUtils.addRendererHint(g);
         g.setColor(UiConstants.ButtonsColors.BORDER);
 		g.drawRect(0, 0, w, h);
-        Rectangle2D r = new Rectangle2D.Double(1, 1, w - 1, h - 1);
+        Rectangle2D r = new Rectangle2D.Double(1, 1, w - 2, h - 2);
         GradientPaint gp = new GradientPaint(
                 0, 0,
                 UiConstants.ButtonsColors.GRAD_TOP,
@@ -113,8 +118,7 @@ public class GlassForestButtonUI extends BasicButtonUI {
         if(button.isRolloverEnabled() && model.isRollover() && button.isEnabled()){
         	g.setColor(UiConstants.ButtonsColors.HOVER_BORDER);
     		g.drawRect(0, 0, w, h);
-    		r = new Rectangle2D.Double(1, 1, w - 1, h - 1);
-            gp = new GradientPaint(
+    		gp = new GradientPaint(
                     0, 0,
                     UiConstants.ButtonsColors.HOVER_GRAD_TOP,
                     0, h / 2,
@@ -125,8 +129,7 @@ public class GlassForestButtonUI extends BasicButtonUI {
         } else {
         	g.setColor(UiConstants.ButtonsColors.BORDER);
     		g.drawRect(0, 0, w, h);
-    		r = new Rectangle2D.Double(1, 1, w - 1, h - 1);
-    	    gp = new GradientPaint(
+    		gp = new GradientPaint(
 	                0, 0,
 	                UiConstants.ButtonsColors.GRAD_TOP,
 	                0, h / 2,

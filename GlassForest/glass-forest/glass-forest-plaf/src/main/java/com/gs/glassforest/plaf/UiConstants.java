@@ -55,15 +55,15 @@ public interface UiConstants {
     }
     
     interface ButtonsColors{
-        Color BACKGROUND = Color.decode("0xA4C3EB");
+        Color BACKGROUND = Color.decode("0x0F2A9B");
         
         Color HOVER_BORDER = Color.decode("0xFA980D");
         Color HOVER_GRAD_TOP = new Color(131, 185, 255);//Color.decode("0xFFBD69");
         Color HOVER_GRAD_BOTTOM = new Color(59, 151, 58);//Color.decode("0xFFDA75");
         
-        Color BORDER = Color.RED;//Color.decode("0x186337");
-        Color GRAD_TOP = Color.decode("0xB4D4F4");
-        Color GRAD_BOTTOM = Color.decode("0xB4D4F4");
+        Color BORDER = Color.decode("0x0F2A9B");
+        Color GRAD_TOP = Color.decode("0x8DC2F6");
+        Color GRAD_BOTTOM = Color.decode("0x7DA5D9");
         
         Color SELECTED_FOREGROUND = Color.decode("0xF2F6F0");
 		Color SELECTED_BG_GRAD_TOP = Color.decode("0x4BA231");
