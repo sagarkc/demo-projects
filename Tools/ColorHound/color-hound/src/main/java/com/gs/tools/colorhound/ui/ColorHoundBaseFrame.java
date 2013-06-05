@@ -103,8 +103,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                 exitMenuItemActionPerformed(e);
             }
         };
-    private static final int PALETTE_CONTENT_MAX_WIDTH = 1000;
-    private static final int MAX_COLORS_IN_ROW = 20;
+    private static final int PALETTE_CONTENT_MAX_WIDTH = 1005;
     public static final String ENLARGE_RATIO_SLIDER = "ENLARGE_RATIO_SLIDER";
     
     private ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/Message");
@@ -213,6 +212,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         paletteListComboBox = new javax.swing.JComboBox();
         addPaletteButton = new javax.swing.JButton();
         deletePaletteButton = new javax.swing.JButton();
+        jSeparator8 = new javax.swing.JToolBar.Separator();
         baseContentPanel = new javax.swing.JPanel();
         baseSplitPane = new javax.swing.JSplitPane();
         topPanel = new javax.swing.JPanel();
@@ -239,6 +239,8 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         cssCopyButton = new javax.swing.JButton();
         hexColorTextField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        jSeparator9 = new javax.swing.JSeparator();
+        jLabel11 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         enlargedPanel = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -270,9 +272,23 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         fileMenu = new javax.swing.JMenu();
         newMenuItem = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        saveMenuItem = new javax.swing.JMenuItem();
+        savePaletteAsMenuItem = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        importPalettesMenuItem = new javax.swing.JMenuItem();
+        exportPalettesMenuItem = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         hideMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
+        undoMenuItem = new javax.swing.JMenuItem();
+        redoMenuItem = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        cutMenuItem = new javax.swing.JMenuItem();
+        copyMenuItem = new javax.swing.JMenuItem();
+        pasteMenuItem = new javax.swing.JMenuItem();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
+        renameMenuItem = new javax.swing.JMenuItem();
         toolsMenu = new javax.swing.JMenu();
         settingsMenuItem = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
@@ -319,6 +335,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         deletePaletteButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         deletePaletteButton.addActionListener(formListener);
         baseToolBar.add(deletePaletteButton);
+        baseToolBar.add(jSeparator8);
 
         getContentPane().add(baseToolBar, java.awt.BorderLayout.PAGE_START);
 
@@ -326,7 +343,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         baseSplitPane.addComponentListener(formListener);
         baseSplitPane.addPropertyChangeListener(formListener);
 
-        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("lbl.palette.panel.header"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(153, 153, 255))); // NOI18N
+        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("lbl.palette.panel.header"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(153, 153, 255))); // NOI18N
 
         paletteToolBar.setFloatable(false);
         paletteToolBar.setRollover(true);
@@ -375,7 +392,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         leftPanel.setLayout(leftPanelLayout);
         leftPanelLayout.setHorizontalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(paletteToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+            .addComponent(paletteToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
             .addComponent(paletteContentScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         leftPanelLayout.setVerticalGroup(
@@ -444,41 +461,50 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
 
         jLabel7.setText("CSS");
 
+        jLabel11.setText("jLabel11");
+
         javax.swing.GroupLayout colorDetailsPanelLayout = new javax.swing.GroupLayout(colorDetailsPanel);
         colorDetailsPanel.setLayout(colorDetailsPanelLayout);
         colorDetailsPanelLayout.setHorizontalGroup(
             colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(colorDetailsPanelLayout.createSequentialGroup()
-                .addGap(4, 4, 4)
-                .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, colorDetailsPanelLayout.createSequentialGroup()
+                .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator9, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(colorDetailsPanelLayout.createSequentialGroup()
+                        .addGap(4, 4, 4)
                         .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel4))
-                        .addGap(2, 2, 2)
-                        .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(hexColorTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-                            .addComponent(cssRgbTextField))
-                        .addGap(2, 2, 2)
-                        .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(hexCopyButton, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cssCopyButton, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(colorDetailsPanelLayout.createSequentialGroup()
-                        .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(redRgbTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(greenRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, colorDetailsPanelLayout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(blueRgbTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rgbCopyButton)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGroup(colorDetailsPanelLayout.createSequentialGroup()
+                                .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel4))
+                                .addGap(2, 2, 2)
+                                .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(hexColorTextField)
+                                    .addComponent(cssRgbTextField))
+                                .addGap(2, 2, 2)
+                                .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(hexCopyButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(cssCopyButton, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addGroup(colorDetailsPanelLayout.createSequentialGroup()
+                                .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(redRgbTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(greenRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, colorDetailsPanelLayout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(colorDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(blueRgbTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rgbCopyButton)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(2, 2, 2))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, colorDetailsPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel4, jLabel7});
@@ -509,7 +535,11 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                     .addComponent(cssRgbTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(cssCopyButton))
-                .addGap(2, 2, 2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         colorDetailsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {blueRgbTextField, cssCopyButton, cssRgbTextField, greenRgbTextField, hexColorTextField, hexCopyButton, jLabel4, jLabel7, redRgbTextField, rgbCopyButton});
@@ -591,7 +621,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                         .addComponent(colorDetailsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addContainerGap())))
         );
 
         baseSplitPane.setTopComponent(topPanel);
@@ -709,7 +739,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                             .addGroup(textPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textScanProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -728,7 +758,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         );
         logContentPanelLayout.setVerticalGroup(
             logContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 324, Short.MAX_VALUE)
+            .addGap(0, 322, Short.MAX_VALUE)
         );
 
         colorSourceTabbedPane.addTab(bundle.getString("lbl.log.tab.title"), logContentPanel); // NOI18N
@@ -743,7 +773,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         );
         baseContentPanelLayout.setVerticalGroup(
             baseContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(baseSplitPane)
+            .addComponent(baseSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
         );
 
         getContentPane().add(baseContentPanel, java.awt.BorderLayout.CENTER);
@@ -756,6 +786,25 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         newMenuItem.addActionListener(formListener);
         fileMenu.add(newMenuItem);
         fileMenu.add(jSeparator1);
+
+        saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        saveMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_edit.gif"))); // NOI18N
+        saveMenuItem.setText(bundle.getString("lbl.save.menu.item")); // NOI18N
+        fileMenu.add(saveMenuItem);
+
+        savePaletteAsMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/saveas_edit.gif"))); // NOI18N
+        savePaletteAsMenuItem.setText(bundle.getString("lbl.save.palette.as.menu.item")); // NOI18N
+        fileMenu.add(savePaletteAsMenuItem);
+        fileMenu.add(jSeparator5);
+
+        importPalettesMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/import_wiz.gif"))); // NOI18N
+        importPalettesMenuItem.setText(bundle.getString("lbl.import.palettes.menu.item")); // NOI18N
+        fileMenu.add(importPalettesMenuItem);
+
+        exportPalettesMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/export_wiz.gif"))); // NOI18N
+        exportPalettesMenuItem.setText(bundle.getString("lbl.export.palettes.menu.item")); // NOI18N
+        fileMenu.add(exportPalettesMenuItem);
+        fileMenu.add(jSeparator2);
 
         hideMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.ALT_MASK));
         hideMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hide.png"))); // NOI18N
@@ -772,6 +821,38 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         baseMenuBar.add(fileMenu);
 
         editMenu.setText(bundle.getString("lbl.edit.menu")); // NOI18N
+
+        undoMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
+        undoMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/undo.png"))); // NOI18N
+        undoMenuItem.setText(bundle.getString("lbl.undo.menu.item")); // NOI18N
+        editMenu.add(undoMenuItem);
+
+        redoMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
+        redoMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/redo.png"))); // NOI18N
+        redoMenuItem.setText(bundle.getString("lbl.redo.menu.item")); // NOI18N
+        editMenu.add(redoMenuItem);
+        editMenu.add(jSeparator6);
+
+        cutMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
+        cutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cut_edit.gif"))); // NOI18N
+        cutMenuItem.setText(bundle.getString("lbl.cut.menu.item")); // NOI18N
+        editMenu.add(cutMenuItem);
+
+        copyMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        copyMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/copy_edit.gif"))); // NOI18N
+        copyMenuItem.setText(bundle.getString("lbl.copy.menu.item")); // NOI18N
+        editMenu.add(copyMenuItem);
+
+        pasteMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_MASK));
+        pasteMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/paste.png"))); // NOI18N
+        pasteMenuItem.setText(bundle.getString("lbl.paste.menu.item")); // NOI18N
+        editMenu.add(pasteMenuItem);
+        editMenu.add(jSeparator7);
+
+        renameMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        renameMenuItem.setText(bundle.getString("lbl.rename.menu.item")); // NOI18N
+        editMenu.add(renameMenuItem);
+
         baseMenuBar.add(editMenu);
 
         toolsMenu.setText(bundle.getString("lbl.tools.menu")); // NOI18N
@@ -845,6 +926,9 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
             else if (evt.getSource() == openTextFileButton) {
                 ColorHoundBaseFrame.this.openTextFileButtonActionPerformed(evt);
             }
+            else if (evt.getSource() == cleatTextButton) {
+                ColorHoundBaseFrame.this.cleatTextButtonActionPerformed(evt);
+            }
             else if (evt.getSource() == scanTextButton) {
                 ColorHoundBaseFrame.this.scanTextButtonActionPerformed(evt);
             }
@@ -868,9 +952,6 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
             }
             else if (evt.getSource() == enableRealtimeViewChkMenuItem) {
                 ColorHoundBaseFrame.this.enableRealtimeViewChkMenuItemActionPerformed(evt);
-            }
-            else if (evt.getSource() == cleatTextButton) {
-                ColorHoundBaseFrame.this.cleatTextButtonActionPerformed(evt);
             }
         }
 
@@ -997,7 +1078,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     	ColorPaletteManager.getInstance().makeSelectedColorPanelEditable(getPaletteName());
         if(enlargePanelEnabled 
                     && ColorPaletteManager.getInstance().isSelectedPanelEditable(getPaletteName())){
-                mouseWatchTimer.schedule(mouseWatcher, 0, 500L);
+                startMouseWatch();
         } else {
             mouseWatchTimer.cancel();
         }
@@ -1360,8 +1441,10 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     private javax.swing.JPanel colorDetailsPanel;
     private javax.swing.JList colorPickedJList;
     private javax.swing.JTabbedPane colorSourceTabbedPane;
+    private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JButton cssCopyButton;
     private javax.swing.JTextField cssRgbTextField;
+    private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JButton deleteColorButton;
     private javax.swing.JButton deletePaletteButton;
     private javax.swing.JButton editColorButton;
@@ -1370,6 +1453,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     private javax.swing.JCheckBoxMenuItem enableRealtimeViewChkMenuItem;
     private javax.swing.JPanel enlargedPanel;
     private javax.swing.JMenuItem exitMenuItem;
+    private javax.swing.JMenuItem exportPalettesMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JTextField greenRgbTextField;
     private javax.swing.JTextField hexColorTextField;
@@ -1378,8 +1462,10 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     private javax.swing.JPanel imageContainerPanel;
     private javax.swing.JToolBar imageControlToolBar;
     private javax.swing.JPanel imageViewerPanel;
+    private javax.swing.JMenuItem importPalettesMenuItem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1392,8 +1478,14 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
+    private javax.swing.JToolBar.Separator jSeparator8;
+    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JPanel leftPanel;
     private javax.swing.JPanel logContentPanel;
     private javax.swing.JMenuItem newMenuItem;
@@ -1403,10 +1495,15 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     private javax.swing.JScrollPane paletteContentScrollPane;
     private javax.swing.JComboBox paletteListComboBox;
     private javax.swing.JToolBar paletteToolBar;
+    private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JLabel ratioLabel;
     private javax.swing.JSlider ratioSlider;
     private javax.swing.JTextField redRgbTextField;
+    private javax.swing.JMenuItem redoMenuItem;
+    private javax.swing.JMenuItem renameMenuItem;
     private javax.swing.JButton rgbCopyButton;
+    private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JMenuItem savePaletteAsMenuItem;
     private javax.swing.JButton scanTextButton;
     private javax.swing.JLabel selectedPaletteNameLabel;
     private javax.swing.JMenuItem settingsMenuItem;
@@ -1418,6 +1515,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     private javax.swing.JProgressBar textScanProgressBar;
     private javax.swing.JMenu toolsMenu;
     private javax.swing.JPanel topPanel;
+    private javax.swing.JMenuItem undoMenuItem;
     // End of variables declaration//GEN-END:variables
 
     public TrayIcon minimizeToTray(final Frame frame, final Image image, ActionListener exitListener) {
@@ -1533,13 +1631,23 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                 ? paletteListComboBox.getSelectedItem().toString() : "";
     }
     
+    public void startMouseWatch() {
+        try {
+            mouseWatchTimer.purge();
+            mouseWatchTimer.schedule(mouseWatcher, 0, timerPeriod);
+        } catch (IllegalStateException ise) {
+            mouseWatchTimer = new Timer();
+            mouseWatcher.cancel();
+            mouseWatchTimer.schedule(mouseWatcher, 0, timerPeriod);
+        }
+    }
+    
     @Override
     public void colorPanelSelected(ColorPanelSelectedEvent event) {
         if(event.getNewValue()){
             if(enlargePanelEnabled 
                     && ColorPaletteManager.getInstance().isSelectedPanelEditable(getPaletteName())){
-                mouseWatchTimer.purge();
-                mouseWatchTimer.schedule(mouseWatcher, 0, timerPeriod);
+                startMouseWatch();
             }
             editColorButton.setEnabled(true);
             deleteColorButton.setEnabled(true);
@@ -1612,13 +1720,14 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     private void resizePaletteContentPanel() {
         int totalColorPanels = ColorPaletteManager.getInstance()
                 .getColorPanelCount(getPaletteName());
-        if(totalColorPanels <= MAX_COLORS_IN_ROW){
+        int maxColorsInRow = PALETTE_CONTENT_MAX_WIDTH / ColorPanel.MAX_WIDTH;
+        if(totalColorPanels <= maxColorsInRow){
             paletteContentPanel.setPreferredSize(
                 new Dimension(100,100));
             return;
         }
-        int rowCount = (int)(totalColorPanels/MAX_COLORS_IN_ROW)+1;
-        int height = rowCount * 50;
+        int rowCount = (int)(totalColorPanels/maxColorsInRow)+1;
+        int height = rowCount * (ColorPanel.MAX_HEIGHT+5);
         paletteContentPanel.setPreferredSize(
                 new Dimension(PALETTE_CONTENT_MAX_WIDTH, height+10));
         

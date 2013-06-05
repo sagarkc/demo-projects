@@ -176,6 +176,17 @@ public class ColorPaletteManager implements ColorGrabListener, ColorDetectListen
         colorPanelPaletteMap.remove(paletteName);
     }
 
+    public void selectPanel(String paletteName, ColorPanel aThis, boolean b) {
+        final List<ColorPanel> colorPanels = colorPanelPaletteMap.get(paletteName);
+        for (ColorPanel p : colorPanels) {
+            p.setSelected(false);
+            p.updateUI();
+        }
+        
+        selectedPanel.setSelected(b);
+        selectedPanel = null;
+    }
+
     
     
     

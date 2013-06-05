@@ -5,6 +5,8 @@
 package com.gs.tools.colorhound.util;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 /**
  *
@@ -36,4 +38,16 @@ public final class GraphicsUtil {
         return "0x"+String.format("%02x%02x%02x", 
                 r,g,b).toUpperCase();
     }
+    
+    public static void addRendererHint(final Graphics2D graphics){
+		if(graphics == null)
+			return;
+		RenderingHints hints = new RenderingHints(
+				RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		hints.add(new RenderingHints(RenderingHints.KEY_RENDERING,
+				RenderingHints.VALUE_RENDER_QUALITY));
+		graphics.setRenderingHints(hints);
+	}
+    
 }
