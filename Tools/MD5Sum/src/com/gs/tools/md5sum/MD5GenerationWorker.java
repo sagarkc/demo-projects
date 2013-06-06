@@ -9,6 +9,9 @@ import java.io.FileInputStream;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import javax.swing.SwingWorker;
+import org.apache.commons.codec.binary.Base32;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -32,7 +35,8 @@ public class MD5GenerationWorker extends SwingWorker<Void, Void>
 		File file = new File(sourceFileName);
         long size = file.length();
         try {
-            MessageDigest md = MessageDigest.getInstance(algorithmName);
+            MessageDigest md = DigestUtils.getDigest(algorithmName);//MessageDigest.getInstance(algorithmName);
+            
             DigestInputStream inputStream = null;
             try{
                 inputStream = new DigestInputStream(
@@ -45,6 +49,7 @@ public class MD5GenerationWorker extends SwingWorker<Void, Void>
                 while((c = inputStream.read(b, 0, BUFFER_SIZE)) > -1){
                     s += c;
                     progress = (int) (((s*1.0) / (size*1.0)) * 100.0);
+                    md.update(b, 0, c);
                     firePropertyChange(PROPERTY_PROGRESS, null, progress);
                 }
             } finally {
@@ -53,13 +58,16 @@ public class MD5GenerationWorker extends SwingWorker<Void, Void>
                 }
             }
             digest = md.digest();
-            firePropertyChange(TASK_STATUS_DONE, null, new String(digest));
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < digest.length; i++) {
+                sb.append(Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            firePropertyChange(TASK_STATUS_DONE, null, sb.toString());
         } catch (Exception e) {
             firePropertyChange(TASK_STATUS_FAILED, null, e.getMessage());
 			return null;
         }
         
-		firePropertyChange(TASK_STATUS_DONE, null, "");
 		return null;
 	}
 	
