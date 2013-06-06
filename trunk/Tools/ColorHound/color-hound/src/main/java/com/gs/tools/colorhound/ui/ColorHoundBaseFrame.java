@@ -343,7 +343,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         baseSplitPane.addComponentListener(formListener);
         baseSplitPane.addPropertyChangeListener(formListener);
 
-        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("lbl.palette.panel.header"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, new java.awt.Color(153, 153, 255))); // NOI18N
+        leftPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("lbl.palette.panel.header"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(153, 153, 255))); // NOI18N
 
         paletteToolBar.setFloatable(false);
         paletteToolBar.setRollover(true);
@@ -392,7 +392,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         leftPanel.setLayout(leftPanelLayout);
         leftPanelLayout.setHorizontalGroup(
             leftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(paletteToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+            .addComponent(paletteToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
             .addComponent(paletteContentScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         leftPanelLayout.setVerticalGroup(
@@ -738,7 +738,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                         .addGroup(textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(textPanelLayout.createSequentialGroup()
                                 .addComponent(jLabel10)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 106, Short.MAX_VALUE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textScanProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -758,7 +758,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         );
         logContentPanelLayout.setVerticalGroup(
             logContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 322, Short.MAX_VALUE)
+            .addGap(0, 250, Short.MAX_VALUE)
         );
 
         colorSourceTabbedPane.addTab(bundle.getString("lbl.log.tab.title"), logContentPanel); // NOI18N
