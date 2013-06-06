@@ -10,6 +10,8 @@ import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.UIManager;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -36,7 +38,34 @@ implements  PropertyChangeListener{
         setIconImage(frameIcon.getImage());
         setLocationByPlatform(true);
         initComponents();
-        
+        generationProgressBar.setVisible(false);
+        generationProgressBar.setValue(0);
+        stopButton.setVisible(false);
+        sourceTextArea.getDocument().addDocumentListener(
+            new DocumentListener() {
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                    enableControl();
+                }
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                    enableControl();
+                }
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    enableControl();
+                }
+                
+                private void enableControl(){
+                    if(null != sourceTextArea.getText() 
+                            && !"".equals(sourceTextArea.getText().trim())){
+                        compareButton.setEnabled(true);
+                        return ;
+                    }
+                    compareButton.setEnabled(false);
+                }
+                
+            });
     }
 
     /**
@@ -65,11 +94,15 @@ implements  PropertyChangeListener{
         resultLabel = new javax.swing.JLabel();
         compareButton = new javax.swing.JButton();
         generationProgressBar = new javax.swing.JProgressBar();
-        jButton1 = new javax.swing.JButton();
+        stopButton = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MD5 Sum");
+        setMaximumSize(new java.awt.Dimension(560, 360));
+        setMinimumSize(new java.awt.Dimension(560, 360));
+        setPreferredSize(new java.awt.Dimension(560, 360));
+        setResizable(false);
 
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
@@ -110,7 +143,7 @@ implements  PropertyChangeListener{
         gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
         jPanel1.add(jLabel2, gridBagConstraints);
 
-        algoTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "MD5", "SHA", "SHA256" }));
+        algoTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "MD5", "SHA1", "SHA-256" }));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -185,6 +218,12 @@ implements  PropertyChangeListener{
         jPanel1.add(resultLabel, gridBagConstraints);
 
         compareButton.setText("Compare");
+        compareButton.setEnabled(false);
+        compareButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                compareButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 6;
@@ -205,14 +244,19 @@ implements  PropertyChangeListener{
         gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
         jPanel1.add(generationProgressBar, gridBagConstraints);
 
-        jButton1.setText("Stop");
+        stopButton.setText("Stop");
+        stopButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stopButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
         gridBagConstraints.insets = new java.awt.Insets(3, 3, 3, 3);
-        jPanel1.add(jButton1, gridBagConstraints);
+        jPanel1.add(stopButton, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
@@ -251,6 +295,24 @@ implements  PropertyChangeListener{
         }
     }//GEN-LAST:event_generateButtonActionPerformed
 
+    private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
+        synchronized(this){
+            if(null != generationWorker){
+                generationWorker.stop();
+            }
+        }
+    }//GEN-LAST:event_stopButtonActionPerformed
+
+    private void compareButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compareButtonActionPerformed
+        String l = generateTextArea.getText();
+        String r = sourceTextArea.getText();
+        if(r.equals(l)){
+            resultLabel.setIcon(acceptIcon);
+        } else {
+            resultLabel.setIcon(rejectIcon);
+        }
+    }//GEN-LAST:event_compareButtonActionPerformed
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         String name = evt.getPropertyName();
@@ -262,31 +324,43 @@ implements  PropertyChangeListener{
             browseSourceButton.setEnabled(false);
             fileNameTextField.setEditable(false);
             resultLabel.setIcon(clockIcon);
+            stopButton.setVisible(true);
+            generateTextArea.setText("");
+            sourceTextArea.setText("");
+            sourceTextArea.setEditable(false);
         }
         if(WorkerTaskConstants.TASK_STATUS_FAILED.equals(name)
                 || WorkerTaskConstants.TASK_STATUS_ABORT.equals(name)){
             generateButton.setEnabled(true);
-            compareButton.setEnabled(true);
             generationProgressBar.setVisible(false);
             generationProgressBar.setValue(0);
             browseSourceButton.setEnabled(true);
             fileNameTextField.setEditable(true);
             resultLabel.setIcon(clockIcon);
+            stopButton.setVisible(false);
+            sourceTextArea.setEditable(true);
         }
         if(WorkerTaskConstants.TASK_STATUS_DONE.equals(name)){
             generateButton.setEnabled(true);
-            compareButton.setEnabled(true);
             generationProgressBar.setVisible(false);
             generationProgressBar.setValue(0);
             browseSourceButton.setEnabled(true);
             fileNameTextField.setEditable(true);
             resultLabel.setIcon(clockIcon);
+            stopButton.setVisible(false);
+            sourceTextArea.setEditable(true);
+            if(null != evt.getNewValue()){
+                String sum = evt.getNewValue().toString();
+                generateTextArea.setText(sum);
+            }
         }
         if(WorkerTaskConstants.PROPERTY_PROGRESS.equals(name)){
             Integer progress = (Integer) evt.getNewValue();
-            System.out.println(progress);
-            generationProgressBar.setValue((Integer)progress);
-            //generationProgressBar.updateUI();
+            int val = generationProgressBar.getValue();
+            if(progress > val){
+                generationProgressBar.setValue((Integer)progress);
+                generationProgressBar.updateUI();
+            }
         }
     }
 
@@ -298,7 +372,7 @@ implements  PropertyChangeListener{
      */
     public static void main(String args[]) {
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception e) {
         }
 
@@ -317,7 +391,6 @@ implements  PropertyChangeListener{
     private javax.swing.JButton generateButton;
     private javax.swing.JTextArea generateTextArea;
     private javax.swing.JProgressBar generationProgressBar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -328,5 +401,6 @@ implements  PropertyChangeListener{
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel resultLabel;
     private javax.swing.JTextArea sourceTextArea;
+    private javax.swing.JButton stopButton;
     // End of variables declaration//GEN-END:variables
 }
