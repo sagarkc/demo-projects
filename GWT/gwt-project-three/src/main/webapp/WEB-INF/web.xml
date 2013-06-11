@@ -1,26 +1,86 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE web-app
-    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-    "http://java.sun.com/dtd/web-app_2_3.dtd">
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+    
+    <display-name>GWT-WebApp</display-name>
 
-<web-app>
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>gwt.webAppRoot</param-value>
+    </context-param>
 
-	<!-- Servlets -->
-	<servlet>
-		<servlet-name>greetServlet</servlet-name>
-		<servlet-class>com.gs.gwtproject.three.server.GreetingServiceImpl</servlet-class>
-	</servlet>
+    <context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>classpath:logger/log4j.xml</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>log4jExposeWebAppRoot</param-name>
+		<param-value>false</param-value>
+	</context-param>
+
+    <!--
+      - Loads the root log4j config of this web app at startup.
+    -->
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+    
+    <!--
+      - Location of the XML file that defines the root application context
+      - Applied by ContextLoaderListener.
+      -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:context/gwt-app-context.xml</param-value>
+	</context-param>
+    <!--
+      - Loads the root application context of this web app at startup.
+    -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+    
+    <filter>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    
+    <!-- The front controller of this Spring Web application, responsible for 
+    handling all application requests -->
+    <servlet>
+        <servlet-name>gwt-dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>gwt-dispatcher</servlet-name>
+        <url-pattern>*.rpc</url-pattern>
+    </servlet-mapping>
 
 
-	<servlet-mapping>
-		<servlet-name>greetServlet</servlet-name>
-		<url-pattern>/GwtProjectThree/greet</url-pattern>
-	</servlet-mapping>
+    <!-- Session Info -->
+    <session-config>
+        <session-timeout>60</session-timeout>
+    </session-config>
+    
 
-
-	<!-- Default page to serve -->
-	<welcome-file-list>
-		<welcome-file>GwtProjectThree.html</welcome-file>
-	</welcome-file-list>
+    <!-- Default page to serve -->
+    <welcome-file-list>
+        <welcome-file>GwtProjectThree.html</welcome-file>
+    </welcome-file-list>
 
 </web-app>
