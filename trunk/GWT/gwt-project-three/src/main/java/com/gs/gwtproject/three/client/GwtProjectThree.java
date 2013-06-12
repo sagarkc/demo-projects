@@ -9,6 +9,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.gs.gwtproject.three.client.i18n.ApplicationMessages;
+import com.gs.gwtproject.three.client.service.ExampleServiceClientImpl;
 import com.gs.gwtproject.three.shared.CommonEventManager;
 import com.gs.gwtproject.three.shared.event.MessageUpdatedEvent;
 import com.gs.gwtproject.three.shared.listener.MessageUpdateListener;
@@ -24,7 +25,8 @@ public class GwtProjectThree implements EntryPoint, MessageUpdateListener {
     private static final CommonEventManager eventManager = CommonEventManager.getInstance();
 	private Label helloLabel;
 	private Button button;
-    
+    private ExampleServiceClientImpl clientImpl =
+				new ExampleServiceClientImpl(GWT.getModuleBaseURL() + "greet");
     /**
      * This is the entry point method.
      */
@@ -51,8 +53,7 @@ public class GwtProjectThree implements EntryPoint, MessageUpdateListener {
     }
     
     private void handleButtonClick() {
-		MessageUpdatedEvent evt = new MessageUpdatedEvent("Hello....");
-		eventManager.fireEvent(evt);
+		clientImpl.sayHello("Sabuj");
 	}
     
     public void seyHello(String msg){
