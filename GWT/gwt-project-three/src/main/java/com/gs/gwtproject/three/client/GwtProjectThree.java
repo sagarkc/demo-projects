@@ -9,61 +9,50 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.gs.gwtproject.three.client.i18n.ApplicationMessages;
-import com.gs.gwtproject.three.client.service.ExampleServiceClientImpl;
-import com.gs.gwtproject.three.shared.CommonEventManager;
-import com.gs.gwtproject.three.shared.event.MessageUpdatedEvent;
-import com.gs.gwtproject.three.shared.listener.MessageUpdateListener;
+import com.gs.gwtproject.three.client.service.UserManagerClient;
+import com.gs.gwtproject.three.client.service.UserManagerClientImpl;
+import com.gs.gwtproject.three.client.ui.UserView;
 
 /**
- * Entry point classes define
- * <code>onModuleLoad()</code>.
+ * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class GwtProjectThree implements EntryPoint, MessageUpdateListener {
+public class GwtProjectThree implements EntryPoint {
 
-    private final ApplicationMessages messages = GWT.create(ApplicationMessages.class);
-
-    private static final CommonEventManager eventManager = CommonEventManager.getInstance();
-	private Label helloLabel;
+	private final ApplicationMessages messages = GWT
+			.create(ApplicationMessages.class);
+	private Label emailLabel;
 	private Button button;
-    private ExampleServiceClientImpl clientImpl =
-				new ExampleServiceClientImpl(GWT.getModuleBaseURL() + "greet");
-    /**
-     * This is the entry point method.
-     */
-    @Override
-    public void onModuleLoad() {
-        initComponents();
-        VerticalPanel verticalPanel = new VerticalPanel();
-		verticalPanel.add(helloLabel);
-		eventManager.addListener(MessageUpdatedEvent.TYPE, this);
+
+	private UserManagerClient userClient = new UserManagerClientImpl();
+
+	/**
+	 * This is the entry point method.
+	 */
+	@Override
+	public void onModuleLoad() {
+		initComponents();
+		VerticalPanel verticalPanel = new VerticalPanel();
+		verticalPanel.add(emailLabel);
 		button.addClickHandler(new ClickHandler() {
-            @Override
+			@Override
 			public void onClick(ClickEvent event) {
+				System.out.println("Button clicked.....");
 				handleButtonClick();
 			}
 		});
-		
+
 		verticalPanel.add(button);
+		verticalPanel.add(new UserView());
 		RootPanel.get().add(verticalPanel);
-    }
-
-    private void initComponents() {
-        helloLabel = new Label(messages.nameFieldLebel());
-        button = new Button(messages.sendButton());
-    }
-    
-    private void handleButtonClick() {
-		clientImpl.sayHello("Sabuj");
-	}
-    
-    public void seyHello(String msg){
-		helloLabel.setText(msg);
 	}
 
-    @Override
-    public void messageUpdated(MessageUpdatedEvent messageUpdatedEvent) {
-        if(null != messageUpdatedEvent){
-			seyHello(messageUpdatedEvent.getMessage());
-		}
-    }
+	private void initComponents() {
+		emailLabel = new Label(messages.nameFieldLebel());
+		button = new Button(messages.sendButton());
+	}
+
+	private void handleButtonClick() {
+		userClient.getUser("dskfhaslkdj alskdjfl askjdf");
+	}
+
 }
