@@ -49,6 +49,7 @@ public class GwtProjectThree implements EntryPoint {
 	private void initComponents() {
 		emailLabel = new Label(messages.nameFieldLebel());
 		button = new Button(messages.sendButton());
+                button.setStyleName("button");
 	}
 
 	private void handleButtonClick() {
