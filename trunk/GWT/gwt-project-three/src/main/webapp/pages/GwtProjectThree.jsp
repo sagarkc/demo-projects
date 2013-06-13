@@ -14,7 +14,7 @@
     <!-- Consider inlining CSS to reduce the number of requested files -->
     <!--                                                               -->
     <link type="text/css" rel="stylesheet" href="GwtProjectThree/GwtProjectThree.css">
-
+    <link type="text/css" rel="stylesheet" href="assets/css/common.css"/>
     <!--                                           -->
     <!-- Any title is fine                         -->
     <!--                                           -->
