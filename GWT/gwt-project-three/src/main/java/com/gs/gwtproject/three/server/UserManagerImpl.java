@@ -37,7 +37,7 @@ public class UserManagerImpl implements UserManager {
         user.setFirstName("Sabuj");
         user.setLastName("Das");
         user.setEmail("sa@mail.com");
-        List<User> l  = new ArrayList<>();
+        List<User> l  = new ArrayList<User>();
         l.add(user);
         return l;
     }

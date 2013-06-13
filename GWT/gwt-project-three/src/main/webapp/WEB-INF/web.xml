@@ -68,7 +68,12 @@
 
     <servlet-mapping>
         <servlet-name>gwt-dispatcher</servlet-name>
-        <url-pattern>/rpc/*</url-pattern>
+        <url-pattern>/GwtProjectThree/*.rpc</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>gwt-dispatcher</servlet-name>
+        <url-pattern>*.htm</url-pattern>
     </servlet-mapping>
 
 
@@ -80,7 +85,7 @@
 
     <!-- Default page to serve -->
     <welcome-file-list>
-        <welcome-file>GwtProjectThree.html</welcome-file>
+        <welcome-file>/index.htm</welcome-file>
     </welcome-file-list>
 
 </web-app>

@@ -12,11 +12,13 @@ package com.gs.gwtproject.three.shared.model;
 
 import java.io.Serializable;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
  *
  * @author Sabuj Das | sabuj.das@gmail.com
  */
-public class User implements Serializable{
+public class User implements Serializable, IsSerializable{
 
     private String firstName;
     private String lastName;
