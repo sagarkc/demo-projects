@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author Sabuj Das | sabuj.das@gmail.com
  */
-@RemoteServiceRelativePath("rpc/userManager")
+@RemoteServiceRelativePath("userManager.rpc")
 public interface UserManager extends RemoteService{
 
     User getUser(String email);

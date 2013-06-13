@@ -11,6 +11,7 @@
 package com.gs.gwtproject.three.client.service;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.gs.gwtproject.three.shared.CommonEventManager;
@@ -29,17 +30,16 @@ public class UserManagerClientImpl implements UserManagerClient{
     public UserManagerClientImpl() {
         service = GWT.create(UserManager.class);
         ServiceDefTarget endpoint = (ServiceDefTarget) service;
-        endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + "rpc/userManager");
-        System.out.println(GWT.getModuleBaseURL() + "rpc/userManager");
+        endpoint.setServiceEntryPoint(GWT.getModuleBaseURL() + "userManager.rpc");
+        Window.alert(GWT.getModuleBaseURL() + "userManager.rpc");
     }
     
     public void getUser(String email){
-    	System.out.println("in getUser");
         service.getUser(email, new AsyncCallback<User>() {
 
             @Override
             public void onFailure(Throwable caught) {
-                caught.printStackTrace();
+            	Window.alert("Error!\n\n" + caught.getMessage());
             }
 
             @Override
