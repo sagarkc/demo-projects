@@ -27,7 +27,7 @@ public class GwtHandlerMapping extends AbstractDetectingUrlHandlerMapping{
         
         final Object bean = getApplicationContext().getBean(beanName);
         if(bean instanceof RemoteService){
-            urls = new String[]{"/" + beanName};
+            urls = new String[]{"/**/" + beanName + ".rpc" };
         }
         return urls;
     }

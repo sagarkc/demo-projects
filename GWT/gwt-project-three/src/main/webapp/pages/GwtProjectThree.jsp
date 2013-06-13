@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
 <!-- The DOCTYPE declaration above will set the    -->
 <!-- browser's rendering engine into               -->
@@ -12,7 +13,7 @@
     <!--                                                               -->
     <!-- Consider inlining CSS to reduce the number of requested files -->
     <!--                                                               -->
-    <link type="text/css" rel="stylesheet" href="GwtProjectThree.css">
+    <link type="text/css" rel="stylesheet" href="GwtProjectThree/GwtProjectThree.css">
 
     <!--                                           -->
     <!-- Any title is fine                         -->
