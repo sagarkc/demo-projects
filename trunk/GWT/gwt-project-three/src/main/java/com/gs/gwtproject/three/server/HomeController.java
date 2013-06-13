@@ -4,6 +4,7 @@
  */
 package com.gs.gwtproject.three.server;
 
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,8 +22,13 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String doLogin(){
-		return "redirect:/GwtProjectThree.html";
+	public String doLogin(HttpServletRequest request){
+            if(null != request){
+                request.getSession().invalidate();
+                request.getSession(true);
+            }
+            
+            return "GwtProjectThree";
 	}
 	
 }
