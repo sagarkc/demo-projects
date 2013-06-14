@@ -32,7 +32,6 @@
         <tiles-version>2.2.2</tiles-version>
         <jsp-ui-config.version>1.0.RELEASE</jsp-ui-config.version>
         <slf4j.version>1.6.6</slf4j.version>
-        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
     </properties>
 
     <dependencies>
@@ -237,6 +236,29 @@
             <artifactId>derby</artifactId>
             <version>${derby.db.version}</version>
         </dependency>
+        
+        <dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+		</dependency>
         
     </dependencies>
 
