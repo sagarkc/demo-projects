@@ -30,5 +30,10 @@ public class HomeController {
             
             return "GwtProjectThree";
 	}
+        
+        @RequestMapping(value="/home", method=RequestMethod.GET)
+        public String showHomePage(){
+            return "GwtProjectThree";
+        }
 	
 }
