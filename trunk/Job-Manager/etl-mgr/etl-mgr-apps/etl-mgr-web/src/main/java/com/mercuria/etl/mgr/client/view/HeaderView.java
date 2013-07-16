@@ -17,7 +17,7 @@ public class HeaderView extends Composite{
 	
 	public HeaderView() {
 		
-		logoImage = new Image("asstes/images/system-monitor-logo-227x48.png");
+		logoImage = new Image("assets/images/system-monitor-logo-227x48.png");
 		logoImage.setWidth("227");
 		logoImage.setHeight("48");
 		

@@ -1,5 +1,8 @@
 package com.mercuria.etl.mgr.client;
 
+
+import java.util.logging.Logger;
+
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.History;
@@ -11,11 +14,12 @@ import com.mercuria.etl.mgr.client.view.BasicLayoutView;
 
 public class AppController implements Presenter<Display>,
 		ValueChangeHandler<String> {
-
+	
+	private static Logger logger = Logger.getLogger(EtlManager.class.getName());
 	private HasWidgets container;
 
 	public AppController() {
-
+		logger.info("In AppController constructor");
 		bind();
 	}
 
