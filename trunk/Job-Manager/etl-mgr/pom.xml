@@ -1,20 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.mercuria.etl.manager</groupId>
-	<artifactId>etl-manager</artifactId>
+	<groupId>com.mercuria.etl.mgr</groupId>
+	<artifactId>etl-mgr</artifactId>
 	<packaging>pom</packaging>
 	<version>${release.version}</version>
-	<name>etl-manager</name>
-	<url>http://maven.apache.org</url>
+	<name>ETL - Manager</name>
+	<url>http://localhost:8080/etlmgr/</url>
+	<inceptionYear>2001</inceptionYear>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.test.skip>true</maven.test.skip>
 		<downloadSources>true</downloadSources>
 
-		<release.version>0.0.1</release.version>
+		<!-- env type = dev | lab | prod -->
+		<environment.type>dev</environment.type>
 		<jdk.version>1.7</jdk.version>
+		<release.version>0.1</release.version>
+
 		<springframework.version>3.2.3.RELEASE</springframework.version>
 		<spring.security.version>3.1.4.RELEASE</spring.security.version>
 		<spring.batch.version>2.2.0.RELEASE</spring.batch.version>
@@ -24,113 +29,32 @@
 		<derby.db.version>10.9.1.0</derby.db.version>
 		<tiles-version>2.2.2</tiles-version>
 		<slf4j.version>1.6.6</slf4j.version>
+		
+		<gwtVersion>2.5.1</gwtVersion>
 
-		<web.context.root>etl-manager</web.context.root>
-
-		<app.config.dir>../setup/conf</app.config.dir>
-		<report.config.directory>${app.config.dir}/reporting-config</report.config.directory>
-		<report.output.directory>../../site/reports</report.output.directory>
-
-
+		<host.address>http://localhost:8080</host.address>
+		
+		<app.config.dir>../../../config</app.config.dir>
+		<report.config.directory>${app.config.dir}/reporting</report.config.directory>
+		<report.output.directory>../site/reports</report.output.directory>
 	</properties>
 
-	<distributionManagement>
-		<site>
-			<id>${web.context.root}</id>
-			<url>file://C:/TOOLS/www/${web.context.root}</url>
-		</site>
-	</distributionManagement>
-
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl-over-slf4j</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>runtime</scope>
-		</dependency>
+	<repositories>
+		<repository>
+			<id>spring-snapshots</id>
+			<name>Spring Maven Snapshot Repository</name>
+			<url>http://s3.amazonaws.com/maven.springframework.org/snapshot</url>
+		</repository>
+	</repositories>
 
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>1.7.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>1.7.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.batch</groupId>
-			<artifactId>spring-batch-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.batch</groupId>
-			<artifactId>spring-batch-infrastructure</artifactId>
-		</dependency>
-
-	</dependencies>
-
+	<modules>
+		<module>etl-mgr-common</module>
+		<module>etl-mgr-util</module>
+		<module>etl-mgr-model</module>
+		<module>etl-mgr-core</module>
+		<module>etl-mgr-apps</module>
+	</modules>
 
 	<dependencyManagement>
 		<dependencies>
@@ -315,24 +239,110 @@
 				<artifactId>derby</artifactId>
 				<version>${derby.db.version}</version>
 			</dependency>
-			<dependency>
-				<groupId>com.microsoft</groupId>
-				<artifactId>sqljdbc4</artifactId>
-				<version>1.0</version>
-			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
 
-	<modules>
-		<module>etl-manager-core</module>
-		<module>etl-manager-integration</module>
-		<module>etl-manager-web</module>
-	</modules>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.batch</groupId>
+			<artifactId>spring-batch-infrastructure</artifactId>
+		</dependency>
+	</dependencies>
+
 
 	<build>
 		<plugins>
-			
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<configuration>
+					<locales>en</locales>
+				</configuration>
+			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.0</version>
@@ -355,9 +365,9 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>3.3</version>
+				<version>3.1</version>
 				<configuration>
-					<locales>en,fr</locales>
+					<locales>en</locales>
 					<reportPlugins>
 
 						<plugin>
@@ -448,4 +458,6 @@
 			</plugin>
 		</plugins>
 	</reporting>
+
+	
 </project>

@@ -176,13 +176,17 @@
 		</dependency>
 
 		<!-- JDBC Connectors dependencies -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derby</artifactId>
+		</dependency> -->
+		<dependency>
+			<groupId>com.microsoft</groupId>
+			<artifactId>sqljdbc4</artifactId>
 		</dependency>
 
 		<!-- WEB related -->
