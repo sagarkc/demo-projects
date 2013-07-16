@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.mercuria.etl.mgr</groupId>
+		<artifactId>etl-mgr</artifactId>
+		<version>${release.version}</version>
+	</parent>
+	<groupId>com.mercuria.etl.mgr</groupId>
+	<artifactId>etl-mgr-core</artifactId>
+	<version>${release.version}</version>
+	<name>etl-mgr-core</name>
+	<url>${host.address}/etlmgr/core</url>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.mercuria.etl.mgr</groupId>
+			<artifactId>etl-mgr-common</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.mercuria.etl.mgr</groupId>
+			<artifactId>etl-mgr-model</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.mercuria.etl.mgr</groupId>
+			<artifactId>etl-mgr-util</artifactId>
+			<version>${release.version}</version>
+		</dependency>
+	</dependencies>
+</project>
