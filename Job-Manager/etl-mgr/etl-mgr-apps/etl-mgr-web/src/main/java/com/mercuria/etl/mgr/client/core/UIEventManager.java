@@ -32,6 +32,7 @@ public class UIEventManager implements HasHandlers{
 
 
 
+    @Override
 	public void fireEvent(GwtEvent<?> event) {
 		handlerManager.fireEvent(event);
 	}

@@ -39,6 +39,8 @@ public class HeaderView extends Composite{
 		
 		horizontalPanel.add(userNameLabel);
 		horizontalPanel.add(logoutButton);
+		
+		initWidget(horizontalPanel);
 	}
 
 
