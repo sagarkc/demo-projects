@@ -1,49 +1,74 @@
 package com.mercuria.etl.mgr.client.view;
 
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DockLayoutPanel;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.SplitLayoutPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.mercuria.etl.mgr.client.presenter.BasicLayoutPresenter.LayoutDisplay;
+import com.mercuria.etl.mgr.client.UIConstants;
+import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.VLayout;
 
-public class BasicLayoutView extends Composite implements LayoutDisplay{
+public class BasicLayoutView extends Composite {
 
 	private HeaderView headerView;
-	private VerticalPanel baseContainerPanel = new VerticalPanel();
+	private ActionMenubarView actionMenubarView;
+	private NavigationView navigationView;
+	private BaseContainerView baseContainerView;
 	
-	private DockLayoutPanel basePanel = new DockLayoutPanel(Unit.EM);
-	
+
 	public BasicLayoutView() {
-		
-		
 		initLayout();
-		
-	}
-	
-	/**
-	 * 
-	 */
-	private void initLayout() {
-		//basePanel.setWidth("100%");
-		//basePanel.setHeight("100%");
-		
-		SplitLayoutPanel p = new SplitLayoutPanel();
-		p.addWest(new HTML("navigation"), 128);
-		p.add(new HTML("details"));
-		
-		basePanel.addNorth(new HTML("header"), 2);
-		basePanel.addSouth(new HTML("footer"), 2);
-		basePanel.add(p);
-		
-		
-		
-		initWidget(basePanel);
 	}
 
-	@Override
-	public void updateHeaderView() {
-		headerView.getUserNameLabel().setText("Hello World!!!");
+
+	private void initLayout() {
+		headerView = new HeaderView();
+		actionMenubarView = new ActionMenubarView();
+		navigationView = new NavigationView();
+		baseContainerView = new BaseContainerView();
+		
+		VLayout mainLayout;
+		HLayout northLayout;
+		HLayout southLayout;
+		
+		mainLayout = new VLayout();
+		mainLayout.setWidth100();
+		mainLayout.setHeight100();
+
+		northLayout = new HLayout();
+		northLayout.setHeight(UIConstants.HEADER_HEIGHT
+				+ UIConstants.MENUBAR_HEIGHT);
+
+		VLayout vLayout = new VLayout();
+		vLayout.addMember(headerView);
+		vLayout.addMember(actionMenubarView);
+		northLayout.addMember(vLayout);
+
+		southLayout = new HLayout();
+
+		southLayout.setMembers(navigationView, baseContainerView);
+
+		mainLayout.addMember(northLayout);
+		mainLayout.addMember(southLayout);
+
+
+		initWidget(mainLayout);
 	}
+
+
+	public HeaderView getHeaderView() {
+		return headerView;
+	}
+
+	public ActionMenubarView getActionMenubarView() {
+		return actionMenubarView;
+	}
+
+	public NavigationView getNavigationView() {
+		return navigationView;
+	}
+
+	public BaseContainerView getBaseContainerView() {
+		return baseContainerView;
+	}
+
+	
+	
 }
