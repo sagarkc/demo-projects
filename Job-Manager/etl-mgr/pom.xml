@@ -45,6 +45,10 @@
 			<name>Spring Maven Snapshot Repository</name>
 			<url>http://s3.amazonaws.com/maven.springframework.org/snapshot</url>
 		</repository>
+		<repository>
+			<id>smart-gwt</id>
+			<url>http://www.smartclient.com/maven2</url>
+		</repository>
 	</repositories>
 
 

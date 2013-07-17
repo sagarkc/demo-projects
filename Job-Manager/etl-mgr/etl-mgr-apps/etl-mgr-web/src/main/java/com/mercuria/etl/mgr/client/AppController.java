@@ -7,7 +7,6 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.mercuria.etl.mgr.client.core.Display;
 import com.mercuria.etl.mgr.client.core.Presenter;
-import com.mercuria.etl.mgr.client.presenter.BasicLayoutPresenter;
 import com.mercuria.etl.mgr.client.view.BasicLayoutView;
 
 public class AppController implements Presenter<Display>{
@@ -26,11 +25,8 @@ public class AppController implements Presenter<Display>{
 	public void go(HasWidgets container) {
 		this.container = container;
 		if ("".equals(History.getToken())) {
-			Presenter<Display> presenter =  new BasicLayoutPresenter(new BasicLayoutView());
-
-			if (presenter != null) {
-				presenter.go(container);
-			}
+			container.clear();
+			container.add(new BasicLayoutView());
 		}
 	}
 

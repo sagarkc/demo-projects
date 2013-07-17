@@ -9,7 +9,7 @@ body{
     font-size: 0.85em;
     background-color: #9ECDE1;
 }
-.button{
+.aqua-button{
     width: auto;
     height: 28px;
     padding: 5px 16px 3px;
@@ -125,7 +125,6 @@ body{
 #linearBg1 {
     /* fallback */
     background-color: #1a82f7;
-    background-image: url(images/linear_bg_1.png);
     background-repeat: repeat-y;
 
     /* Safari 4-5, Chrome 1-9 */
