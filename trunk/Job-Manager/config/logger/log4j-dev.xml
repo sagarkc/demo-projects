@@ -3,7 +3,7 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
 	<appender name="APP_LOG" class="org.apache.log4j.RollingFileAppender">
-		<param name="file" value="e:/logs/etl-mgr/app.log" />
+		<param name="file" value="c:/logs/etl-mgr/app.log" />
 		<param name="MaxFileSize" value="50MB" />
 		<param name="maxBackupIndex" value="10" />
 		<layout class="org.apache.log4j.PatternLayout">
@@ -12,7 +12,7 @@
 	</appender>
 
 	<appender name="SPRING_LOG" class="org.apache.log4j.RollingFileAppender">
-		<param name="file" value="e:/logs/etl-mgr/spring.log" />
+		<param name="file" value="c:/logs/etl-mgr/spring.log" />
 		<param name="MaxFileSize" value="50MB" />
 		<param name="maxBackupIndex" value="10" />
 		<layout class="org.apache.log4j.PatternLayout">

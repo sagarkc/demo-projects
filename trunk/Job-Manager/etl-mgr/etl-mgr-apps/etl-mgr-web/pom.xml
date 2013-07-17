@@ -165,8 +165,10 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derby</artifactId>
+			<groupId>com.microsoft</groupId>
+			<artifactId>sqljdbc4</artifactId>
+			<version>1.0</version>
+			<scope>runtime</scope>
 		</dependency>
 
 
