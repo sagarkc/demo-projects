@@ -4,6 +4,7 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.SplitLayoutPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.mercuria.etl.mgr.client.presenter.BasicLayoutPresenter.LayoutDisplay;
 
@@ -25,20 +26,16 @@ public class BasicLayoutView extends Composite implements LayoutDisplay{
 	 * 
 	 */
 	private void initLayout() {
-		basePanel.setWidth("100%");
-		basePanel.setHeight("100%");
+		//basePanel.setWidth("100%");
+		//basePanel.setHeight("100%");
 		
+		SplitLayoutPanel p = new SplitLayoutPanel();
+		p.addWest(new HTML("navigation"), 128);
+		p.add(new HTML("details"));
 		
-		
-		//baseContainerPanel.setWidth("100%");
-		//baseContainerPanel.setHeight("100%");
-		baseContainerPanel.setBorderWidth(1);
-		
-		headerView = new HeaderView();
-		basePanel.addNorth(headerView, 2);
+		basePanel.addNorth(new HTML("header"), 2);
 		basePanel.addSouth(new HTML("footer"), 2);
-		basePanel.addWest(new HTML("navigation"), 10);
-		basePanel.add(baseContainerPanel);
+		basePanel.add(p);
 		
 		
 		
