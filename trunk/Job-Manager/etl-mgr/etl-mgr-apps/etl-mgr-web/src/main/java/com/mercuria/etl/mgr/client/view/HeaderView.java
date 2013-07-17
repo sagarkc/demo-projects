@@ -22,6 +22,7 @@ public class HeaderView extends Composite{
 		logoImage.setHeight("48");
 		
 		userNameLabel = new Label("Welcome");
+		userNameLabel.setStylePrimaryName("userNameLabel");
 		
 		logoutButton = new Button(EtlManager.MESSAGES.sendButton());
 		
