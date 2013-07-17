@@ -403,3 +403,14 @@ h1 {
 #closeButton {
   margin: 15px 6px 6px;
 }
+
+
+/** Custom styles */
+.userNameLabel{
+	color: black;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+
+

@@ -26,7 +26,7 @@
 		<access-denied-handler error-page="/accessDenied.htm" />
 		
 		<session-management invalid-session-url="/login.htm" session-fixation-protection="newSession">
-		    <concurrency-control max-sessions="1" error-if-maximum-exceeded="true" expired-url="/login.htm"/>
+		    <concurrency-control max-sessions="1" error-if-maximum-exceeded="false" expired-url="/login.htm"/>
 		</session-management>
 	</http>
 	
