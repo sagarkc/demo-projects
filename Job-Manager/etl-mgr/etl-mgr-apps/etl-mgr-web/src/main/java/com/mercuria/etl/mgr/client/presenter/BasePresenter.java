@@ -17,7 +17,6 @@ public abstract class BasePresenter<D extends Display> implements Presenter<D>{
 	
 	public BasePresenter(D display) {
 		this.contentDisplay = display;
-		bind();
 	}
 
 	public UIEventManager getEventManager() {

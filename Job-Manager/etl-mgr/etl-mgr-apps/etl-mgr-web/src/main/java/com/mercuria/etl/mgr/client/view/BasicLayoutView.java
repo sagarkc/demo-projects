@@ -2,14 +2,17 @@ package com.mercuria.etl.mgr.client.view;
 
 import com.google.gwt.user.client.ui.Composite;
 import com.mercuria.etl.mgr.client.UIConstants;
+import com.mercuria.etl.mgr.client.presenter.BasicLayoutPresenter.LayoutDisplay;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
-public class BasicLayoutView extends Composite {
+public class BasicLayoutView extends Composite implements LayoutDisplay{
 
 	private HeaderView headerView;
 	private ActionMenubarView actionMenubarView;
 	private NavigationView navigationView;
+	
+	// the root component
 	private BaseContainerView baseContainerView;
 	
 
@@ -22,7 +25,7 @@ public class BasicLayoutView extends Composite {
 		headerView = new HeaderView();
 		actionMenubarView = new ActionMenubarView();
 		navigationView = new NavigationView();
-		baseContainerView = new BaseContainerView();
+		baseContainerView = BaseContainerView.getContainer();
 		
 		VLayout mainLayout;
 		HLayout northLayout;
