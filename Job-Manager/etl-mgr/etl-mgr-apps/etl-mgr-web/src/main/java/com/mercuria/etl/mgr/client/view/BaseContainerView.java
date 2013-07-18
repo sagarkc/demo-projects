@@ -12,8 +12,9 @@ public final class BaseContainerView extends VLayout {
 
 		GWT.log("init Context Area()...", null);
 
-		this.setWidth("*");
-		this.setBackgroundColor("#EEEEEE");
+		setWidth100();
+        setHeight100();
+		setBackgroundColor("#E0E0E0");
 
 	}
 

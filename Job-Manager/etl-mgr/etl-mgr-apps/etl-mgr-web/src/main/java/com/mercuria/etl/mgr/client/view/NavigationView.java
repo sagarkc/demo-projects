@@ -79,7 +79,8 @@ public class NavigationView extends VLayout implements ResizedHandler, Navigatio
 	
 	@Override
 	public void onResized(ResizedEvent event) {
-		navigationStack.setWidth(this.getWidth());
+		navigationStack.setWidth(Math.max(this.getWidth(), UIConstants.NAV_WEST_WIDTH));
+		BaseContainerView.getContainer().redraw();
 	}
 
 
