@@ -7,12 +7,14 @@ import com.mercuria.etl.mgr.client.presenter.NavigationPresenter.NavigationDispl
 import com.smartgwt.client.types.VisibilityMode;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Label;
+import com.smartgwt.client.widgets.events.ResizedEvent;
+import com.smartgwt.client.widgets.events.ResizedHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.SectionStackSection;
 import com.smartgwt.client.widgets.layout.VLayout;
 
-public class NavigationView extends VLayout implements NavigationDisplay{
+public class NavigationView extends VLayout implements ResizedHandler, NavigationDisplay{
 
 	private final SectionStack navigationStack = new SectionStack();   
 	
@@ -23,14 +25,14 @@ public class NavigationView extends VLayout implements NavigationDisplay{
 	private final Button jobMonitorButton = new Button("Job Monitor");
 	
 	public NavigationView() {
-
-		GWT.log("init Navigation Pane()...", null);
+		addResizedHandler(this);
+		GWT.log("init Navigation View()...");
 
 		this.setWidth(UIConstants.NAV_WEST_WIDTH);
 		this.setShowResizeBar(true);
 
 		navigationStack.setVisibilityMode(VisibilityMode.MUTEX);   
-		navigationStack.setWidth100();   
+		navigationStack.setWidth("227");   
 		navigationStack.setHeight100();   
 		navigationStack.setAutoWidth();
 
@@ -44,8 +46,6 @@ public class NavigationView extends VLayout implements NavigationDisplay{
 		monitorSection.addItem(monitorSectionContent);
 		navigationStack.addSection(monitorSection);
 		
-		
-		historySection.setIcon("system-monitor-16x16.png");
 		
 		historySection.setExpanded(false);
 		historySectionContent.setWidth("*");   
@@ -78,8 +78,39 @@ public class NavigationView extends VLayout implements NavigationDisplay{
 	}
 	
 	@Override
+	public void onResized(ResizedEvent event) {
+		navigationStack.setWidth(this.getWidth());
+	}
+
+
+	public SectionStack getNavigationStack() {
+		return navigationStack;
+	}
+
+
+	public SectionStackSection getMonitorSection() {
+		return monitorSection;
+	}
+
+
+	public VLayout getMonitorSectionContent() {
+		return monitorSectionContent;
+	}
+
+
+	public SectionStackSection getHistorySection() {
+		return historySection;
+	}
+
+
+	public VLayout getHistorySectionContent() {
+		return historySectionContent;
+	}
+
+
 	public Button getJobMonitorButton() {
 		return jobMonitorButton;
 	}
+	
 	
 }

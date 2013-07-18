@@ -1,38 +1,43 @@
 package com.mercuria.etl.mgr.client.presenter;
 
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.mercuria.etl.mgr.client.core.Display;
-import com.mercuria.etl.mgr.client.core.Presenter;
+import com.mercuria.etl.mgr.client.view.JobMonitorView;
 
 public class JobMonitorPresenter extends BaseContainerPresenter<Display> {
 
+	final PopupPanel popup = new PopupPanel(false, true); 
+	
 	public interface JobMonitorDisplay extends Display{
 		
 	}
 	
-	private Display display;
+	private JobMonitorView jobMonitorView;
 	
-	public JobMonitorPresenter(Display display) {
-		this.display = display;
+	public JobMonitorPresenter(JobMonitorView display) {
+		super(display);
+		jobMonitorView = display;
+		bind();
 	}
 
 
 	@Override
 	public void bind() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	
 	@Override
-	public void render(Presenter<Display> presenter) {
-		
+	public void render() {
+		getBaseContainer().clear();
+		getBaseContainer().addMember(getDisplay().asWidget());
 	}
 
 
-	@Override
-	public Display getDisplay() {
-		return display;
-	}
+//	// Create a modal dialog box that will not auto-hide
+//	popup.add(new Label("Please wait"));
+//	popup.setGlassEnabled(true); // Enable the glass panel
+//	popup.center(); // Center the popup and make it visible
 
 	
 	

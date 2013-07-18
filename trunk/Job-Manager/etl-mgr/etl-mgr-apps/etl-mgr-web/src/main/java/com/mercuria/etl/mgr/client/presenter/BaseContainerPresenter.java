@@ -7,19 +7,28 @@ import com.mercuria.etl.mgr.client.view.BaseContainerView;
 
 public abstract class BaseContainerPresenter<D extends Display> implements Presenter<D> {
 
-	private final BaseContainerView baseContainer = new BaseContainerView();
+	private final D display;
 	
-	@Override
-	public void go(HasWidgets container) {
-		throw new RuntimeException("Do not use this method");
+	
+	public BaseContainerPresenter(D display) {
+		this.display = display;
 	}
 
+
+	@Override
+	public final void go(HasWidgets container) {
+	}
+
+	@Override
+	public final D getDisplay() {
+		return display;
+	}
 	
 	public BaseContainerView getBaseContainer() {
-		return baseContainer;
+		return BaseContainerView.getContainer();
 	}
 
 
-	public abstract void render(Presenter<Display> presenter);
+	public abstract void render();
 	
 }

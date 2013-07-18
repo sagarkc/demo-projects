@@ -3,10 +3,13 @@ package com.mercuria.etl.mgr.client;
 
 import java.util.logging.Logger;
 
+import javax.swing.plaf.basic.BasicPanelUI;
+
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.mercuria.etl.mgr.client.core.Display;
 import com.mercuria.etl.mgr.client.core.Presenter;
+import com.mercuria.etl.mgr.client.presenter.BasicLayoutPresenter;
 import com.mercuria.etl.mgr.client.view.BasicLayoutView;
 
 public class AppController implements Presenter<Display>{
@@ -19,14 +22,12 @@ public class AppController implements Presenter<Display>{
 		bind();
 	}
 
-	
-
 	@Override
 	public void go(HasWidgets container) {
 		this.container = container;
 		if ("".equals(History.getToken())) {
-			container.clear();
-			container.add(new BasicLayoutView());
+			BasicLayoutPresenter presenter = new BasicLayoutPresenter(new BasicLayoutView());
+			presenter.go(container);
 		}
 	}
 

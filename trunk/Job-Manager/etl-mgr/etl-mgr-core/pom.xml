@@ -13,7 +13,7 @@
 	<version>${release.version}</version>
 	<name>etl-mgr-core</name>
 	<url>${host.address}/etlmgr/core</url>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>com.mercuria.etl.mgr</groupId>
@@ -29,6 +29,12 @@
 			<groupId>com.mercuria.etl.mgr</groupId>
 			<artifactId>etl-mgr-util</artifactId>
 			<version>${release.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+			<version>2.2.2</version>
 		</dependency>
 	</dependencies>
 </project>

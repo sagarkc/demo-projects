@@ -13,7 +13,8 @@ import com.smartgwt.client.widgets.toolbar.ToolStripButton;
 public class HeaderView extends HLayout{
 
 	private final ToolStripButton userNameButton = new ToolStripButton();
-	
+	private final ImgButton logoutButton = new ImgButton();
+	private final ImgButton etlmgrHomeButton = new ImgButton();
 	
 	public HeaderView() {
 		GWT.log("init HeaderView()..."); 
@@ -26,19 +27,14 @@ public class HeaderView extends HLayout{
         topBar.setWidth100();
         topBar.addSpacer(6);
         
-        ImgButton sgwtHomeButton = new ImgButton();
-        sgwtHomeButton.setSrc("system-monitor-logo-227x48.png");
-        sgwtHomeButton.setWidth(227);
-        sgwtHomeButton.setHeight(48);
-        sgwtHomeButton.setShowRollOver(false);
-        sgwtHomeButton.setShowDownIcon(false);
-        sgwtHomeButton.setShowDown(false);
-        sgwtHomeButton.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                com.google.gwt.user.client.Window.open("http://localhost:8080/etlmgr", "ETL Manager", null);
-            }
-        });
-        topBar.addMember(sgwtHomeButton);
+        
+        etlmgrHomeButton.setSrc("system-monitor-logo-227x48.png");
+        etlmgrHomeButton.setWidth(227);
+        etlmgrHomeButton.setHeight(48);
+        etlmgrHomeButton.setShowRollOver(false);
+        etlmgrHomeButton.setShowDownIcon(false);
+        etlmgrHomeButton.setShowDown(false);
+        topBar.addMember(etlmgrHomeButton);
         topBar.addSpacer(6);
 		
         topBar.addFill();
@@ -50,18 +46,18 @@ public class HeaderView extends HLayout{
 
         topBar.addSeparator();
         
-        ImgButton imgButton = new ImgButton();
-        imgButton.setWidth(24);
-        imgButton.setHeight(24);
-        imgButton.setSrc("system-monitor-16x16.png");
-        imgButton.setShowFocused(false);
-        imgButton.setShowFocusedIcon(false);
-        imgButton.setPrompt("Logout");
-        imgButton.setHoverWidth(110);
-        imgButton.setHoverStyle("interactImageHover");
+        
+        logoutButton.setWidth(24);
+        logoutButton.setHeight(24);
+        logoutButton.setSrc("system-monitor-16x16.png");
+        logoutButton.setShowFocused(false);
+        logoutButton.setShowFocusedIcon(false);
+        logoutButton.setPrompt("Logout");
+        logoutButton.setHoverWidth(110);
+        logoutButton.setHoverStyle("interactImageHover");
 
 
-        topBar.addMember(imgButton);
+        topBar.addMember(logoutButton);
 
         topBar.addSpacer(6);
 
@@ -69,6 +65,14 @@ public class HeaderView extends HLayout{
 		addMember(topBar);
 	}
 
+
+	public ImgButton getLogoutButton() {
+		return logoutButton;
+	}
+
+	public ImgButton getEtlMgrHomeButton() {
+		return etlmgrHomeButton;
+	}
 
 	public ToolStripButton getUserNameButton() {
 		return userNameButton;
