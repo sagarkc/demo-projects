@@ -3,8 +3,6 @@ package com.mercuria.etl.mgr.client;
 
 import java.util.logging.Logger;
 
-import javax.swing.plaf.basic.BasicPanelUI;
-
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.mercuria.etl.mgr.client.core.Display;

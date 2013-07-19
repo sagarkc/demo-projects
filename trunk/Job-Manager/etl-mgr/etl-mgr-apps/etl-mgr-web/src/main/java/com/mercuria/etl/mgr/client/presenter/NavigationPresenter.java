@@ -1,6 +1,5 @@
 package com.mercuria.etl.mgr.client.presenter;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.mercuria.etl.mgr.client.core.Display;
 import com.mercuria.etl.mgr.client.view.JobMonitorView;

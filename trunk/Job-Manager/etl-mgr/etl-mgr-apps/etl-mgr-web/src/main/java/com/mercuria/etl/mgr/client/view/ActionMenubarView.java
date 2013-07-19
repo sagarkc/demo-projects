@@ -22,8 +22,8 @@ public class ActionMenubarView extends HLayout {
 	 // initialise the application menu label
 	    Label label = new Label(); 
 	    label.setContents("Application Menu");  
-	    label.setAlign(Alignment.CENTER);  
-	    label.setOverflow(Overflow.HIDDEN);  
+	    //label.setAlign(Alignment.CENTER);  
+	    //label.setOverflow(Overflow.HIDDEN);  
 			    
 	    // add the label to the layout container
 	    this.addMember(label); 
