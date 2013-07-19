@@ -29,8 +29,9 @@ public class JobMonitorPresenter extends BaseContainerPresenter<Display> {
 	
 	@Override
 	public void render() {
-		getBaseContainer().clear();
+		removeAllChield();
 		getBaseContainer().addMember(getDisplay().asWidget());
+		getBaseContainer().redraw();
 	}
 
 

@@ -29,7 +29,6 @@ public class NavigationView extends VLayout implements ResizedHandler, Navigatio
 		GWT.log("init Navigation View()...");
 
 		this.setWidth(UIConstants.NAV_WEST_WIDTH);
-		this.setShowResizeBar(true);
 
 		navigationStack.setVisibilityMode(VisibilityMode.MUTEX);   
 		navigationStack.setWidth("227");   
@@ -79,7 +78,10 @@ public class NavigationView extends VLayout implements ResizedHandler, Navigatio
 	
 	@Override
 	public void onResized(ResizedEvent event) {
-		navigationStack.setWidth(Math.max(this.getWidth(), UIConstants.NAV_WEST_WIDTH));
+		if(this.getWidth() > UIConstants.NAV_WEST_WIDTH)
+			navigationStack.setWidth(this.getWidth());
+		else 
+			navigationStack.setWidth(UIConstants.NAV_WEST_WIDTH);
 		BaseContainerView.getContainer().redraw();
 	}
 

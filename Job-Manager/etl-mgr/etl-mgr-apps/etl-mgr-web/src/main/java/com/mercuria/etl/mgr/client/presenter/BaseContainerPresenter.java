@@ -4,6 +4,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.mercuria.etl.mgr.client.core.Display;
 import com.mercuria.etl.mgr.client.core.Presenter;
 import com.mercuria.etl.mgr.client.view.BaseContainerView;
+import com.smartgwt.client.widgets.Canvas;
 
 public abstract class BaseContainerPresenter<D extends Display> implements Presenter<D> {
 
@@ -31,4 +32,10 @@ public abstract class BaseContainerPresenter<D extends Display> implements Prese
 
 	public abstract void render();
 	
+	public void removeAllChield(){
+		Canvas[] children = getBaseContainer().getMembers();
+		if(null != children && children.length > 0){
+			getBaseContainer().removeMembers(children);
+		}
+	}
 }

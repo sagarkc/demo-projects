@@ -3,7 +3,6 @@ package com.mercuria.etl.mgr.client.view;
 import com.google.gwt.user.client.ui.Composite;
 import com.mercuria.etl.mgr.client.UIConstants;
 import com.mercuria.etl.mgr.client.presenter.BasicLayoutPresenter.LayoutDisplay;
-import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -30,7 +29,8 @@ public class BasicLayoutView extends Composite implements LayoutDisplay{
 		baseContainerView = BaseContainerView.getContainer();
 		
 		VLayout mainLayout = new VLayout();
-		mainLayout.setBackgroundColor("black");
+		mainLayout.setCanSelectText(true);
+		mainLayout.setStyleName("mainLayout");
 		mainLayout.setWidth100();
 		mainLayout.setHeight100();
 		
@@ -44,19 +44,21 @@ public class BasicLayoutView extends Composite implements LayoutDisplay{
 		HLayout centerLayout = new HLayout();
 		centerLayout.setBackgroundColor("#507B14");
 		
-		VLayout sideNavLayout = new VLayout();
+		/*VLayout sideNavLayout = new VLayout();
 		sideNavLayout.setLayoutMargin(5);
 		sideNavLayout.setBackgroundColor("#176767");
 		sideNavLayout.setWidth(250);
 		sideNavLayout.setShowResizeBar(true);
-		sideNavLayout.addMember(new Label("Side Bar"));
-		centerLayout.addMember(sideNavLayout);
+		sideNavLayout.addMember(navigationView);*/
+		navigationView.setShowResizeBar(true);
+		centerLayout.addMember(navigationView);
 		
 		VLayout containerLayout = new VLayout();
-		containerLayout.setBorder("1px solid #a1a1a1");
+		containerLayout.setBorder("3px solid #ff1010");
 		containerLayout.setLayoutMargin(5);
 		containerLayout.setBackgroundColor("white");
-		containerLayout.addMember(new Label("Main Container"));
+		containerLayout.addMember(actionMenubarView);
+		containerLayout.addMember(baseContainerView);
 		centerLayout.addMember(containerLayout);
 		mainLayout.addMember(centerLayout);
 		
