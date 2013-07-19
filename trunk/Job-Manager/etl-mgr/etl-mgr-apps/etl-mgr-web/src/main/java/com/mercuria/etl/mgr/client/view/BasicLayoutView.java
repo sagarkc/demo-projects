@@ -4,6 +4,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.mercuria.etl.mgr.client.UIConstants;
 import com.mercuria.etl.mgr.client.presenter.BasicLayoutPresenter.LayoutDisplay;
 import com.smartgwt.client.widgets.Canvas;
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
@@ -28,39 +29,47 @@ public class BasicLayoutView extends Composite implements LayoutDisplay{
 		navigationView = new NavigationView();
 		baseContainerView = BaseContainerView.getContainer();
 		
-		VLayout main = new VLayout() {
-            {
-                setID("isc_EtlManager_1_0");
-            }
-
-        };
+		VLayout mainLayout = new VLayout();
+		mainLayout.setBackgroundColor("black");
+		mainLayout.setWidth100();
+		mainLayout.setHeight100();
 		
-        main.addMember(headerView);
-        main.setWidth100();
-        main.setHeight100();
-        main.setBackgroundColor("#10ff20");
-        
-        HLayout hLayout = new HLayout();
-        hLayout.setLayoutMargin(5);
-        hLayout.setWidth100();
-        hLayout.setHeight100();
-        hLayout.setBackgroundColor("#1020ff");
-        
-        
-        VLayout sideNavLayout = new VLayout();
-        sideNavLayout.setHeight100();
-        sideNavLayout.setWidth(185);
-        sideNavLayout.setShowResizeBar(true);
-        sideNavLayout.setBackgroundColor("#176767");
-        sideNavLayout.addMember(navigationView);
-        
-        hLayout.addMember(sideNavLayout);
-        
-        hLayout.addMember(baseContainerView);
-        
-        main.addMember(hLayout);
-        
-        main.draw();
+		HLayout headerLayout = new HLayout();
+		headerLayout.setWidth100();
+		headerLayout.setHeight(UIConstants.HEADER_HEIGHT);
+		headerLayout.setBackgroundColor("blue");
+		headerLayout.addMember(headerView);
+		mainLayout.addMember(headerLayout);
+		
+		HLayout centerLayout = new HLayout();
+		centerLayout.setBackgroundColor("#507B14");
+		
+		VLayout sideNavLayout = new VLayout();
+		sideNavLayout.setLayoutMargin(5);
+		sideNavLayout.setBackgroundColor("#176767");
+		sideNavLayout.setWidth(250);
+		sideNavLayout.setShowResizeBar(true);
+		sideNavLayout.addMember(new Label("Side Bar"));
+		centerLayout.addMember(sideNavLayout);
+		
+		VLayout containerLayout = new VLayout();
+		containerLayout.setBorder("1px solid #a1a1a1");
+		containerLayout.setLayoutMargin(5);
+		containerLayout.setBackgroundColor("white");
+		containerLayout.addMember(new Label("Main Container"));
+		centerLayout.addMember(containerLayout);
+		mainLayout.addMember(centerLayout);
+		
+		
+		
+		
+		HLayout southLayout =  new HLayout();
+		southLayout.setWidth100();
+		southLayout.setHeight(30);
+		southLayout.setBackgroundColor("black");
+		mainLayout.addMember(southLayout);
+		
+		
         
         
 		/*VLayout mainLayout;
@@ -100,7 +109,7 @@ public class BasicLayoutView extends Composite implements LayoutDisplay{
 		mainLayout.addMember(centerLayout);
 		mainLayout.addMember(southLayout);*/
 
-		initWidget(main);
+		initWidget(mainLayout);
 	}
 
 
