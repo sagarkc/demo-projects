@@ -5,6 +5,13 @@
              version="1.0">
 
 	<persistence-unit name="etlmgr.persistence.uinit" transaction-type="RESOURCE_LOCAL">
+	    <class>com.mercuria.etl.mgr.model.entity.JobInstance</class>
+	    <class>com.mercuria.etl.mgr.model.entity.JobExecution</class>
+	    <class>com.mercuria.etl.mgr.model.entity.JobExecutionParameter</class>
+	    <class>com.mercuria.etl.mgr.model.entity.JobExecutionContext</class>
+	    <class>com.mercuria.etl.mgr.model.entity.StepExecution</class>
+	    <class>com.mercuria.etl.mgr.model.entity.StepExecutionContext</class>
+	    <class>com.mercuria.etl.mgr.model.entity.JobExecutionParameterPK</class>
 	</persistence-unit>
 
 </persistence>
