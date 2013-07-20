@@ -43,7 +43,7 @@
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
-				<value>classpath:com/mercuria/etl/mgr/client/i18n/ApplicationMessages</value>
+				<value>classpath:com/mercuria/etl/mgr/web/client/i18n/ApplicationMessages</value>
 			</list>
 		</property>
 	</bean>
