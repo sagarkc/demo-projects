@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.mercuria.etl.mgr</groupId>
+		<artifactId>etl-mgr-apps</artifactId>
+		<version>${release.version}</version>
+	</parent>
+	<groupId>com.mercuria.etl.mgr</groupId>
+	<artifactId>etl-mgr-dao</artifactId>
+	<version>${release.version}</version>
+	<name>etl-mgr-dao</name>
+	<url>${host.address}/etlmgr/apps/dao</url>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+		</dependency>
+	</dependencies>
+</project>
