@@ -46,8 +46,8 @@ public class BasicLayoutView extends Composite implements LayoutDisplay{
 		
 		VLayout containerLayout = new VLayout();
 		containerLayout.setBorder("1px solid #a1a1a1");
-		containerLayout.setLayoutMargin(5);
-		containerLayout.addMember(actionMenubarView);
+		containerLayout.setLayoutMargin(2);
+		//containerLayout.addMember(actionMenubarView);
 		containerLayout.addMember(baseContainerView);
 		centerLayout.addMember(containerLayout);
 		mainLayout.addMember(centerLayout);
@@ -58,7 +58,6 @@ public class BasicLayoutView extends Composite implements LayoutDisplay{
 		HLayout southLayout =  new HLayout();
 		southLayout.setWidth100();
 		southLayout.setHeight(30);
-		southLayout.setBackgroundColor("white");
 		mainLayout.addMember(southLayout);
 		
 

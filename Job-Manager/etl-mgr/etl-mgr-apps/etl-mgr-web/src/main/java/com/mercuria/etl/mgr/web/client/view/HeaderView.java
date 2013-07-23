@@ -26,7 +26,7 @@ public class HeaderView extends HLayout{
         topBar.addSpacer(6);
         
         
-        etlmgrHomeButton.setSrc("etl-logo_228x48.png");
+        etlmgrHomeButton.setSrc("etl-logo_on_black_228x48.png");
         etlmgrHomeButton.setWidth(227);
         etlmgrHomeButton.setHeight(48);
         etlmgrHomeButton.setShowRollOver(false);

@@ -21,8 +21,9 @@
     <!-- Consider inlining CSS to reduce the number of requested files -->
     <!--                                                               -->
     <link rel="stylesheet" type="text/css"
-		href="<%=request.getContextPath()%>/assets/css/EtlManager.css" />
-
+		href="<%=request.getContextPath()%>/css/EtlManager.css" />
+	<link rel="stylesheet" type="text/css"
+		href="<%=request.getContextPath()%>/css/job-mgr-style.css" />
     
 
     <!--                                           -->

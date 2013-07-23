@@ -1,0 +1,17 @@
+
+
+.templatemo_header {
+
+	height: 54px;
+	background: url(images/header-bg.png) repeat-x;
+	margin: 0;
+	padding: 0;
+
+}
+
+.job-monitor-realTime{
+	
+	margin: 3px;
+	border: 1px dotted #a1a1a1;
+	
+}
