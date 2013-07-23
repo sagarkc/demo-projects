@@ -2,31 +2,40 @@ package com.mercuria.etl.mgr.web.client.presenter;
 
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.mercuria.etl.mgr.web.client.core.Display;
+import com.mercuria.etl.mgr.web.client.endpoint.JobMonitorClientEndpoint;
 import com.mercuria.etl.mgr.web.client.view.JobMonitorView;
 
 public class JobMonitorPresenter extends BaseContainerPresenter<Display> {
 
 	final PopupPanel popup = new PopupPanel(false, true); 
+	private final JobMonitorClientEndpoint jobMonitorClientEndpoint;
 	
 	public interface JobMonitorDisplay extends Display{
 		
 	}
 	
-	private JobMonitorView jobMonitorView;
 	
 	public JobMonitorPresenter(JobMonitorView display) {
 		super(display);
-		jobMonitorView = display;
+		jobMonitorClientEndpoint = new JobMonitorClientEndpoint();
 		bind();
 	}
 
 
 	@Override
 	public void bind() {
-		
+		loadHistory();
 	}
 
 	
+	/**
+	 * 
+	 */
+	private void loadHistory() {
+		jobMonitorClientEndpoint.loadHistoricalMonitorData();
+	}
+
+
 	@Override
 	public void render() {
 		removeAllChield();

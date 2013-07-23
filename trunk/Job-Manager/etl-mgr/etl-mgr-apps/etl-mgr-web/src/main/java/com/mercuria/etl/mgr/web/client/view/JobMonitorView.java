@@ -55,5 +55,18 @@ public class JobMonitorView extends VLayout implements JobMonitorDisplay, Resize
 		// TODO Auto-generated method stub
 		
 	}
+
+	public TabSet getMonitorTabSet() {
+		return monitorTabSet;
+	}
+
+	public RealTimeJobMonitorView getRealTimeJobMonitorView() {
+		return realTimeJobMonitorView;
+	}
+
+	public HistoryJobMonitorView getHistoryJobMonitorView() {
+		return historyJobMonitorView;
+	}
+	
 	
 }
