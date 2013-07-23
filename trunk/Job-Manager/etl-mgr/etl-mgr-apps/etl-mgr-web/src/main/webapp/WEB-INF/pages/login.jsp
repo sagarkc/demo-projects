@@ -19,7 +19,7 @@
 
 
 <link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/assets/css/EtlManager.css" />
+	href="<%=request.getContextPath()%>/css/EtlManager.css" />
 
 <title><fmt:message key="applicationTitle" /></title>
 </head>

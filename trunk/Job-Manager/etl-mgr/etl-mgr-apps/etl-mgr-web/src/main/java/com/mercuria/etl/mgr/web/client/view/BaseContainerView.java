@@ -14,10 +14,8 @@ public final class BaseContainerView extends VLayout {
 
 		setWidth100();
         setHeight100();
-		setBackgroundColor("#E0E0E0");
 		setBorder("1px solid #a1a1a1"); 
-		setLayoutMargin(5);             
-		setBackgroundColor("white");    
+		setLayoutMargin(2);             
 
 	}
 
