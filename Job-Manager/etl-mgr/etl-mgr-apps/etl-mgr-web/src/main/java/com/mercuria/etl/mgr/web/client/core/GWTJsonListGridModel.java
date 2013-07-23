@@ -1,12 +1,20 @@
+/**
+ * File :: com.mercuria.etl.mgr.web.client.core.GWTJsonListGridModel
+ * Date :: 24-Jul-2013
+ */
 package com.mercuria.etl.mgr.web.client.core;
 
 import java.util.List;
 
 import com.smartgwt.client.widgets.grid.ListGridField;
 
-public interface GWTCollectionGridModel<T> {
-	
-	public int getColumnCount() ;
+/**
+ * @author Sabuj Das | sabuj.das@gmail.com
+ *
+ */
+public interface GWTJsonListGridModel<T> {
+
+public int getColumnCount() ;
 	
 	public String getColumnName(int columnIndex) ;
 
@@ -31,5 +39,5 @@ public interface GWTCollectionGridModel<T> {
 	 * @return
 	 */
 	public ListGridField getListGridField(int columnIndex);
-
+	
 }

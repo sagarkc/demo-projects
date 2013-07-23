@@ -1,22 +1,35 @@
 package com.mercuria.etl.mgr.web.client.view;
 
-import com.smartgwt.client.types.Alignment;
-import com.smartgwt.client.types.ListGridFieldType;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.user.client.Window;
+import com.mercuria.etl.mgr.web.client.core.GWTCollectionDataGrid;
+import com.mercuria.etl.mgr.web.client.core.GWTCollectionGridModel;
+import com.mercuria.etl.mgr.web.client.core.GWTGridColumnHeader;
+import com.mercuria.etl.mgr.web.client.core.UIEventManager;
+import com.mercuria.etl.mgr.web.client.event.HistoricalJobMonitorEvent;
+import com.mercuria.etl.mgr.web.client.event.HistoricalJobMonitorEventListener;
+import com.mercuria.etl.mgr.web.shared.model.JSONListGridDataModel;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Label;
-import com.smartgwt.client.widgets.grid.ListGrid;
-import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
-public class HistoryJobMonitorView extends VLayout {
+public class HistoryJobMonitorView extends VLayout implements HistoricalJobMonitorEventListener{
 
+	private static UIEventManager uiEventManager = UIEventManager.getInstance();
+	
 	private final Button addJobButton = new Button("Add Job");
 	private final Button removeJobButton = new Button("Remove Job");
 	private final Button refreshButton = new Button("Refresh");
-	private final ListGrid countryGrid = new ListGrid();  
+	private final GWTCollectionDataGrid<JavaScriptObject> jobMonitorHistoryGrid 
+		= new GWTCollectionDataGrid<JavaScriptObject>();
+	private final List<GWTGridColumnHeader> columnHeaders = new ArrayList<GWTGridColumnHeader>();;
 	
 	public HistoryJobMonitorView() {
+		uiEventManager.addListener(HistoricalJobMonitorEvent.TYPE, this);
 		setStyleName("job-monitor-realTime");
 		setWidth100();
 		setHeight100();
@@ -34,24 +47,31 @@ public class HistoryJobMonitorView extends VLayout {
 		header.addMember(refreshButton);
 		addMember(header);
 		
+		columnHeaders.add(new GWTGridColumnHeader("JOB Name", "jobName"));
+		columnHeaders.add(new GWTGridColumnHeader("Status", "status"));
 		
-        countryGrid.setWidth100();  
-        countryGrid.setHeight100();  
-        countryGrid.setShowAllRecords(true); 
+		jobMonitorHistoryGrid.setWidth100();  
+		jobMonitorHistoryGrid.setHeight100();  
+		jobMonitorHistoryGrid.setShowAllRecords(true); 
 		
-        ListGridField countryCodeField = new ListGridField("countryCode", "Flag", 40);  
-        countryCodeField.setAlign(Alignment.CENTER);  
-        countryCodeField.setType(ListGridFieldType.IMAGE);  
-  
-        ListGridField nameField = new ListGridField("countryName", "Country");  
-        ListGridField capitalField = new ListGridField("capital", "Capital");  
-        ListGridField continentField = new ListGridField("continent", "Continent");  
-        countryGrid.setFields(countryCodeField, nameField, capitalField, continentField);  
-        countryGrid.setCanResizeFields(true);  
         
-        addMember(countryGrid);  
+        addMember(jobMonitorHistoryGrid);  
   
         
 	}
+
+	public GWTCollectionDataGrid<JavaScriptObject> getJobMonitorHistoryGrid() {
+		return jobMonitorHistoryGrid;
+	}
+
+	@Override
+	public void showHistoricalJobMonitorData(HistoricalJobMonitorEvent event) {
+		Window.alert("Size: " + event.getJobMonitorData().size());
+		GWTCollectionGridModel<JavaScriptObject> model = new JSONListGridDataModel<JavaScriptObject>( 
+				event.getJobMonitorData(), columnHeaders);
+		jobMonitorHistoryGrid.setModel(model);
+		//jobMonitorHistoryGrid.redraw();
+	}
+	
 	
 }
