@@ -15,7 +15,7 @@ public class TitleBar extends HLayout implements ResizedHandler {
 		//super.setTitle(title);
 		this.iconPath = iconPath;
 		setHeight(UIConstants.TITLE_BAR_HEIGHT);
-		setWidth("*");
+		setWidth100();
 		setBackgroundColor("green");
 		
 		setDefaultLayoutAlign(VerticalAlignment.CENTER);
