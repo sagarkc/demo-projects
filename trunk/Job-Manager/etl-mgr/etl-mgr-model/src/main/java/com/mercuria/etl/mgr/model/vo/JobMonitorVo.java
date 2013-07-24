@@ -3,18 +3,29 @@ package com.mercuria.etl.mgr.model.vo;
 import java.io.Serializable;
 import java.util.Date;
 
-public class JobMonitorVo implements Serializable {
+import net.sf.jsonizer.annotation.JsonObject;
+import net.sf.jsonizer.annotation.JsonProperty;
+import net.sf.jsonizer.core.Jsonizable;
+
+@JsonObject(name="jobMonitorVo")
+public class JobMonitorVo implements Serializable, Jsonizable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2430011941593495688L;
 
+	@JsonProperty(name="jobName")
 	private String jobName;
+	@JsonProperty(name="startTime")
 	private Date startTime;
+	@JsonProperty(name="endTime")
 	private Date endTime;
+	@JsonProperty(name="status")
 	private String status;
+	@JsonProperty(name="exitCode")
 	private String exitCode;
+	@JsonProperty(name="exitMessage")
 	private String exitMessage;
 
 	public JobMonitorVo() {

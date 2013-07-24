@@ -20,7 +20,7 @@ import com.smartgwt.client.widgets.grid.ListGridField;
  */
 public class JSONListGridDataModel<T extends JavaScriptObject> implements GWTCollectionGridModel<T> {
 
-	private final List<T> jsonDataList;
+	private List<T> jsonDataList;
 	
 	private final int columnCount;
 	private Object[][] dataTable;
@@ -31,8 +31,25 @@ public class JSONListGridDataModel<T extends JavaScriptObject> implements GWTCol
 	private final List<GWTGridColumnHeader> columnHeaders;
 	private final List<ListGridField> listGridFields;
 	
+	public JSONListGridDataModel(List<GWTGridColumnHeader> columnHeaders) {
+		this.columnHeaders = columnHeaders;
+		this.columnCount = columnHeaders.size();
+		this.columnNames = new String[columnCount];
+		this.columnAttributeNames = new String[columnCount];
+		columnWidths = new int[columnCount];
+		listGridFields = new ArrayList<ListGridField>();
+		
+		for (int i = 0; i < columnCount; i++) {
+			GWTGridColumnHeader header = columnHeaders.get(i);
+			columnNames[i] = header.getTitle();
+			columnAttributeNames[i] = header.getAttribute();
+			listGridFields.add(header.createListGridField());
+		}
+		
+	}
+	
 	public JSONListGridDataModel(List<T> jsonDataObjects, List<GWTGridColumnHeader> columnHeaders) {
-		this.jsonDataList = jsonDataObjects;
+		this.jsonDataList = (null == jsonDataObjects) ? new ArrayList<T>() : jsonDataObjects;
 		this.columnHeaders = columnHeaders;
 		this.columnCount = columnHeaders.size();
 		this.columnNames = new String[columnCount];
@@ -40,7 +57,6 @@ public class JSONListGridDataModel<T extends JavaScriptObject> implements GWTCol
 		this.rowCount = jsonDataObjects.size();
 		columnWidths = new int[columnCount];
 		listGridFields = new ArrayList<ListGridField>();
-		//dataTable = new Object[dataList.size()][columnCount];
 		
 		for (int i = 0; i < columnCount; i++) {
 			GWTGridColumnHeader header = columnHeaders.get(i);
@@ -53,6 +69,8 @@ public class JSONListGridDataModel<T extends JavaScriptObject> implements GWTCol
 	}
 	
 	public void populateModel(){
+		dataTable = new Object[jsonDataList.size()][getColumnCount()] ;
+		this.rowCount = jsonDataList.size();
 		for (int i = 0; i < jsonDataList.size(); i++) {
 			JSONObject jsonObject = new JSONObject(jsonDataList.get(i));
 			for (int j = 0; j < columnAttributeNames.length; j++) {
@@ -62,6 +80,12 @@ public class JSONListGridDataModel<T extends JavaScriptObject> implements GWTCol
 		
 	}
 
+	@Override
+	public void reload(List<T> data) {
+		this.jsonDataList = (null == data) ? new ArrayList<T>() : data;
+		populateModel();
+	}
+	
 	@Override
 	public ListGridField getListGridField(int columnIndex) {
 		return listGridFields.get(columnIndex);

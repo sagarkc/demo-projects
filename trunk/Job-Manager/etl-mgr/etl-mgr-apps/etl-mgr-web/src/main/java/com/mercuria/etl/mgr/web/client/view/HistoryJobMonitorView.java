@@ -54,6 +54,9 @@ public class HistoryJobMonitorView extends VLayout implements HistoricalJobMonit
 		jobMonitorHistoryGrid.setHeight100();  
 		jobMonitorHistoryGrid.setShowAllRecords(true); 
 		
+		GWTCollectionGridModel<JavaScriptObject> model 
+			= new JSONListGridDataModel<JavaScriptObject>(columnHeaders);
+		jobMonitorHistoryGrid.setModel(model);
         
         addMember(jobMonitorHistoryGrid);  
   
@@ -67,9 +70,7 @@ public class HistoryJobMonitorView extends VLayout implements HistoricalJobMonit
 	@Override
 	public void showHistoricalJobMonitorData(HistoricalJobMonitorEvent event) {
 		Window.alert("Size: " + event.getJobMonitorData().size());
-		GWTCollectionGridModel<JavaScriptObject> model = new JSONListGridDataModel<JavaScriptObject>( 
-				event.getJobMonitorData(), columnHeaders);
-		jobMonitorHistoryGrid.setModel(model);
+		jobMonitorHistoryGrid.reload(event.getJobMonitorData());
 		//jobMonitorHistoryGrid.redraw();
 	}
 	
