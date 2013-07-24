@@ -49,6 +49,12 @@ public class JobMonitorDataModel<T extends IsSerializable> implements GWTCollect
 	private void populateModel(){
 		
 	}
+	
+	@Override
+	public void reload(List<T> data) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public ListGridField getListGridField(int columnIndex) {

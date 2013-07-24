@@ -22,7 +22,6 @@ public class GWTCollectionDataGrid<T extends JavaScriptObject> extends ListGrid{
 
 	public void setModel(GWTCollectionGridModel<T> model) {
 		this.model = model;
-		Window.alert("Model init...");
 		initGrid();
 	}
 
@@ -31,9 +30,7 @@ public class GWTCollectionDataGrid<T extends JavaScriptObject> extends ListGrid{
 		ListGridField[] headers = new ListGridField[columnNames.size()];
 		for (int i = 0; i < columnNames.size(); i++) {
 			headers[i] = model.getListGridField(i);
-			Window.alert("Header: " + headers[i].getName());
 		}
-		Window.alert("Headers: " + headers.length);
 		setFields(headers);
 		
 		setRowData();
@@ -45,11 +42,14 @@ public class GWTCollectionDataGrid<T extends JavaScriptObject> extends ListGrid{
 			ListGridRecord record = new ListGridRecord();
 			for(int c=0; c < model.getColumnCount(); c++){
 				record.setAttribute(model.getColumnAttributeName(c), model.getValueAt(r, c));  
-				Window.alert("" + model.getValueAt(r, c));
 			}
 			records[r] = record;
 		}
 		setData(records);
 	}
 	
+	public void reload(List<T> data){
+		getModel().reload(data);
+		setRowData();
+	}
 }

@@ -32,4 +32,5 @@ public interface GWTCollectionGridModel<T> {
 	 */
 	public ListGridField getListGridField(int columnIndex);
 
+	public void reload(List<T> data);
 }
