@@ -32,6 +32,7 @@ public class JobMonitorVo implements Serializable, Jsonizable {
 		// TODO Auto-generated constructor stub
 	}
 
+	
 	public String getJobName() {
 		return jobName;
 	}

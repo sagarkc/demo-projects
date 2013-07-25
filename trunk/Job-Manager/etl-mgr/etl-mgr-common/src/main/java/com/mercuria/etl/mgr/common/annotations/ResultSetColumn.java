@@ -1,4 +1,4 @@
-package com.mercuria.etl.mgr.core.annotations;
+package com.mercuria.etl.mgr.common.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
