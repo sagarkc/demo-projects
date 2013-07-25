@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
 import com.mercuria.etl.mgr.web.client.UIConstants;
 import com.mercuria.etl.mgr.web.client.presenter.NavigationPresenter.NavigationDisplay;
+import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.VisibilityMode;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Label;
@@ -27,27 +28,34 @@ public class NavigationView extends VLayout implements ResizedHandler, Navigatio
 	public NavigationView() {
 		addResizedHandler(this);
 		GWT.log("init Navigation View()...");
-
+		jobMonitorButton.setStyleName("navigationButton");
+		jobMonitorButton.setWidth100();
+		
 		this.setWidth(UIConstants.NAV_WEST_WIDTH);
 
 		navigationStack.setVisibilityMode(VisibilityMode.MUTEX);   
 		navigationStack.setWidth("227");   
 		navigationStack.setHeight100();   
 		navigationStack.setAutoWidth();
+		navigationStack.setOverflow(Overflow.HIDDEN);
+		navigationStack.setStyleName("navigationAccordianTitle");
 
-		
+		monitorSection.setTitle("Monitor");
 		monitorSection.setExpanded(true);
-		
-		monitorSectionContent.setWidth("*");   
+		//monitorSection.setItems(jobMonitorButton);
+		monitorSectionContent.setWidth100();   
 		monitorSectionContent.setHeight("*");
+		
+		
 		monitorSectionContent.addMember(jobMonitorButton);
 		
 		monitorSection.addItem(monitorSectionContent);
 		navigationStack.addSection(monitorSection);
 		
-		
+		historySection.setTitle("History");
 		historySection.setExpanded(false);
-		historySectionContent.setWidth("*");   
+		
+		historySectionContent.setWidth100();   
 		historySectionContent.setHeight("*");
 		historySectionContent.addMember(new Button("Job History"));
 		historySection.addItem(historySectionContent);

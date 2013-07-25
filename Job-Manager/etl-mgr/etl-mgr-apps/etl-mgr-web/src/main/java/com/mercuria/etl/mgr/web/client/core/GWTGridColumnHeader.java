@@ -14,7 +14,6 @@ public class GWTGridColumnHeader {
 	private String imageURLPrefix;
 	private String imageURLSuffix;
 	
-	
 	/**
 	 * @param title
 	 * @param attribute

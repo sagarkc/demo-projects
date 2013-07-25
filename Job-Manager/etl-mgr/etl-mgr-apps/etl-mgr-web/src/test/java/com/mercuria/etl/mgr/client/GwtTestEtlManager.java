@@ -1,7 +1,6 @@
 package com.mercuria.etl.mgr.client;
 
 import com.google.gwt.junit.client.GWTTestCase;
-import com.mercuria.etl.mgr.shared.FieldVerifier;
 
 /**
  * GWT JUnit <b>integration</b> tests must extend GWTTestCase.
@@ -26,12 +25,7 @@ public class GwtTestEtlManager extends GWTTestCase {
    * Tests the FieldVerifier.
    */
   public void testFieldVerifier() {
-    assertFalse(FieldVerifier.isValidName(null));
-    assertFalse(FieldVerifier.isValidName(""));
-    assertFalse(FieldVerifier.isValidName("a"));
-    assertFalse(FieldVerifier.isValidName("ab"));
-    assertFalse(FieldVerifier.isValidName("abc"));
-    assertTrue(FieldVerifier.isValidName("abcd"));
+    
   }
 
   /**

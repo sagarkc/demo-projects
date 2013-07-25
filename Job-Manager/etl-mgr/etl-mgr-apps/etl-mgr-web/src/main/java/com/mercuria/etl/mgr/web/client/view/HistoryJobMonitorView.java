@@ -49,6 +49,10 @@ public class HistoryJobMonitorView extends VLayout implements HistoricalJobMonit
 		
 		columnHeaders.add(new GWTGridColumnHeader("JOB Name", "jobName"));
 		columnHeaders.add(new GWTGridColumnHeader("Status", "status"));
+		columnHeaders.add(new GWTGridColumnHeader("Start Time", "startTime"));
+		columnHeaders.add(new GWTGridColumnHeader("End Time", "endTime"));
+		columnHeaders.add(new GWTGridColumnHeader("Exit Code", "exitCode"));
+		columnHeaders.add(new GWTGridColumnHeader("Exit Message", "exitMessage"));
 		
 		jobMonitorHistoryGrid.setWidth100();  
 		jobMonitorHistoryGrid.setHeight100();  
@@ -69,9 +73,7 @@ public class HistoryJobMonitorView extends VLayout implements HistoricalJobMonit
 
 	@Override
 	public void showHistoricalJobMonitorData(HistoricalJobMonitorEvent event) {
-		Window.alert("Size: " + event.getJobMonitorData().size());
 		jobMonitorHistoryGrid.reload(event.getJobMonitorData());
-		//jobMonitorHistoryGrid.redraw();
 	}
 	
 	

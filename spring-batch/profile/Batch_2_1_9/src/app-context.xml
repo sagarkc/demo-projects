@@ -40,11 +40,11 @@
 			<list>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_01" />
-					<property name="cronExpression" value="0 0/2 * * * ?" />
+					<property name="cronExpression" value="0 0/1 * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_02" />
-					<property name="cronExpression" value="0 0/5 * * * ?" />
+					<property name="cronExpression" value="0/30 * * * * ?" />
 				</bean> 
 			</list>
 		</property>
@@ -58,9 +58,9 @@
 	<bean id="genevaDataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
-		<property name="url" value="jdbc:sqlserver://10.41.12.36"></property>
-		<property name="username" value="damtest" />
-		<property name="password" value="damtest" />
+		<property name="url" value="jdbc:sqlserver://KIWS-SG1736;instanceName=SQLEXPRESS;databaseName=JOB_MANAGER"></property>
+		<property name="username" value="sa" />
+		<property name="password" value="Root1234" />
 		<property name="initialSize" value="8" />
 		<property name="maxActive" value="15" />
 		<property name="maxIdle" value="7" />
