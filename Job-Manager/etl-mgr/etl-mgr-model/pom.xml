@@ -17,6 +17,11 @@
 
 	<dependencies>
 		<dependency>
+			<artifactId>etl-mgr-common</artifactId>
+			<groupId>com.mercuria.etl.mgr</groupId>
+			<version>${release.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
 		</dependency>
