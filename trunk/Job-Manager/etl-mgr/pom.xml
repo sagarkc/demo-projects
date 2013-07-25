@@ -35,6 +35,7 @@
 		<host.address>http://localhost:8080</host.address>
 		
 		<app.config.dir>../../../config</app.config.dir>
+		<app.deploy.dir>../../../deploy</app.deploy.dir>
 		<report.config.directory>${app.config.dir}/reporting</report.config.directory>
 		<report.output.directory>../site/reports</report.output.directory>
 	</properties>

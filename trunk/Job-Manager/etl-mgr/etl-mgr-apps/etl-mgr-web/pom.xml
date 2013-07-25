@@ -344,6 +344,7 @@
 				<version>1.7</version>
 				<executions>
 					<execution>
+						<id>cp-config</id>
 						<phase>prepare-package</phase>
 						<goals>
 							<goal>run</goal>
@@ -356,6 +357,29 @@
 								<copy
 									tofile="${project.build.directory}/${project.build.finalName}/WEB-INF/config/log4j.xml"
 									file="${app.config.dir}/logger/log4j-${environment.type}.xml" />
+							</tasks>
+						</configuration>
+
+					</execution>
+					<execution>
+						<id>cp-war</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<delete includeEmptyDirs="true">
+  									<fileset dir="${app.deploy.dir}/${project.build.finalName}" 
+  									includes="**/*"/>
+								</delete>
+								<!-- <copy 
+									file="${project.build.directory}/${project.build.finalName}.war"
+									tofile="${app.deploy.dir}/${project.build.finalName}.war"
+									 /> -->
+								<copydir src="${project.build.directory}/${project.build.finalName}"
+           							dest="${app.deploy.dir}/${project.build.finalName}"
+           							includes="**/*"/>
 							</tasks>
 						</configuration>
 

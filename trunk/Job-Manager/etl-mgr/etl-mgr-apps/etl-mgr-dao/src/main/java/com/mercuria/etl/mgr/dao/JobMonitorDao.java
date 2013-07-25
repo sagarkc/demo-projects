@@ -6,6 +6,11 @@ import com.mercuria.etl.mgr.model.vo.JobMonitorVo;
 
 public interface JobMonitorDao {
 
-	List<JobMonitorVo> getJobMonitorList();
+	/**
+	 * List all the job execution history.
+	 * 
+	 * @return List of JobMonitorVo
+	 */
+	List<JobMonitorVo> getJobExecutionHistory();
 	
 }

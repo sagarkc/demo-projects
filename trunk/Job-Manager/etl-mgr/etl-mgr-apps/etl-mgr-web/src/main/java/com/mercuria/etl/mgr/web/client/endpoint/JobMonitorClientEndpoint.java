@@ -24,6 +24,8 @@ import com.mercuria.etl.mgr.web.client.core.UIEventManager;
 import com.mercuria.etl.mgr.web.client.event.HistoricalJobMonitorEvent;
 import com.mercuria.etl.mgr.web.client.service.JobMonitorService;
 import com.mercuria.etl.mgr.web.client.service.JobMonitorServiceAsync;
+import com.mercuria.etl.mgr.web.shared.JSONDataParser;
+import com.mercuria.etl.mgr.web.shared.model.JsonDataCollection;
 
 
 /**
@@ -48,29 +50,8 @@ public class JobMonitorClientEndpoint {
 			@Override
 			public void onSuccess(String result) {
 				Window.alert("SUCCESS: " + result);
-				List<JavaScriptObject> data = new ArrayList<JavaScriptObject>();
-				
-				
-				if(JsonUtils.safeToEval(result)){
-					Window.alert("Parsing..." );
-					JSONValue jsonValue = JSONParser.parseStrict(result);
-					JSONObject jsonObject;
-					if ((jsonObject = jsonValue.isObject()) == null) {
-					    Window.alert("Error parsing the JSON");
-					    // Possibilites: error during download,
-					    // someone trying to break the application, etc.
-					}
-					
-					jsonValue = jsonObject.get("data");
-					JSONArray jsonArray = jsonValue.isArray();
-					if(null != jsonArray){
-						for (int i = 0; i < jsonArray.size(); i++) {
-							JSONObject dataValue =  jsonArray.get(i).isObject();
-							data.add(dataValue.getJavaScriptObject());
-						}
-					}
-				}
-				HistoricalJobMonitorEvent event = new HistoricalJobMonitorEvent(data);
+				JsonDataCollection<JavaScriptObject> dataCollection = JSONDataParser.parseJsonToJSObject(result);
+				HistoricalJobMonitorEvent event = new HistoricalJobMonitorEvent(dataCollection.getRecords());
 				uiEventManager.fireEvent(event);
 			}
 			
