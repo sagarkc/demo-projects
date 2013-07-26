@@ -1,11 +1,12 @@
-package com.mercuria.etl.mgr.dao;
+package com.mercuria.etl.mgr.service;
 
 import java.util.List;
 
 import com.mercuria.etl.mgr.model.vo.JobMonitorVo;
 
-public interface JobMonitorDao {
+public interface JobDetailMonitorService {
 
+	
 	/**
 	 * List all the job execution history.
 	 * 

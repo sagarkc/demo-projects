@@ -5,7 +5,6 @@
 package com.mercuria.etl.mgr.model.entity;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +29,7 @@ public class StepExecutionContext implements Serializable {
 
 	@Id
 	@Column(name="STEP_EXECUTION_ID", unique=true, nullable=false)
-	private BigInteger stepExecutionId;
+	private Long stepExecutionId;
 	
 	@Column(name="SHORT_CONTEXT", length=2500, nullable=false)
 	private String shortContext;
@@ -50,11 +49,11 @@ public class StepExecutionContext implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BigInteger getStepExecutionId() {
+	public Long getStepExecutionId() {
 		return stepExecutionId;
 	}
 
-	public void setStepExecutionId(BigInteger stepExecutionId) {
+	public void setStepExecutionId(Long stepExecutionId) {
 		this.stepExecutionId = stepExecutionId;
 	}
 

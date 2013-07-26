@@ -16,7 +16,7 @@ import java.util.Map;
 import org.springframework.beans.BeanUtils;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.mercuria.etl.mgr.core.annotations.ResultSetColumn;
+import com.mercuria.etl.mgr.common.annotations.ResultSetColumn;
 
 public class ReflectionBasedRowMapper<T> implements RowMapper<T>{
 	

@@ -11,6 +11,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -33,7 +34,7 @@ public class JobInstance implements Serializable {
 
 	@Id
 	@Column(name="JOB_INSTANCE_ID", nullable=false)
-	private BigInteger instanceId;
+	private Long instanceId;
 	
 	@Column(name="VERSION")
 	private BigInteger instanceVersion;
@@ -44,7 +45,7 @@ public class JobInstance implements Serializable {
 	@Column(name="JOB_KEY", length=32, nullable=false)
 	private String jobKey;
 	
-	@OneToMany(mappedBy="jobInstance")
+	@OneToMany(mappedBy="jobInstance", fetch=FetchType.LAZY)
 	private Set<JobExecution> jobExecutions;
 	
 	/**
@@ -54,11 +55,11 @@ public class JobInstance implements Serializable {
 		jobExecutions = new HashSet<>();
 	}
 
-	public BigInteger getInstanceId() {
+	public Long getInstanceId() {
 		return instanceId;
 	}
 
-	public void setInstanceId(BigInteger instanceId) {
+	public void setInstanceId(Long instanceId) {
 		this.instanceId = instanceId;
 	}
 
