@@ -19,6 +19,7 @@
 	<import resource="classpath:context/etlmgr-session-context.xml"/>  
 	<import resource="classpath:context/etlmgr-web-context.xml"/> 
 	<import resource="classpath:context/etlmgr-security-context.xml"/> 
+	<import resource="classpath:context/etlmgr-query-context.xml"/> 
 	
 	<bean name="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">

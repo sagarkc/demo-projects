@@ -5,7 +5,6 @@
 package com.mercuria.etl.mgr.model.entity;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
@@ -33,10 +32,10 @@ public class StepExecution implements Serializable {
 
 	@Id
 	@Column(name="STEP_EXECUTION_ID", unique=true, nullable=false)
-	private BigInteger stepExecutionId;
+	private Long stepExecutionId;
 	
 	@Column(name="VERSION")
-	private BigInteger stepExecutionVersion;
+	private Long stepExecutionVersion;
 	
 	@Column(name="STEP_NAME", length=100, nullable=false)
 	private String stepName;
@@ -55,29 +54,29 @@ public class StepExecution implements Serializable {
 	private String status;
 	
 	@Column(name="COMMIT_COUNT")
-	private BigInteger commitCount;
+	private Long commitCount;
 	
 	//	READ_COUNT BIGINT ,
 	@Column(name="READ_COUNT")
-	private BigInteger readCount;
+	private Long readCount;
 	
 	@Column(name="FILTER_COUNT")
-	private BigInteger filterCount;
+	private Long filterCount;
 
 	@Column(name="WRITE_COUNT")
-	private BigInteger writeCount;
+	private Long writeCount;
 
 	@Column(name="READ_SKIP_COUNT")
-	private BigInteger readSkipCount;
+	private Long readSkipCount;
 
 	@Column(name="WRITE_SKIP_COUNT")
-	private BigInteger writeSkipCount;
+	private Long writeSkipCount;
 
 	@Column(name="PROCESS_SKIP_COUNT")
-	private BigInteger processSkipCount;
+	private Long processSkipCount;
 
 	@Column(name="ROLLBACK_COUNT")
-	private BigInteger rollbackCount;
+	private Long rollbackCount;
 	
 	@Column(name="EXIT_CODE", length=100, nullable=true)
 	private String exitCode;
@@ -98,19 +97,19 @@ public class StepExecution implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BigInteger getStepExecutionId() {
+	public Long getStepExecutionId() {
 		return stepExecutionId;
 	}
 
-	public void setStepExecutionId(BigInteger stepExecutionId) {
+	public void setStepExecutionId(Long stepExecutionId) {
 		this.stepExecutionId = stepExecutionId;
 	}
 
-	public BigInteger getStepExecutionVersion() {
+	public Long getStepExecutionVersion() {
 		return stepExecutionVersion;
 	}
 
-	public void setStepExecutionVersion(BigInteger stepExecutionVersion) {
+	public void setStepExecutionVersion(Long stepExecutionVersion) {
 		this.stepExecutionVersion = stepExecutionVersion;
 	}
 
@@ -154,67 +153,67 @@ public class StepExecution implements Serializable {
 		this.status = status;
 	}
 
-	public BigInteger getCommitCount() {
+	public Long getCommitCount() {
 		return commitCount;
 	}
 
-	public void setCommitCount(BigInteger commitCount) {
+	public void setCommitCount(Long commitCount) {
 		this.commitCount = commitCount;
 	}
 
-	public BigInteger getReadCount() {
+	public Long getReadCount() {
 		return readCount;
 	}
 
-	public void setReadCount(BigInteger readCount) {
+	public void setReadCount(Long readCount) {
 		this.readCount = readCount;
 	}
 
-	public BigInteger getFilterCount() {
+	public Long getFilterCount() {
 		return filterCount;
 	}
 
-	public void setFilterCount(BigInteger filterCount) {
+	public void setFilterCount(Long filterCount) {
 		this.filterCount = filterCount;
 	}
 
-	public BigInteger getWriteCount() {
+	public Long getWriteCount() {
 		return writeCount;
 	}
 
-	public void setWriteCount(BigInteger writeCount) {
+	public void setWriteCount(Long writeCount) {
 		this.writeCount = writeCount;
 	}
 
-	public BigInteger getReadSkipCount() {
+	public Long getReadSkipCount() {
 		return readSkipCount;
 	}
 
-	public void setReadSkipCount(BigInteger readSkipCount) {
+	public void setReadSkipCount(Long readSkipCount) {
 		this.readSkipCount = readSkipCount;
 	}
 
-	public BigInteger getWriteSkipCount() {
+	public Long getWriteSkipCount() {
 		return writeSkipCount;
 	}
 
-	public void setWriteSkipCount(BigInteger writeSkipCount) {
+	public void setWriteSkipCount(Long writeSkipCount) {
 		this.writeSkipCount = writeSkipCount;
 	}
 
-	public BigInteger getProcessSkipCount() {
+	public Long getProcessSkipCount() {
 		return processSkipCount;
 	}
 
-	public void setProcessSkipCount(BigInteger processSkipCount) {
+	public void setProcessSkipCount(Long processSkipCount) {
 		this.processSkipCount = processSkipCount;
 	}
 
-	public BigInteger getRollbackCount() {
+	public Long getRollbackCount() {
 		return rollbackCount;
 	}
 
-	public void setRollbackCount(BigInteger rollbackCount) {
+	public void setRollbackCount(Long rollbackCount) {
 		this.rollbackCount = rollbackCount;
 	}
 

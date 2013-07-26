@@ -5,7 +5,6 @@
 package com.mercuria.etl.mgr.model.entity;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -40,10 +39,10 @@ public class JobExecution implements Serializable{
 	//JOB_EXECUTION_ID
 	@Id
 	@Column(name="JOB_EXECUTION_ID", nullable=false)
-	private BigInteger executionId;
+	private Long executionId;
 	
 	@Column(name="VERSION")
-	private BigInteger executionVersion;
+	private Long executionVersion;
 	
 	@ManyToOne
 	@JoinColumn(name="JOB_INSTANCE_ID", nullable=false)
@@ -70,10 +69,10 @@ public class JobExecution implements Serializable{
 	@Column(name="LAST_UPDATED", nullable=true)
 	private Timestamp lastUpdated;
 	
-	@OneToMany(mappedBy="jobExecution")
+	@OneToMany(mappedBy="jobExecution", fetch=FetchType.LAZY)
 	private List<JobExecutionParameter> executionParameters;
 	
-	@OneToMany(mappedBy="jobExecution")
+	@OneToMany(mappedBy="jobExecution", fetch=FetchType.LAZY)
 	private Set<StepExecution> stepExecutions;
 	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "jobExecution", fetch = FetchType.LAZY)
@@ -87,19 +86,19 @@ public class JobExecution implements Serializable{
 		stepExecutions = new HashSet<>();
 	}
 
-	public BigInteger getExecutionId() {
+	public Long getExecutionId() {
 		return executionId;
 	}
 
-	public void setExecutionId(BigInteger executionId) {
+	public void setExecutionId(Long executionId) {
 		this.executionId = executionId;
 	}
 
-	public BigInteger getExecutionVersion() {
+	public Long getExecutionVersion() {
 		return executionVersion;
 	}
 
-	public void setExecutionVersion(BigInteger executionVersion) {
+	public void setExecutionVersion(Long executionVersion) {
 		this.executionVersion = executionVersion;
 	}
 

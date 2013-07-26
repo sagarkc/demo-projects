@@ -11,10 +11,13 @@ import java.util.List;
 import net.sf.jsonizer.core.FlexigridJsonCollection;
 import net.sf.jsonizer.service.impl.FlexigridJsonOutputMapper;
 
+import org.apache.log4j.Logger;
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mercuria.etl.mgr.model.vo.JobMonitorVo;
+import com.mercuria.etl.mgr.service.JobDetailMonitorService;
 import com.mercuria.etl.mgr.web.client.service.JobMonitorService;
 
 /**
@@ -24,16 +27,30 @@ import com.mercuria.etl.mgr.web.client.service.JobMonitorService;
 @Component(value=JobMonitorService.RPC_TARGET)
 public class JobMonitorServerEndpoint implements JobMonitorService{
 
+	private static Logger logger = Logger.getLogger(JobMonitorServerEndpoint.class);
+	
+	@Autowired
+	private JobDetailMonitorService jobDetailMonitorService;
+	
 	/**
 	 * 
 	 */
 	public JobMonitorServerEndpoint() {
 		// TODO Auto-generated constructor stub
 	}
+	
+
+	public void setJobDetailMonitorService(
+			JobDetailMonitorService jobDetailMonitorService) {
+		this.jobDetailMonitorService = jobDetailMonitorService;
+	}
+
+
 
 	@Override
 	public String loadHistoricalMonitorData() {
-		System.out.println("@ Server: loadHistoricalMonitorData()");
+		List<JobMonitorVo> list = jobDetailMonitorService.getJobExecutionHistory();
+		/*System.out.println("@ Server: loadHistoricalMonitorData()");
 		String json = "{ \"data\": [ " +
 				"{\"jobName\": \"Job 001\", \"status\": \"Started\"  }," +
 				"{\"jobName\": \"Job 002\", \"status\": \"Started\"  }," +
@@ -75,16 +92,19 @@ public class JobMonitorServerEndpoint implements JobMonitorService{
 		monitorVo = new JobMonitorVo();
 		monitorVo.setJobName("A 007");
 		monitorVo.setStatus("Wait");
-		list.add(monitorVo);
+		list.add(monitorVo);*/
 		
 		FlexigridJsonCollection<JobMonitorVo> collection
 			= new FlexigridJsonCollection<JobMonitorVo>(list);
 		FlexigridJsonOutputMapper jsonOutputMapper = new FlexigridJsonOutputMapper();
-		String jsonStr = json;
+		String jsonStr = "";
 		try {
 			jsonStr = jsonOutputMapper.getJonOutput(collection);
 		} catch (JSONException e) {
 			e.printStackTrace();
+		}
+		if(logger.isDebugEnabled()){
+			logger.debug("Generated JSON: " + jsonStr);
 		}
 		return jsonStr;
 	}
