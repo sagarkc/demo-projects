@@ -11,7 +11,7 @@
     		<value>
 	    		<![CDATA[
 	    		select 
-	    			inst   
+	    			inst, exec   
 	    		from 
 	    			JobInstance as inst 
 	    			inner join inst.jobExecutions as exec

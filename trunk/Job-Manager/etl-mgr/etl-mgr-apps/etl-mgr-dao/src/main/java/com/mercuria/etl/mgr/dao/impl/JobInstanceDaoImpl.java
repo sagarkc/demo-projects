@@ -1,6 +1,8 @@
 package com.mercuria.etl.mgr.dao.impl;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,17 @@ public class JobInstanceDaoImpl extends EtlCommonDaoImpl<JobInstance, BigInteger
 	@Override
 	public List<JobInstance> getAllInstances() throws ApplicationException {
 		try{
-			return getEntityManager().createQuery(JPQL_JOB_MONITOR, JobInstance.class).getResultList();
+			List<JobInstance> instances = new ArrayList<>();
+			
+			Collection collection = getEntityManager().createQuery(JPQL_JOB_MONITOR).getResultList();
+			if(null != collection && collection != null){
+				for (Object object : collection) {
+					if(object instanceof JobInstance){
+						instances.add((JobInstance)object);
+					}
+				}
+			}
+			return instances;
 		} catch(Exception exception){
 			throw new ApplicationException(exception);
 		}
