@@ -63,6 +63,13 @@ public class ReflectionBasedRowMapper<T> implements RowMapper<T>{
 				if ( pd == null ) {
 					columnName = rsMetaData.getColumnName(j);
 					String propertyName = columnPropertyMap.get(columnName);
+					if(null == propertyName || "".equals(propertyName)){
+						columnName = rsMetaData.getColumnLabel(j);
+						propertyName = columnPropertyMap.get(columnName);
+						if(null == propertyName || "".equals(propertyName)){
+							continue;
+						}
+					}
 					pd = BeanUtils.getPropertyDescriptor(dtoClass,  propertyName);
 				}
 				Object value = resultSet.getObject(j);

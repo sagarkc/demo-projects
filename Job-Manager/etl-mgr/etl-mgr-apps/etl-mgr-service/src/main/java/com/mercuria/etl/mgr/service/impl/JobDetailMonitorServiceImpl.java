@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mercuria.etl.mgr.common.exception.ApplicationException;
 import com.mercuria.etl.mgr.dao.JobInstanceDao;
+import com.mercuria.etl.mgr.dao.JobMonitorJdbcDao;
 import com.mercuria.etl.mgr.model.entity.JobExecution;
 import com.mercuria.etl.mgr.model.entity.JobInstance;
 import com.mercuria.etl.mgr.model.vo.JobMonitorVo;
@@ -24,10 +25,17 @@ public class JobDetailMonitorServiceImpl implements JobDetailMonitorService {
 	
 	@Autowired
 	private JobInstanceDao jobInstanceDao;
+	@Autowired 
+	private JobMonitorJdbcDao jobMonitorJdbcDao;
 	
 	public void setJobInstanceDao(JobInstanceDao jobInstanceDao) {
 		this.jobInstanceDao = jobInstanceDao;
 	}
+
+	public void setJobMonitorJdbcDao(JobMonitorJdbcDao jobMonitorJdbcDao) {
+		this.jobMonitorJdbcDao = jobMonitorJdbcDao;
+	}
+
 
 	/**
 	 * {@inheritDoc}
@@ -75,4 +83,16 @@ public class JobDetailMonitorServiceImpl implements JobDetailMonitorService {
 		return jobMonitorVos;
 	}
 
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
+	public List<JobMonitorVo> getAllJobHistory() {
+		try{
+			return jobMonitorJdbcDao.getAllJobHistory();
+		} catch (ApplicationException e){
+			logger.error(e);
+		}
+		return new ArrayList<>();
+	}
+
+	
 }

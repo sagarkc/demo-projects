@@ -35,6 +35,17 @@
 			<bean class="test.profile.C"></bean>
 		</property>
 	</bean>
+	<bean id="step_Test_Hello_01_01" parent="simpleStep"  scope="prototype">
+		<property name="itemReader">
+			<bean class="test.profile.A" />
+		</property>
+		<property name="itemProcessor">
+			<bean class="test.profile.B"></bean>
+		</property>
+		<property name="itemWriter">
+			<bean class="test.profile.C"></bean>
+		</property>
+	</bean>
 	
 	<bean id="step_Test_Hello_02" parent="simpleStep"  scope="prototype">
 		<property name="itemReader">
@@ -60,6 +71,16 @@
 						<value>step_Test_Hello_01</value>
 					</constructor-arg>
 				</bean>
+				<bean class="test.profile.batch.JobStepFactoryBean">
+					<constructor-arg>
+						<value>step_Test_Hello_01_01</value>
+					</constructor-arg>
+				</bean>
+				<bean class="test.profile.batch.JobStepFactoryBean">
+					<constructor-arg>
+						<value>step_Test_Hello_01</value>
+					</constructor-arg>
+				</bean>
 			</list>
 		</property>
 	</bean>
@@ -70,6 +91,11 @@
 				<bean class="test.profile.batch.JobStepFactoryBean">
 					<constructor-arg>
 						<value>step_Test_Hello_02</value>
+					</constructor-arg>
+				</bean>
+				<bean class="test.profile.batch.JobStepFactoryBean">
+					<constructor-arg>
+						<value>step_Test_Hello_01</value>
 					</constructor-arg>
 				</bean>
 			</list>

@@ -4,7 +4,6 @@
  */
 package com.mercuria.etl.mgr.web.server.endpoint;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class JobMonitorServerEndpoint implements JobMonitorService{
 
 	@Override
 	public String loadHistoricalMonitorData() {
-		List<JobMonitorVo> list = jobDetailMonitorService.getJobExecutionHistory();
+		List<JobMonitorVo> list = jobDetailMonitorService.getAllJobHistory();
 		/*System.out.println("@ Server: loadHistoricalMonitorData()");
 		String json = "{ \"data\": [ " +
 				"{\"jobName\": \"Job 001\", \"status\": \"Started\"  }," +

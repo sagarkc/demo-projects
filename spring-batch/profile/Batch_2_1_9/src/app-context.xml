@@ -55,7 +55,7 @@
 		lazy-init="true">
 		<property name="dataSource" ref="genevaDataSource" />
 	</bean>
-	<bean id="genevaDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	<!-- <bean id="genevaDataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 		<property name="url" value="jdbc:sqlserver://KIWS-SG1736;instanceName=SQLEXPRESS;databaseName=JOB_MANAGER"></property>
@@ -64,13 +64,25 @@
 		<property name="initialSize" value="8" />
 		<property name="maxActive" value="15" />
 		<property name="maxIdle" value="7" />
+	</bean> -->
+	
+	<bean id="genevaDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/job_manager?zeroDateTimeBehavior=convertToNull" />
+		<property name="username" value="root" />
+		<property name="password" value="root123" />
+		<property name="initialSize" value="8" />
+		<property name="maxActive" value="15" />
+		<property name="maxIdle" value="7" />
 	</bean>
+	
 	<bean id="jobRepository"
 		class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
 		<property name="dataSource" ref="genevaDataSource" />
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="incrementerFactory">
-			<bean class="test.profile.batch.CustomIncrementerFactory">
+			<bean class="test.profile.batch.MysqlDataFieldMaxValueIncrementerFactory">
 				<property name="dataSource" ref="genevaDataSource" />
 			</bean>
 		</property>

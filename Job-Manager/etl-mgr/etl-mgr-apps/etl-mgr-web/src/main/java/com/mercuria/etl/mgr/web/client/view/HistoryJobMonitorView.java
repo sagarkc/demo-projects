@@ -12,6 +12,7 @@ import com.mercuria.etl.mgr.web.client.core.UIEventManager;
 import com.mercuria.etl.mgr.web.client.event.HistoricalJobMonitorEvent;
 import com.mercuria.etl.mgr.web.client.event.HistoricalJobMonitorEventListener;
 import com.mercuria.etl.mgr.web.shared.model.JSONListGridDataModel;
+import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.HLayout;
@@ -47,9 +48,9 @@ public class HistoryJobMonitorView extends VLayout implements HistoricalJobMonit
 		header.addMember(refreshButton);
 		addMember(header);
 		
-		columnHeaders.add(new GWTGridColumnHeader("JOB Name", "jobName"));
+		columnHeaders.add(new GWTGridColumnHeader("JOB Name", "jobName", ListGridFieldType.TEXT));
 		columnHeaders.add(new GWTGridColumnHeader("Status", "status"));
-		columnHeaders.add(new GWTGridColumnHeader("Start Time", "startTime"));
+		columnHeaders.add(new GWTGridColumnHeader("Start Time", "startTime", ListGridFieldType.DATETIME));
 		columnHeaders.add(new GWTGridColumnHeader("End Time", "endTime"));
 		columnHeaders.add(new GWTGridColumnHeader("Exit Code", "exitCode"));
 		columnHeaders.add(new GWTGridColumnHeader("Exit Message", "exitMessage"));

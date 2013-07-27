@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.Window;
+import com.smartgwt.client.util.JSONEncoder;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
@@ -41,7 +42,8 @@ public class GWTCollectionDataGrid<T extends JavaScriptObject> extends ListGrid{
 		for(int r=0; r < model.getRowCount(); r++){
 			ListGridRecord record = new ListGridRecord();
 			for(int c=0; c < model.getColumnCount(); c++){
-				record.setAttribute(model.getColumnAttributeName(c), model.getValueAt(r, c));  
+				Window.alert("Val: " + model.getValueAt(r, c));
+				record.setAttribute(model.getColumnAttributeName(c), "Test");  
 			}
 			records[r] = record;
 		}
