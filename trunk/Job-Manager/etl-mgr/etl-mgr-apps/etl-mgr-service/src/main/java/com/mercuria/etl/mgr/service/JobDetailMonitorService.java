@@ -14,4 +14,5 @@ public interface JobDetailMonitorService {
 	 */
 	List<JobMonitorVo> getJobExecutionHistory();
 	
+	public List<JobMonitorVo> getAllJobHistory();
 }

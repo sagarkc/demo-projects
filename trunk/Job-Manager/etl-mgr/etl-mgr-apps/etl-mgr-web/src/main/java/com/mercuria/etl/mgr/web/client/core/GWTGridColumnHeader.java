@@ -23,6 +23,21 @@ public class GWTGridColumnHeader {
 		this.attribute = attribute;
 	}
 
+	
+	/**
+	 * @param title
+	 * @param attribute
+	 * @param cellType
+	 */
+	public GWTGridColumnHeader(String title, String attribute,
+			ListGridFieldType cellType) {
+		this.title = title;
+		this.attribute = attribute;
+		this.cellType = cellType;
+	}
+
+
+
 	public String getTitle() {
 		return title;
 	}

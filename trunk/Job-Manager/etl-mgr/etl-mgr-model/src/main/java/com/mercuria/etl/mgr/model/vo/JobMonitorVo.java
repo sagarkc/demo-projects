@@ -3,6 +3,8 @@ package com.mercuria.etl.mgr.model.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.mercuria.etl.mgr.common.annotations.ResultSetColumn;
+
 import net.sf.jsonizer.annotation.JsonObject;
 import net.sf.jsonizer.annotation.JsonProperty;
 import net.sf.jsonizer.core.Jsonizable;
@@ -15,6 +17,8 @@ public class JobMonitorVo implements Serializable, Jsonizable {
 	 */
 	private static final long serialVersionUID = -2430011941593495688L;
 
+	@JsonProperty(name="jobInstanceId")
+	private Long jobInstanceId;
 	@JsonProperty(name="jobName")
 	private String jobName;
 	@JsonProperty(name="startTime")
@@ -32,7 +36,18 @@ public class JobMonitorVo implements Serializable, Jsonizable {
 		// TODO Auto-generated constructor stub
 	}
 
-	
+	@ResultSetColumn(propertyName="jobInstanceId", mappedColumnName="JOB_INSTANCE_ID")
+	public Long getJobInstanceId() {
+		return jobInstanceId;
+	}
+
+
+	public void setJobInstanceId(Long jobInstanceId) {
+		this.jobInstanceId = jobInstanceId;
+	}
+
+
+	@ResultSetColumn(propertyName="jobName", mappedColumnName="JOB_NAME")
 	public String getJobName() {
 		return jobName;
 	}
@@ -41,6 +56,7 @@ public class JobMonitorVo implements Serializable, Jsonizable {
 		this.jobName = jobName;
 	}
 
+	@ResultSetColumn(propertyName="startTime", mappedColumnName="JOB_START_TIME")
 	public Date getStartTime() {
 		return startTime;
 	}
@@ -49,6 +65,7 @@ public class JobMonitorVo implements Serializable, Jsonizable {
 		this.startTime = startTime;
 	}
 
+	@ResultSetColumn(propertyName="endTime", mappedColumnName="JOB_END_TIME")
 	public Date getEndTime() {
 		return endTime;
 	}
@@ -65,6 +82,7 @@ public class JobMonitorVo implements Serializable, Jsonizable {
 		this.status = status;
 	}
 
+	@ResultSetColumn(propertyName="exitCode", mappedColumnName="EXIT_CODE")
 	public String getExitCode() {
 		return exitCode;
 	}
@@ -73,6 +91,7 @@ public class JobMonitorVo implements Serializable, Jsonizable {
 		this.exitCode = exitCode;
 	}
 
+	@ResultSetColumn(propertyName="exitMessage", mappedColumnName="EXIT_MESSAGE")
 	public String getExitMessage() {
 		return exitMessage;
 	}
@@ -87,5 +106,39 @@ public class JobMonitorVo implements Serializable, Jsonizable {
 				+ ", exitCode=" + exitCode + "]";
 	}
 
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((jobInstanceId == null) ? 0 : jobInstanceId.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof JobMonitorVo)) {
+			return false;
+		}
+		JobMonitorVo other = (JobMonitorVo) obj;
+		if (jobInstanceId == null) {
+			if (other.jobInstanceId != null) {
+				return false;
+			}
+		} else if (!jobInstanceId.equals(other.jobInstanceId)) {
+			return false;
+		}
+		return true;
+	}
+
+	
 	
 }
