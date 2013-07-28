@@ -29,3 +29,7 @@
 	height: 42px;
 	border: 1px solid #a1a2a1;
 }
+
+.jobFilterView{
+	border: 1px dotted #a1a2a1;
+}
