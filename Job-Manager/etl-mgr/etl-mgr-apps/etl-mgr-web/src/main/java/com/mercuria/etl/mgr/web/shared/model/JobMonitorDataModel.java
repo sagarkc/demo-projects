@@ -1,116 +1,79 @@
 /**
  * File :: com.mercuria.etl.mgr.web.shared.model.JobMonitorDataModel
- * Date :: 23-Jul-2013
+ * Date :: 27-Jul-2013
  */
 package com.mercuria.etl.mgr.web.shared.model;
 
-import java.util.Arrays;
-import java.util.List;
-
-import com.google.gwt.user.client.rpc.IsSerializable;
-import com.mercuria.etl.mgr.web.client.core.GWTCollectionGridModel;
-import com.smartgwt.client.widgets.grid.ListGridField;
+import java.util.Date;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
- *
+ * 
  */
-public class JobMonitorDataModel<T extends IsSerializable> implements GWTCollectionGridModel<T> {
+public class JobMonitorDataModel implements JobMonitorData {
 
-	private final List<T> dataList;
-	private final int columnCount;
-	private Object[][] data;
-	private final String[] columnNames;
-	private final String[] columnAttributeNames;
-	private final int[] columnWidths;
-	
-	
-	public JobMonitorDataModel(List<T> dataList) {
-		this.dataList = dataList;
-		
-		this.columnCount = 2;
-		data = new Object[dataList.size()][columnCount];
-		
-		this.columnNames = new String[columnCount];
-		this.columnAttributeNames = new String[columnCount];
-		
-		columnNames[0] = "Job Name";
-		columnNames[1] = "Job Status";
-		
-		columnAttributeNames[0] = "jobName";
-		columnAttributeNames[1] = "status";
-		
-		columnWidths = new int[columnCount];
-		columnWidths[0] = 150;
-		columnWidths[1] = 80;
-		populateModel();
-	}
-	
-	private void populateModel(){
-		
-	}
-	
-	@Override
-	public void reload(List<T> data) {
-		// TODO Auto-generated method stub
-		
+	private Long jobInstanceId;
+	private String jobName;
+	private Date startTime;
+	private Date endTime;
+	private String status;
+	private String exitCode;
+	private String exitMessage;
+
+	public Long getJobInstanceId() {
+		return jobInstanceId;
 	}
 
-	@Override
-	public ListGridField getListGridField(int columnIndex) {
-		return new ListGridField(getColumnName(columnIndex));
+	public void setJobInstanceId(Long jobInstanceId) {
+		this.jobInstanceId = jobInstanceId;
 	}
 
-	@Override
-	public int getColumnCount() {
-		return columnCount;
+	public String getJobName() {
+		return jobName;
 	}
 
-	@Override
-	public String getColumnName(int columnIndex) {
-		return columnNames[columnIndex];
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
 	}
 
-	@Override
-	public int getRowCount() {
-		return dataList.size();
+	public Date getStartTime() {
+		return startTime;
 	}
 
-	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		return data[rowIndex][columnIndex];
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
 	}
 
-	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return false;
+	public Date getEndTime() {
+		return endTime;
 	}
 
-	@Override
-	public void setValueAt(Object value, int rowIndex, int columnIndex) {
-		data[rowIndex][columnIndex] = value;
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
-	@Override
-	public List<T> getDataList() {
-		return dataList;
+	public String getStatus() {
+		return status;
 	}
 
-	@Override
-	public List<String> getColumnNameList() {
-		return Arrays.asList(columnNames);
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
-	@Override
-	public String getColumnAttributeName(int columnIndex) {
-		return columnAttributeNames[columnIndex];
+	public String getExitCode() {
+		return exitCode;
 	}
 
-	@Override
-	public int getColumnWidth(int columnIndex) {
-		return columnWidths[columnIndex];
+	public void setExitCode(String exitCode) {
+		this.exitCode = exitCode;
 	}
-	
-	
-	
+
+	public String getExitMessage() {
+		return exitMessage;
+	}
+
+	public void setExitMessage(String exitMessage) {
+		this.exitMessage = exitMessage;
+	}
+
 }

@@ -4,7 +4,9 @@
 	<inherits name='com.google.gwt.user.User'/>
     <inherits name="com.google.gwt.core.Core"/>
     <inherits name="com.google.gwt.user.History"/>
-
+ 
+	<inherits name="com.google.web.bindery.autobean.AutoBean"/>
+    
 	<inherits name="com.smartgwt.SmartGwt" />
 	
     <inherits name="com.smartgwt.SmartGwtNoScript"/>
