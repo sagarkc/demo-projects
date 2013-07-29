@@ -111,5 +111,15 @@ public class JobHistoryFilterView extends VLayout{
         
         addMember(searchButton);
 	}
+
+	public Button getSearchButton() {
+		return searchButton;
+	}
+
+	public ValuesManager getValuesManager() {
+		return valuesManager;
+	}
+	
+	
 	
 }
