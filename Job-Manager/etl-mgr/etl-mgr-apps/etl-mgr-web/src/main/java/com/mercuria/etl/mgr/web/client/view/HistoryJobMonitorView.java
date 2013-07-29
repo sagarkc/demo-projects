@@ -13,10 +13,6 @@ import com.mercuria.etl.mgr.web.client.event.HistoricalJobMonitorEventListener;
 import com.mercuria.etl.mgr.web.shared.model.JSONListGridDataModel;
 import com.smartgwt.client.types.AnimationEffect;
 import com.smartgwt.client.types.ListGridFieldType;
-import com.smartgwt.client.types.Visibility;
-import com.smartgwt.client.util.SC;
-import com.smartgwt.client.widgets.Button;
-import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
@@ -30,8 +26,6 @@ public class HistoryJobMonitorView extends VLayout implements HistoricalJobMonit
 
 	private static UIEventManager uiEventManager = UIEventManager.getInstance();
 	
-	private final Button addJobButton = new Button("Add Job");
-	private final Button removeJobButton = new Button("Remove Job");
 	private final ToolStripButton refreshButton = new ToolStripButton("Refresh");
 	private final GWTCollectionDataGrid<JavaScriptObject> jobMonitorHistoryGrid 
 		= new GWTCollectionDataGrid<JavaScriptObject>();
@@ -60,7 +54,8 @@ public class HistoryJobMonitorView extends VLayout implements HistoricalJobMonit
         
         jobHistoryToolStrip.addButton(refreshButton);
         
-		showFilterCheckboxItem.setTitle("Show/Hide Filter");
+		showFilterCheckboxItem.setTitle("Show Filter Section");
+		showFilterCheckboxItem.setValue(true);
 		showFilterCheckboxItem.addChangedHandler(new ChangedHandler() {
 			
 			@Override
@@ -111,6 +106,10 @@ public class HistoryJobMonitorView extends VLayout implements HistoricalJobMonit
 	@Override
 	public void showHistoricalJobMonitorData(HistoricalJobMonitorEvent event) {
 		jobMonitorHistoryGrid.reload(event.getJobMonitorData());
+	}
+
+	public JobHistoryFilterView getJobHistoryFilterView() {
+		return jobHistoryFilterView;
 	}
 	
 	

@@ -67,6 +67,11 @@ public class JobMonitorView extends VLayout implements JobMonitorDisplay, Resize
 	public HistoryJobMonitorView getHistoryJobMonitorView() {
 		return historyJobMonitorView;
 	}
+
+	@Override
+	public JobHistoryFilterView getJobHistoryFilterView() {
+		return historyJobMonitorView.getJobHistoryFilterView();
+	}
 	
 	
 }
