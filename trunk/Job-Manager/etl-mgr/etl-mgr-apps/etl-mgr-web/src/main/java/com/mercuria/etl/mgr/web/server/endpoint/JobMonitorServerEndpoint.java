@@ -7,13 +7,7 @@ package com.mercuria.etl.mgr.web.server.endpoint;
 import java.util.Date;
 import java.util.List;
 
-import net.sf.jsonizer.core.FlexigridJsonCollection;
-import net.sf.jsonizer.core.GWTJsonCollection;
-import net.sf.jsonizer.service.impl.FlexigridJsonOutputMapper;
-import net.sf.jsonizer.service.impl.GWTJsonOutputMapper;
-
 import org.apache.log4j.Logger;
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -52,19 +46,8 @@ public class JobMonitorServerEndpoint implements JobMonitorService{
 	public String loadHistoricalMonitorData() {
 		List<JobMonitorVo> list = jobDetailMonitorService.getAllJobHistory();
 		
-		GWTJsonCollection<JobMonitorVo> collection
-			= new GWTJsonCollection<JobMonitorVo>(list);
-		GWTJsonOutputMapper jsonOutputMapper = new GWTJsonOutputMapper();
-		String jsonStr = "";
-		try {
-			jsonStr = jsonOutputMapper.getJonOutput(collection);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		if(logger.isDebugEnabled()){
-			logger.debug("Generated JSON: " + jsonStr);
-		}
-		return jsonStr;
+		
+		return "";
 	}
 
 	@Override

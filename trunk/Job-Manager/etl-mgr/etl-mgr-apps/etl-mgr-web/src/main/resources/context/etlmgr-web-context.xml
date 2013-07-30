@@ -15,6 +15,19 @@
 	<mvc:annotation-driven />
 	<context:component-scan base-package="com.mercuria.etl.mgr" />
 
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+
+	<bean id="jacksonMessageConverter" class="java.util.ArrayList">
+		<constructor-arg>
+	        <list>
+	        	<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+	        </list>
+	    </constructor-arg>   
+	</bean>
+
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" >
+		<property name="messageConverters" ref="jacksonMessageConverter"/>
+	</bean>
 
 	<bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
@@ -33,6 +46,24 @@
 
 	</mvc:interceptors>
 
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="order" value="1" />
+		<property name="mediaTypes">
+			<map>
+				<entry key="json" value="application/json" />
+			</map>
+		</property>
+
+		<property name="defaultViews">
+			<list>
+				<!-- JSON View -->
+				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+				</bean>
+			</list>
+		</property>
+		<property name="ignoreAcceptHeader" value="true" />
+	</bean>
+	
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/pages/" />
@@ -43,10 +74,12 @@
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
-				<value>classpath:com/mercuria/etl/mgr/web/client/i18n/ApplicationMessages</value>
+				<value>classpath:com/mercuria/etl/mgr/web/client/i18n/ApplicationMessages
+				</value>
 			</list>
 		</property>
 	</bean>
 
+	
 
 </beans>

@@ -25,7 +25,7 @@
 	<!-- Other module inherits -->
 <!-- 	<inherits name="com.google.gwt.logging.Logging"/> -->
 	
-
+	<inherits name="com.google.gwt.http.HTTP" />
 	
 	<!-- Specify the app entry point class. -->
 	<entry-point class='com.mercuria.etl.mgr.web.client.EtlManager' />
