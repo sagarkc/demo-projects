@@ -6,24 +6,28 @@ import java.util.List;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.mercuria.etl.mgr.web.WebConstants;
-import com.mercuria.etl.mgr.web.client.core.GWTCollectionDataGrid;
-import com.mercuria.etl.mgr.web.client.core.GWTCollectionGridModel;
 import com.mercuria.etl.mgr.web.client.core.GWTGridColumnHeader;
-import com.mercuria.etl.mgr.web.client.service.JobMonitorService;
-import com.mercuria.etl.mgr.web.shared.model.JobMonitorData;
-import com.mercuria.etl.mgr.web.shared.model.JobMonitorDataModel;
-import com.smartgwt.client.data.DataSource;
+import com.smartgwt.client.data.DSRequest;
+import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
-import com.smartgwt.client.data.XJSONDataSource;
+import com.smartgwt.client.data.OperationBinding;
+import com.smartgwt.client.data.RestDataSource;
 import com.smartgwt.client.types.DSDataFormat;
+import com.smartgwt.client.types.DSOperationType;
+import com.smartgwt.client.types.DSProtocol;
 import com.smartgwt.client.types.FieldType;
-import com.smartgwt.client.types.ListGridFieldType;
+import com.smartgwt.client.util.JSON;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
+/**
+ * @author Sabuj Das | sabuj.das@asia.xchanging.com
+ *
+ */
 public class RealTimeJobMonitorView extends VLayout {
 
 	private final Button addJobButton = new Button("Add Job");
@@ -55,8 +59,7 @@ public class RealTimeJobMonitorView extends VLayout {
 		jobMonitorGrid.setHeight100();  
 		jobMonitorGrid.setShowAllRecords(true); 
 		
-		XJSONDataSource dataSource = new XJSONDataSource();
-		dataSource.setDataURL(GWT.getHostPageBaseURL() + JobMonitorService.RPC_TARGET + WebConstants.RPC_EXT);
+		RealtimeJobHistoryDS dataSource = new RealtimeJobHistoryDS();
 		
 		DataSourceField field = new DataSourceField("jobName", FieldType.TEXT, "Job Name");
 		dataSource.addField(field);
@@ -69,6 +72,14 @@ public class RealTimeJobMonitorView extends VLayout {
 		
 		dataSource.setDataFormat(DSDataFormat.JSON);
 		
+		OperationBinding fetch = new OperationBinding();
+		fetch.setOperationType(DSOperationType.FETCH);  
+        fetch.setDataProtocol(DSProtocol.POSTMESSAGE); 
+        dataSource.setOperationBindings(fetch);
+        
+        dataSource.setFetchDataURL(GWT.getHostPageBaseURL() + WebConstants.FETCH_HISTORICAL_JOB_MONITOR_DATA
+        		+ WebConstants.DISPATCHER_EXT);
+		
 		jobMonitorGrid.setDataSource(dataSource);
 		jobMonitorGrid.setWidth100();  
 		jobMonitorGrid.setHeight100();  
@@ -80,4 +91,21 @@ public class RealTimeJobMonitorView extends VLayout {
         
 	}
 	
+}
+
+class RealtimeJobHistoryDS extends RestDataSource {
+	@Override
+	protected Object transformRequest(DSRequest dsRequest) {
+		dsRequest.setContentType("application/json");
+		JavaScriptObject jso = dsRequest.getData();
+		String jsonText = JSON.encode(jso);
+		return jsonText;
+	}
+
+	@Override
+	protected void transformResponse(DSResponse response, DSRequest request,
+			Object data) {
+		SC.say(data.toString());
+		super.transformResponse(response, request, data);
+	}
 }
