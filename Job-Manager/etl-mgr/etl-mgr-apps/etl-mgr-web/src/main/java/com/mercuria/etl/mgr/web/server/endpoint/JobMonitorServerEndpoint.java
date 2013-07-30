@@ -8,7 +8,9 @@ import java.util.Date;
 import java.util.List;
 
 import net.sf.jsonizer.core.FlexigridJsonCollection;
+import net.sf.jsonizer.core.GWTJsonCollection;
 import net.sf.jsonizer.service.impl.FlexigridJsonOutputMapper;
+import net.sf.jsonizer.service.impl.GWTJsonOutputMapper;
 
 import org.apache.log4j.Logger;
 import org.json.JSONException;
@@ -49,53 +51,10 @@ public class JobMonitorServerEndpoint implements JobMonitorService{
 	@Override
 	public String loadHistoricalMonitorData() {
 		List<JobMonitorVo> list = jobDetailMonitorService.getAllJobHistory();
-		/*System.out.println("@ Server: loadHistoricalMonitorData()");
-		String json = "{ \"data\": [ " +
-				"{\"jobName\": \"Job 001\", \"status\": \"Started\"  }," +
-				"{\"jobName\": \"Job 002\", \"status\": \"Started\"  }," +
-				"{\"jobName\": \"Job 003\", \"status\": \"Started\"  }," +
-				"{\"jobName\": \"Job 004\", \"status\": \"Ready\"  }" +
-				"]}";
 		
-		List<JobMonitorVo> list = new ArrayList<JobMonitorVo>();
-		JobMonitorVo monitorVo = new JobMonitorVo();
-		monitorVo.setJobName("A 001");
-		monitorVo.setStatus("Ready");
-		list.add(monitorVo);
-		
-		monitorVo = new JobMonitorVo();
-		monitorVo.setJobName("A 002");
-		monitorVo.setStatus("Running");
-		list.add(monitorVo);
-		
-		monitorVo = new JobMonitorVo();
-		monitorVo.setJobName("A 003");
-		monitorVo.setStatus("Running");
-		list.add(monitorVo);
-		
-		monitorVo = new JobMonitorVo();
-		monitorVo.setJobName("A 004");
-		monitorVo.setStatus("Wait");
-		list.add(monitorVo);
-		
-		monitorVo = new JobMonitorVo();
-		monitorVo.setJobName("A 005");
-		monitorVo.setStatus("Running");
-		list.add(monitorVo);
-		
-		monitorVo = new JobMonitorVo();
-		monitorVo.setJobName("A 006");
-		monitorVo.setStatus("Running");
-		list.add(monitorVo);
-		
-		monitorVo = new JobMonitorVo();
-		monitorVo.setJobName("A 007");
-		monitorVo.setStatus("Wait");
-		list.add(monitorVo);*/
-		
-		FlexigridJsonCollection<JobMonitorVo> collection
-			= new FlexigridJsonCollection<JobMonitorVo>(list);
-		FlexigridJsonOutputMapper jsonOutputMapper = new FlexigridJsonOutputMapper();
+		GWTJsonCollection<JobMonitorVo> collection
+			= new GWTJsonCollection<JobMonitorVo>(list);
+		GWTJsonOutputMapper jsonOutputMapper = new GWTJsonOutputMapper();
 		String jsonStr = "";
 		try {
 			jsonStr = jsonOutputMapper.getJonOutput(collection);
