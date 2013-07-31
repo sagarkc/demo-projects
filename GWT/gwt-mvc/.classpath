@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" output="test-classes" path="test"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/aopalliance-1.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/aspectjrt-1.7.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/aspectjweaver-1.7.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-beanutils-1.7.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-dbcp-1.2.2.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-digester-1.8.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-logging-api-1.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-servlet.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/jackson-core-asl-1.9.12.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/jackson-mapper-asl-1.9.12.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-aop-3.2.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-beans-3.2.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-context-3.2.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-context-support-3.2.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-core-3.2.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-expression-3.2.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-jdbc-3.2.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-orm-3.2.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-oxm-3.2.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-security-acl-3.1.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-security-config-3.1.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-security-core-3.1.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-security-taglibs-3.1.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-security-web-3.1.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-web-3.2.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/spring-webmvc-3.2.3.RELEASE.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/smartgwt-4.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/smartgwt-skins-4.0.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/hibernate-validator-4.3.0.Final.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/jboss-logging-3.1.0.GA.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/jboss-transaction-api_1.1_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+</classpath>
