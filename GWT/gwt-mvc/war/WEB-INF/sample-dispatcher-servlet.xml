@@ -11,7 +11,7 @@
 	<mvc:annotation-driven />
 	<context:component-scan base-package="com.gwt.sample.mvc" />
 	
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+	<!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
 
 	<bean id="jacksonMessageConverter" class="java.util.ArrayList">
 		<constructor-arg>
@@ -23,5 +23,5 @@
 
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" >
 		<property name="messageConverters" ref="jacksonMessageConverter"/>
-	</bean>
+	</bean> -->
 </beans>

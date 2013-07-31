@@ -14,20 +14,7 @@
 	<!-- MVC -->
 	<mvc:annotation-driven />
 	<context:component-scan base-package="com.mercuria.etl.mgr" />
-
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
-
-	<bean id="jacksonMessageConverter" class="java.util.ArrayList">
-		<constructor-arg>
-	        <list>
-	        	<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
-	        </list>
-	    </constructor-arg>   
-	</bean>
-
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" >
-		<property name="messageConverters" ref="jacksonMessageConverter"/>
-	</bean>
+	
 
 	<bean id="localeResolver"
 		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">

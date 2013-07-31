@@ -1,0 +1,74 @@
+Public resources found in...
+   Unexpected entry in classpath; E:\etl-mgr-web\target\etlmgr\WEB-INF\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\etl-mgr-web\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-apps\etl-mgr-service\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-apps\etl-mgr-service\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-apps\etl-mgr-dao\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-apps\etl-mgr-dao\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-common\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-common\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-model\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-model\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-util\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-util\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-core\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-core\target\test-classes is neither a directory nor an archive (.jar or .zip)
+Translatable source found in...
+Found 0 cached/archived units.  Used 0 / 2719 units from cache.
+Compiling...
+   0% complete (ETR: 50 seconds)
+   10% complete (ETR: 48 seconds)
+   20% complete (ETR: 27 seconds)
+   30% complete (ETR: 19 seconds)
+   40% complete (ETR: 14 seconds)
+   50% complete (ETR: 10 seconds)
+   60% complete (ETR: 8 seconds)
+   70% complete (ETR: 6 seconds)
+   80% complete (ETR: 3 seconds)
+   90% complete (ETR: 2 seconds)
+   100% complete (ETR: 0 seconds)
+   Compilation completed in 29.93 seconds
+Removing invalidated units
+Finding entry point classes
+Public resources found in...
+   Unexpected entry in classpath; E:\etl-mgr-web\target\etlmgr\WEB-INF\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\etl-mgr-web\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-apps\etl-mgr-service\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-apps\etl-mgr-service\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-apps\etl-mgr-dao\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-apps\etl-mgr-dao\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-common\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-common\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-model\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-model\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-util\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-util\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-core\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-core\target\test-classes is neither a directory nor an archive (.jar or .zip)
+Translatable source found in...
+Found 2719 cached/archived units.  Used 2719 / 2719 units from cache.
+Compiling...
+   Compilation completed in 0.00 seconds
+Removing invalidated units
+Finding entry point classes
+Public resources found in...
+   Unexpected entry in classpath; E:\etl-mgr-web\target\etlmgr\WEB-INF\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\etl-mgr-web\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-apps\etl-mgr-service\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-apps\etl-mgr-service\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-apps\etl-mgr-dao\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-apps\etl-mgr-dao\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-common\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-common\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-model\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-model\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-util\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-util\target\test-classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-core\target\classes is neither a directory nor an archive (.jar or .zip)
+   Unexpected entry in classpath; E:\SVN_HOME\demo-projects\Job-Manager\etl-mgr\etl-mgr-core\target\test-classes is neither a directory nor an archive (.jar or .zip)
+Translatable source found in...
+Found 2719 cached/archived units.  Used 2719 / 2719 units from cache.
+Compiling...
+   Compilation completed in 0.00 seconds
+Removing invalidated units
+Finding entry point classes

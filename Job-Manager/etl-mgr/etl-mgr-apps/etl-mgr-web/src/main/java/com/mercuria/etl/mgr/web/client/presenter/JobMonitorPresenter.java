@@ -36,7 +36,6 @@ public class JobMonitorPresenter extends BaseContainerPresenter<Display> {
 
 	@Override
 	public void bind() {
-		loadHistory();
 		jobMonitorDisplay.getJobHistoryFilterView().getSearchButton().addClickHandler(new ClickHandler() {
 			
 			@Override
