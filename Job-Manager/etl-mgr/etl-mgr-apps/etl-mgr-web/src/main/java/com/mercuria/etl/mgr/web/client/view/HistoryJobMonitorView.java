@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.mercuria.etl.mgr.web.client.core.GWTCollectionDataGrid;
 import com.mercuria.etl.mgr.web.client.core.GWTGridColumnHeader;
 import com.mercuria.etl.mgr.web.client.core.UIEventManager;
 import com.mercuria.etl.mgr.web.client.ds.HistoricalJobMonitorDataSource;
 import com.mercuria.etl.mgr.web.client.event.HistoricalJobMonitorEvent;
 import com.mercuria.etl.mgr.web.client.event.HistoricalJobMonitorEventListener;
+import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.AnimationEffect;
 import com.smartgwt.client.types.ListGridFieldType;
-import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -20,7 +22,9 @@ import com.smartgwt.client.widgets.form.FilterBuilder;
 import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
+import com.smartgwt.client.widgets.grid.CellFormatter;
 import com.smartgwt.client.widgets.grid.ListGridField;
+import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
@@ -97,6 +101,18 @@ public class HistoryJobMonitorView extends VLayout implements HistoricalJobMonit
 		ListGridField nameField = new ListGridField("jobName", "JOB Name");
 		ListGridField exitCodeField = new ListGridField("exitCode", "Exit Code");
 		ListGridField startTimeField = new ListGridField("startTime", "Job Start Time");
+		startTimeField.setCellFormatter(new CellFormatter() {
+
+			@Override
+			public String format(Object value, ListGridRecord record,
+					int rowNum, int colNum) {
+				record.getAttributeAsLong("startTime");
+				return null;
+			}
+			
+		});
+		startTimeField.setAlign(Alignment.LEFT);
+		
 		ListGridField endTimeField = new ListGridField("endTime",  "Job End Time");
 		ListGridField exitMessageField = new ListGridField("exitMessage", "Exit Message");
 		
@@ -111,12 +127,12 @@ public class HistoryJobMonitorView extends VLayout implements HistoricalJobMonit
 		jobMonitorHistoryGrid.setAutoFetchData(true);
 		jobMonitorHistoryGrid.setDataSource(historicalJobMonitorDataSource);
 		
-		 IButton filterButton = new IButton("Filter");  
-	        filterButton.addClickHandler(new ClickHandler() {  
-	            public void onClick(ClickEvent event) {  
-	            	jobMonitorHistoryGrid.filterData(filterBuilder.getCriteria());  
-	            }  
-	        }); 
+		Button filterButton = new Button("Filter");
+		filterButton.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				jobMonitorHistoryGrid.filterData(filterBuilder.getCriteria());
+			}
+		});
 
 	    addMember(filterBuilder);
 	    addMember(filterButton);  
