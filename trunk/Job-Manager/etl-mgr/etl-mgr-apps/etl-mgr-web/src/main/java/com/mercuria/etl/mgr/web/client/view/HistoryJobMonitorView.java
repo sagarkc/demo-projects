@@ -5,18 +5,22 @@ import java.util.List;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.mercuria.etl.mgr.web.client.core.GWTCollectionDataGrid;
-import com.mercuria.etl.mgr.web.client.core.GWTCollectionGridModel;
 import com.mercuria.etl.mgr.web.client.core.GWTGridColumnHeader;
 import com.mercuria.etl.mgr.web.client.core.UIEventManager;
+import com.mercuria.etl.mgr.web.client.ds.HistoricalJobMonitorDataSource;
 import com.mercuria.etl.mgr.web.client.event.HistoricalJobMonitorEvent;
 import com.mercuria.etl.mgr.web.client.event.HistoricalJobMonitorEventListener;
-import com.mercuria.etl.mgr.web.shared.model.JSONListGridDataModel;
 import com.smartgwt.client.types.AnimationEffect;
 import com.smartgwt.client.types.ListGridFieldType;
+import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.FilterBuilder;
 import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
+import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
@@ -33,6 +37,12 @@ public class HistoryJobMonitorView extends VLayout implements HistoricalJobMonit
 	private final JobHistoryFilterView jobHistoryFilterView = new JobHistoryFilterView(); 
 	private final CheckboxItem showFilterCheckboxItem = new CheckboxItem();
 	private final ToolStrip jobHistoryToolStrip = new ToolStrip();
+	
+	private final HistoricalJobMonitorDataSource historicalJobMonitorDataSource 
+		= HistoricalJobMonitorDataSource.getInstance();
+	
+	private final FilterBuilder filterBuilder = new FilterBuilder(); 
+	
 	
 	public HistoryJobMonitorView() {
 		uiEventManager.addListener(HistoricalJobMonitorEvent.TYPE, this);
@@ -79,21 +89,37 @@ public class HistoryJobMonitorView extends VLayout implements HistoricalJobMonit
 		
 		addMember(jobHistoryFilterView);
 		
-		columnHeaders.add(new GWTGridColumnHeader("JOB Name", "jobName", ListGridFieldType.TEXT));
-		columnHeaders.add(new GWTGridColumnHeader("Status", "status"));
-		columnHeaders.add(new GWTGridColumnHeader("Start Time", "startTime", ListGridFieldType.DATETIME));
-		columnHeaders.add(new GWTGridColumnHeader("End Time", "endTime"));
-		columnHeaders.add(new GWTGridColumnHeader("Exit Code", "exitCode"));
-		columnHeaders.add(new GWTGridColumnHeader("Exit Message", "exitMessage"));
+		ListGridField idField = new ListGridField("jobInstanceId", "JOB Instance ID");
+		idField.setCanEdit(false);
+		idField.setHidden(true);
+		idField.setType(ListGridFieldType.INTEGER);
+		
+		ListGridField nameField = new ListGridField("jobName", "JOB Name");
+		ListGridField exitCodeField = new ListGridField("exitCode", "Exit Code");
+		ListGridField startTimeField = new ListGridField("startTime", "Job Start Time");
+		ListGridField endTimeField = new ListGridField("endTime",  "Job End Time");
+		ListGridField exitMessageField = new ListGridField("exitMessage", "Exit Message");
+		
+		filterBuilder.setDataSource(historicalJobMonitorDataSource);
+		
+		jobMonitorHistoryGrid.setFields(idField, nameField, exitCodeField, 
+				startTimeField, endTimeField, exitMessageField);
 		
 		jobMonitorHistoryGrid.setWidth100();  
 		jobMonitorHistoryGrid.setHeight100();  
 		jobMonitorHistoryGrid.setShowAllRecords(true); 
+		jobMonitorHistoryGrid.setAutoFetchData(true);
+		jobMonitorHistoryGrid.setDataSource(historicalJobMonitorDataSource);
 		
-		GWTCollectionGridModel<JavaScriptObject> model 
-			= new JSONListGridDataModel<JavaScriptObject>(columnHeaders);
-		jobMonitorHistoryGrid.setModel(model);
-        
+		 IButton filterButton = new IButton("Filter");  
+	        filterButton.addClickHandler(new ClickHandler() {  
+	            public void onClick(ClickEvent event) {  
+	            	jobMonitorHistoryGrid.filterData(filterBuilder.getCriteria());  
+	            }  
+	        }); 
+
+	    addMember(filterBuilder);
+	    addMember(filterButton);  
         addMember(jobMonitorHistoryGrid);  
   
         
