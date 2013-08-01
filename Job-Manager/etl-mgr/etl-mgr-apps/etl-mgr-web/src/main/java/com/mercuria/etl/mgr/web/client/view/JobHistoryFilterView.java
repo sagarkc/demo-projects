@@ -4,6 +4,10 @@
  */
 package com.mercuria.etl.mgr.web.client.view;
 
+import com.mercuria.etl.mgr.web.client.ds.HistoricalJobMonitorDataSource;
+import com.smartgwt.client.data.Criterion;
+import com.smartgwt.client.types.AnimationEffect;
+import com.smartgwt.client.types.FetchMode;
 import com.smartgwt.client.types.MultipleAppearance;
 import com.smartgwt.client.types.TitleOrientation;
 import com.smartgwt.client.widgets.Button;
@@ -14,6 +18,10 @@ import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.TimeItem;
+import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
+import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
+import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
+import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
@@ -55,38 +63,52 @@ public class JobHistoryFilterView extends VLayout{
 		DynamicForm jobNamesForm = new DynamicForm();
 		jobNamesForm.setWidth100();
 		jobNamesForm.setHeight100();
-		jobNamesForm.setGroupTitle("Select Job Names");
+		jobNamesForm.setGroupTitle("Filter Jobs");
 		jobNamesForm.setIsGroup(true);
 		jobNamesForm.setTitleOrientation(TitleOrientation.TOP);
-		jobNamesForm.setNumCols(1);
+		jobNamesForm.setNumCols(2);
 		jobNamesForm.setValuesManager(valuesManager);
+		
+		jobNamesForm.setDataFetchMode(FetchMode.BASIC);
+		
 		
 		CheckboxItem selectAllJobNamesChkItem = new CheckboxItem();
 		selectAllJobNamesChkItem.setValue(true);
 		selectAllJobNamesChkItem.setTitle("Select All Jobs");
 		selectAllJobNamesChkItem.setWidth("*");
 		selectAllJobNamesChkItem.setName("selectAllJobNames");
+		selectAllJobNamesChkItem.addChangedHandler(new ChangedHandler() {
+			
+			@Override
+			public void onChanged(ChangedEvent event) {
+				if((Boolean)event.getValue() ){
+					selectJobNameGrid.setDisabled(true);
+					selectJobNameGrid.setCriterion(null);
+				} else {
+					selectJobNameGrid.setDisabled(false);
+					//selectJobNameGrid.setCriterion(new Criterion().seta);
+				}
+			}
+		});
 		
 		selectJobNameGrid.setTitle("Select Jobs"); 
-		selectJobNameGrid.setWidth(220);
+		selectJobNameGrid.setWidth("100%");
         selectJobNameGrid.setMultiple(true);  
         selectJobNameGrid.setMultipleAppearance(MultipleAppearance.GRID); 
-        selectJobNameGrid.setValueMap("Cat", "Dog", "Giraffe", "Goat", "Marmoset", "Mouse");
+        selectJobNameGrid.setValueMap("job", "job1", "job2", "Goat", "Marmoset", "Mouse");
         selectJobNameGrid.setName("selectedJobNames");
+        selectJobNameGrid.setCriteriaField("selectedJobNames");
+        /*selectJobNameGrid.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				if(event.getSource().equals(selectJobNameGrid)){
+					String[] values = selectJobNameGrid.getValues();
+					valuesManager.setAttribute("selectedJobNames", values, true);
+				}
+			}
+		});*/
 		
-		jobNamesForm.setItems(selectAllJobNamesChkItem, selectJobNameGrid);
-		
-		formsHLayout.addMember(jobNamesForm);
-		
-		DynamicForm jobExecutionForm = new DynamicForm();
-		jobExecutionForm.setWidth(350);
-		jobExecutionForm.setHeight100();
-		jobExecutionForm.setGroupTitle("Select Job execution times");
-		jobExecutionForm.setIsGroup(true);
-		jobExecutionForm.setTitleOrientation(TitleOrientation.TOP);
-		jobExecutionForm.setNumCols(2);
-		jobExecutionForm.setValuesManager(valuesManager);
-		
+				
         executionStartDate.setName("executionStartDate");  
         executionStartDate.setTitle("Exceution Start Date");  
         executionStartDate.setRequired(true);
@@ -103,9 +125,12 @@ public class JobHistoryFilterView extends VLayout{
         executionEndTime.setTitle("Exceution End Time");  
         executionEndTime.setRequired(true);  
         
-        jobExecutionForm.setFields(new FormItem[] {
-        		executionStartDate,  executionStartTime, executionEndDate, executionEndTime});
-        formsHLayout.addMember(jobExecutionForm);
+        FormItem[] formItems = new FormItem[] {
+        		selectAllJobNamesChkItem, selectJobNameGrid,
+        		executionStartDate,  executionStartTime, executionEndDate, executionEndTime};
+        jobNamesForm.setDataSource(HistoricalJobMonitorDataSource.getInstance(), formItems);
+        jobNamesForm.setFields(formItems);
+        formsHLayout.addMember(jobNamesForm);
         
         addMember(formsHLayout);
         

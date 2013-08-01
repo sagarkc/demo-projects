@@ -102,12 +102,11 @@ public class HistoryJobMonitorView extends VLayout implements HistoricalJobMonit
 		ListGridField exitCodeField = new ListGridField("exitCode", "Exit Code");
 		ListGridField startTimeField = new ListGridField("startTime", "Job Start Time");
 		startTimeField.setCellFormatter(new CellFormatter() {
-
 			@Override
 			public String format(Object value, ListGridRecord record,
 					int rowNum, int colNum) {
-				record.getAttributeAsLong("startTime");
-				return null;
+				long data = record.getAttributeAsLong("data");
+				return ""+data;
 			}
 			
 		});
