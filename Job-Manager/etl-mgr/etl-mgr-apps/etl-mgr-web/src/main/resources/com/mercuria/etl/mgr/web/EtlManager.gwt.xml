@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='EtlManager'>
 	
-    <inherits name='com.mercuria.etl.mgr.Model'/>
     
 	<inherits name='com.google.gwt.user.User'/>
     <inherits name="com.google.gwt.core.Core"/>
@@ -22,12 +21,14 @@
 	<!-- We need the JUnit module in the main module, -->
 	<!-- otherwise eclipse complains (Google plugin bug?) -->
 	<inherits name='com.google.gwt.junit.JUnit' />
-
+	
+	<inherits name='com.mercuria.etl.mgr.SharedModel'/>
 	
 	<!-- Other module inherits -->
 <!-- 	<inherits name="com.google.gwt.logging.Logging"/> -->
 	
 	<inherits name="com.google.gwt.http.HTTP" />
+	
 	
 	<!-- Specify the app entry point class. -->
 	<entry-point class='com.mercuria.etl.mgr.web.client.EtlManager' />
