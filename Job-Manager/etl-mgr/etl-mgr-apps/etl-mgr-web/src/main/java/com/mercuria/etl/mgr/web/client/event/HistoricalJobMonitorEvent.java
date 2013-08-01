@@ -6,8 +6,8 @@ package com.mercuria.etl.mgr.web.client.event;
 
 import java.util.List;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.event.shared.GwtEvent;
+import com.mercuria.etl.mgr.model.vo.JobMonitorHistoryVo;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
@@ -18,12 +18,12 @@ public class HistoricalJobMonitorEvent extends GwtEvent<HistoricalJobMonitorEven
 	public static final Type<HistoricalJobMonitorEventListener> TYPE
 		= new Type<HistoricalJobMonitorEventListener>();
 
-	private final List<JavaScriptObject> jobMonitorData;
+	private final List<JobMonitorHistoryVo> jobMonitorData;
 
 	/**
 	 * @param jobMonitorData
 	 */
-	public HistoricalJobMonitorEvent(List<JavaScriptObject> jobMonitorData) {
+	public HistoricalJobMonitorEvent(List<JobMonitorHistoryVo> jobMonitorData) {
 		this.jobMonitorData = jobMonitorData;
 	}
 
@@ -37,7 +37,7 @@ public class HistoricalJobMonitorEvent extends GwtEvent<HistoricalJobMonitorEven
 		handler.showHistoricalJobMonitorData(this);
 	}
 
-	public List<JavaScriptObject> getJobMonitorData() {
+	public List<JobMonitorHistoryVo> getJobMonitorData() {
 		return jobMonitorData;
 	}
 	
