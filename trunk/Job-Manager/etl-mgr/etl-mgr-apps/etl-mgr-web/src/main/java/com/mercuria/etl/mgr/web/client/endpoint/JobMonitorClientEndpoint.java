@@ -9,16 +9,14 @@ import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
+import com.mercuria.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.mercuria.etl.mgr.web.WebConstants;
 import com.mercuria.etl.mgr.web.client.core.UIEventManager;
 import com.mercuria.etl.mgr.web.client.event.HistoricalJobMonitorEvent;
 import com.mercuria.etl.mgr.web.client.service.JobMonitorService;
 import com.mercuria.etl.mgr.web.client.service.JobMonitorServiceAsync;
-import com.mercuria.etl.mgr.web.shared.JSONDataParser;
-import com.mercuria.etl.mgr.web.shared.model.JsonDataCollection;
 import com.smartgwt.client.util.SC;
 
 
@@ -39,12 +37,11 @@ public class JobMonitorClientEndpoint {
 	}
 	
 	public void loadHistoricalMonitorData(){
-		monitorService.loadHistoricalMonitorData(new AsyncCallback<String>() {
+		monitorService.loadHistoricalMonitorData(new AsyncCallback<List<JobMonitorHistoryVo>>() {
 			
 			@Override
-			public void onSuccess(String result) {
-				JsonDataCollection<JavaScriptObject> dataCollection = JSONDataParser.parseJsonToJSObject(result);
-				HistoricalJobMonitorEvent event = new HistoricalJobMonitorEvent(dataCollection.getRecords());
+			public void onSuccess(List<JobMonitorHistoryVo> result) {
+				HistoricalJobMonitorEvent event = new HistoricalJobMonitorEvent(result);
 				uiEventManager.fireEvent(event);
 			}
 			

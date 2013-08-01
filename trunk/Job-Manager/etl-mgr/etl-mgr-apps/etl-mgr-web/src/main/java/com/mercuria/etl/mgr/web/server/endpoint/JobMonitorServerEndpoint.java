@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mercuria.etl.mgr.model.vo.JobMonitorVo;
+import com.mercuria.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.mercuria.etl.mgr.service.JobDetailMonitorService;
 import com.mercuria.etl.mgr.web.client.service.JobMonitorService;
 
@@ -42,13 +42,12 @@ public class JobMonitorServerEndpoint implements JobMonitorService{
 
 
 
+
 	@Override
-	public String loadHistoricalMonitorData() {
-		List<JobMonitorVo> list = jobDetailMonitorService.getAllJobHistory();
-		
-		
-		return "";
+	public List<JobMonitorHistoryVo> loadHistoricalMonitorData() {
+		return jobDetailMonitorService.getAllJobMonitorHistory();
 	}
+
 
 	@Override
 	public String loadHistoricalMonitorData(List<String> jobNames) {

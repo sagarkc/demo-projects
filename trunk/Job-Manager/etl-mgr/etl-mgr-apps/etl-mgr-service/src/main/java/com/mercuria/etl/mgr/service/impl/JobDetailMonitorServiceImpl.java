@@ -15,6 +15,7 @@ import com.mercuria.etl.mgr.dao.JobInstanceDao;
 import com.mercuria.etl.mgr.dao.JobMonitorJdbcDao;
 import com.mercuria.etl.mgr.model.entity.JobExecution;
 import com.mercuria.etl.mgr.model.entity.JobInstance;
+import com.mercuria.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.mercuria.etl.mgr.model.vo.JobMonitorVo;
 import com.mercuria.etl.mgr.service.JobDetailMonitorService;
 
@@ -91,6 +92,14 @@ public class JobDetailMonitorServiceImpl implements JobDetailMonitorService {
 		} catch (ApplicationException e){
 			logger.error(e);
 		}
+		return new ArrayList<>();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.mercuria.etl.mgr.service.JobDetailMonitorService#getAllJobMonitorHistory()
+	 */
+	@Override
+	public List<JobMonitorHistoryVo> getAllJobMonitorHistory() {
 		return new ArrayList<>();
 	}
 

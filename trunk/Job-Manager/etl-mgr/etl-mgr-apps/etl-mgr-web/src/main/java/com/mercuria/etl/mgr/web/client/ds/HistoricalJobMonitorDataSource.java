@@ -16,15 +16,13 @@ import java.util.Date;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.mercuria.etl.mgr.web.WebConstants;
 import com.mercuria.etl.mgr.web.client.core.AbstractRestDataSource;
+import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DataSourceField;
-import com.smartgwt.client.data.fields.DataSourceDateField;
+import com.smartgwt.client.data.OperationBinding;
 import com.smartgwt.client.types.DSDataFormat;
-import com.smartgwt.client.types.DateDisplayFormat;
+import com.smartgwt.client.types.DSOperationType;
 import com.smartgwt.client.types.FieldType;
 import com.smartgwt.client.util.DateDisplayFormatter;
-import com.smartgwt.client.widgets.grid.CellFormatter;
-import com.smartgwt.client.widgets.grid.ListGridField;
-import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
@@ -71,23 +69,19 @@ public class HistoricalJobMonitorDataSource extends AbstractRestDataSource{
 		setJsonRecordXPath("/");
 		
 		
-		
-		
 		DataSourceField idField = new DataSourceField("jobInstanceId", FieldType.INTEGER, "JOB Instance ID");
 		idField.setPrimaryKey(true);
 		idField.setCanEdit(false);
 		idField.setHidden(true);
 		addField(idField);
 		
-		
-		
 		DataSourceField nameField = new DataSourceField("jobName", FieldType.TEXT, "JOB Name");
 		addField(nameField);
 		DataSourceField exitCodeField = new DataSourceField("exitCode", FieldType.TEXT, "Exit Code");
 		addField(exitCodeField);
-		DataSourceDateField startTimeField = new DataSourceDateField("startTime", "Job Start Time");
+		DataSourceField startTimeField = new DataSourceField("startTime", FieldType.DATETIME, "Job Start Time");
 		addField(startTimeField);
-		DataSourceDateField endTimeField = new DataSourceDateField("endTime",  "Job End Time");
+		DataSourceField endTimeField = new DataSourceField("endTime", FieldType.DATETIME, "Job End Time");
 		addField(endTimeField);
 		DataSourceField exitMessageField = new DataSourceField("exitMessage", FieldType.TEXT, "Exit Message");
 		addField(exitMessageField);
