@@ -12,11 +12,13 @@ package com.mercuria.etl.mgr.model.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
  * 
  */
-public class JobExecutionHistoryVo implements Serializable {
+public class JobExecutionHistoryVo implements Serializable, IsSerializable {
 
 	private String jobName;
 	private Long jobExecutionId;

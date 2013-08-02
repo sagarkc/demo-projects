@@ -78,7 +78,7 @@ public class RealTimeJobMonitorView extends VLayout {
         dataSource.setOperationBindings(fetch);
         
         dataSource.setFetchDataURL(GWT.getHostPageBaseURL() + WebConstants.FETCH_HISTORICAL_JOB_MONITOR_DATA
-        		+ WebConstants.DISPATCHER_EXT);
+        		+ WebConstants.RPC_EXT);
 		
 		jobMonitorGrid.setDataSource(dataSource);
 		jobMonitorGrid.setWidth100();  
@@ -105,7 +105,6 @@ class RealtimeJobHistoryDS extends RestDataSource {
 	@Override
 	protected void transformResponse(DSResponse response, DSRequest request,
 			Object data) {
-		SC.say(data.toString());
 		super.transformResponse(response, request, data);
 	}
 }

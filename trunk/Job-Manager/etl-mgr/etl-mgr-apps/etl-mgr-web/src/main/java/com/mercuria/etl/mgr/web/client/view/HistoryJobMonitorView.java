@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Window;
 import com.mercuria.etl.mgr.web.client.core.GWTCollectionDataGrid;
 import com.mercuria.etl.mgr.web.client.core.GWTGridColumnHeader;
 import com.mercuria.etl.mgr.web.client.core.UIEventManager;
@@ -15,6 +16,7 @@ import com.mercuria.etl.mgr.web.client.event.HistoricalJobMonitorEventListener;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.AnimationEffect;
 import com.smartgwt.client.types.ListGridFieldType;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
@@ -108,7 +110,9 @@ public class HistoryJobMonitorView extends VLayout implements HistoricalJobMonit
 
 	@Override
 	public void showHistoricalJobMonitorData(HistoricalJobMonitorEvent event) {
+		Window.alert("HistoryJobMonitorView.showHistoricalJobMonitorData()");
 		jobMonitorHistoryGrid.setJobExecutionData(event.getJobMonitorData());
+		jobMonitorHistoryGrid.redraw();
 	}
 
 	public JobHistoryFilterView getJobHistoryFilterView() {

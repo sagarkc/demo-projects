@@ -48,4 +48,36 @@
 		</constructor-arg>
 	</bean>
 
+	<bean id="SQL_getDistinctJobNames" class="java.lang.String">
+		<constructor-arg>
+		    <value>
+            <![CDATA[
+            SELECT DISTINCT JOB_NAME
+			FROM BATCH_JOB_INSTANCE
+			ORDER BY JOB_NAME
+            ]]>
+            </value>
+		</constructor-arg>
+
+	</bean>
+	
+	<bean id="SQL_lastJobExecutionByJobNames" class="java.lang.String">
+		<constructor-arg>
+		    <value>
+            <![CDATA[
+            SELECT 
+				DISTINCT JOB_NAME,
+				MAX(BATCH_JOB_EXECUTION.START_TIME) AS MAX_START_TIME,
+				MAX(BATCH_JOB_EXECUTION.END_TIME) AS MAX_END_TIME
+			
+			FROM 
+				BATCH_JOB_EXECUTION INNER JOIN 
+				BATCH_JOB_INSTANCE ON 
+					BATCH_JOB_EXECUTION.JOB_INSTANCE_ID = BATCH_JOB_INSTANCE.JOB_INSTANCE_ID
+			GROUP BY JOB_NAME	
+            ]]>
+            </value>
+		</constructor-arg>
+
+	</bean>
 </beans>

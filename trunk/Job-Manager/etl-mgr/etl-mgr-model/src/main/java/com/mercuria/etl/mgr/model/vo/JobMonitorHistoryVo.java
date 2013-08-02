@@ -14,11 +14,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gwt.user.client.rpc.IsSerializable;
+import com.mercuria.etl.mgr.common.annotations.ResultSetColumn;
+
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
  *
  */
-public class JobMonitorHistoryVo implements Serializable{
+public class JobMonitorHistoryVo implements Serializable, IsSerializable{
 
 	private String jobName;
 	private String status;
@@ -37,6 +40,7 @@ public class JobMonitorHistoryVo implements Serializable{
 	/**
 	 * @return the jobName
 	 */
+	@ResultSetColumn(propertyName="jobName", mappedColumnName="JOB_NAME")
 	public String getJobName() {
 		return jobName;
 	}
@@ -65,6 +69,7 @@ public class JobMonitorHistoryVo implements Serializable{
 	/**
 	 * @return the lastStartedTime
 	 */
+	@ResultSetColumn(propertyName="lastStartedTime", mappedColumnName="MAX_START_TIME")
 	public Date getLastStartedTime() {
 		return lastStartedTime;
 	}
@@ -79,6 +84,7 @@ public class JobMonitorHistoryVo implements Serializable{
 	/**
 	 * @return the lastEndedTime
 	 */
+	@ResultSetColumn(propertyName="lastEndedTime", mappedColumnName="MAX_END_TIME")
 	public Date getLastEndedTime() {
 		return lastEndedTime;
 	}

@@ -15,7 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Window;
+import com.mercuria.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.mercuria.etl.mgr.model.vo.JobMonitorHistoryVo;
+import com.mercuria.etl.mgr.web.client.ds.JobExecutionHistoryDataSource;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.util.SC;
@@ -36,11 +39,24 @@ public class JobExecutionHistoryGrid extends ListGrid {
 
 	private List<JobMonitorHistoryVo> jobExecutionData;
 
+	private JobExecutionHistoryDataSource dataSource;
+	
 	/**
 	 * 
 	 */
 	public JobExecutionHistoryGrid() {
-		this(new ArrayList<JobMonitorHistoryVo>());
+		//this(new ArrayList<JobMonitorHistoryVo>());
+		dataSource = new JobExecutionHistoryDataSource();
+		setDataSource(dataSource);
+		setShowAllRecords(true); 
+		setAutoFetchData(true);
+		setDrawAheadRatio(4);
+		setCanExpandRecords(true);
+		
+		addColumns();
+		
+		invalidateCache();
+		fetchData();
 	}
 	
 	/**
@@ -54,7 +70,7 @@ public class JobExecutionHistoryGrid extends ListGrid {
 		setCanExpandRecords(true);
 		
 		addColumns();
-		populateData();
+		//populateData();
 	}
 
 	/**
@@ -124,24 +140,27 @@ public class JobExecutionHistoryGrid extends ListGrid {
 	 */
 	public void setJobExecutionData(List<JobMonitorHistoryVo> jobExecutionData) {
 		this.jobExecutionData = jobExecutionData;
-		populateData();
+		//populateData();
 	}
 
 	/**
 	 * 
 	 */
 	private void populateData() {
+		
 		if(null == jobExecutionData || jobExecutionData.size() <= 0)
 			return;
-		for (JobMonitorHistoryVo monitorVo : jobExecutionData) {
+		Window.alert("JobExecutionHistoryGrid.populateData()");
+		for (int i = 0; i < jobExecutionData.size(); i++) {
+			JobMonitorHistoryVo monitorVo = jobExecutionData.get(i);
 			ListGridRecord record = new ListGridRecord();
 			record.setAttribute("jobName", monitorVo.getJobName());
-			record.setAttribute("status", monitorVo.getJobName());
-			record.setAttribute("lastStartedTime", monitorVo.getJobName());
-			record.setAttribute("lastEndedTime", monitorVo.getJobName());
+			record.setAttribute("status", monitorVo.getStatus());
+			record.setAttribute("lastStartedTime", monitorVo.getLastStartedTime());
+			record.setAttribute("lastEndedTime", monitorVo.getLastEndedTime());
 			
 			record.setAttribute("executionDetails", monitorVo.getExecutionDetails());
-			
+			Window.alert("JobExecutionHistoryGrid.populateData():: Record: " + record);
 			addData(record);
 		}
 	}
@@ -152,6 +171,7 @@ public class JobExecutionHistoryGrid extends ListGrid {
 	 */
 	@Override
 	protected Canvas getExpansionComponent(ListGridRecord record) {
+		Window.alert("JobExecutionHistoryGrid.getExpansionComponent()");
 		ListGrid executionDetailsGrid = new ListGrid();
 		executionDetailsGrid.setWidth100();
 		executionDetailsGrid.setHeight(150);
@@ -208,6 +228,18 @@ public class JobExecutionHistoryGrid extends ListGrid {
 		ListGridField exitMessageField = new ListGridField("exitMessage", "Exit Message");
 		executionDetailsGrid.setFields( idField, nameField, exitCodeField, startTimeField, endTimeField, exitMessageField);
 		
+		List<JobExecutionHistoryVo> execHistoryVos = (List<JobExecutionHistoryVo>)record.getAttributeAsObject("executionDetails");
+		for (int i = 0; i < execHistoryVos.size(); i++) {
+			JobExecutionHistoryVo vo = execHistoryVos.get(i);
+			ListGridRecord subRecord = new ListGridRecord();
+			subRecord.setAttribute("jobExecutionId", vo.getJobExecutionId());
+			subRecord.setAttribute("jobName", vo.getJobName());
+			subRecord.setAttribute("exitCode", vo.getExitCode());
+			subRecord.setAttribute("startTime", vo.getStartTime());
+			subRecord.setAttribute("endTime", vo.getEndTime());
+			subRecord.setAttribute("exitMessage", vo.getExitMessage());
+			executionDetailsGrid.addData(subRecord);
+		}
 		Canvas canvas = new Canvas();
 		canvas.setWidth100();
 		canvas.setHeight(180);
@@ -222,7 +254,7 @@ public class JobExecutionHistoryGrid extends ListGrid {
 	@Override
 	protected Canvas createRecordComponent(final ListGridRecord record, Integer colNum) {
 		String fieldName = this.getFieldName(colNum); 
-		
+		Window.alert("JobExecutionHistoryGrid.createRecordComponent():: Create button");
 		if (fieldName.equals("executeJob")) {  
             IButton button = new IButton();  
             button.setHeight(18);  
@@ -230,7 +262,7 @@ public class JobExecutionHistoryGrid extends ListGrid {
             button.setTitle("Run");  
             button.addClickHandler(new ClickHandler() {  
                 public void onClick(ClickEvent event) {  
-                    SC.say(record.getAttribute("jobName") + " execute clicked.");  
+                	Window.alert(record.getAttribute("jobName") + " execute clicked.");  
                 }  
             });  
             return button;  

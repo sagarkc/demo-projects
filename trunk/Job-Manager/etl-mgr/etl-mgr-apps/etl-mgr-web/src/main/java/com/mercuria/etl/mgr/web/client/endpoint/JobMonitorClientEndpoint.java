@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.mercuria.etl.mgr.model.vo.JobMonitorHistoryVo;
@@ -37,17 +38,19 @@ public class JobMonitorClientEndpoint {
 	}
 	
 	public void loadHistoricalMonitorData(){
+		SC.say("JobMonitorClientEndpoint.loadHistoricalMonitorData()");
 		monitorService.loadHistoricalMonitorData(new AsyncCallback<List<JobMonitorHistoryVo>>() {
 			
 			@Override
 			public void onSuccess(List<JobMonitorHistoryVo> result) {
+				Window.alert("Success from loadHistoricalMonitorData(): " + result);
 				HistoricalJobMonitorEvent event = new HistoricalJobMonitorEvent(result);
 				uiEventManager.fireEvent(event);
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				SC.say("ERROR: " + caught.getMessage());
+				SC.say("ERROR from loadHistoricalMonitorData(): " + caught.getStackTrace());
 			}
 		});
 	}

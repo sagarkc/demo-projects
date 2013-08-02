@@ -2,6 +2,7 @@ package com.mercuria.etl.mgr.web.client.presenter;
 
 import java.util.HashMap;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.mercuria.etl.mgr.web.client.core.Display;
 import com.mercuria.etl.mgr.web.client.endpoint.JobMonitorClientEndpoint;
@@ -36,7 +37,7 @@ public class JobMonitorPresenter extends BaseContainerPresenter<Display> {
 
 	@Override
 	public void bind() {
-		loadHistory();
+		//loadHistory();
 		jobMonitorDisplay.getJobHistoryFilterView().getSearchButton().addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -69,6 +70,7 @@ public class JobMonitorPresenter extends BaseContainerPresenter<Display> {
 	 * 
 	 */
 	private void loadHistory() {
+		Window.alert("JobMonitorPresenter.loadHistory()");
 		jobMonitorClientEndpoint.loadHistoricalMonitorData();
 	}
 

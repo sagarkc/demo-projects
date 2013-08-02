@@ -92,7 +92,7 @@ public class JobHistoryFilterView extends VLayout{
 		});
 		
 		selectJobNameGrid.setTitle("Select Jobs"); 
-		selectJobNameGrid.setWidth("100%");
+		selectJobNameGrid.setWidth(280);
         selectJobNameGrid.setMultiple(true);  
         selectJobNameGrid.setMultipleAppearance(MultipleAppearance.GRID); 
         selectJobNameGrid.setValueMap("job", "job1", "job2", "Goat", "Marmoset", "Mouse");

@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 
+
+import com.google.gwt.user.client.rpc.IsSerializable;
 import com.mercuria.etl.mgr.common.annotations.ResultSetColumn;
 
-public class JobMonitorVo implements Serializable{
+public class JobMonitorVo implements Serializable, IsSerializable{
 
 	/**
 	 * 
