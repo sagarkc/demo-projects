@@ -45,15 +45,14 @@ public class JobExecutionHistoryGrid extends ListGrid {
 	 * 
 	 */
 	public JobExecutionHistoryGrid() {
+		addColumns();
 		//this(new ArrayList<JobMonitorHistoryVo>());
 		dataSource = new JobExecutionHistoryDataSource();
 		setDataSource(dataSource);
 		setShowAllRecords(true); 
-		setAutoFetchData(true);
+		setAutoFetchData(false);
 		setDrawAheadRatio(4);
 		setCanExpandRecords(true);
-		
-		addColumns();
 		
 		invalidateCache();
 		fetchData();
