@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class JobMonitorSearchVo implements Serializable{
+import com.google.gwt.user.client.rpc.IsSerializable;
+
+public class JobMonitorSearchVo implements Serializable, IsSerializable{
 
 	/**
 	 * 

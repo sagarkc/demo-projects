@@ -1,7 +1,9 @@
 package com.mercuria.etl.mgr.service.impl;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -15,10 +17,15 @@ import com.mercuria.etl.mgr.dao.JobInstanceDao;
 import com.mercuria.etl.mgr.dao.JobMonitorJdbcDao;
 import com.mercuria.etl.mgr.model.entity.JobExecution;
 import com.mercuria.etl.mgr.model.entity.JobInstance;
+import com.mercuria.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.mercuria.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.mercuria.etl.mgr.model.vo.JobMonitorVo;
 import com.mercuria.etl.mgr.service.JobDetailMonitorService;
 
+/**
+ * @author Sabuj Das | sabuj.das@asia.xchanging.com
+ *
+ */
 @Service
 public class JobDetailMonitorServiceImpl implements JobDetailMonitorService {
 
@@ -100,7 +107,42 @@ public class JobDetailMonitorServiceImpl implements JobDetailMonitorService {
 	 */
 	@Override
 	public List<JobMonitorHistoryVo> getAllJobMonitorHistory() {
-		return new ArrayList<>();
+		List<JobMonitorHistoryVo> historyVos = new ArrayList<>();
+		try{
+			historyVos = jobMonitorJdbcDao.getLastJobExecutionByJobNames();
+			if(null == historyVos){
+				logger.info("No data found");
+				return new ArrayList<>();
+			}
+			List<JobMonitorVo> jobMonitorVos = jobMonitorJdbcDao.getAllJobHistory();
+			
+			if(null != jobMonitorVos && jobMonitorVos.size() > 0){
+				Map<String, JobMonitorHistoryVo> historyMap = new LinkedHashMap<>();
+				for (JobMonitorHistoryVo historyVo :  historyVos){
+					historyMap.put(historyVo.getJobName(), historyVo);
+				}
+				
+				for(JobMonitorVo monitorVo : jobMonitorVos){
+					final JobMonitorHistoryVo historyVo = historyMap.get(monitorVo.getJobName());
+					JobExecutionHistoryVo executionHistoryVo = new JobExecutionHistoryVo();
+					executionHistoryVo.setJobName(monitorVo.getJobName());
+					executionHistoryVo.setExitCode(monitorVo.getExitCode());
+					executionHistoryVo.setExitMessage(monitorVo.getExitMessage());
+					executionHistoryVo.setStartTime(monitorVo.getStartTime());
+					executionHistoryVo.setEndTime(monitorVo.getEndTime());
+					if(historyVo.getLastStartedTime().equals(monitorVo.getStartTime())
+							&& historyVo.getLastEndedTime().equals(monitorVo.getEndTime())){
+						historyVo.setStatus(monitorVo.getStatus());
+					}
+					historyVo.getExecutionDetails().add(executionHistoryVo);
+				}
+				
+			}
+		}catch(ApplicationException ex){
+			logger.error(ex);
+		}
+		
+		return historyVos;
 	}
 
 	
