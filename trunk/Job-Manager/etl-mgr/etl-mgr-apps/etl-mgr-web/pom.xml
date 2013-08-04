@@ -298,11 +298,16 @@
 					</execution>
 				</executions>
 				<!-- Plugin configuration. There are many available options, see gwt-maven-plugin 
-					documentation at codehaus.org -->
+					documentation at codehaus.org 
+					<configuration>
+                  <module>com.mycomp.demo.mygwt2.Application</module>
+                  <runTarget>com.mycomp.demo.mygwt2.Application/Application.html</runTarget>
+					</configuration>-->
 				<configuration>
-					<runTarget>EtlManager.htm</runTarget>
-					<hostedWebapp>${webappDirectory}</hostedWebapp>
-					<i18nMessagesBundle>com.mercuria.etl.mgr.client.i18n.ApplicationMessages</i18nMessagesBundle>
+					<module>com.mercuria.etl.mgr.web.EtlManager</module>
+					<runTarget>com.mercuria.etl.mgr.web.EtlManager/EtlManager.htm</runTarget>
+					<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
+					<i18nMessagesBundle>com.mercuria.etl.mgr.web.client.i18n.ApplicationMessages</i18nMessagesBundle>
 				</configuration>
 			</plugin>
 
