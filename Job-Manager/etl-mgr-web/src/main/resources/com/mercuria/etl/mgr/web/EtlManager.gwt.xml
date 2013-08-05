@@ -1,34 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='EtlManager'>
 
+	
+	<inherits name='com.google.gwt.user.User'/>
+   
+	<inherits name="com.smartgwt.SmartGwt" />
+	
+	<inherits name='com.mercuria.etl.mgr.SharedModel'/>
+
 	<!-- Specify the app entry point class. -->
 	<entry-point class='com.mercuria.etl.mgr.web.client.EtlManager' />
 
 	<!-- Specify the paths for translatable code -->
 	<source path='client' />
 	<source path='shared' />
-	
-	
-	<inherits name='com.google.gwt.user.User'/>
-    <inherits name="com.google.gwt.core.Core"/>
-    <inherits name="com.google.gwt.user.History"/>
- 
-	<inherits name="com.google.web.bindery.autobean.AutoBean"/>
-    
-	<inherits name="com.smartgwt.SmartGwt" />
-	
-    <inherits name="com.smartgwt.SmartGwtNoScript"/>
-    <inherits name="com.smartgwt.DrawingNoScript"/>
-    <inherits name="com.smartgwt.tools.SmartGwtTools"/>
-    <inherits name="com.smartclient.theme.enterprise.EnterpriseResources"/>
-    <inherits name="com.smartclient.theme.enterpriseblue.EnterpriseBlueResources"/>
-    <inherits name="com.smartclient.theme.graphite.GraphiteResources"/>
-    <inherits name="com.smartclient.theme.simplicity.SimplicityResources"/>
-    
-    <inherits name="com.google.gwt.http.HTTP" />
-    
-    <inherits name='com.google.gwt.junit.JUnit' />
-	
-	<inherits name='com.mercuria.etl.mgr.SharedModel'/>
-
 </module>

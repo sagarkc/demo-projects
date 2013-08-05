@@ -1,16 +1,16 @@
 package com.mercuria.etl.mgr.web.client.view;
 
-import com.google.gwt.core.client.GWT;
+import com.smartgwt.client.widgets.Canvas;
+import com.smartgwt.client.widgets.layout.Layout;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 public final class BaseContainerView extends VLayout {
 
 	private static BaseContainerView container;
+	private Layout content;
 	
 	private BaseContainerView() {
 		super();
-
-		GWT.log("init Context Area()...", null);
 
 		setWidth100();
         setHeight100();
@@ -29,6 +29,20 @@ public final class BaseContainerView extends VLayout {
 		return container;
 	}
 
-	
+	public void setView(final Layout view){
+		this.content = view;
+		Canvas[] children = getMembers();
+		if(null != children && children.length > 0){
+			removeMembers(children);
+		}
+		addMember(view);
+	}
+
+	/**
+	 * @return the content
+	 */
+	public Layout getContent() {
+		return content;
+	}
 	
 }

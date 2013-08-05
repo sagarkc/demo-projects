@@ -1,12 +1,16 @@
 /**
- * File :: com.mercuria.etl.mgr.web.client.view.JobHistoryFilterView
- * Date :: 28-Jul-2013
+ * -------------------------------------------------------------------------- *
+ * 								ETL Manager
+ * 						Monitor | Manage | Admin
+ * -------------------------------------------------------------------------- *
+ * Type:	com.mercuria.etl.mgr.web.client.view.JobHistoryFilterView
+ * Date:	Aug 5, 2013  8:14:39 PM
+ * 
+ * -------------------------------------------------------------------------- *
  */
 package com.mercuria.etl.mgr.web.client.view;
 
 import com.mercuria.etl.mgr.web.client.ds.HistoricalJobMonitorDataSource;
-import com.smartgwt.client.data.Criterion;
-import com.smartgwt.client.types.AnimationEffect;
 import com.smartgwt.client.types.FetchMode;
 import com.smartgwt.client.types.MultipleAppearance;
 import com.smartgwt.client.types.TitleOrientation;
@@ -20,8 +24,6 @@ import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.TimeItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
 import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
-import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
-import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 

@@ -1,6 +1,5 @@
 package com.mercuria.etl.mgr.web.client.view;
 
-import com.google.gwt.core.client.GWT;
 import com.mercuria.etl.mgr.web.client.UIConstants;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.ImgButton;
@@ -15,8 +14,6 @@ public class HeaderView extends HLayout{
 	private final ImgButton etlmgrHomeButton = new ImgButton();
 	
 	public HeaderView() {
-		GWT.log("init HeaderView()..."); 
-		
 		setHeight(UIConstants.HEADER_HEIGHT);  
 		setDefaultLayoutAlign(Alignment.CENTER);
 		

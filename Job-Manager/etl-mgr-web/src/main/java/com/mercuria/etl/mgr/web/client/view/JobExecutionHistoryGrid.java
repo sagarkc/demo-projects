@@ -4,14 +4,13 @@
  * 						Monitor | Manage | Admin
  * -------------------------------------------------------------------------- *
  * Type:	com.mercuria.etl.mgr.web.client.view.JobExecutionHistoryGrid
- * Date:	Aug 1, 2013  5:23:12 PM
+ * Date:	Aug 5, 2013  8:13:49 PM
  * 
  * -------------------------------------------------------------------------- *
  */
 package com.mercuria.etl.mgr.web.client.view;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -21,7 +20,6 @@ import com.mercuria.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.mercuria.etl.mgr.web.client.ds.JobExecutionHistoryDataSource;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.ListGridFieldType;
-import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
