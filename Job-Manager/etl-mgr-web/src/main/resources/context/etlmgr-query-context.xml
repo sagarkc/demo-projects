@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+	default-autowire="byName" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+
+
+	<bean id="getAllJobHistory" class="java.lang.String">
+		<constructor-arg>
+		    <value>
+            <![CDATA[
+            SELECT 
+				BATCH_JOB_INSTANCE.JOB_INSTANCE_ID,
+				BATCH_JOB_INSTANCE.JOB_NAME,
+				BATCH_JOB_EXECUTION.EXIT_CODE,
+				BATCH_JOB_EXECUTION.EXIT_MESSAGE,
+				BATCH_JOB_EXECUTION.START_TIME AS JOB_START_TIME,
+				BATCH_JOB_EXECUTION.END_TIME AS JOB_END_TIME
+			
+			FROM 
+				BATCH_JOB_EXECUTION INNER JOIN 
+				BATCH_JOB_INSTANCE ON BATCH_JOB_EXECUTION.JOB_INSTANCE_ID = BATCH_JOB_INSTANCE.JOB_INSTANCE_ID
+            ]]>
+            </value>
+		</constructor-arg>
+
+	</bean>
+
+	<bean id="JPQL_JOB_MONITOR" class="java.lang.String">
+		<constructor-arg>
+			<value>
+	    		<![CDATA[
+	    		select 
+	    			inst, exec   
+	    		from 
+	    			JobInstance as inst 
+	    			inner join inst.jobExecutions as exec
+	    		]]>
+			</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="SQL_getDistinctJobNames" class="java.lang.String">
+		<constructor-arg>
+		    <value>
+            <![CDATA[
+            SELECT DISTINCT JOB_NAME
+			FROM BATCH_JOB_INSTANCE
+			ORDER BY JOB_NAME
+            ]]>
+            </value>
+		</constructor-arg>
+
+	</bean>
+	
+	<bean id="SQL_lastJobExecutionByJobNames" class="java.lang.String">
+		<constructor-arg>
+		    <value>
+            <![CDATA[
+            SELECT 
+				DISTINCT JOB_NAME,
+				MAX(BATCH_JOB_EXECUTION.START_TIME) AS MAX_START_TIME,
+				MAX(BATCH_JOB_EXECUTION.END_TIME) AS MAX_END_TIME
+			
+			FROM 
+				BATCH_JOB_EXECUTION INNER JOIN 
+				BATCH_JOB_INSTANCE ON 
+					BATCH_JOB_EXECUTION.JOB_INSTANCE_ID = BATCH_JOB_INSTANCE.JOB_INSTANCE_ID
+			GROUP BY JOB_NAME	
+            ]]>
+            </value>
+		</constructor-arg>
+
+	</bean>
+</beans>

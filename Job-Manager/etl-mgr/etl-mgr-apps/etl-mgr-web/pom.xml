@@ -7,12 +7,12 @@
 	<parent>
 		<artifactId>etl-mgr-apps</artifactId>
 		<groupId>com.mercuria.etl.mgr</groupId>
-		<version>${release.version}</version>
+		<version>0.1</version>
 	</parent>
 	<groupId>com.mercuria.etl.mgr</groupId>
 	<artifactId>etl-mgr-web</artifactId>
 	<packaging>war</packaging>
-	<version>${release.version}</version>
+	<version>0.1</version>
 	<name>etl-mgr-web</name>
 	<url>${host.address}/etlmgr/apps/web</url>
 
@@ -21,7 +21,7 @@
 	    <dependency>
 			<groupId>com.mercuria.etl.mgr</groupId>
 			<artifactId>etl-mgr-service</artifactId>
-			<version>${release.version}</version>
+			<version>0.1</version>
 		</dependency>
 	    
 		<dependency>

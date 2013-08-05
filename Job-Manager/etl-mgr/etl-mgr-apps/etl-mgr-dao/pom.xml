@@ -6,11 +6,11 @@
 	<parent>
 		<groupId>com.mercuria.etl.mgr</groupId>
 		<artifactId>etl-mgr-apps</artifactId>
-		<version>${release.version}</version>
+		<version>0.1</version>
 	</parent>
 	<groupId>com.mercuria.etl.mgr</groupId>
 	<artifactId>etl-mgr-dao</artifactId>
-	<version>${release.version}</version>
+	<version>0.1</version>
 	<name>etl-mgr-dao</name>
 	<url>${host.address}/etlmgr/apps/dao</url>
 	

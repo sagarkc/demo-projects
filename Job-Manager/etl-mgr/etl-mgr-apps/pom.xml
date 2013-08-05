@@ -4,18 +4,17 @@
 	<parent>
 		<groupId>com.mercuria.etl.mgr</groupId>
 		<artifactId>etl-mgr</artifactId>
-		<version>${release.version}</version>
+		<version>0.1</version>
 	</parent>
 	<groupId>com.mercuria.etl.mgr</groupId>
 	<artifactId>etl-mgr-apps</artifactId>
-	<version>${release.version}</version>
+	<version>0.1</version>
 	<packaging>pom</packaging>
 	<name>ETL Manager - Apps</name>
 	<url>${host.address}/etlmgr/apps</url>
 	
 	
 	<modules>
-		<module>etl-mgr-web</module>
     <module>etl-mgr-dao</module>
     <module>etl-mgr-service</module>
   </modules>
@@ -25,22 +24,22 @@
 		<dependency>
 			<groupId>com.mercuria.etl.mgr</groupId>
 			<artifactId>etl-mgr-common</artifactId>
-			<version>${release.version}</version>
+			<version>0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.mercuria.etl.mgr</groupId>
 			<artifactId>etl-mgr-model</artifactId>
-			<version>${release.version}</version>
+			<version>0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.mercuria.etl.mgr</groupId>
 			<artifactId>etl-mgr-util</artifactId>
-			<version>${release.version}</version>
+			<version>0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.mercuria.etl.mgr</groupId>
 			<artifactId>etl-mgr-core</artifactId>
-			<version>${release.version}</version>
+			<version>0.1</version>
 		</dependency>
 	</dependencies>
 	

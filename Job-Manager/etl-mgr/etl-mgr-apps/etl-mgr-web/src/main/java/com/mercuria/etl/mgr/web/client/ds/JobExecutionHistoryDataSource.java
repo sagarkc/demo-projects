@@ -69,10 +69,11 @@ public class JobExecutionHistoryDataSource extends GwtRpcObjectDataSource {
 			public void onSuccess(List<JobMonitorHistoryVo> jobExecutionData) {
 				/*if(null == jobExecutionData || jobExecutionData.size() <= 0)
 					return;*/
-				Window.alert("onSuccess:: JobExecutionHistoryDataSource.executeFetch()\n"
-						+ jobExecutionData.toString());
+				
 				ListGridRecord[] records = new ListGridRecord[jobExecutionData.size()];
 				for (int i = 0; i < jobExecutionData.size(); i++) {
+					Window.alert("onSuccess:: JobExecutionHistoryDataSource.executeFetch():: Counter: \n"
+							+ i);
 					JobMonitorHistoryVo monitorVo = jobExecutionData.get(i);
 					ListGridRecord record = new ListGridRecord();
 					record.setAttribute("jobName", monitorVo.getJobName());
@@ -81,7 +82,7 @@ public class JobExecutionHistoryDataSource extends GwtRpcObjectDataSource {
 					record.setAttribute("lastEndedTime", monitorVo.getLastEndedTime());
 					
 					record.setAttribute("executionDetails", monitorVo.getExecutionDetails());
-					//Window.alert("JobExecutionHistoryGrid.populateData():: Record: " + record);
+					Window.alert("JobExecutionHistoryGrid.populateData():: Record: " + record);
 					records[i] = record;
 				}
 				response.setData(records);
