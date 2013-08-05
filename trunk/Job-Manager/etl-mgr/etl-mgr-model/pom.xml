@@ -6,11 +6,11 @@
 	<parent>
 		<groupId>com.mercuria.etl.mgr</groupId>
 		<artifactId>etl-mgr</artifactId>
-		<version>${release.version}</version>
+		<version>0.1</version>
 	</parent>
 	<groupId>com.mercuria.etl.mgr</groupId>
 	<artifactId>etl-mgr-model</artifactId>
-	<version>${release.version}</version>
+	<version>0.1</version>
 	<name>etl-mgr-model</name>
 	<url>${host.address}/etlmgr/model</url>
 
@@ -19,7 +19,7 @@
 		<dependency>
 			<artifactId>etl-mgr-common</artifactId>
 			<groupId>com.mercuria.etl.mgr</groupId>
-			<version>${release.version}</version>
+			<version>0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>

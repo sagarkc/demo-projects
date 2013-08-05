@@ -6,11 +6,11 @@
 	<parent>
 		<groupId>com.mercuria.etl.mgr</groupId>
 		<artifactId>etl-mgr</artifactId>
-		<version>${release.version}</version>
+		<version>0.1</version>
 	</parent>
 	<groupId>com.mercuria.etl.mgr</groupId>
 	<artifactId>etl-mgr-common</artifactId>
-	<version>${release.version}</version>
+	<version>0.1</version>
 	<name>etl-mgr-common</name>
 	<url>${host.address}/etlmgr/common</url>
 	

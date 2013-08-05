@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="APP_LOG" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="c:/logs/etl-mgr/app.log" />
+		<param name="MaxFileSize" value="50MB" />
+		<param name="maxBackupIndex" value="10" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{dd-MMM-yyyy HH:mm:ss.SSS} %-5p %C{1}: %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="SPRING_LOG" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="c:/logs/etl-mgr/spring.log" />
+		<param name="MaxFileSize" value="50MB" />
+		<param name="maxBackupIndex" value="10" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{dd-MMM-yyyy HH:mm:ss.SSS} %-5p %C{1}: %m%n" />
+		</layout>
+	</appender>
+	
+
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="[%p] %c{1}.%M(%L) | %m%n" />
+		</layout>
+	</appender>
+
+	<logger name="com.mercuria.etl.mgr">
+		<level value="debug"/>
+        <appender-ref ref="APP_LOG" />
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+	<logger name="org.springframework">
+		<level value="trace"/>
+        <appender-ref ref="SPRING_LOG" />
+    </logger>
+	
+
+</log4j:configuration>
