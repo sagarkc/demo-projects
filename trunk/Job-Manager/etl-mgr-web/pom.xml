@@ -8,7 +8,7 @@
 	<artifactId>etl-mgr-web</artifactId>
 	<packaging>war</packaging>
 	<version>1.0</version>
-	<name>GWT Maven Archetype</name>
+	<name>ETL Manager - Webapp</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,6 +35,18 @@
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>spring-snapshots</id>
+			<name>Spring Maven Snapshot Repository</name>
+			<url>http://s3.amazonaws.com/maven.springframework.org/snapshot</url>
+		</repository>
+		<repository>
+			<id>smart-gwt</id>
+			<url>http://www.smartclient.com/maven2</url>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<dependency>
@@ -91,12 +103,12 @@
 		<dependency>
 			<groupId>com.smartgwt</groupId>
 			<artifactId>smartgwt</artifactId>
-			<version>4.0</version>
+			<version>3.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.smartgwt</groupId>
 			<artifactId>smartgwt-skins</artifactId>
-			<version>4.0</version>
+			<version>3.1</version>
 		</dependency>
 
 

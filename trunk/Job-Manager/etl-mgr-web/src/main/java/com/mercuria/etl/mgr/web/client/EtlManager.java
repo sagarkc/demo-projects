@@ -1,17 +1,14 @@
 package com.mercuria.etl.mgr.web.client;
 
-import java.util.Date;
 import java.util.logging.Logger;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.mercuria.etl.mgr.web.client.i18n.ApplicationMessages;
-import com.smartgwt.client.util.DateDisplayFormatter;
-import com.smartgwt.client.util.DateUtil;
+import com.mercuria.etl.mgr.web.client.view.BasicLayoutView;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -23,7 +20,8 @@ public class EtlManager implements EntryPoint {
 	public static final ApplicationMessages MESSAGES = GWT
 			.create(ApplicationMessages.class);
 
-
+	private final BasicLayoutView basicLayoutView = new BasicLayoutView();
+	
 	/**
 	 * This is the entry point method.
 	 */
@@ -35,21 +33,50 @@ public class EtlManager implements EntryPoint {
 	    Window.setMargin("0px");
 	    Cookies.setCookie("skin_name_2_4", "EnterpriseBlue");
 	    
-	    DateUtil.setShortDateDisplayFormatter(new DateDisplayFormatter() {
-		     public String format(Date date) {
-		    	 String format = null;
-		         if (date != null) { 
-		        	 final DateTimeFormat dateFormatter = DateTimeFormat.getFormat("dd/MM/yyyy HH:mm:ss");
-	        		 format = dateFormatter.format(date);
-		         }
-		         return format;
-		     }
-		});
 	    
-		AppController appViewer = new AppController();
-	    appViewer.go(RootLayoutPanel.get());
+	    RootLayoutPanel.get().add(basicLayoutView);
         
 	}
+	
+	/*private HeaderView headerView = new HeaderView();
+	private VLayout mainLayout;
+    private HLayout northLayout;
+    private HLayout southLayout;
+    private ApplicationContainerView eastLayout;
+    private NavigationView westLayout;
+    
+    public void onModuleLoad() {
+        
+        com.google.gwt.user.client.Window.enableScrolling(false);
+        com.google.gwt.user.client.Window.setMargin("0px");
+        
+        // main layout occupies the whole area
+        mainLayout = new VLayout();
+        mainLayout.setWidth100();
+        mainLayout.setHeight100();
+
+        northLayout = new HLayout();
+        northLayout.setHeight(UIConstants.HEADER_HEIGHT);
+
+        northLayout.addMember(headerView);
+
+        westLayout = new NavigationView();
+        westLayout.setWidth(220);
+        
+        eastLayout = new ApplicationContainerView();
+        eastLayout.setWidth("85%");
+        
+        southLayout = new HLayout();
+        southLayout.setMembers(westLayout, eastLayout);
+
+        mainLayout.addMember(northLayout);
+        mainLayout.addMember(southLayout);
+
+        // add the main layout container to GWT's root panel
+        RootLayoutPanel.get().add(mainLayout);
+        //mainLayout.draw();
+
+    }*/
 }
 
 

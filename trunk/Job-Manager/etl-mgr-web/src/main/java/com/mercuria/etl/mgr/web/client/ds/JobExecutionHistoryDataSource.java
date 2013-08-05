@@ -25,6 +25,8 @@ import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.types.FieldType;
+import com.smartgwt.client.util.JSOHelper;
+import com.smartgwt.client.util.JSONEncoder;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 /**
@@ -79,8 +81,8 @@ public class JobExecutionHistoryDataSource extends GwtRpcObjectDataSource {
 					record.setAttribute("status", monitorVo.getStatus());
 					record.setAttribute("lastStartedTime", monitorVo.getLastStartedTime());
 					record.setAttribute("lastEndedTime", monitorVo.getLastEndedTime());
-					
-					record.setAttribute("executionDetails", monitorVo.getExecutionDetails());
+					JSOHelper.setObjectAttribute(null, "executionDetails", monitorVo.getExecutionDetails() );
+					//record.setAttribute("executionDetails", );
 					//Window.alert("JobExecutionHistoryGrid.populateData():: Record: " + record);
 					records[i] = record;
 				}
