@@ -10,8 +10,11 @@
  */
 package com.mercuria.etl.mgr.web.client.view;
 
+import com.mercuria.etl.mgr.web.client.EtlManager;
 import com.mercuria.etl.mgr.web.client.core.UIEventManager;
 import com.smartgwt.client.types.AnimationEffect;
+import com.smartgwt.client.widgets.Img;
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
@@ -51,6 +54,24 @@ public class HistoryJobMonitorView extends VLayout {
 		  
         jobHistoryToolStrip.setWidth100();
         jobHistoryToolStrip.setHeight(25);
+        
+        Img image = new Img();
+        image.setSrc("monitor/system-monitor-16x16.png");
+        image.setWidth(16);
+        image.setHeight(16);
+        image.setShowRollOver(false);
+        image.setShowDownIcon(false);
+        image.setShowDown(false);
+        jobHistoryToolStrip.addMember(image);
+        
+        Label titleLabel = new Label(EtlManager.MESSAGES.getTitleMonitorJobHistoricalData());
+        titleLabel.setStyleName("toolbar-title");
+        titleLabel.setWidth(250);
+        jobHistoryToolStrip.addMember(titleLabel);
+        jobHistoryToolStrip.addSeparator();
+        
+        
+        
         jobHistoryToolStrip.addFill();
         
         jobHistoryToolStrip.addButton(refreshButton);
