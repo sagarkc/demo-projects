@@ -33,4 +33,12 @@ public interface ApplicationMessages extends
 	@DefaultMessage("Send")
 	@Key("sendButton")
 	String sendButton();
+	
+	@DefaultMessage("Historical Data")
+	@Key("lbl.monitor.job.historical.data.btn")
+	String getLblMonitorJobHistoricalDataBtn();
+	
+	@DefaultMessage("Historical Job Monitor")
+	@Key("lbl.monitor.job.historical.data")
+	String getLblMonitorJobHistoricalData();
 }
