@@ -1,5 +1,7 @@
 package com.mercuria.etl.mgr.web.client.i18n;
 
+import com.google.gwt.core.client.JavaScriptObject;
+
 /**
  * Interface to represent the messages contained in resource bundle: 
  * Path: com/mercuria/etl/mgr/client/i18n/ApplicationMessages.properties'.
@@ -41,4 +43,11 @@ public interface ApplicationMessages extends
 	@DefaultMessage("Historical Job Monitor")
 	@Key("lbl.monitor.job.historical.data")
 	String getLblMonitorJobHistoricalData();
+
+	/**
+	 * @return
+	 */
+	@DefaultMessage("Historical Job Monitor")
+	@Key("title.monitor.job.historical.data")
+	String getTitleMonitorJobHistoricalData();
 }

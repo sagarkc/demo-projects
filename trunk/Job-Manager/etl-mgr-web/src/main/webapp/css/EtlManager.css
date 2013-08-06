@@ -423,3 +423,10 @@ h1 {
 .mainLayout{
 	background-color: white;
 }
+
+.toolbar-title{
+	color: #136E13;
+	font-size: 1.4em;
+	font-weight: bold;
+}
+
