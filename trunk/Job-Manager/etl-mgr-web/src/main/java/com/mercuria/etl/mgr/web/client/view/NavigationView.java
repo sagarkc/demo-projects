@@ -10,6 +10,7 @@
  */
 package com.mercuria.etl.mgr.web.client.view;
 
+import com.mercuria.etl.mgr.web.client.EtlManager;
 import com.mercuria.etl.mgr.web.client.UIConstants;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.VisibilityMode;
@@ -35,7 +36,9 @@ public class NavigationView extends VLayout implements ResizedHandler {
 	private final VLayout monitorSectionContent = new VLayout();
 	private final SectionStackSection historySection = new SectionStackSection();
 	private final VLayout historySectionContent = new VLayout();
-	private final Button jobHistoryMonitorButton = new Button("Historical Data");
+	private final Button jobHistoryMonitorButton = new Button(
+			EtlManager.MESSAGES.getLblMonitorJobHistoricalDataBtn()
+			);
 	
 	public NavigationView() {
 
@@ -63,7 +66,7 @@ public class NavigationView extends VLayout implements ResizedHandler {
 		navigationStack.setOverflow(Overflow.HIDDEN);
 		navigationStack.setStyleName("navigationAccordianTitle");
 
-		monitorSection.setTitle("Historical Data");
+		monitorSection.setTitle(EtlManager.MESSAGES.getLblMonitorJobHistoricalData());
 		monitorSection.setExpanded(true);
 		//monitorSection.setItems(jobMonitorButton);
 		monitorSectionContent.setWidth100();   
