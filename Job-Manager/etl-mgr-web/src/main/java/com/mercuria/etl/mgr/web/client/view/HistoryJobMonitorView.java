@@ -56,7 +56,7 @@ public class HistoryJobMonitorView extends VLayout {
         jobHistoryToolStrip.addButton(refreshButton);
         
 		showFilterCheckboxItem.setTitle("Show Filter Section");
-		showFilterCheckboxItem.setValue(true);
+		showFilterCheckboxItem.setValue(false);
 		showFilterCheckboxItem.addChangedHandler(new ChangedHandler() {
 			
 			@Override
@@ -77,10 +77,8 @@ public class HistoryJobMonitorView extends VLayout {
 		header.addMember(jobHistoryToolStrip);
 		
 		addMember(header);
-		
+		jobHistoryFilterView.hide();
 		addMember(jobHistoryFilterView);
-		
-		
 		
 		jobMonitorHistoryGrid.setWidth100();  
 		jobMonitorHistoryGrid.setHeight100();  

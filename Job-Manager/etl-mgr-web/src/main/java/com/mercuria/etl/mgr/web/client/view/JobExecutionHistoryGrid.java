@@ -18,8 +18,13 @@ import com.google.gwt.user.client.Window;
 import com.mercuria.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.mercuria.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.mercuria.etl.mgr.web.client.ds.JobExecutionHistoryDataSource;
+import com.mercuria.etl.mgr.web.client.ds.JobMonitorHistoryDataSource;
+import com.smartgwt.client.data.Criterion;
+import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.ExpansionMode;
 import com.smartgwt.client.types.ListGridFieldType;
+import com.smartgwt.client.types.OperatorId;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -35,91 +40,55 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
  */
 public class JobExecutionHistoryGrid extends ListGrid {
 
+	
 	private List<JobMonitorHistoryVo> jobExecutionData;
-
-	private JobExecutionHistoryDataSource dataSource;
+	private JobMonitorHistoryDataSource jobMonitorHistoryDS = JobMonitorHistoryDataSource.getInstance();
 	
 	/**
 	 * 
 	 */
 	public JobExecutionHistoryGrid() {
 		addColumns();
-		//this(new ArrayList<JobMonitorHistoryVo>());
-		dataSource = new JobExecutionHistoryDataSource();
-		setDataSource(dataSource);
+		setDataSource(jobMonitorHistoryDS);
 		setShowAllRecords(true); 
 		setAutoFetchData(false);
 		setDrawAheadRatio(4);
 		setCanExpandRecords(true);
+		setShowRecordComponents(true);
+		setShowRecordComponentsByCell(true);
+		setShowAllColumns(true);
+		setExpansionMode(ExpansionMode.DETAILS);
 		
 		invalidateCache();
 		fetchData();
 	}
 	
-	/**
-	 * @param jobExecutionData
-	 */
-	public JobExecutionHistoryGrid(List<JobMonitorHistoryVo> jobExecutionData) {
-		this.jobExecutionData = jobExecutionData;
-		setShowAllRecords(true); 
-		setAutoFetchData(false);
-		setDrawAheadRatio(4);
-		setCanExpandRecords(true);
-		
-		addColumns();
-		//populateData();
-	}
-
+	public DataSource getRelatedDataSource(ListGridRecord record) {  
+        return JobExecutionHistoryDataSource.getInstance();  
+    } 
+	
+	
 	/**
 	 * 
 	 */
 	private void addColumns() {
-		ListGridField nameField = new ListGridField("jobName", "JOB Name");
+		ListGridField nameField = new ListGridField(JobMonitorHistoryVo.Fields.JOB_NAME, "JOB Name");
 		nameField.setWidth(180);
-		ListGridField exitCodeField = new ListGridField("status", "Status");
+		ListGridField exitCodeField = new ListGridField(JobMonitorHistoryVo.Fields.STATUS, "Status");
+		exitCodeField.setAlign(Alignment.CENTER);
 		exitCodeField.setWidth(100);
-		ListGridField startTimeField = new ListGridField("lastStartedTime", "Last Start Time");
-		startTimeField.setWidth(150);
-		startTimeField.setCellFormatter(new CellFormatter() {
-			@Override
-			public String format(Object value, ListGridRecord record,
-					int rowNum, int colNum) {
-				String data = record.getAttribute("startTime");
-				if(data != null && !"".equals(data)){
-					Long milis = Long.parseLong(data);
-					Date date = new Date(milis);
-					DateTimeFormat fmt = DateTimeFormat.getFormat("dd/MM/yyyy HH:mm:ss");
-					return fmt.format(date);
-				}
-				return data;
-			}
-			
-		});
-		startTimeField.setAlign(Alignment.LEFT);
+		ListGridField startTimeField = new ListGridField(JobMonitorHistoryVo.Fields.LAST_STARTED_TIME, "Last Start Time");
 		startTimeField.setType(ListGridFieldType.DATETIME);
+		startTimeField.setWidth(150);
+		startTimeField.setAlign(Alignment.CENTER);
 		
-		ListGridField endTimeField = new ListGridField("lastEndedTime",  "Last End Time");
+		ListGridField endTimeField = new ListGridField(JobMonitorHistoryVo.Fields.LAST_ENDED_TIME,  "Last End Time");
 		endTimeField.setWidth(150);
-		endTimeField.setCellFormatter(new CellFormatter() {
-			@Override
-			public String format(Object value, ListGridRecord record,
-					int rowNum, int colNum) {
-				String data = record.getAttribute("endTime");
-				if(data != null && !"".equals(data)){
-					Long milis = Long.parseLong(data);
-					Date date = new Date(milis);
-					DateTimeFormat fmt = DateTimeFormat.getFormat("dd/MM/yyyy HH:mm:ss");
-					return fmt.format(date);
-				}
-				return data;
-			}
-			
-		});
-		endTimeField.setAlign(Alignment.LEFT);
+		endTimeField.setAlign(Alignment.CENTER);
 		endTimeField.setType(ListGridFieldType.DATETIME);
 		
 		ListGridField executeJobField = new ListGridField("executeJob", "Action");
-		exitCodeField.setWidth(80);
+		executeJobField.setAlign(Alignment.RIGHT);
 		
 		setFields(nameField, exitCodeField, 
 				startTimeField, endTimeField, executeJobField);
@@ -140,27 +109,7 @@ public class JobExecutionHistoryGrid extends ListGrid {
 		//populateData();
 	}
 
-	/**
-	 * 
-	 */
-	private void populateData() {
-		
-		if(null == jobExecutionData || jobExecutionData.size() <= 0)
-			return;
-		Window.alert("JobExecutionHistoryGrid.populateData()");
-		for (int i = 0; i < jobExecutionData.size(); i++) {
-			JobMonitorHistoryVo monitorVo = jobExecutionData.get(i);
-			ListGridRecord record = new ListGridRecord();
-			record.setAttribute("jobName", monitorVo.getJobName());
-			record.setAttribute("status", monitorVo.getStatus());
-			record.setAttribute("lastStartedTime", monitorVo.getLastStartedTime());
-			record.setAttribute("lastEndedTime", monitorVo.getLastEndedTime());
-			
-			record.setAttribute("executionDetails", monitorVo.getExecutionDetails());
-			Window.alert("JobExecutionHistoryGrid.populateData():: Record: " + record);
-			addData(record);
-		}
-	}
+	
 	
 	
 	/* (non-Javadoc)
@@ -168,75 +117,37 @@ public class JobExecutionHistoryGrid extends ListGrid {
 	 */
 	@Override
 	protected Canvas getExpansionComponent(ListGridRecord record) {
-		Window.alert("JobExecutionHistoryGrid.getExpansionComponent()");
 		ListGrid executionDetailsGrid = new ListGrid();
 		executionDetailsGrid.setWidth100();
 		executionDetailsGrid.setHeight(150);
 		
-		ListGridField idField = new ListGridField("jobExecutionId", "JOB Execution ID");
+		ListGridField idField = new ListGridField(JobExecutionHistoryVo.Fields.JOB_EXECUTION_ID, "JOB Execution ID");
 		idField.setCanEdit(false);
-		idField.setHidden(true);
+		idField.setWidth(50);
 		idField.setType(ListGridFieldType.INTEGER);
 		
-		ListGridField nameField = new ListGridField("jobName", "JOB Name");
+		ListGridField nameField = new ListGridField(JobExecutionHistoryVo.Fields.JOB_NAME, "JOB Name");
 		nameField.setWidth(180);
-		ListGridField exitCodeField = new ListGridField("exitCode", "Exit Code");
+		nameField.setHidden(true);
+		
+		ListGridField exitCodeField = new ListGridField(JobExecutionHistoryVo.Fields.EXIT_CODE, "Exit Code");
 		exitCodeField.setWidth(100);
-		ListGridField startTimeField = new ListGridField("startTime", "Job Start Time");
+		ListGridField startTimeField = new ListGridField(JobExecutionHistoryVo.Fields.START_TIME, "Job Start Time");
 		startTimeField.setWidth(150);
-		startTimeField.setCellFormatter(new CellFormatter() {
-			@Override
-			public String format(Object value, ListGridRecord record,
-					int rowNum, int colNum) {
-				String data = record.getAttribute("startTime");
-				if(data != null && !"".equals(data)){
-					Long milis = Long.parseLong(data);
-					Date date = new Date(milis);
-					DateTimeFormat fmt = DateTimeFormat.getFormat("dd/MM/yyyy HH:mm:ss");
-					return fmt.format(date);
-				}
-				return data;
-			}
-			
-		});
-		startTimeField.setAlign(Alignment.LEFT);
+		startTimeField.setAlign(Alignment.CENTER);
 		startTimeField.setType(ListGridFieldType.DATETIME);
 		
-		ListGridField endTimeField = new ListGridField("endTime",  "Job End Time");
+		ListGridField endTimeField = new ListGridField(JobExecutionHistoryVo.Fields.END_TIME,  "Job End Time");
 		endTimeField.setWidth(150);
-		endTimeField.setCellFormatter(new CellFormatter() {
-			@Override
-			public String format(Object value, ListGridRecord record,
-					int rowNum, int colNum) {
-				String data = record.getAttribute("endTime");
-				if(data != null && !"".equals(data)){
-					Long milis = Long.parseLong(data);
-					Date date = new Date(milis);
-					DateTimeFormat fmt = DateTimeFormat.getFormat("dd/MM/yyyy HH:mm:ss");
-					return fmt.format(date);
-				}
-				return data;
-			}
-			
-		});
-		endTimeField.setAlign(Alignment.LEFT);
+		endTimeField.setAlign(Alignment.CENTER);
 		endTimeField.setType(ListGridFieldType.DATETIME);
 		
-		ListGridField exitMessageField = new ListGridField("exitMessage", "Exit Message");
+		ListGridField exitMessageField = new ListGridField(JobExecutionHistoryVo.Fields.EXIT_MESSAGE, "Exit Message");
 		executionDetailsGrid.setFields( idField, nameField, exitCodeField, startTimeField, endTimeField, exitMessageField);
-		
-		List<JobExecutionHistoryVo> execHistoryVos = (List<JobExecutionHistoryVo>)record.getAttributeAsObject("executionDetails");
-		for (int i = 0; i < execHistoryVos.size(); i++) {
-			JobExecutionHistoryVo vo = execHistoryVos.get(i);
-			ListGridRecord subRecord = new ListGridRecord();
-			subRecord.setAttribute("jobExecutionId", vo.getJobExecutionId());
-			subRecord.setAttribute("jobName", vo.getJobName());
-			subRecord.setAttribute("exitCode", vo.getExitCode());
-			subRecord.setAttribute("startTime", vo.getStartTime());
-			subRecord.setAttribute("endTime", vo.getEndTime());
-			subRecord.setAttribute("exitMessage", vo.getExitMessage());
-			executionDetailsGrid.addData(subRecord);
-		}
+		executionDetailsGrid.setDataSource(getRelatedDataSource(record));
+		executionDetailsGrid.fetchData(
+				new Criterion(JobExecutionHistoryVo.Fields.JOB_NAME, OperatorId.EQUALS, 
+						record.getAttributeAsString(JobMonitorHistoryVo.Fields.JOB_NAME)));
 		Canvas canvas = new Canvas();
 		canvas.setWidth100();
 		canvas.setHeight(180);
@@ -251,7 +162,6 @@ public class JobExecutionHistoryGrid extends ListGrid {
 	@Override
 	protected Canvas createRecordComponent(final ListGridRecord record, Integer colNum) {
 		String fieldName = this.getFieldName(colNum); 
-		Window.alert("JobExecutionHistoryGrid.createRecordComponent():: Create button");
 		if (fieldName.equals("executeJob")) {  
             IButton button = new IButton();  
             button.setHeight(18);  
