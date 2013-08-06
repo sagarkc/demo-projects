@@ -145,5 +145,47 @@ public class JobDetailMonitorServiceImpl implements JobDetailMonitorService {
 		return historyVos;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.mercuria.etl.mgr.service.JobDetailMonitorService#loadJobMonitorHistoryData()
+	 */
+	@Override
+	public List<JobMonitorHistoryVo> loadJobMonitorHistoryData() {
+		List<JobMonitorHistoryVo> historyVos = new ArrayList<>();
+		try{
+			historyVos = jobMonitorJdbcDao.getLastJobExecutionByJobNames();
+			if(null == historyVos){
+				logger.info("No data found");
+				return new ArrayList<>();
+			}
+		} catch(ApplicationException ex){
+			logger.error(ex);
+		}
+		return historyVos;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.mercuria.etl.mgr.service.JobDetailMonitorService#loadJobExecutionHistoryData(java.lang.String)
+	 */
+	@Override
+	public List<JobExecutionHistoryVo> loadJobExecutionHistoryData(
+			String jobName) {
+		if(null == jobName || "".equals(jobName)){
+			logger.warn("No Job name specified.....");
+			return new ArrayList<>();
+		}
+		
+		List<JobExecutionHistoryVo> historyVos = new ArrayList<>();
+		try{
+			historyVos = jobMonitorJdbcDao.getJobExecutionHistoryByName(jobName);
+			if(null == historyVos){
+				logger.info("No data found");
+				return new ArrayList<>();
+			}
+		} catch(ApplicationException ex){
+			logger.error(ex);
+		}
+		return historyVos;
+	}
+
 	
 }

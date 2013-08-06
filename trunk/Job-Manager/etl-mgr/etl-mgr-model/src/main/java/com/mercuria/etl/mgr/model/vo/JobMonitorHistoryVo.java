@@ -23,6 +23,14 @@ import com.mercuria.etl.mgr.common.annotations.ResultSetColumn;
  */
 public class JobMonitorHistoryVo implements Serializable, IsSerializable{
 
+	public interface Fields{
+		String JOB_NAME = "jobName";
+		String STATUS = "status";
+		String LAST_STARTED_TIME = "lastStartedTime";
+		String LAST_ENDED_TIME = "lastEndedTime";
+		String EXECUTION_DETAILS = "executionDetails";
+	}
+	
 	private String jobName;
 	private String status;
 	private Date lastStartedTime;

@@ -3,8 +3,8 @@
  * 								ETL Manager
  * 						Monitor | Manage | Admin
  * -------------------------------------------------------------------------- *
- * Type:	com.mercuria.etl.mgr.web.client.ds.JobExecutionHistoryDataSource
- * Date:	Aug 2, 2013  8:13:29 PM
+ * Type:	com.mercuria.etl.mgr.web.client.ds.JobMonitorHistoryDataSource
+ * Date:	Aug 6, 2013  12:18:13 PM
  * 
  * -------------------------------------------------------------------------- *
  */
@@ -16,7 +16,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
-import com.mercuria.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.mercuria.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.mercuria.etl.mgr.web.WebConstants;
 import com.mercuria.etl.mgr.web.client.core.GwtRpcObjectDataSource;
@@ -32,71 +31,63 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
  *
  */
-public class JobExecutionHistoryDataSource extends GwtRpcObjectDataSource {
-	private static JobExecutionHistoryDataSource instance = null;  
+public class JobMonitorHistoryDataSource extends GwtRpcObjectDataSource{
+	
+	public static final String DS_ID = "JobMonitorHistoryDataSource";
+	private static JobMonitorHistoryDataSource instance = null;  
 	private final JobMonitorServiceAsync monitorService;
 	
-    public static JobExecutionHistoryDataSource getInstance() {  
+    public static JobMonitorHistoryDataSource getInstance() {  
         if (instance == null) {  
-            instance = new JobExecutionHistoryDataSource("JobExecutionHistoryDataSource");  
+            instance = new JobMonitorHistoryDataSource(DS_ID);  
         }  
         return instance;  
     }  
-	/**
-	 * 
-	 */
-	private JobExecutionHistoryDataSource(String id) {
-		setID(id);
-		
-		monitorService = GWT.create(JobMonitorService.class);
+  
+    private JobMonitorHistoryDataSource(String id) {  
+        setID(id);  
+        
+        monitorService = GWT.create(JobMonitorService.class);
 		ServiceDefTarget endpoint = (ServiceDefTarget) monitorService;
 		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL()
 				+ JobMonitorService.RPC_TARGET + WebConstants.RPC_EXT);
 		
-		DataSourceField executionIdField = new DataSourceField(JobExecutionHistoryVo.Fields.JOB_EXECUTION_ID, FieldType.INTEGER);
-		executionIdField.setPrimaryKey(true);
+		DataSourceField nameField = new DataSourceField(JobMonitorHistoryVo.Fields.JOB_NAME, FieldType.TEXT);
+		nameField.setPrimaryKey(true);
 		
-		DataSourceField nameField = new DataSourceField(JobExecutionHistoryVo.Fields.JOB_NAME, FieldType.TEXT);
-		nameField.setForeignKey(JobMonitorHistoryDataSource.DS_ID
-				+ "." + JobMonitorHistoryVo.Fields.JOB_NAME);
+		DataSourceField exitCodeField = new DataSourceField(JobMonitorHistoryVo.Fields.STATUS, FieldType.TEXT);
+		DataSourceField startTimeField = new DataSourceField(JobMonitorHistoryVo.Fields.LAST_STARTED_TIME, FieldType.DATETIME);
+		DataSourceField endTimeField = new DataSourceField(JobMonitorHistoryVo.Fields.LAST_ENDED_TIME,  FieldType.DATETIME);
+		DataSourceField executeJobField = new DataSourceField("executeJob", FieldType.ANY);
 		
-		DataSourceField exitCodeField = new DataSourceField(JobExecutionHistoryVo.Fields.EXIT_CODE, FieldType.TEXT);
-		DataSourceField startTimeField = new DataSourceField(JobExecutionHistoryVo.Fields.START_TIME, FieldType.DATETIME);
-		DataSourceField endTimeField = new DataSourceField(JobExecutionHistoryVo.Fields.END_TIME,  FieldType.DATETIME);
-		DataSourceField exitMessageField = new DataSourceField(JobExecutionHistoryVo.Fields.EXIT_MESSAGE, FieldType.TEXT);
-		
-		addField(executionIdField);
 		addField(nameField);
 		addField(exitCodeField); 
 		addField(startTimeField); 
 		addField(endTimeField);
-		addField(exitMessageField);
-	}
-	
+		addField(executeJobField);
+  
+        setClientOnly(true);  
+  
+    }
+
 	@Override
 	protected void executeFetch(final String requestId, DSRequest request,
 			final DSResponse response) {
-		String jobName = "";
-		if(null != request.getCriteria()){
-			jobName = request.getCriteria().getAttribute("value");
-		}
-		monitorService.loadJobExecutionHistoryDateData(jobName, new AsyncCallback<List<JobExecutionHistoryVo>>() {
+		monitorService.loadJobMonitorHistoryData(new AsyncCallback<List<JobMonitorHistoryVo>>() {
 			
 			@Override
-			public void onSuccess(List<JobExecutionHistoryVo> jobExecutionData) {
+			public void onSuccess(List<JobMonitorHistoryVo> jobExecutionData) {
 				if(null == jobExecutionData || jobExecutionData.size() <= 0)
 					return;
-				
 				ListGridRecord[] records = new ListGridRecord[jobExecutionData.size()];
 				for (int i = 0; i < jobExecutionData.size(); i++) {
-					JobExecutionHistoryVo monitorVo = jobExecutionData.get(i);
+					JobMonitorHistoryVo monitorVo = jobExecutionData.get(i);
 					ListGridRecord record = new ListGridRecord();
-					record.setAttribute(JobExecutionHistoryVo.Fields.JOB_NAME, monitorVo.getJobName());
-					record.setAttribute(JobExecutionHistoryVo.Fields.JOB_EXECUTION_ID, monitorVo.getJobExecutionId());
-					record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_CODE, monitorVo.getExitCode());
-					record.setAttribute(JobExecutionHistoryVo.Fields.START_TIME, monitorVo.getStartTime());
-					record.setAttribute(JobExecutionHistoryVo.Fields.END_TIME, monitorVo.getEndTime());
-					record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_MESSAGE, monitorVo.getExitMessage());
+					record.setAttribute(JobMonitorHistoryVo.Fields.JOB_NAME, monitorVo.getJobName());
+					record.setAttribute(JobMonitorHistoryVo.Fields.STATUS, monitorVo.getStatus());
+					record.setAttribute(JobMonitorHistoryVo.Fields.LAST_STARTED_TIME, monitorVo.getLastStartedTime());
+					record.setAttribute(JobMonitorHistoryVo.Fields.LAST_ENDED_TIME, monitorVo.getLastEndedTime());
+					
 					records[i] = record;
 				}
 				response.setData(records);
@@ -110,25 +101,35 @@ public class JobExecutionHistoryDataSource extends GwtRpcObjectDataSource {
 		});
 	}
 
+	/* (non-Javadoc)
+	 * @see com.mercuria.etl.mgr.web.client.core.GwtRpcObjectDataSource#executeAdd(java.lang.String, com.smartgwt.client.data.DSRequest, com.smartgwt.client.data.DSResponse)
+	 */
 	@Override
 	protected void executeAdd(String requestId, DSRequest request,
 			DSResponse response) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
+	/* (non-Javadoc)
+	 * @see com.mercuria.etl.mgr.web.client.core.GwtRpcObjectDataSource#executeUpdate(java.lang.String, com.smartgwt.client.data.DSRequest, com.smartgwt.client.data.DSResponse)
+	 */
 	@Override
 	protected void executeUpdate(String requestId, DSRequest request,
 			DSResponse response) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
+	/* (non-Javadoc)
+	 * @see com.mercuria.etl.mgr.web.client.core.GwtRpcObjectDataSource#executeRemove(java.lang.String, com.smartgwt.client.data.DSRequest, com.smartgwt.client.data.DSResponse)
+	 */
 	@Override
 	protected void executeRemove(String requestId, DSRequest request,
 			DSResponse response) {
 		// TODO Auto-generated method stub
-
-	}
-
+		
+	}  
+    
+    
 }

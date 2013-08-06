@@ -80,4 +80,29 @@
 		</constructor-arg>
 
 	</bean>
+	
+	<bean id="SQL_jobExecutionHistoryByJobNames" class="java.lang.String">
+		<constructor-arg>
+		    <value>
+            <![CDATA[
+            SELECT 
+				BATCH_JOB_EXECUTION.JOB_EXECUTION_ID,
+				BATCH_JOB_INSTANCE.JOB_NAME,
+				BATCH_JOB_EXECUTION.EXIT_CODE,
+				BATCH_JOB_EXECUTION.EXIT_MESSAGE,
+				BATCH_JOB_EXECUTION.START_TIME AS JOB_START_TIME,
+				BATCH_JOB_EXECUTION.END_TIME AS JOB_END_TIME
+			
+			FROM 
+				BATCH_JOB_EXECUTION INNER JOIN 
+				BATCH_JOB_INSTANCE ON BATCH_JOB_EXECUTION.JOB_INSTANCE_ID = BATCH_JOB_INSTANCE.JOB_INSTANCE_ID
+			
+			WHERE BATCH_JOB_INSTANCE.JOB_NAME = ?
+			
+			ORDER BY BATCH_JOB_EXECUTION.START_TIME DESC
+            ]]>
+            </value>
+		</constructor-arg>
+
+	</bean>
 </beans>

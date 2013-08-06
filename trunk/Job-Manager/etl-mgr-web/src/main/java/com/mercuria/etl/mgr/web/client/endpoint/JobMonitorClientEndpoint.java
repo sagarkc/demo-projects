@@ -43,7 +43,6 @@ public class JobMonitorClientEndpoint {
 			
 			@Override
 			public void onSuccess(List<JobMonitorHistoryVo> result) {
-				Window.alert("Success from loadHistoricalMonitorData(): " + result);
 				HistoricalJobMonitorEvent event = new HistoricalJobMonitorEvent(result);
 				uiEventManager.fireEvent(event);
 			}

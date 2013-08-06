@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.google.gwt.user.client.rpc.IsSerializable;
+import com.mercuria.etl.mgr.common.annotations.ResultSetColumn;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
@@ -20,6 +21,15 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  */
 public class JobExecutionHistoryVo implements Serializable, IsSerializable {
 
+	public interface Fields{
+		String JOB_NAME = "jobName";
+		String JOB_EXECUTION_ID = "jobExecutionId";
+		String START_TIME = "startTime";
+		String END_TIME = "endTime";
+		String EXIT_CODE = "exitCode";
+		String EXIT_MESSAGE = "exitMessage";
+	}
+	
 	private String jobName;
 	private Long jobExecutionId;
 	private Date startTime;
@@ -30,6 +40,7 @@ public class JobExecutionHistoryVo implements Serializable, IsSerializable {
 	/**
 	 * @return the jobName
 	 */
+	@ResultSetColumn(propertyName="jobName", mappedColumnName="JOB_NAME")
 	public String getJobName() {
 		return jobName;
 	}
@@ -45,6 +56,7 @@ public class JobExecutionHistoryVo implements Serializable, IsSerializable {
 	/**
 	 * @return the jobExecutionId
 	 */
+	@ResultSetColumn(propertyName="jobExecutionId", mappedColumnName="JOB_EXECUTION_ID")
 	public Long getJobExecutionId() {
 		return jobExecutionId;
 	}
@@ -60,6 +72,7 @@ public class JobExecutionHistoryVo implements Serializable, IsSerializable {
 	/**
 	 * @return the startTime
 	 */
+	@ResultSetColumn(propertyName="startTime", mappedColumnName="JOB_START_TIME")
 	public Date getStartTime() {
 		return startTime;
 	}
@@ -75,6 +88,7 @@ public class JobExecutionHistoryVo implements Serializable, IsSerializable {
 	/**
 	 * @return the endTime
 	 */
+	@ResultSetColumn(propertyName="endTime", mappedColumnName="JOB_END_TIME")
 	public Date getEndTime() {
 		return endTime;
 	}
@@ -90,6 +104,7 @@ public class JobExecutionHistoryVo implements Serializable, IsSerializable {
 	/**
 	 * @return the exitCode
 	 */
+	@ResultSetColumn(propertyName="exitCode", mappedColumnName="EXIT_CODE")
 	public String getExitCode() {
 		return exitCode;
 	}
@@ -105,6 +120,7 @@ public class JobExecutionHistoryVo implements Serializable, IsSerializable {
 	/**
 	 * @return the exitMessage
 	 */
+	@ResultSetColumn(propertyName="exitMessage", mappedColumnName="EXIT_MESSAGE")
 	public String getExitMessage() {
 		return exitMessage;
 	}

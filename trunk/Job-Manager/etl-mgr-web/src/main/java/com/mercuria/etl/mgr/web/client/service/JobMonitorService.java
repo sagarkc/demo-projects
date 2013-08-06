@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.mercuria.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.mercuria.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.mercuria.etl.mgr.web.WebConstants;
 
@@ -28,4 +29,8 @@ public interface JobMonitorService extends RemoteService{
 	String loadHistoricalMonitorData(List<String> jobNames, Date startTime, Date endTime);
 	
 	String loadCurrentMonitorData(List<String> jobNames);
+
+	List<JobMonitorHistoryVo> loadJobMonitorHistoryData();
+
+	List<JobExecutionHistoryVo> loadJobExecutionHistoryDateData(String jobName);
 }
