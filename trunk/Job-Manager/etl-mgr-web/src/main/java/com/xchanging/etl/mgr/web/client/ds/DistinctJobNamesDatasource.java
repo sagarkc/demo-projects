@@ -18,15 +18,14 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
+import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.FieldType;
-import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.xchanging.etl.mgr.web.WebConstants;
 import com.xchanging.etl.mgr.web.client.core.GwtRpcObjectDataSource;
 import com.xchanging.etl.mgr.web.client.service.JobMonitorService;
 import com.xchanging.etl.mgr.web.client.service.JobMonitorServiceAsync;
-import com.xchanging.etl.mgr.web.client.view.JobHistoryFilterView;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
@@ -55,7 +54,7 @@ public class DistinctJobNamesDatasource extends GwtRpcObjectDataSource {
 		
 		DataSourceField nameField = new DataSourceField(
 				JobExecutionHistoryVo.Fields.JOB_NAME, FieldType.TEXT);
-		nameField.setPrimaryKey(true);
+		//nameField.setPrimaryKey(true);
 		
 		setFields(nameField);
 	}
@@ -64,16 +63,17 @@ public class DistinctJobNamesDatasource extends GwtRpcObjectDataSource {
 	@Override
 	protected void executeFetch(final String requestId, final DSRequest request,
 			final DSResponse response) {
+		invalidateCache();
 		monitorService.loadAllJobNames(new AsyncCallback<List<String>>() {
 			@Override
 			public void onSuccess(List<String> result) {
 				if(null == result || result.size() <= 0)
 					return;
 				
-				ListGridRecord[] records = new ListGridRecord[result.size()];
+				Record[] records = new Record[result.size()];
 				for (int i = 0; i < result.size(); i++) {
 					String jobName = result.get(i);
-					ListGridRecord record = new ListGridRecord();
+					Record record = new Record();
 					record.setAttribute(JobMonitorHistoryVo.Fields.JOB_NAME, jobName);
 					records[i] = record;
 				}
