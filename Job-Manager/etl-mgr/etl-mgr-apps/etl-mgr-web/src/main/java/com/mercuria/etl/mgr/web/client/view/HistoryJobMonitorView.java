@@ -1,4 +1,4 @@
-package com.mercuria.etl.mgr.web.client.view;
+package com.xchanging.etl.mgr.web.client.view;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -7,12 +7,12 @@ import java.util.List;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
-import com.mercuria.etl.mgr.web.client.core.GWTCollectionDataGrid;
-import com.mercuria.etl.mgr.web.client.core.GWTGridColumnHeader;
-import com.mercuria.etl.mgr.web.client.core.UIEventManager;
-import com.mercuria.etl.mgr.web.client.ds.HistoricalJobMonitorDataSource;
-import com.mercuria.etl.mgr.web.client.event.HistoricalJobMonitorEvent;
-import com.mercuria.etl.mgr.web.client.event.HistoricalJobMonitorEventListener;
+import com.xchanging.etl.mgr.web.client.core.GWTCollectionDataGrid;
+import com.xchanging.etl.mgr.web.client.core.GWTGridColumnHeader;
+import com.xchanging.etl.mgr.web.client.core.UIEventManager;
+import com.xchanging.etl.mgr.web.client.ds.HistoricalJobMonitorDataSource;
+import com.xchanging.etl.mgr.web.client.event.HistoricalJobMonitorEvent;
+import com.xchanging.etl.mgr.web.client.event.HistoricalJobMonitorEventListener;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.AnimationEffect;
 import com.smartgwt.client.types.ListGridFieldType;

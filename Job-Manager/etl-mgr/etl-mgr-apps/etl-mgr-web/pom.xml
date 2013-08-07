@@ -6,10 +6,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>etl-mgr-apps</artifactId>
-		<groupId>com.mercuria.etl.mgr</groupId>
+		<groupId>com.xchanging.etl.mgr</groupId>
 		<version>0.1</version>
 	</parent>
-	<groupId>com.mercuria.etl.mgr</groupId>
+	<groupId>com.xchanging.etl.mgr</groupId>
 	<artifactId>etl-mgr-web</artifactId>
 	<packaging>war</packaging>
 	<version>0.1</version>
@@ -19,7 +19,7 @@
 
 	<dependencies>
 	    <dependency>
-			<groupId>com.mercuria.etl.mgr</groupId>
+			<groupId>com.xchanging.etl.mgr</groupId>
 			<artifactId>etl-mgr-service</artifactId>
 			<version>0.1</version>
 		</dependency>
@@ -304,10 +304,10 @@
                   <runTarget>com.mycomp.demo.mygwt2.Application/Application.html</runTarget>
 					</configuration>-->
 				<configuration>
-					<module>com.mercuria.etl.mgr.web.EtlManager</module>
-					<runTarget>com.mercuria.etl.mgr.web.EtlManager/EtlManager.htm</runTarget>
+					<module>com.xchanging.etl.mgr.web.EtlManager</module>
+					<runTarget>com.xchanging.etl.mgr.web.EtlManager/EtlManager.htm</runTarget>
 					<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
-					<i18nMessagesBundle>com.mercuria.etl.mgr.web.client.i18n.ApplicationMessages</i18nMessagesBundle>
+					<i18nMessagesBundle>com.xchanging.etl.mgr.web.client.i18n.ApplicationMessages</i18nMessagesBundle>
 				</configuration>
 			</plugin>
 

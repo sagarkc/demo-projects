@@ -1,6 +1,6 @@
-package com.mercuria.etl.mgr.web.client.view;
+package com.xchanging.etl.mgr.web.client.view;
 
-import com.mercuria.etl.mgr.web.client.presenter.JobMonitorPresenter.JobMonitorDisplay;
+import com.xchanging.etl.mgr.web.client.presenter.JobMonitorPresenter.JobMonitorDisplay;
 import com.smartgwt.client.widgets.events.ResizedEvent;
 import com.smartgwt.client.widgets.events.ResizedHandler;
 import com.smartgwt.client.widgets.layout.Layout;

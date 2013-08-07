@@ -1,4 +1,4 @@
-package com.mercuria.etl.mgr.web.client.core;
+package com.xchanging.etl.mgr.web.client.core;
 
 import java.util.List;
 

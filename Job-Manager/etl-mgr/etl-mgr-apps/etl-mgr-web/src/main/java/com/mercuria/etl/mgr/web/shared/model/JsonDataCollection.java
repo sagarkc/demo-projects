@@ -1,4 +1,4 @@
-package com.mercuria.etl.mgr.web.shared.model;
+package com.xchanging.etl.mgr.web.shared.model;
 
 import java.util.ArrayList;
 import java.util.List;

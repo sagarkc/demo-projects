@@ -1,4 +1,4 @@
-package com.mercuria.etl.mgr.web.client.lauout;
+package com.xchanging.etl.mgr.web.client.lauout;
 
 
 public class LayoutManager {

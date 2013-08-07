@@ -1,8 +1,8 @@
 /**
- * File :: com.mercuria.etl.mgr.web.shared.model.JobMonitorData
+ * File :: com.xchanging.etl.mgr.web.shared.model.JobMonitorData
  * Date :: 27-Jul-2013
  */
-package com.mercuria.etl.mgr.web.shared.model;
+package com.xchanging.etl.mgr.web.shared.model;
 
 import java.util.Date;
 

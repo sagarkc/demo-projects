@@ -1,4 +1,4 @@
-package com.mercuria.etl.mgr.client;
+package com.xchanging.etl.mgr.client;
 
 import com.google.gwt.junit.client.GWTTestCase;
 
@@ -18,7 +18,7 @@ public class GwtTestEtlManager extends GWTTestCase {
    * Must refer to a valid module that sources this class.
    */
   public String getModuleName() {
-    return "com.mercuria.etl.mgr.EtlManagerJUnit";
+    return "com.xchanging.etl.mgr.EtlManagerJUnit";
   }
 
   /**

@@ -1,8 +1,8 @@
 /**
- * File :: com.mercuria.etl.mgr.web.client.core.GWTJsonListGridModel
+ * File :: com.xchanging.etl.mgr.web.client.core.GWTJsonListGridModel
  * Date :: 24-Jul-2013
  */
-package com.mercuria.etl.mgr.web.client.core;
+package com.xchanging.etl.mgr.web.client.core;
 
 import java.util.List;
 

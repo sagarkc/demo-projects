@@ -1,14 +1,14 @@
 /**
- * File :: com.mercuria.etl.mgr.web.client.service.JobMonitorServiceAsync
+ * File :: com.xchanging.etl.mgr.web.client.service.JobMonitorServiceAsync
  * Date :: 24-Jul-2013
  */
-package com.mercuria.etl.mgr.web.client.service;
+package com.xchanging.etl.mgr.web.client.service;
 
 import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.mercuria.etl.mgr.model.vo.JobMonitorHistoryVo;
+import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com

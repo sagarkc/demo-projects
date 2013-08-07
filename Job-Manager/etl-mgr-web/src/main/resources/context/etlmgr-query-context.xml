@@ -39,7 +39,7 @@
 			<value>
 	    		<![CDATA[
 	    		select 
-	    			inst, exec   
+	    			inst 
 	    		from 
 	    			JobInstance as inst 
 	    			inner join inst.jobExecutions as exec
@@ -66,16 +66,22 @@
 		    <value>
             <![CDATA[
             SELECT 
-				DISTINCT BATCH_JOB_INSTANCE.JOB_NAME,
-				BATCH_JOB_EXECUTION.STATUS,
-				MAX(BATCH_JOB_EXECUTION.START_TIME) AS MAX_START_TIME,
-				MAX(BATCH_JOB_EXECUTION.END_TIME) AS MAX_END_TIME
-			FROM 
-				BATCH_JOB_EXECUTION 
-			INNER JOIN 
-				BATCH_JOB_INSTANCE ON 
-					BATCH_JOB_EXECUTION.JOB_INSTANCE_ID = BATCH_JOB_INSTANCE.JOB_INSTANCE_ID
-			GROUP BY BATCH_JOB_INSTANCE.JOB_NAME	
+				inst.JOB_NAME, 
+				exc.START_TIME as MAX_START_TIME,  
+				exc.END_TIME as MAX_END_TIME, 
+				exc.STATUS
+			FROM (	
+					SELECT 
+						BATCH_JOB_INSTANCE.JOB_NAME,
+						MAX(BATCH_JOB_EXECUTION.START_TIME) AS MAX_START_TIME
+					FROM 
+						BATCH_JOB_EXECUTION 
+					INNER JOIN 
+						BATCH_JOB_INSTANCE ON 
+							BATCH_JOB_EXECUTION.JOB_INSTANCE_ID = BATCH_JOB_INSTANCE.JOB_INSTANCE_ID
+					GROUP BY BATCH_JOB_INSTANCE.JOB_NAME
+				) inst
+			INNER JOIN BATCH_JOB_EXECUTION exc ON exc.START_TIME = inst.MAX_START_TIME	
             ]]>
             </value>
 		</constructor-arg>

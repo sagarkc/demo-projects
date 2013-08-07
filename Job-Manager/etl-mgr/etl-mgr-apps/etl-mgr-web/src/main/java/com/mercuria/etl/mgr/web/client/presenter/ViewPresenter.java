@@ -1,7 +1,7 @@
-package com.mercuria.etl.mgr.web.client.presenter;
+package com.xchanging.etl.mgr.web.client.presenter;
 
-import com.mercuria.etl.mgr.web.client.core.Display;
-import com.mercuria.etl.mgr.web.client.view.BaseContainerView;
+import com.xchanging.etl.mgr.web.client.core.Display;
+import com.xchanging.etl.mgr.web.client.view.BaseContainerView;
 
 public interface ViewPresenter<D extends Display> {
 	

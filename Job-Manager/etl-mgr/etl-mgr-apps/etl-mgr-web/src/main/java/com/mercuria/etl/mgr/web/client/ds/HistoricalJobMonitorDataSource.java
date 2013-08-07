@@ -3,19 +3,19 @@
  * 								ETL Manager
  * 						Monitor | Manage | Admin
  * -------------------------------------------------------------------------- *
- * Type:	com.mercuria.etl.mgr.web.client.ds.HistoricalJobMonitorDataSource
+ * Type:	com.xchanging.etl.mgr.web.client.ds.HistoricalJobMonitorDataSource
  * Date:	Jul 31, 2013
  * 
  * Author:	Sabuj Das | sabuj.das@asia.xchanging.com
  * -------------------------------------------------------------------------- *
  */
-package com.mercuria.etl.mgr.web.client.ds;
+package com.xchanging.etl.mgr.web.client.ds;
 
 import java.util.Date;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.mercuria.etl.mgr.web.WebConstants;
-import com.mercuria.etl.mgr.web.client.core.AbstractRestDataSource;
+import com.xchanging.etl.mgr.web.WebConstants;
+import com.xchanging.etl.mgr.web.client.core.AbstractRestDataSource;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.data.OperationBinding;

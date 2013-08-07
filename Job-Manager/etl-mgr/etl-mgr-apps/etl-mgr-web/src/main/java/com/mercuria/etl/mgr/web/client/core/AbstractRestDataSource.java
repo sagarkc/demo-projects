@@ -1,9 +1,9 @@
-package com.mercuria.etl.mgr.web.client.core;
+package com.xchanging.etl.mgr.web.client.core;
 
 import java.util.Map;
 
 import com.google.gwt.http.client.URL;
-import com.mercuria.etl.mgr.web.WebConstants;
+import com.xchanging.etl.mgr.web.WebConstants;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.OperationBinding;
 import com.smartgwt.client.data.Record;

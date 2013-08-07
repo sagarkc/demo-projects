@@ -1,6 +1,6 @@
-package com.mercuria.etl.mgr.web.client.view;
+package com.xchanging.etl.mgr.web.client.view;
 
-import com.mercuria.etl.mgr.web.client.UIConstants;
+import com.xchanging.etl.mgr.web.client.UIConstants;
 import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ResizedEvent;

@@ -1,4 +1,4 @@
-package com.mercuria.etl.mgr.web.client.view;
+package com.xchanging.etl.mgr.web.client.view;
 
 import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.widgets.layout.VLayout;

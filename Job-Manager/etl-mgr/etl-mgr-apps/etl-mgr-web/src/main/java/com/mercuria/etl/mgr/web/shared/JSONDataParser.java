@@ -1,4 +1,4 @@
-package com.mercuria.etl.mgr.web.shared;
+package com.xchanging.etl.mgr.web.shared;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +11,9 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.web.bindery.autobean.shared.AutoBeanCodex;
-import com.mercuria.etl.mgr.web.shared.model.JobMonitorData;
-import com.mercuria.etl.mgr.web.shared.model.JobMonitorDataFactory;
-import com.mercuria.etl.mgr.web.shared.model.JsonDataCollection;
+import com.xchanging.etl.mgr.web.shared.model.JobMonitorData;
+import com.xchanging.etl.mgr.web.shared.model.JobMonitorDataFactory;
+import com.xchanging.etl.mgr.web.shared.model.JsonDataCollection;
 import com.smartgwt.client.data.XJSONDataSource;
 import com.smartgwt.client.util.JSONEncoder;
 

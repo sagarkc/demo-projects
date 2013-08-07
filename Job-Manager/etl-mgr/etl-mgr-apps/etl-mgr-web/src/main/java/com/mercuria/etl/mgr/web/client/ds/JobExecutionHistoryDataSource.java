@@ -3,12 +3,12 @@
  * 								ETL Manager
  * 						Monitor | Manage | Admin
  * -------------------------------------------------------------------------- *
- * Type:	com.mercuria.etl.mgr.web.client.ds.JobExecutionHistoryDataSource
+ * Type:	com.xchanging.etl.mgr.web.client.ds.JobExecutionHistoryDataSource
  * Date:	Aug 2, 2013  8:13:29 PM
  * 
  * -------------------------------------------------------------------------- *
  */
-package com.mercuria.etl.mgr.web.client.ds;
+package com.xchanging.etl.mgr.web.client.ds;
 
 import java.util.List;
 
@@ -16,11 +16,11 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
-import com.mercuria.etl.mgr.model.vo.JobMonitorHistoryVo;
-import com.mercuria.etl.mgr.web.WebConstants;
-import com.mercuria.etl.mgr.web.client.core.GwtRpcObjectDataSource;
-import com.mercuria.etl.mgr.web.client.service.JobMonitorService;
-import com.mercuria.etl.mgr.web.client.service.JobMonitorServiceAsync;
+import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
+import com.xchanging.etl.mgr.web.WebConstants;
+import com.xchanging.etl.mgr.web.client.core.GwtRpcObjectDataSource;
+import com.xchanging.etl.mgr.web.client.service.JobMonitorService;
+import com.xchanging.etl.mgr.web.client.service.JobMonitorServiceAsync;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;

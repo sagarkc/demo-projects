@@ -4,7 +4,7 @@
 
 	<!-- POM file generated with GWT webAppCreator -->
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.mercuria.etl.mgr.web</groupId>
+	<groupId>com.xchanging.etl.mgr.web</groupId>
 	<artifactId>etl-mgr-web</artifactId>
 	<packaging>war</packaging>
 	<version>1.0</version>
@@ -50,32 +50,32 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.mercuria.etl.mgr</groupId>
+			<groupId>com.xchanging.etl.mgr</groupId>
 			<artifactId>etl-mgr-common</artifactId>
 			<version>${etl.mgr.release.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.mercuria.etl.mgr</groupId>
+			<groupId>com.xchanging.etl.mgr</groupId>
 			<artifactId>etl-mgr-model</artifactId>
 			<version>${etl.mgr.release.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.mercuria.etl.mgr</groupId>
+			<groupId>com.xchanging.etl.mgr</groupId>
 			<artifactId>etl-mgr-util</artifactId>
 			<version>${etl.mgr.release.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.mercuria.etl.mgr</groupId>
+			<groupId>com.xchanging.etl.mgr</groupId>
 			<artifactId>etl-mgr-core</artifactId>
 			<version>${etl.mgr.release.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.mercuria.etl.mgr</groupId>
+			<groupId>com.xchanging.etl.mgr</groupId>
 			<artifactId>etl-mgr-dao</artifactId>
 			<version>${etl.mgr.release.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.mercuria.etl.mgr</groupId>
+			<groupId>com.xchanging.etl.mgr</groupId>
 			<artifactId>etl-mgr-service</artifactId>
 			<version>${etl.mgr.release.version}</version>
 		</dependency> 
@@ -421,10 +421,10 @@
                   <runTarget>com.mycomp.demo.mygwt2.Application/Application.html</runTarget>
 					</configuration>-->
 				<configuration>
-					<module>com.mercuria.etl.mgr.web.EtlManager</module>
-					<runTarget>com.mercuria.etl.mgr.web.EtlManager/EtlManager.htm</runTarget>
+					<module>com.xchanging.etl.mgr.web.EtlManager</module>
+					<runTarget>com.xchanging.etl.mgr.web.EtlManager/EtlManager.htm</runTarget>
 					<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
-					<i18nMessagesBundle>com.mercuria.etl.mgr.web.client.i18n.ApplicationMessages</i18nMessagesBundle>
+					<i18nMessagesBundle>com.xchanging.etl.mgr.web.client.i18n.ApplicationMessages</i18nMessagesBundle>
 				</configuration>
 			</plugin>
 

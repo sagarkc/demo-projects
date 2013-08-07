@@ -22,7 +22,7 @@
 	<!-- otherwise eclipse complains (Google plugin bug?) -->
 	<inherits name='com.google.gwt.junit.JUnit' />
 	
-	<inherits name='com.mercuria.etl.mgr.SharedModel'/>
+	<inherits name='com.xchanging.etl.mgr.SharedModel'/>
 	
 	<!-- Other module inherits -->
 <!-- 	<inherits name="com.google.gwt.logging.Logging"/> -->
@@ -31,7 +31,7 @@
 	
 	
 	<!-- Specify the app entry point class. -->
-	<entry-point class='com.mercuria.etl.mgr.web.client.EtlManager' />
+	<entry-point class='com.xchanging.etl.mgr.web.client.EtlManager' />
 
 	<!-- Specify the paths for translatable code -->
 	<source path='client' />

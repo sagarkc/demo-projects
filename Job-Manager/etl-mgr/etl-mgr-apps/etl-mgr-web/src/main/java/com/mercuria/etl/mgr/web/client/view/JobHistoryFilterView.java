@@ -1,10 +1,10 @@
 /**
- * File :: com.mercuria.etl.mgr.web.client.view.JobHistoryFilterView
+ * File :: com.xchanging.etl.mgr.web.client.view.JobHistoryFilterView
  * Date :: 28-Jul-2013
  */
-package com.mercuria.etl.mgr.web.client.view;
+package com.xchanging.etl.mgr.web.client.view;
 
-import com.mercuria.etl.mgr.web.client.ds.HistoricalJobMonitorDataSource;
+import com.xchanging.etl.mgr.web.client.ds.HistoricalJobMonitorDataSource;
 import com.smartgwt.client.data.Criterion;
 import com.smartgwt.client.types.AnimationEffect;
 import com.smartgwt.client.types.FetchMode;

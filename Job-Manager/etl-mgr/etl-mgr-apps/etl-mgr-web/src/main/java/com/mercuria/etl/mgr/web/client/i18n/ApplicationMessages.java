@@ -1,8 +1,8 @@
-package com.mercuria.etl.mgr.web.client.i18n;
+package com.xchanging.etl.mgr.web.client.i18n;
 
 /**
  * Interface to represent the messages contained in resource bundle: 
- * Path: com/mercuria/etl/mgr/client/i18n/ApplicationMessages.properties'.
+ * Path: com/xchanging/etl/mgr/client/i18n/ApplicationMessages.properties'.
  */
 public interface ApplicationMessages extends
 		com.google.gwt.i18n.client.Messages {

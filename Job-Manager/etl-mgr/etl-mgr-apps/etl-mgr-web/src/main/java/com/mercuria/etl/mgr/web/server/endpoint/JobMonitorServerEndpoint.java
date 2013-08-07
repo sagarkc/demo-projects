@@ -1,8 +1,8 @@
 /**
- * File :: com.mercuria.etl.mgr.web.server.endpoint.JobMonitorServerEndpoint
+ * File :: com.xchanging.etl.mgr.web.server.endpoint.JobMonitorServerEndpoint
  * Date :: 24-Jul-2013
  */
-package com.mercuria.etl.mgr.web.server.endpoint;
+package com.xchanging.etl.mgr.web.server.endpoint;
 
 import java.util.Date;
 import java.util.List;
@@ -11,9 +11,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mercuria.etl.mgr.model.vo.JobMonitorHistoryVo;
-import com.mercuria.etl.mgr.service.JobDetailMonitorService;
-import com.mercuria.etl.mgr.web.client.service.JobMonitorService;
+import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
+import com.xchanging.etl.mgr.service.JobDetailMonitorService;
+import com.xchanging.etl.mgr.web.client.service.JobMonitorService;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
