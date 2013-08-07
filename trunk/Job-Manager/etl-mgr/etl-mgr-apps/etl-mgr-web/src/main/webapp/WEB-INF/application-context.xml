@@ -13,7 +13,7 @@
 	<bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" />
 	
 	<context:annotation-config />
-	<context:component-scan base-package="com.mercuria.etl.mgr" />
+	<context:component-scan base-package="com.xchanging.etl.mgr" />
 	
 	
 	<import resource="classpath:context/etlmgr-session-context.xml"/>  

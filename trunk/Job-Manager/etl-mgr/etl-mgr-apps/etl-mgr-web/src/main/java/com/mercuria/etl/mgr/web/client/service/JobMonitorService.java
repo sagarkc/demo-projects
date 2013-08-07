@@ -1,16 +1,16 @@
 /**
- * File :: com.mercuria.etl.mgr.web.client.service.JobMonitorService
+ * File :: com.xchanging.etl.mgr.web.client.service.JobMonitorService
  * Date :: 20-Jul-2013
  */
-package com.mercuria.etl.mgr.web.client.service;
+package com.xchanging.etl.mgr.web.client.service;
 
 import java.util.Date;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.mercuria.etl.mgr.model.vo.JobMonitorHistoryVo;
-import com.mercuria.etl.mgr.web.WebConstants;
+import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
+import com.xchanging.etl.mgr.web.WebConstants;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com

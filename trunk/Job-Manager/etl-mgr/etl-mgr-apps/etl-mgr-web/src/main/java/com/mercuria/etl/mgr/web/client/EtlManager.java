@@ -1,4 +1,4 @@
-package com.mercuria.etl.mgr.web.client;
+package com.xchanging.etl.mgr.web.client;
 
 import java.util.Date;
 import java.util.logging.Logger;
@@ -9,7 +9,7 @@ import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
-import com.mercuria.etl.mgr.web.client.i18n.ApplicationMessages;
+import com.xchanging.etl.mgr.web.client.i18n.ApplicationMessages;
 import com.smartgwt.client.util.DateDisplayFormatter;
 import com.smartgwt.client.util.DateUtil;
 

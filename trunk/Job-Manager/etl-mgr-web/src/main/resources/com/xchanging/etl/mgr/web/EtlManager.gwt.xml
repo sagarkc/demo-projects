@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='EtlManager'>
+
+	
+	<inherits name='com.google.gwt.user.User'/>
+   
+	<inherits name="com.smartgwt.SmartGwt" />
+	
+	<inherits name='com.xchanging.etl.mgr.SharedModel'/>
+
+	<!-- Specify the app entry point class. -->
+	<entry-point class='com.xchanging.etl.mgr.web.client.EtlManager' />
+
+	<!-- Specify the paths for translatable code -->
+	<source path='client' />
+	<source path='shared' />
+</module>

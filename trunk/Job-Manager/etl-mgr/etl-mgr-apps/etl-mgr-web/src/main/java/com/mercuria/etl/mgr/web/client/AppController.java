@@ -1,14 +1,14 @@
-package com.mercuria.etl.mgr.web.client;
+package com.xchanging.etl.mgr.web.client;
 
 
 import java.util.logging.Logger;
 
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HasWidgets;
-import com.mercuria.etl.mgr.web.client.core.Display;
-import com.mercuria.etl.mgr.web.client.core.Presenter;
-import com.mercuria.etl.mgr.web.client.presenter.BasicLayoutPresenter;
-import com.mercuria.etl.mgr.web.client.view.BasicLayoutView;
+import com.xchanging.etl.mgr.web.client.core.Display;
+import com.xchanging.etl.mgr.web.client.core.Presenter;
+import com.xchanging.etl.mgr.web.client.presenter.BasicLayoutPresenter;
+import com.xchanging.etl.mgr.web.client.view.BasicLayoutView;
 
 public class AppController implements Presenter<Display>{
 	

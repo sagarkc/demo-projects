@@ -3,12 +3,12 @@
  * 								ETL Manager
  * 						Monitor | Manage | Admin
  * -------------------------------------------------------------------------- *
- * Type:	com.mercuria.etl.mgr.web.client.view.JobExecutionHistoryGrid
+ * Type:	com.xchanging.etl.mgr.web.client.view.JobExecutionHistoryGrid
  * Date:	Aug 1, 2013  5:23:12 PM
  * 
  * -------------------------------------------------------------------------- *
  */
-package com.mercuria.etl.mgr.web.client.view;
+package com.xchanging.etl.mgr.web.client.view;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -16,9 +16,9 @@ import java.util.List;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
-import com.mercuria.etl.mgr.model.vo.JobExecutionHistoryVo;
-import com.mercuria.etl.mgr.model.vo.JobMonitorHistoryVo;
-import com.mercuria.etl.mgr.web.client.ds.JobExecutionHistoryDataSource;
+import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
+import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
+import com.xchanging.etl.mgr.web.client.ds.JobExecutionHistoryDataSource;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.util.SC;

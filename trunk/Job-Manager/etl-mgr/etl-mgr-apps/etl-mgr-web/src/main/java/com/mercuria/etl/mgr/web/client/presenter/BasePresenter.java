@@ -1,9 +1,9 @@
-package com.mercuria.etl.mgr.web.client.presenter;
+package com.xchanging.etl.mgr.web.client.presenter;
 
 
-import com.mercuria.etl.mgr.web.client.core.Display;
-import com.mercuria.etl.mgr.web.client.core.Presenter;
-import com.mercuria.etl.mgr.web.client.core.UIEventManager;
+import com.xchanging.etl.mgr.web.client.core.Display;
+import com.xchanging.etl.mgr.web.client.core.Presenter;
+import com.xchanging.etl.mgr.web.client.core.UIEventManager;
 
 public abstract class BasePresenter<D extends Display> implements Presenter<D>{
 	

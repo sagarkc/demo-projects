@@ -1,12 +1,12 @@
-package com.mercuria.etl.mgr.web.client.view;
+package com.xchanging.etl.mgr.web.client.view;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
-import com.mercuria.etl.mgr.web.WebConstants;
-import com.mercuria.etl.mgr.web.client.core.GWTGridColumnHeader;
+import com.xchanging.etl.mgr.web.WebConstants;
+import com.xchanging.etl.mgr.web.client.core.GWTGridColumnHeader;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;

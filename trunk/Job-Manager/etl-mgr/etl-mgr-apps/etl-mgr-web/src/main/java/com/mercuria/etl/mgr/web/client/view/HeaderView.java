@@ -1,7 +1,7 @@
-package com.mercuria.etl.mgr.web.client.view;
+package com.xchanging.etl.mgr.web.client.view;
 
 import com.google.gwt.core.client.GWT;
-import com.mercuria.etl.mgr.web.client.UIConstants;
+import com.xchanging.etl.mgr.web.client.UIConstants;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.ImgButton;
 import com.smartgwt.client.widgets.layout.HLayout;

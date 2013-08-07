@@ -1,8 +1,8 @@
 /**
- * File :: com.mercuria.etl.mgr.web.shared.model.JSONDataSourceGridDataModel
+ * File :: com.xchanging.etl.mgr.web.shared.model.JSONDataSourceGridDataModel
  * Date :: 27-Jul-2013
  */
-package com.mercuria.etl.mgr.web.shared.model;
+package com.xchanging.etl.mgr.web.shared.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,8 +10,8 @@ import java.util.List;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.json.client.JSONObject;
-import com.mercuria.etl.mgr.web.client.core.GWTCollectionGridModel;
-import com.mercuria.etl.mgr.web.client.core.GWTGridColumnHeader;
+import com.xchanging.etl.mgr.web.client.core.GWTCollectionGridModel;
+import com.xchanging.etl.mgr.web.client.core.GWTGridColumnHeader;
 import com.smartgwt.client.widgets.grid.ListGridField;
 
 /**

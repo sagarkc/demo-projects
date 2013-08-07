@@ -1,8 +1,8 @@
-package com.mercuria.etl.mgr.web.client.view;
+package com.xchanging.etl.mgr.web.client.view;
 
 import com.google.gwt.user.client.ui.Composite;
-import com.mercuria.etl.mgr.web.client.UIConstants;
-import com.mercuria.etl.mgr.web.client.presenter.BasicLayoutPresenter.LayoutDisplay;
+import com.xchanging.etl.mgr.web.client.UIConstants;
+import com.xchanging.etl.mgr.web.client.presenter.BasicLayoutPresenter.LayoutDisplay;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 

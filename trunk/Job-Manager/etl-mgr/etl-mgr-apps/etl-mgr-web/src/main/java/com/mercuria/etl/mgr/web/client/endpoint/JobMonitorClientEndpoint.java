@@ -1,8 +1,8 @@
 /**
- * File :: com.mercuria.etl.mgr.web.client.endpoint.JobMonitorClientEndpoint
+ * File :: com.xchanging.etl.mgr.web.client.endpoint.JobMonitorClientEndpoint
  * Date :: 24-Jul-2013
  */
-package com.mercuria.etl.mgr.web.client.endpoint;
+package com.xchanging.etl.mgr.web.client.endpoint;
 
 
 import java.util.Date;
@@ -12,12 +12,12 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
-import com.mercuria.etl.mgr.model.vo.JobMonitorHistoryVo;
-import com.mercuria.etl.mgr.web.WebConstants;
-import com.mercuria.etl.mgr.web.client.core.UIEventManager;
-import com.mercuria.etl.mgr.web.client.event.HistoricalJobMonitorEvent;
-import com.mercuria.etl.mgr.web.client.service.JobMonitorService;
-import com.mercuria.etl.mgr.web.client.service.JobMonitorServiceAsync;
+import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
+import com.xchanging.etl.mgr.web.WebConstants;
+import com.xchanging.etl.mgr.web.client.core.UIEventManager;
+import com.xchanging.etl.mgr.web.client.event.HistoricalJobMonitorEvent;
+import com.xchanging.etl.mgr.web.client.service.JobMonitorService;
+import com.xchanging.etl.mgr.web.client.service.JobMonitorServiceAsync;
 import com.smartgwt.client.util.SC;
 
 

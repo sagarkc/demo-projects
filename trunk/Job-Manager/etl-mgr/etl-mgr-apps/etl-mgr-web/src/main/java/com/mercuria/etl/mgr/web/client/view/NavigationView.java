@@ -1,9 +1,9 @@
-package com.mercuria.etl.mgr.web.client.view;
+package com.xchanging.etl.mgr.web.client.view;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
-import com.mercuria.etl.mgr.web.client.UIConstants;
-import com.mercuria.etl.mgr.web.client.presenter.NavigationPresenter.NavigationDisplay;
+import com.xchanging.etl.mgr.web.client.UIConstants;
+import com.xchanging.etl.mgr.web.client.presenter.NavigationPresenter.NavigationDisplay;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.VisibilityMode;
 import com.smartgwt.client.widgets.Button;

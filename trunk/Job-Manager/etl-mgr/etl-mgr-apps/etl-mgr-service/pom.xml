@@ -4,11 +4,11 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.mercuria.etl.mgr</groupId>
+		<groupId>com.xchanging.etl.mgr</groupId>
 		<artifactId>etl-mgr-apps</artifactId>
 		<version>0.1</version>
 	</parent>
-	<groupId>com.mercuria.etl.mgr</groupId>
+	<groupId>com.xchanging.etl.mgr</groupId>
 	<artifactId>etl-mgr-service</artifactId>
 	<version>0.1</version>
 	<name>etl-mgr-service</name>
@@ -16,7 +16,7 @@
 	
 	<dependencies>
 		<dependency>
-			<groupId>com.mercuria.etl.mgr</groupId>
+			<groupId>com.xchanging.etl.mgr</groupId>
 			<artifactId>etl-mgr-dao</artifactId>
 			<version>0.1</version>
 		</dependency>
