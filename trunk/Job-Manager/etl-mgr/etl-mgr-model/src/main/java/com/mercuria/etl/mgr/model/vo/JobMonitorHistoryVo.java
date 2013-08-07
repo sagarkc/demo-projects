@@ -63,6 +63,7 @@ public class JobMonitorHistoryVo implements Serializable, IsSerializable{
 	/**
 	 * @return the status
 	 */
+	@ResultSetColumn(propertyName="status", mappedColumnName="STATUS")
 	public String getStatus() {
 		return status;
 	}
