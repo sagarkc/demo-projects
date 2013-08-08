@@ -35,4 +35,6 @@ public interface JobMonitorService extends RemoteService{
 	List<JobExecutionHistoryVo> loadJobExecutionHistoryDateData(String jobName);
 
 	List<String> loadAllJobNames();
+
+	List<JobExecutionHistoryVo> loadJobCurrentExecutionData(String[] jobNames);
 }

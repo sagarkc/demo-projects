@@ -131,7 +131,7 @@ public class JobHistoryFilterView extends VLayout{
         FormItem[] formItems = new FormItem[] {
         		selectAllJobNamesChkItem, selectJobNameGrid,
         		executionStartDate,  executionStartTime, executionEndDate, executionEndTime};
-        jobNamesForm.setDataSource(JobMonitorHistoryDataSource.getInstance(), formItems);
+        //jobNamesForm.setDataSource(JobMonitorHistoryDataSource.getInstance(), formItems);
         jobNamesForm.setFields(formItems);
         formsHLayout.addMember(jobNamesForm);
         

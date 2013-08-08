@@ -27,7 +27,7 @@
 		</layout>
 	</appender>
 
-	<logger name="com.mercuria.etl.mgr">
+	<logger name="com.xchanging.etl.mgr">
 		<level value="debug"/>
         <appender-ref ref="APP_LOG" />
         <appender-ref ref="CONSOLE"/>

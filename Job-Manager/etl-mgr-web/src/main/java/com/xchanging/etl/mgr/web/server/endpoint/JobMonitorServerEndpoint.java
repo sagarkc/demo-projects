@@ -90,6 +90,16 @@ public class JobMonitorServerEndpoint implements JobMonitorService{
 	public List<String> loadAllJobNames() {
 		return jobDetailMonitorService.getAllJobNames();
 	}
+
+
+	/* (non-Javadoc)
+	 * @see com.xchanging.etl.mgr.web.client.service.JobMonitorService#loadJobCurrentExecutionData(java.lang.String[])
+	 */
+	@Override
+	public List<JobExecutionHistoryVo> loadJobCurrentExecutionData(
+			String[] jobNames) {
+		return jobDetailMonitorService.loadJobCurrentExecutionData(jobNames);
+	}
 	
 	
 }

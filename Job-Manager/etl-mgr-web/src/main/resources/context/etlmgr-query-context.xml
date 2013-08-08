@@ -112,4 +112,64 @@
 		</constructor-arg>
 
 	</bean>
+	
+	<bean id="SQL_currentJobExecutionByJobNames" class="java.lang.String">
+		<constructor-arg>
+		    <value>
+            <![CDATA[
+            SELECT 
+				inst.JOB_NAME,
+				exc.JOB_EXECUTION_ID, 
+				exc.START_TIME as JOB_START_TIME,  
+				exc.END_TIME as JOB_END_TIME, 
+				exc.EXIT_CODE,
+				exc.EXIT_MESSAGE
+			FROM (	
+					SELECT 
+						BATCH_JOB_INSTANCE.JOB_NAME,
+						MAX(BATCH_JOB_EXECUTION.START_TIME) AS JOB_START_TIME
+					FROM 
+						BATCH_JOB_EXECUTION 
+					INNER JOIN 
+						BATCH_JOB_INSTANCE ON 
+							BATCH_JOB_EXECUTION.JOB_INSTANCE_ID = BATCH_JOB_INSTANCE.JOB_INSTANCE_ID
+					GROUP BY BATCH_JOB_INSTANCE.JOB_NAME
+				) inst
+			INNER JOIN BATCH_JOB_EXECUTION exc 
+				ON (exc.START_TIME = inst.JOB_START_TIME AND exc.START_TIME >= :selectedTime)
+            ]]>
+            </value>
+		</constructor-arg>
+
+	</bean>
+	<bean id="SQL_currentJobExecutionByJobNamesFiltered" class="java.lang.String">
+		<constructor-arg>
+		    <value>
+            <![CDATA[
+            SELECT 
+				inst.JOB_NAME,
+				exc.JOB_EXECUTION_ID, 
+				exc.START_TIME as JOB_START_TIME,  
+				exc.END_TIME as JOB_END_TIME, 
+				exc.EXIT_CODE,
+				exc.EXIT_MESSAGE
+			FROM (	
+					SELECT 
+						BATCH_JOB_INSTANCE.JOB_NAME,
+						MAX(BATCH_JOB_EXECUTION.START_TIME) AS JOB_START_TIME
+					FROM 
+						BATCH_JOB_EXECUTION 
+					INNER JOIN 
+						BATCH_JOB_INSTANCE ON 
+							BATCH_JOB_EXECUTION.JOB_INSTANCE_ID = BATCH_JOB_INSTANCE.JOB_INSTANCE_ID
+					GROUP BY BATCH_JOB_INSTANCE.JOB_NAME
+				) inst
+			INNER JOIN BATCH_JOB_EXECUTION exc 
+				ON (exc.START_TIME = inst.JOB_START_TIME AND exc.START_TIME >= :selectedTime)
+			WHERE inst.JOB_NAME IN (:selectedJobNames)
+            ]]>
+            </value>
+		</constructor-arg>
+
+	</bean>
 </beans>
