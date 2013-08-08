@@ -36,6 +36,7 @@ public class JobMonitorJdbcDaoImpl implements JobMonitorJdbcDao {
 	@Autowired private String SQL_getDistinctJobNames;
 	@Autowired private String SQL_lastJobExecutionByJobNames;
 	@Autowired private String SQL_jobExecutionHistoryByJobNames;
+	@Autowired private String SQL_lastJobExecutionByJobNamesFiltered;
 
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;

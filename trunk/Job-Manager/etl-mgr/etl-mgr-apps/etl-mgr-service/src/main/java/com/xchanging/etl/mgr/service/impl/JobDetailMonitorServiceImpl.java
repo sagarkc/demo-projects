@@ -205,5 +205,20 @@ public class JobDetailMonitorServiceImpl implements JobDetailMonitorService {
 		return jobNames;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.xchanging.etl.mgr.service.JobDetailMonitorService#loadJobCurrentExecutionData(java.lang.String[])
+	 */
+	@Override
+	public List<JobExecutionHistoryVo> loadJobCurrentExecutionData(
+			String[] jobNames) {
+		if(null == jobNames || jobNames.length <= 0)
+		{
+			
+		} 
+		
+		return null;
+	}
+
+	
 	
 }

@@ -47,4 +47,11 @@ public interface JobMonitorServiceAsync {
 	 */
 	void loadAllJobNames(AsyncCallback<List<String>> asyncCallback);
 
+	/**
+	 * @param jobNames
+	 * @param asyncCallback
+	 */
+	void loadJobCurrentExecutionData(String[] jobNames,
+			AsyncCallback<List<JobExecutionHistoryVo>> asyncCallback);
+
 }

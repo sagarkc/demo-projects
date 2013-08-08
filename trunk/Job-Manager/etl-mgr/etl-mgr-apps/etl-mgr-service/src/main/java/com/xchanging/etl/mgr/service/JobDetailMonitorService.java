@@ -28,4 +28,10 @@ public interface JobDetailMonitorService {
 	 * @return
 	 */
 	List<String> getAllJobNames();
+
+	/**
+	 * @param jobNames
+	 * @return
+	 */
+	List<JobExecutionHistoryVo> loadJobCurrentExecutionData(String[] jobNames);
 }

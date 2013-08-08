@@ -25,6 +25,7 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.ValuesManager;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.grid.ListGridField;
+import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.xchanging.etl.mgr.web.client.ds.DistinctJobNamesDatasource;
 
@@ -60,6 +61,7 @@ public class AddJobsToMyJobMonitorDialog extends Window{
         DynamicForm jobNameForm = new DynamicForm();   
         jobNameForm.setWidth100();   
         jobNameForm.setHeight100();
+        jobNameForm.setDataSource(DistinctJobNamesDatasource.getInstance());
         //jobNameForm.setValuesManager(valuesManager);
         
         //valuesManager.setDataSource(DistinctJobNamesDatasource.getInstance());
@@ -74,8 +76,9 @@ public class AddJobsToMyJobMonitorDialog extends Window{
         allJobNameSelectItem.setOptionDataSource(DistinctJobNamesDatasource.getInstance());
         allJobNameSelectItem.setDisplayField(JobMonitorHistoryVo.Fields.JOB_NAME);
         allJobNameSelectItem.setPickListFields(new ListGridField(JobMonitorHistoryVo.Fields.JOB_NAME));
-        allJobNameSelectItem.setWidth("500");
-        allJobNameSelectItem.setHeight("300");
+        allJobNameSelectItem.setPickListWidth(100);
+        allJobNameSelectItem.setWidth("450");
+        allJobNameSelectItem.setHeight("200");
         jobNameForm.setItems(allJobNameSelectItem);
         
         addItem(jobNameForm);
@@ -85,11 +88,11 @@ public class AddJobsToMyJobMonitorDialog extends Window{
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				Record[] selectedRecords = allJobNameSelectItem.getSelectedRecords();
+				String[] selectedRecords = allJobNameSelectItem.getValues();
 				if(null != selectedRecords && selectedRecords.length > 0){
-					for (Record record : selectedRecords) {
-						selectedJobsNames.add(
-								record.getAttributeAsString(JobMonitorHistoryVo.Fields.JOB_NAME));
+					for (String record : selectedRecords) {
+						selectedJobsNames.add(record);
+								//record.getAttributeAsString(JobMonitorHistoryVo.Fields.JOB_NAME));
 					}
 				}
 			}

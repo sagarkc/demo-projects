@@ -10,6 +10,8 @@
  */
 package com.xchanging.etl.mgr.web.client.view;
 
+import com.smartgwt.client.data.Criterion;
+import com.smartgwt.client.types.OperatorId;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -19,17 +21,21 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
 import com.xchanging.etl.mgr.web.client.EtlManager;
+import com.xchanging.etl.mgr.web.client.core.UIEventManager;
 import com.xchanging.etl.mgr.web.client.dialog.AddJobsToMyJobMonitorDialog;
+import com.xchanging.etl.mgr.web.client.event.MyJobSelectedJobNamesChangedEvent;
+import com.xchanging.etl.mgr.web.client.event.MyJobSelectedJobNamesChangedEventListener;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
  *
  */
-public class MyJobsJobMonitorView extends VLayout{
+public class MyJobsJobMonitorView extends VLayout
+		implements MyJobSelectedJobNamesChangedEventListener{
 
 	
-	private final JobExecutionHistoryGrid jobMonitorGrid 
-		= new JobExecutionHistoryGrid();
+	private final JobExecutionRealtimeGrid jobMonitorGrid 
+		= new JobExecutionRealtimeGrid();
 	private final ToolStrip jobsToolStrip = new ToolStrip();
 	
 	/**
@@ -41,6 +47,7 @@ public class MyJobsJobMonitorView extends VLayout{
 		setHeight100();
 		setLayoutMargin(2);
 		initComponents();
+		UIEventManager.getInstance().addListener(MyJobSelectedJobNamesChangedEvent.TYPE, this);
 	}
 	
 	private void initComponents() {
@@ -90,4 +97,18 @@ public class MyJobsJobMonitorView extends VLayout{
 		addMember(jobMonitorGrid);  
         
 	}
+
+	/* (non-Javadoc)
+	 * @see com.xchanging.etl.mgr.web.client.event.MyJobSelectedJobNamesChangedEventListener#selectedJobNamesChanged(com.xchanging.etl.mgr.web.client.event.MyJobSelectedJobNamesChangedEvent)
+	 */
+	@Override
+	public void selectedJobNamesChanged(MyJobSelectedJobNamesChangedEvent event) {
+		if(null != event && null != event.getSelectedJobNames()){
+			jobMonitorGrid.fetchData(
+					new Criterion("jobNames", OperatorId.IN_SET, 
+							event.getSelectedJobNames()));
+		}
+	}
+	
+	
 }

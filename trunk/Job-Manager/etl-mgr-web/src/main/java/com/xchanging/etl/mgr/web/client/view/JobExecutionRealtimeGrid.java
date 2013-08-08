@@ -64,14 +64,14 @@ public class JobExecutionRealtimeGrid extends ListGrid {
 		exitCodeField.setAlign(Alignment.CENTER);
 		exitCodeField.setWidth(100);
 		ListGridField startTimeField = new ListGridField(JobMonitorHistoryVo.Fields.LAST_STARTED_TIME, "Last Start Time");
-		startTimeField.setType(ListGridFieldType.DATETIME);
+		startTimeField.setType(ListGridFieldType.DATE);
 		startTimeField.setWidth(150);
 		startTimeField.setAlign(Alignment.CENTER);
 		
 		ListGridField endTimeField = new ListGridField(JobMonitorHistoryVo.Fields.LAST_ENDED_TIME,  "Last End Time");
 		endTimeField.setWidth(150);
 		endTimeField.setAlign(Alignment.CENTER);
-		endTimeField.setType(ListGridFieldType.DATETIME);
+		endTimeField.setType(ListGridFieldType.DATE);
 		
 		ListGridField executeJobField = new ListGridField("executeJob", "Action");
 		executeJobField.setAlign(Alignment.RIGHT);
@@ -121,12 +121,12 @@ public class JobExecutionRealtimeGrid extends ListGrid {
 		ListGridField startTimeField = new ListGridField(JobExecutionHistoryVo.Fields.START_TIME, "Job Start Time");
 		startTimeField.setWidth(150);
 		startTimeField.setAlign(Alignment.CENTER);
-		startTimeField.setType(ListGridFieldType.DATETIME);
+		startTimeField.setType(ListGridFieldType.DATE);
 		
 		ListGridField endTimeField = new ListGridField(JobExecutionHistoryVo.Fields.END_TIME,  "Job End Time");
 		endTimeField.setWidth(150);
 		endTimeField.setAlign(Alignment.CENTER);
-		endTimeField.setType(ListGridFieldType.DATETIME);
+		endTimeField.setType(ListGridFieldType.DATE);
 		
 		ListGridField exitMessageField = new ListGridField(JobExecutionHistoryVo.Fields.EXIT_MESSAGE, "Exit Message");
 		executionDetailsGrid.setFields( idField, nameField, exitCodeField, startTimeField, endTimeField, exitMessageField);
