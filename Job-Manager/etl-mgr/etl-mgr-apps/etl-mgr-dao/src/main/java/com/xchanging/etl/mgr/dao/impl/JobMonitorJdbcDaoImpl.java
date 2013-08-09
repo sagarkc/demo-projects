@@ -6,12 +6,16 @@ package com.xchanging.etl.mgr.dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.xchanging.etl.mgr.common.exception.ApplicationException;
@@ -20,6 +24,7 @@ import com.xchanging.etl.mgr.dao.JobMonitorJdbcDao;
 import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.xchanging.etl.mgr.model.vo.JobMonitorVo;
+import com.xchanging.etl.mgr.util.DateUtility;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
@@ -31,17 +36,17 @@ public class JobMonitorJdbcDaoImpl implements JobMonitorJdbcDao {
 	private static Logger logger = Logger.getLogger(JobMonitorJdbcDaoImpl.class);
 	
 	@Autowired private JdbcTemplate jdbcTemplate;
+	@Autowired private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	
 	@Autowired private String getAllJobHistory;
 	@Autowired private String SQL_getDistinctJobNames;
 	@Autowired private String SQL_lastJobExecutionByJobNames;
 	@Autowired private String SQL_jobExecutionHistoryByJobNames;
-	@Autowired private String SQL_lastJobExecutionByJobNamesFiltered;
-
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
 	
+	@Autowired private String SQL_currentJobExecutionByJobNames;
+	@Autowired private String SQL_currentJobExecutionByJobNamesFiltered;
+
+		
 	
 	public List<JobMonitorVo> getAllJobHistory() throws ApplicationException{
 		if(logger.isDebugEnabled()){
@@ -107,6 +112,34 @@ public class JobMonitorJdbcDaoImpl implements JobMonitorJdbcDao {
 			throw new ApplicationException(e);
 		}
 	}
+
+
+	@Override
+	public List<JobExecutionHistoryVo> loadJobCurrentExecutionData(
+			String[] jobNames) throws ApplicationException {
+		Map<String, Object> params = new HashMap<>();
+		params.put("selectedTime", DateUtility.getCurrentDateWithoutTime());
+		String sql = SQL_currentJobExecutionByJobNames;
+		
+		if(null != jobNames && jobNames.length > 0){
+			params.put("selectedJobNames", jobNames);
+			sql = SQL_currentJobExecutionByJobNamesFiltered;
+		}
+		try{
+			List<JobExecutionHistoryVo> jobExecHistory 
+			= namedParameterJdbcTemplate.query(
+					sql,
+					params,
+					new ReflectionBasedRowMapper<JobExecutionHistoryVo>(JobExecutionHistoryVo.class)
+				);
+			return jobExecHistory;
+		} catch (Exception e){
+			logger.error(e);
+			e.printStackTrace();
+			throw new ApplicationException(e);
+		}
+	}
+	
 	
 	
 }

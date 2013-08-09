@@ -29,5 +29,8 @@ public interface JobMonitorJdbcDao {
 	 * @throws ApplicationException 
 	 */
 	public List<JobExecutionHistoryVo> getJobExecutionHistoryByName(String jobName) throws ApplicationException;
+
+	public List<JobExecutionHistoryVo> loadJobCurrentExecutionData(
+			String[] jobNames) throws ApplicationException;
 	
 }
