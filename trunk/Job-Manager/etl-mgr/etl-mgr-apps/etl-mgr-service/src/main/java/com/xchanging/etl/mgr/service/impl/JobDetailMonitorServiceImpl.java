@@ -211,12 +211,17 @@ public class JobDetailMonitorServiceImpl implements JobDetailMonitorService {
 	@Override
 	public List<JobExecutionHistoryVo> loadJobCurrentExecutionData(
 			String[] jobNames) {
-		if(null == jobNames || jobNames.length <= 0)
-		{
-			
-		} 
-		
-		return null;
+		List<JobExecutionHistoryVo> historyVos = new ArrayList<>();
+		try{
+			historyVos = jobMonitorJdbcDao.loadJobCurrentExecutionData(jobNames);
+			if(null == historyVos){
+				logger.info("No data found");
+				return new ArrayList<>();
+			}
+		} catch(ApplicationException ex){
+			logger.error(ex);
+		}
+		return historyVos;
 	}
 
 	

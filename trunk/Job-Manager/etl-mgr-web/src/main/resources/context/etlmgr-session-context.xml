@@ -32,9 +32,7 @@
 	</bean>
 	
 	<bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-		<constructor-arg>
-			<idref bean="etlMgrDataSource"/>
-		</constructor-arg>
+		<constructor-arg ref="etlMgrDataSource" /> 
 	</bean>
 
 	<bean id="entityManagerFactory"
