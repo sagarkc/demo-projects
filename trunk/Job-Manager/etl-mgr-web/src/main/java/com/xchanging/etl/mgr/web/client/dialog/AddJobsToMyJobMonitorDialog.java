@@ -13,7 +13,6 @@ package com.xchanging.etl.mgr.web.client.dialog;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.MultipleAppearance;
 import com.smartgwt.client.widgets.Button;
 import com.smartgwt.client.widgets.Window;
@@ -25,9 +24,10 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.ValuesManager;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.grid.ListGridField;
-import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
+import com.xchanging.etl.mgr.web.client.core.UIEventManager;
 import com.xchanging.etl.mgr.web.client.ds.DistinctJobNamesDatasource;
+import com.xchanging.etl.mgr.web.client.event.MyJobSelectedJobNamesChangedEvent;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
@@ -77,8 +77,8 @@ public class AddJobsToMyJobMonitorDialog extends Window{
         allJobNameSelectItem.setDisplayField(JobMonitorHistoryVo.Fields.JOB_NAME);
         allJobNameSelectItem.setPickListFields(new ListGridField(JobMonitorHistoryVo.Fields.JOB_NAME));
         allJobNameSelectItem.setPickListWidth(100);
-        allJobNameSelectItem.setWidth("450");
-        allJobNameSelectItem.setHeight("200");
+        allJobNameSelectItem.setWidth("380");
+        allJobNameSelectItem.setHeight("120");
         jobNameForm.setItems(allJobNameSelectItem);
         
         addItem(jobNameForm);
@@ -90,11 +90,10 @@ public class AddJobsToMyJobMonitorDialog extends Window{
 			public void onClick(ClickEvent event) {
 				String[] selectedRecords = allJobNameSelectItem.getValues();
 				if(null != selectedRecords && selectedRecords.length > 0){
-					for (String record : selectedRecords) {
-						selectedJobsNames.add(record);
-								//record.getAttributeAsString(JobMonitorHistoryVo.Fields.JOB_NAME));
-					}
+					UIEventManager.getInstance()
+						.fireEvent(new MyJobSelectedJobNamesChangedEvent(selectedRecords));
 				}
+				destroy();
 			}
 		});
         

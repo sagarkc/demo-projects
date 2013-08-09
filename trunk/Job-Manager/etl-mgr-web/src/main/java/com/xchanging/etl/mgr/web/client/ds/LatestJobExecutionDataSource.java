@@ -84,10 +84,13 @@ public class LatestJobExecutionDataSource extends GwtRpcObjectDataSource {
 			
 			@Override
 			public void onSuccess(List<JobExecutionHistoryVo> jobExecutionData) {
-				if(null == jobExecutionData || jobExecutionData.size() <= 0)
-					return;
-				
 				ListGridRecord[] records = new ListGridRecord[jobExecutionData.size()];
+				if(null == jobExecutionData || jobExecutionData.size() <= 0){
+					response.setData(records);
+					processResponse(requestId, response);
+					return;
+				}
+				
 				for (int i = 0; i < jobExecutionData.size(); i++) {
 					JobExecutionHistoryVo monitorVo = jobExecutionData.get(i);
 					ListGridRecord record = new ListGridRecord();
