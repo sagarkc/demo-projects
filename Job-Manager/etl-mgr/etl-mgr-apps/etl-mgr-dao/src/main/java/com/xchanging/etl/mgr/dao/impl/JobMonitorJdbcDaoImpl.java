@@ -6,6 +6,8 @@ package com.xchanging.etl.mgr.dao.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +17,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.SqlTypeValue;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -117,12 +121,13 @@ public class JobMonitorJdbcDaoImpl implements JobMonitorJdbcDao {
 	@Override
 	public List<JobExecutionHistoryVo> loadJobCurrentExecutionData(
 			String[] jobNames) throws ApplicationException {
-		Map<String, Object> params = new HashMap<>();
-		params.put("selectedTime", DateUtility.getCurrentDateWithoutTime());
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		//Timestamp timestamp = new Timestamp(DateUtility.getCurrentDateWithoutTime().getTime());
+		//params.addValue("selectedTime", timestamp, Types.TIMESTAMP);
 		String sql = SQL_currentJobExecutionByJobNames;
 		
 		if(null != jobNames && jobNames.length > 0){
-			params.put("selectedJobNames", jobNames);
+			params.addValue("selectedJobNames", jobNames);
 			sql = SQL_currentJobExecutionByJobNamesFiltered;
 		}
 		try{

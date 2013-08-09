@@ -136,7 +136,7 @@
 					GROUP BY BATCH_JOB_INSTANCE.JOB_NAME
 				) inst
 			INNER JOIN BATCH_JOB_EXECUTION exc 
-				ON (exc.START_TIME = inst.JOB_START_TIME AND exc.START_TIME >= :selectedTime)
+				ON exc.START_TIME = inst.JOB_START_TIME
             ]]>
             </value>
 		</constructor-arg>
@@ -165,7 +165,7 @@
 					GROUP BY BATCH_JOB_INSTANCE.JOB_NAME
 				) inst
 			INNER JOIN BATCH_JOB_EXECUTION exc 
-				ON (exc.START_TIME = inst.JOB_START_TIME AND exc.START_TIME >= :selectedTime)
+				ON exc.START_TIME = inst.JOB_START_TIME
 			WHERE inst.JOB_NAME IN (:selectedJobNames)
             ]]>
             </value>

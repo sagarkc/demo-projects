@@ -59,17 +59,17 @@ public class JobExecutionRealtimeGrid extends ListGrid {
 	 * 
 	 */
 	private void addColumns() {
-		ListGridField nameField = new ListGridField(JobMonitorHistoryVo.Fields.JOB_NAME, "JOB Name");
+		ListGridField nameField = new ListGridField(JobExecutionHistoryVo.Fields.JOB_NAME, "JOB Name");
 		nameField.setWidth(180);
-		ListGridField exitCodeField = new ListGridField(JobMonitorHistoryVo.Fields.STATUS, "Status");
+		ListGridField exitCodeField = new ListGridField(JobExecutionHistoryVo.Fields.EXIT_CODE, "Status");
 		exitCodeField.setAlign(Alignment.CENTER);
 		exitCodeField.setWidth(100);
-		ListGridField startTimeField = new ListGridField(JobMonitorHistoryVo.Fields.LAST_STARTED_TIME, "Last Start Time");
+		ListGridField startTimeField = new ListGridField(JobExecutionHistoryVo.Fields.START_TIME, "Start Time");
 		startTimeField.setType(ListGridFieldType.DATE);
 		startTimeField.setWidth(150);
 		startTimeField.setAlign(Alignment.CENTER);
 		
-		ListGridField endTimeField = new ListGridField(JobMonitorHistoryVo.Fields.LAST_ENDED_TIME,  "Last End Time");
+		ListGridField endTimeField = new ListGridField(JobExecutionHistoryVo.Fields.END_TIME,  "End Time");
 		endTimeField.setWidth(150);
 		endTimeField.setAlign(Alignment.CENTER);
 		endTimeField.setType(ListGridFieldType.DATE);
