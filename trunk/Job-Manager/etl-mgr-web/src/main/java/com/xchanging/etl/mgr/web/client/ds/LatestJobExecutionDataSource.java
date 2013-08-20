@@ -78,7 +78,7 @@ public class LatestJobExecutionDataSource extends GwtRpcObjectDataSource {
 			final DSResponse response) {
 		String[] jobNames = null;
 		if(null != request.getCriteria()){
-			jobNames = request.getCriteria().getAttributeAsStringArray("jobNames");
+			jobNames = request.getCriteria().getAttributeAsStringArray("value");
 		}
 		monitorService.loadJobCurrentExecutionData(jobNames, new AsyncCallback<List<JobExecutionHistoryVo>>() {
 			

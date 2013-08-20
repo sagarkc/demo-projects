@@ -67,16 +67,17 @@ public class DistinctJobNamesDatasource extends GwtRpcObjectDataSource {
 		monitorService.loadAllJobNames(new AsyncCallback<List<String>>() {
 			@Override
 			public void onSuccess(List<String> result) {
-				if(null == result || result.size() <= 0)
-					return;
-				
-				Record[] records = new Record[result.size()];
-				for (int i = 0; i < result.size(); i++) {
-					String jobName = result.get(i);
-					Record record = new Record();
-					record.setAttribute(JobMonitorHistoryVo.Fields.JOB_NAME, jobName);
-					records[i] = record;
+				Record[] records = new Record[0];
+				if(null != result && result.size() > 0){
+					records = new Record[result.size()];
+					for (int i = 0; i < result.size(); i++) {
+						String jobName = result.get(i);
+						Record record = new Record();
+						record.setAttribute(JobMonitorHistoryVo.Fields.JOB_NAME, jobName);
+						records[i] = record;
+					}
 				}
+				
 				response.setData(records);
 				processResponse(requestId, response);
 			}

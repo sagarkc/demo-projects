@@ -20,7 +20,7 @@
 		<intercept-url pattern="/*" 		access="isAuthenticated()" />
 		<intercept-url pattern="/admin/*" 	access="hasRole('ROLE_ADMIN')" />
  		
-		<form-login login-page="/login.htm" default-target-url="/welcome.htm"
+		<form-login login-page="/login.htm" default-target-url="/EtlManager.html"
 			authentication-failure-url="/loginfailed.htm" />
 
 		<logout logout-success-url="/logout.htm" delete-cookies="JSESSIONID"/>
@@ -35,7 +35,7 @@
 	  <authentication-provider>
 		<user-service>
 			<user name="admin" password="admin" authorities="ROLE_ADMIN" />
-			<user name="guest" password="guest" authorities="ROLE_USER" />
+			<user name="monitor" password="monitor" authorities="ROLE_USER" />
 		</user-service>
 	  </authentication-provider>
 	</authentication-manager>

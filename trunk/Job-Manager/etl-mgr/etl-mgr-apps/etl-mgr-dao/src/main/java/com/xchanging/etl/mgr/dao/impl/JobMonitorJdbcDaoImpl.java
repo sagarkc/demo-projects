@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -127,7 +128,7 @@ public class JobMonitorJdbcDaoImpl implements JobMonitorJdbcDao {
 		String sql = SQL_currentJobExecutionByJobNames;
 		
 		if(null != jobNames && jobNames.length > 0){
-			params.addValue("selectedJobNames", jobNames);
+			params.addValue("selectedJobNames", Arrays.asList(jobNames), java.sql.Types.VARCHAR);
 			sql = SQL_currentJobExecutionByJobNamesFiltered;
 		}
 		try{
