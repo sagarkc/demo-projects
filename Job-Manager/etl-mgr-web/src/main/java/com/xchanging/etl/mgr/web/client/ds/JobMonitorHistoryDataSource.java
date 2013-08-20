@@ -77,19 +77,21 @@ public class JobMonitorHistoryDataSource extends GwtRpcObjectDataSource{
 			
 			@Override
 			public void onSuccess(List<JobMonitorHistoryVo> jobExecutionData) {
-				if(null == jobExecutionData || jobExecutionData.size() <= 0)
-					return;
-				ListGridRecord[] records = new ListGridRecord[jobExecutionData.size()];
-				for (int i = 0; i < jobExecutionData.size(); i++) {
-					JobMonitorHistoryVo monitorVo = jobExecutionData.get(i);
-					ListGridRecord record = new ListGridRecord();
-					record.setAttribute(JobMonitorHistoryVo.Fields.JOB_NAME, monitorVo.getJobName());
-					record.setAttribute(JobMonitorHistoryVo.Fields.STATUS, monitorVo.getStatus());
-					record.setAttribute(JobMonitorHistoryVo.Fields.LAST_STARTED_TIME, monitorVo.getLastStartedTime());
-					record.setAttribute(JobMonitorHistoryVo.Fields.LAST_ENDED_TIME, monitorVo.getLastEndedTime());
-					
-					records[i] = record;
+				ListGridRecord[] records = new ListGridRecord[0];
+				if(null != jobExecutionData && jobExecutionData.size() > 0){
+					records = new ListGridRecord[jobExecutionData.size()];
+					for (int i = 0; i < jobExecutionData.size(); i++) {
+						JobMonitorHistoryVo monitorVo = jobExecutionData.get(i);
+						ListGridRecord record = new ListGridRecord();
+						record.setAttribute(JobMonitorHistoryVo.Fields.JOB_NAME, monitorVo.getJobName());
+						record.setAttribute(JobMonitorHistoryVo.Fields.STATUS, monitorVo.getStatus());
+						record.setAttribute(JobMonitorHistoryVo.Fields.LAST_STARTED_TIME, monitorVo.getLastStartedTime());
+						record.setAttribute(JobMonitorHistoryVo.Fields.LAST_ENDED_TIME, monitorVo.getLastEndedTime());
+						
+						records[i] = record;
+					}
 				}
+				
 				response.setData(records);
 				processResponse(requestId, response);
 			}

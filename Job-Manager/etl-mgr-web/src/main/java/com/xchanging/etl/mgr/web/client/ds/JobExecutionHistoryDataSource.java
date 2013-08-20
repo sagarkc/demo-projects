@@ -13,16 +13,16 @@ package com.xchanging.etl.mgr.web.client.ds;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
-import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
-import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.types.FieldType;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
+import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.xchanging.etl.mgr.web.WebConstants;
 import com.xchanging.etl.mgr.web.client.core.GwtRpcObjectDataSource;
 import com.xchanging.etl.mgr.web.client.service.JobMonitorService;
@@ -84,28 +84,30 @@ public class JobExecutionHistoryDataSource extends GwtRpcObjectDataSource {
 			
 			@Override
 			public void onSuccess(List<JobExecutionHistoryVo> jobExecutionData) {
-				if(null == jobExecutionData || jobExecutionData.size() <= 0)
-					return;
-				
-				ListGridRecord[] records = new ListGridRecord[jobExecutionData.size()];
-				for (int i = 0; i < jobExecutionData.size(); i++) {
-					JobExecutionHistoryVo monitorVo = jobExecutionData.get(i);
-					ListGridRecord record = new ListGridRecord();
-					record.setAttribute(JobExecutionHistoryVo.Fields.JOB_NAME, monitorVo.getJobName());
-					record.setAttribute(JobExecutionHistoryVo.Fields.JOB_EXECUTION_ID, monitorVo.getJobExecutionId());
-					record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_CODE, monitorVo.getExitCode());
-					record.setAttribute(JobExecutionHistoryVo.Fields.START_TIME, monitorVo.getStartTime());
-					record.setAttribute(JobExecutionHistoryVo.Fields.END_TIME, monitorVo.getEndTime());
-					record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_MESSAGE, monitorVo.getExitMessage());
-					records[i] = record;
+				ListGridRecord[] records = new ListGridRecord[0];
+				if(null != jobExecutionData && jobExecutionData.size() > 0)
+				{
+					records = new ListGridRecord[jobExecutionData.size()];
+					for (int i = 0; i < jobExecutionData.size(); i++) {
+						JobExecutionHistoryVo monitorVo = jobExecutionData.get(i);
+						ListGridRecord record = new ListGridRecord();
+						record.setAttribute(JobExecutionHistoryVo.Fields.JOB_NAME, monitorVo.getJobName());
+						record.setAttribute(JobExecutionHistoryVo.Fields.JOB_EXECUTION_ID, monitorVo.getJobExecutionId());
+						record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_CODE, monitorVo.getExitCode());
+						record.setAttribute(JobExecutionHistoryVo.Fields.START_TIME, monitorVo.getStartTime());
+						record.setAttribute(JobExecutionHistoryVo.Fields.END_TIME, monitorVo.getEndTime());
+						record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_MESSAGE, monitorVo.getExitMessage());
+						records[i] = record;
+					}
 				}
+				
 				response.setData(records);
 				processResponse(requestId, response);
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				Window.alert("ERROR from loadHistoricalMonitorData(): " + caught.getStackTrace());
+				SC.say("ERROR from loadHistoricalMonitorData(): " + caught.getMessage());
 			}
 		});
 	}

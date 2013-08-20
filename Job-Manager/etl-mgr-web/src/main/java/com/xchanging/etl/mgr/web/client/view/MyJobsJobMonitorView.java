@@ -104,7 +104,7 @@ public class MyJobsJobMonitorView extends VLayout
 	@Override
 	public void selectedJobNamesChanged(MyJobSelectedJobNamesChangedEvent event) {
 		if(null != event && null != event.getSelectedJobNames()){
-			jobMonitorGrid.fetchData(
+			jobMonitorGrid.filterData(
 					new Criterion("jobNames", OperatorId.IN_SET, 
 							event.getSelectedJobNames()));
 		}
