@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+
+
+	<bean id="serverPushScheduler"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
+		lazy-init="false">
+		<property name="autoStartup" value="true" />
+		<property name="startupDelay" value="0" />
+		<property name="triggers">
+			<list>
+				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+					<property name="cronExpression" value="0/10 * * * * ?" />
+					<property name="startDelay" value="0" />
+					<property name="name" value="realtimeJobMonitorTrigger" />
+					<property name="jobDetail" ref="jobDetail_realtimeJobMonitor" />
+				</bean>
+
+			</list>
+		</property>
+	</bean>
+
+	<bean id="jobDetail_realtimeJobMonitor"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="realtimeJobMonitorTrigger" />
+		<property name="targetMethod" value="loadCurrentJobInfo" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<!-- <bean id="realtimeJobMonitorTrigger"
+		class="com.xchanging.etl.mgr.web.server.trigger.RealtimeJobMonitorTrigger">
+	
+	</bean> -->
+	
+</beans>

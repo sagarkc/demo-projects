@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.AbstractDetectingUrlHandlerMapping;
 
 import com.google.gwt.user.client.rpc.RemoteService;
-import com.xchanging.etl.mgr.web.WebConstants;
+import com.xchanging.etl.mgr.web.shared.WebConstants;
 
 /**
  *

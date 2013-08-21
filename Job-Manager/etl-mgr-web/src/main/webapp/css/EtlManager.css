@@ -430,3 +430,31 @@ h1 {
 	font-weight: bold;
 }
 
+.status_info, .status_success, .status_unknown, .status_error {
+    border: 1px solid;
+    margin: 5px 0px;
+    padding: 0;
+    background-repeat: no-repeat;
+	border-radius:.5em; 
+}
+.status_info {
+    color: #00529B;
+    background-color: #BDE5F8;
+    background-image: url('images/monitor/info.png');
+}
+.status_success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    background-image:url('images/monitor/success.png');
+}
+.status_unknown {
+    color: #9F6000;
+    background-color: #FEEFB3;
+    background-image: url('images/monitor/unknown.png');
+}
+.status_error {
+    color: #D8000C;
+    background-color: #FFBABA;
+    background-image: url('images/monitor/error.png');
+}
+

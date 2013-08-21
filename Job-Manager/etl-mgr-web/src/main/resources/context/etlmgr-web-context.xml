@@ -67,6 +67,6 @@
 		</property>
 	</bean>
 
-	
+	<import resource="server-push-scheduler-context.xml"/>
 
 </beans>

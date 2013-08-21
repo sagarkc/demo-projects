@@ -9,9 +9,9 @@ import org.springframework.jdbc.support.incrementer.DataFieldMaxValueIncrementer
 import org.springframework.jdbc.support.incrementer.SqlServerMaxValueIncrementer;
 
 
-public class CustomIncrementerFactory implements DataFieldMaxValueIncrementerFactory {
+public class SqlServerCustomIncrementerFactory implements DataFieldMaxValueIncrementerFactory {
 
-	private static Logger logger = Logger.getLogger(CustomIncrementerFactory.class.getName());
+	private static Logger logger = Logger.getLogger(SqlServerCustomIncrementerFactory.class.getName());
 
 	private DataSource dataSource;
 	public DataSource getDataSource() {

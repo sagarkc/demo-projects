@@ -11,7 +11,6 @@ import javax.sql.DataSource;
 import org.springframework.batch.item.database.support.DataFieldMaxValueIncrementerFactory;
 import org.springframework.jdbc.support.incrementer.DataFieldMaxValueIncrementer;
 import org.springframework.jdbc.support.incrementer.MySQLMaxValueIncrementer;
-import org.springframework.jdbc.support.incrementer.SqlServerMaxValueIncrementer;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com

@@ -123,8 +123,8 @@ public class JobMonitorJdbcDaoImpl implements JobMonitorJdbcDao {
 	public List<JobExecutionHistoryVo> loadJobCurrentExecutionData(
 			String[] jobNames) throws ApplicationException {
 		MapSqlParameterSource params = new MapSqlParameterSource();
-		//Timestamp timestamp = new Timestamp(DateUtility.getCurrentDateWithoutTime().getTime());
-		//params.addValue("selectedTime", timestamp, Types.TIMESTAMP);
+		Timestamp timestamp = new Timestamp(DateUtility.getCurrentDateWithoutTime().getTime());
+		params.addValue("selectedTime", timestamp, Types.TIMESTAMP);
 		String sql = SQL_currentJobExecutionByJobNames;
 		
 		if(null != jobNames && jobNames.length > 0){
