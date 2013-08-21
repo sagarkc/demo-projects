@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xchanging.etl.mgr.model.vo.JobMonitorVo;
 import com.xchanging.etl.mgr.service.JobDetailMonitorService;
-import com.xchanging.etl.mgr.web.WebConstants;
+import com.xchanging.etl.mgr.web.shared.WebConstants;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com

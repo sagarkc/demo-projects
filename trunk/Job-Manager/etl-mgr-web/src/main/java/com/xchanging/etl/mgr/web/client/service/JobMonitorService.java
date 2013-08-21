@@ -11,7 +11,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
-import com.xchanging.etl.mgr.web.WebConstants;
+import com.xchanging.etl.mgr.web.shared.WebConstants;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com

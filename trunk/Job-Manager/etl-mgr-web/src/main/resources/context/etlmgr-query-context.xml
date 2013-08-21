@@ -122,7 +122,7 @@
 				exc.JOB_EXECUTION_ID, 
 				exc.START_TIME as JOB_START_TIME,  
 				exc.END_TIME as JOB_END_TIME, 
-				exc.EXIT_CODE,
+				exc.STATUS as EXIT_CODE,
 				exc.EXIT_MESSAGE
 			FROM (	
 					SELECT 
@@ -137,6 +137,7 @@
 				) inst
 			INNER JOIN BATCH_JOB_EXECUTION exc 
 				ON exc.START_TIME = inst.JOB_START_TIME
+			WHERE inst.JOB_START_TIME >= :selectedTime
             ]]>
             </value>
 		</constructor-arg>
@@ -151,7 +152,7 @@
 				exc.JOB_EXECUTION_ID, 
 				exc.START_TIME as JOB_START_TIME,  
 				exc.END_TIME as JOB_END_TIME, 
-				exc.EXIT_CODE,
+				exc.STATUS as EXIT_CODE,
 				exc.EXIT_MESSAGE
 			FROM (	
 					SELECT 
@@ -167,6 +168,7 @@
 			INNER JOIN BATCH_JOB_EXECUTION exc 
 				ON exc.START_TIME = inst.JOB_START_TIME
 			WHERE inst.JOB_NAME IN (:selectedJobNames)
+				AND inst.JOB_START_TIME >= :selectedTime
             ]]>
             </value>
 		</constructor-arg>

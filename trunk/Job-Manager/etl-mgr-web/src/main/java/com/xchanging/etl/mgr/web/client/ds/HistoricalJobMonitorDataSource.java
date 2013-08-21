@@ -18,8 +18,8 @@ import com.smartgwt.client.data.DataSourceField;
 import com.smartgwt.client.types.DSDataFormat;
 import com.smartgwt.client.types.FieldType;
 import com.smartgwt.client.util.DateDisplayFormatter;
-import com.xchanging.etl.mgr.web.WebConstants;
 import com.xchanging.etl.mgr.web.client.core.AbstractRestDataSource;
+import com.xchanging.etl.mgr.web.shared.WebConstants;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com

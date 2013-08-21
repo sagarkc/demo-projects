@@ -22,4 +22,12 @@ public final class DateUtility {
 		return calendar.getTime();
 	}
 	
+	public static Date getCurrentDateWitHour(){
+		Calendar calendar = GregorianCalendar.getInstance();
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		return calendar.getTime();
+	}
+	
 }

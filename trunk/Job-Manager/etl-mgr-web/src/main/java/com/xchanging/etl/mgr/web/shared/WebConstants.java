@@ -1,5 +1,5 @@
 
-package com.xchanging.etl.mgr.web;
+package com.xchanging.etl.mgr.web.shared;
 
 import de.novanic.eventservice.client.event.domain.Domain;
 import de.novanic.eventservice.client.event.domain.DomainFactory;
@@ -26,5 +26,19 @@ public interface WebConstants {
 	 * Domain for monitoring Scheduler
 	 */
 	Domain DOMAIN_MONITOR_SCHEDULER = DomainFactory.getDomain("CONTEXT_MONITOR_SCHEDULER");
+	
+	
+	/*   
+	 * 	COMPLETED
+		FAILED
+		STARTED*/
+	String JOB_STATUS_COMPLETED = "COMPLETED";
+	String JOB_STATUS_FAILED = "FAILED";
+	String JOB_STATUS_STARTED = "STARTED";
+	
+	String JOB_EXIT_CODE_COMPLETED = "COMPLETED";
+	String JOB_EXIT_CODE_FAILED = "FAILED";
+	String JOB_EXIT_CODE_STARTED = "STARTED";
+	String JOB_EXIT_CODE_UNKNOWN = "UNKNOWN";
 	
 }

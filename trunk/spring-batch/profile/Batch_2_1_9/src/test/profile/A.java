@@ -36,6 +36,7 @@ public class A implements InitializingBean, ItemReader<String> {
 
 		if (!hasRun) {
 			hasRun = true;
+			Thread.sleep(60000);
 			return "Hello from A...";
 		}
 		return null;

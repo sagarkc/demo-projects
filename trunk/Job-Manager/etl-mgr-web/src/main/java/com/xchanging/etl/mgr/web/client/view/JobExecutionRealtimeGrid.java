@@ -3,8 +3,10 @@
  */
 package com.xchanging.etl.mgr.web.client.view;
 
+import java.util.Date;
 import java.util.List;
 
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.data.Criterion;
@@ -18,11 +20,14 @@ import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.types.OperatorId;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.grid.CellFormatter;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.widgets.layout.HLayout;
 import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.xchanging.etl.mgr.web.client.ds.JobExecutionHistoryDataSource;
@@ -68,15 +73,49 @@ public class JobExecutionRealtimeGrid extends ListGrid {
 		ListGridField exitCodeField = new ListGridField(JobExecutionHistoryVo.Fields.EXIT_CODE, "Status");
 		exitCodeField.setAlign(Alignment.CENTER);
 		exitCodeField.setWidth(100);
+		
+		final DateTimeFormat dateFormatter = DateTimeFormat.getFormat("MMM d, yyyy");  
+        
+		
 		ListGridField startTimeField = new ListGridField(JobExecutionHistoryVo.Fields.START_TIME, "Start Time");
 		startTimeField.setType(ListGridFieldType.DATE);
 		startTimeField.setWidth(150);
 		startTimeField.setAlign(Alignment.CENTER);
+		startTimeField.setCellFormatter(new CellFormatter() {  
+            public String format(Object value, ListGridRecord record, int rowNum, int colNum) {  
+                if (value != null) {  
+  
+                    try {  
+                        Date dateValue = (Date) value;  
+                        return dateFormatter.format(dateValue);  
+                    } catch (Exception e) {  
+                        return value.toString();  
+                    }  
+                } else {  
+                    return "";  
+                }  
+            }  
+        });
 		
 		ListGridField endTimeField = new ListGridField(JobExecutionHistoryVo.Fields.END_TIME,  "End Time");
 		endTimeField.setWidth(150);
 		endTimeField.setAlign(Alignment.CENTER);
 		endTimeField.setType(ListGridFieldType.DATE);
+		endTimeField.setCellFormatter(new CellFormatter() {  
+            public String format(Object value, ListGridRecord record, int rowNum, int colNum) {  
+                if (value != null) {  
+  
+                    try {  
+                        Date dateValue = (Date) value;  
+                        return dateFormatter.format(dateValue);  
+                    } catch (Exception e) {  
+                        return value.toString();  
+                    }  
+                } else {  
+                    return "";  
+                }  
+            }  
+        });
 		
 		ListGridField executeJobField = new ListGridField("executeJob", "Action");
 		executeJobField.setAlign(Alignment.RIGHT);
@@ -100,6 +139,41 @@ public class JobExecutionRealtimeGrid extends ListGrid {
 		//populateData();
 	}
 
+	@Override  
+    protected String getBaseStyle(ListGridRecord record, int rowNum, int colNum) {  
+        if (getFieldName(colNum).equals(JobExecutionHistoryVo.Fields.EXIT_CODE)) {  
+        	String value = record.getAttributeAsString(JobExecutionHistoryVo.Fields.EXIT_CODE);
+
+        	if("COMPLETED".equals(value)){
+        		return "status_success";
+        	} else if("FAILED".equals(value)){
+        		return "status_error";
+        	} else if("UNKNOWN".equals(value)){
+        		return "status_unknown";
+        	} else {  
+                return super.getBaseStyle(record, rowNum, colNum);  
+            }  
+        } else {  
+            return super.getBaseStyle(record, rowNum, colNum);  
+        }  
+    } 
+	
+	/*protected String getCellCSSText(ListGridRecord record, int rowNum, int colNum) {  
+        if (getFieldName(colNum).equals(JobExecutionHistoryVo.Fields.EXIT_CODE)) {  
+        	String value = record.getAttributeAsString(JobExecutionHistoryVo.Fields.EXIT_CODE);
+
+        	if("COMPLETED".equals(value)){
+        		return "font-weight:bold; color:#287fd6;";
+        	} else if("FAILED".equals(value)){
+        		return "font-weight:bold; color:#d64949;";
+        	} else {  
+                return super.getCellCSSText(record, rowNum, colNum);  
+            }  
+        	
+        } else {  
+            return super.getCellCSSText(record, rowNum, colNum);  
+        }  
+    }  */
 	
 	/* (non-Javadoc)
 	 * @see com.smartgwt.client.widgets.grid.ListGrid#createRecordComponent(com.smartgwt.client.widgets.grid.ListGridRecord, java.lang.Integer)

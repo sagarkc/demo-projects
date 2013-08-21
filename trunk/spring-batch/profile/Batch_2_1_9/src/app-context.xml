@@ -40,11 +40,11 @@
 			<list>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_01" />
-					<property name="cronExpression" value="0 0/1 * * * ?" />
+					<property name="cronExpression" value="0 0/5 * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_02" />
-					<property name="cronExpression" value="0/30 * * * * ?" />
+					<property name="cronExpression" value="0 0/10 * * * ?" />
 				</bean> 
 			</list>
 		</property>
@@ -53,9 +53,9 @@
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
 		lazy-init="true">
-		<property name="dataSource" ref="genevaDataSource" />
+		<property name="dataSource" ref="sqlServerDs" />
 	</bean>
-	<!-- <bean id="genevaDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	<bean id="sqlServerDs" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 		<property name="url" value="jdbc:sqlserver://KIWS-SG1736;instanceName=SQLEXPRESS;databaseName=JOB_MANAGER"></property>
@@ -64,9 +64,9 @@
 		<property name="initialSize" value="8" />
 		<property name="maxActive" value="15" />
 		<property name="maxIdle" value="7" />
-	</bean> -->
+	</bean> 
 	
-	<bean id="genevaDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	<bean id="mySqlDs" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/job_manager?zeroDateTimeBehavior=convertToNull" />
@@ -79,11 +79,11 @@
 	
 	<bean id="jobRepository"
 		class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
-		<property name="dataSource" ref="genevaDataSource" />
+		<property name="dataSource" ref="sqlServerDs" />
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="incrementerFactory">
-			<bean class="test.profile.batch.MysqlDataFieldMaxValueIncrementerFactory">
-				<property name="dataSource" ref="genevaDataSource" />
+			<bean class="test.profile.batch.SqlServerCustomIncrementerFactory">
+				<property name="dataSource" ref="sqlServerDs" />
 			</bean>
 		</property>
 	</bean>

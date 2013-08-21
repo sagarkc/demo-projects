@@ -12,9 +12,7 @@ package com.xchanging.etl.mgr.web.client.ds;
 
 import java.util.List;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
@@ -22,9 +20,8 @@ import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.FieldType;
 import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
-import com.xchanging.etl.mgr.web.WebConstants;
 import com.xchanging.etl.mgr.web.client.core.GwtRpcObjectDataSource;
-import com.xchanging.etl.mgr.web.client.service.JobMonitorService;
+import com.xchanging.etl.mgr.web.client.endpoint.RemoteServiceEndpointFactory;
 import com.xchanging.etl.mgr.web.client.service.JobMonitorServiceAsync;
 
 /**
@@ -34,7 +31,8 @@ import com.xchanging.etl.mgr.web.client.service.JobMonitorServiceAsync;
 public class DistinctJobNamesDatasource extends GwtRpcObjectDataSource {
 
 	private static DistinctJobNamesDatasource instance = null;  
-	private final JobMonitorServiceAsync monitorService;
+	private final JobMonitorServiceAsync monitorService 
+		= RemoteServiceEndpointFactory.getInstance().getJobMonitorServiceEndpoint();
 	
     public static DistinctJobNamesDatasource getInstance() {  
         if (instance == null) {  
@@ -47,10 +45,6 @@ public class DistinctJobNamesDatasource extends GwtRpcObjectDataSource {
 	 */
 	private DistinctJobNamesDatasource(String id) {
 		setID(id);
-		monitorService = GWT.create(JobMonitorService.class);
-		ServiceDefTarget endpoint = (ServiceDefTarget) monitorService;
-		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL()
-				+ JobMonitorService.RPC_TARGET + WebConstants.RPC_EXT);
 		
 		DataSourceField nameField = new DataSourceField(
 				JobExecutionHistoryVo.Fields.JOB_NAME, FieldType.TEXT);
