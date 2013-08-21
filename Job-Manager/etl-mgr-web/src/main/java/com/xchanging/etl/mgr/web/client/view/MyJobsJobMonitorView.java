@@ -134,6 +134,7 @@ public class MyJobsJobMonitorView extends VLayout
 						record.setAttribute(JobExecutionHistoryVo.Fields.JOB_NAME, monitorVo.getJobName());
 						record.setAttribute(JobExecutionHistoryVo.Fields.JOB_EXECUTION_ID, monitorVo.getJobExecutionId());
 						record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_CODE, monitorVo.getExitCode());
+						record.setAttribute(JobExecutionHistoryVo.Fields.STATUS_CODE, monitorVo.getStatusCode());
 						record.setAttribute(JobExecutionHistoryVo.Fields.START_TIME, monitorVo.getStartTime());
 						record.setAttribute(JobExecutionHistoryVo.Fields.END_TIME, monitorVo.getEndTime());
 						record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_MESSAGE, monitorVo.getExitMessage());

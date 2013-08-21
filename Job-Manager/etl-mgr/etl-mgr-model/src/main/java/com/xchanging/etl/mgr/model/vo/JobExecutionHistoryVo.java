@@ -27,6 +27,7 @@ public class JobExecutionHistoryVo implements Serializable, IsSerializable {
 		String START_TIME = "startTime";
 		String END_TIME = "endTime";
 		String EXIT_CODE = "exitCode";
+		String STATUS_CODE = "statusCode";
 		String EXIT_MESSAGE = "exitMessage";
 	}
 	
@@ -36,6 +37,16 @@ public class JobExecutionHistoryVo implements Serializable, IsSerializable {
 	private Date endTime;
 	private String exitCode;
 	private String exitMessage;
+	private String statusCode;
+
+	@ResultSetColumn(propertyName="statusCode", mappedColumnName="STATUS_CODE")
+	public String getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
+	}
 
 	/**
 	 * @return the jobName
