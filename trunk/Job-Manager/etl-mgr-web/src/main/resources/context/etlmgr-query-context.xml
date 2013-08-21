@@ -122,7 +122,8 @@
 				exc.JOB_EXECUTION_ID, 
 				exc.START_TIME as JOB_START_TIME,  
 				exc.END_TIME as JOB_END_TIME, 
-				exc.STATUS as EXIT_CODE,
+				exc.STATUS as STATUS_CODE,
+				exc.EXIT_CODE,
 				exc.EXIT_MESSAGE
 			FROM (	
 					SELECT 
@@ -152,7 +153,8 @@
 				exc.JOB_EXECUTION_ID, 
 				exc.START_TIME as JOB_START_TIME,  
 				exc.END_TIME as JOB_END_TIME, 
-				exc.STATUS as EXIT_CODE,
+				exc.STATUS as STATUS_CODE,
+				exc.EXIT_CODE,
 				exc.EXIT_MESSAGE
 			FROM (	
 					SELECT 

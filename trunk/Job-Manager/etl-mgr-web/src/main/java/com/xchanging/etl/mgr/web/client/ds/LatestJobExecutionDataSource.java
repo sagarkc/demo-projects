@@ -54,13 +54,15 @@ public class LatestJobExecutionDataSource extends GwtRpcObjectDataSource {
 				+ "." + JobMonitorHistoryVo.Fields.JOB_NAME);
 		
 		DataSourceField exitCodeField = new DataSourceField(JobExecutionHistoryVo.Fields.EXIT_CODE, FieldType.TEXT);
+		DataSourceField statusCodeField = new DataSourceField(JobExecutionHistoryVo.Fields.STATUS_CODE, FieldType.TEXT);
 		DataSourceField startTimeField = new DataSourceField(JobExecutionHistoryVo.Fields.START_TIME, FieldType.DATETIME);
 		DataSourceField endTimeField = new DataSourceField(JobExecutionHistoryVo.Fields.END_TIME,  FieldType.DATETIME);
 		DataSourceField exitMessageField = new DataSourceField(JobExecutionHistoryVo.Fields.EXIT_MESSAGE, FieldType.TEXT);
 		
 		addField(executionIdField);
 		addField(nameField);
-		addField(exitCodeField); 
+		addField(exitCodeField);
+		addField(statusCodeField);
 		addField(startTimeField); 
 		addField(endTimeField);
 		addField(exitMessageField);
@@ -90,6 +92,7 @@ public class LatestJobExecutionDataSource extends GwtRpcObjectDataSource {
 					record.setAttribute(JobExecutionHistoryVo.Fields.JOB_NAME, monitorVo.getJobName());
 					record.setAttribute(JobExecutionHistoryVo.Fields.JOB_EXECUTION_ID, monitorVo.getJobExecutionId());
 					record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_CODE, monitorVo.getExitCode());
+					record.setAttribute(JobExecutionHistoryVo.Fields.STATUS_CODE, monitorVo.getStatusCode());
 					record.setAttribute(JobExecutionHistoryVo.Fields.START_TIME, monitorVo.getStartTime());
 					record.setAttribute(JobExecutionHistoryVo.Fields.END_TIME, monitorVo.getEndTime());
 					record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_MESSAGE, monitorVo.getExitMessage());

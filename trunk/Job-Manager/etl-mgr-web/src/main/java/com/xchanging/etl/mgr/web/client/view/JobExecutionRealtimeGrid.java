@@ -33,6 +33,7 @@ import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.xchanging.etl.mgr.web.client.ds.JobExecutionHistoryDataSource;
 import com.xchanging.etl.mgr.web.client.ds.JobMonitorHistoryDataSource;
 import com.xchanging.etl.mgr.web.client.ds.LatestJobExecutionDataSource;
+import com.xchanging.etl.mgr.web.shared.WebConstants;
 
 /**
  * @author Sabuj
@@ -69,12 +70,14 @@ public class JobExecutionRealtimeGrid extends ListGrid {
 	 */
 	private void addColumns() {
 		ListGridField nameField = new ListGridField(JobExecutionHistoryVo.Fields.JOB_NAME, "JOB Name");
-		nameField.setWidth(180);
-		ListGridField exitCodeField = new ListGridField(JobExecutionHistoryVo.Fields.EXIT_CODE, "Status");
+		ListGridField exitCodeField = new ListGridField(JobExecutionHistoryVo.Fields.EXIT_CODE, "Exit Code");
 		exitCodeField.setAlign(Alignment.CENTER);
 		exitCodeField.setWidth(100);
+		ListGridField statusCodeField = new ListGridField(JobExecutionHistoryVo.Fields.STATUS_CODE, "Status");
+		statusCodeField.setAlign(Alignment.CENTER);
+		statusCodeField.setWidth(100);
 		
-		final DateTimeFormat dateFormatter = DateTimeFormat.getFormat("MMM d, yyyy");  
+		final DateTimeFormat dateFormatter = DateTimeFormat.getFormat("dd-MMM-yyyy HH:mm:ss.SSS");  
         
 		
 		ListGridField startTimeField = new ListGridField(JobExecutionHistoryVo.Fields.START_TIME, "Start Time");
@@ -119,8 +122,9 @@ public class JobExecutionRealtimeGrid extends ListGrid {
 		
 		ListGridField executeJobField = new ListGridField("executeJob", "Action");
 		executeJobField.setAlign(Alignment.RIGHT);
+		executeJobField.setWidth(75);
 		
-		setFields(nameField, exitCodeField, 
+		setFields(nameField, exitCodeField, statusCodeField, 
 				startTimeField, endTimeField, executeJobField);
 	}
 
@@ -140,21 +144,37 @@ public class JobExecutionRealtimeGrid extends ListGrid {
 	}
 
 	@Override  
-    protected String getBaseStyle(ListGridRecord record, int rowNum, int colNum) {  
+    protected String getCellCSSText(ListGridRecord record, int rowNum, int colNum) {  
         if (getFieldName(colNum).equals(JobExecutionHistoryVo.Fields.EXIT_CODE)) {  
         	String value = record.getAttributeAsString(JobExecutionHistoryVo.Fields.EXIT_CODE);
 
-        	if("COMPLETED".equals(value)){
-        		return "status_success";
-        	} else if("FAILED".equals(value)){
-        		return "status_error";
-        	} else if("UNKNOWN".equals(value)){
-        		return "status_unknown";
+        	if(WebConstants.JOB_EXIT_CODE_COMPLETED.equals(value)){
+        		return WebConstants.STYLE_JOB_STATUS_COMPLETED;
+        	} else if(WebConstants.JOB_EXIT_CODE_FAILED.equals(value)){
+        		return WebConstants.STYLE_JOB_STATUS_ERROR;
+        	} else if(WebConstants.JOB_EXIT_CODE_UNKNOWN.equals(value)){
+        		return WebConstants.STYLE_JOB_STATUS_UNKNOWN;
+        	} else if(WebConstants.JOB_EXIT_CODE_STARTED.equals(value)){
+        		return WebConstants.STYLE_JOB_STATUS_STARTED;
         	} else {  
-                return super.getBaseStyle(record, rowNum, colNum);  
+                return super.getCellCSSText(record, rowNum, colNum);  
+            }  
+        } else if (getFieldName(colNum).equals(JobExecutionHistoryVo.Fields.STATUS_CODE)) {  
+        	String value = record.getAttributeAsString(JobExecutionHistoryVo.Fields.STATUS_CODE);
+
+        	if(WebConstants.JOB_EXIT_CODE_COMPLETED.equals(value)){
+        		return WebConstants.STYLE_JOB_STATUS_COMPLETED;
+        	} else if(WebConstants.JOB_EXIT_CODE_FAILED.equals(value)){
+        		return WebConstants.STYLE_JOB_STATUS_ERROR;
+        	} else if(WebConstants.JOB_EXIT_CODE_UNKNOWN.equals(value)){
+        		return WebConstants.STYLE_JOB_STATUS_UNKNOWN;
+        	} else if(WebConstants.JOB_EXIT_CODE_STARTED.equals(value)){
+        		return WebConstants.STYLE_JOB_STATUS_STARTED;
+        	} else {  
+                return super.getCellCSSText(record, rowNum, colNum);  
             }  
         } else {  
-            return super.getBaseStyle(record, rowNum, colNum);  
+            return super.getCellCSSText(record, rowNum, colNum);  
         }  
     } 
 	
