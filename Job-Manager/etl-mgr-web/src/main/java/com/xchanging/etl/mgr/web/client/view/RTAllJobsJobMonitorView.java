@@ -41,18 +41,18 @@ import de.novanic.eventservice.client.event.RemoteEventServiceFactory;
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
  *
  */
-public class MyJobsJobMonitorView extends VLayout
+public class RTAllJobsJobMonitorView extends VLayout
 		implements MyJobSelectedJobNamesChangedEventListener{
 
 	
-	private final JobExecutionRealtimeGrid jobMonitorGrid 
-		= new JobExecutionRealtimeGrid();
+	private final RealTimeJobMonitorGrid jobMonitorGrid 
+		= new RealTimeJobMonitorGrid();
 	private final ToolStrip jobsToolStrip = new ToolStrip();
 	
 	/**
 	 * 
 	 */
-	public MyJobsJobMonitorView() {
+	public RTAllJobsJobMonitorView() {
 		setStyleName("job-monitor-realTime");
 		setWidth100();
 		setHeight100();

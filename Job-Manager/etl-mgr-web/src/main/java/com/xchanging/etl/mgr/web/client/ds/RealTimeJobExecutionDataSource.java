@@ -29,21 +29,21 @@ import com.xchanging.etl.mgr.web.client.service.JobMonitorServiceAsync;
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
  *
  */
-public class LatestJobExecutionDataSource extends GwtRpcObjectDataSource {
-	private static LatestJobExecutionDataSource instance = null;  
+public class RealTimeJobExecutionDataSource extends GwtRpcObjectDataSource {
+	private static RealTimeJobExecutionDataSource instance = null;  
 	private final JobMonitorServiceAsync monitorService
 		= RemoteServiceEndpointFactory.getInstance().getJobMonitorServiceEndpoint();
 	
-    public static LatestJobExecutionDataSource getInstance() {  
+    public static RealTimeJobExecutionDataSource getInstance() {  
         if (instance == null) {  
-            instance = new LatestJobExecutionDataSource("LatestJobExecutionDataSource");  
+            instance = new RealTimeJobExecutionDataSource("LatestJobExecutionDataSource");  
         }  
         return instance;  
     }  
 	/**
 	 * 
 	 */
-	private LatestJobExecutionDataSource(String id) {
+	private RealTimeJobExecutionDataSource(String id) {
 		setID(id);
 		
 		DataSourceField executionIdField = new DataSourceField(JobExecutionHistoryVo.Fields.JOB_EXECUTION_ID, FieldType.INTEGER);

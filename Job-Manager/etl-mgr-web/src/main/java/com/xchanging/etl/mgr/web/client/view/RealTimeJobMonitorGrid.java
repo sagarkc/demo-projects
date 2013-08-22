@@ -32,23 +32,23 @@ import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.xchanging.etl.mgr.web.client.ds.JobExecutionHistoryDataSource;
 import com.xchanging.etl.mgr.web.client.ds.JobMonitorHistoryDataSource;
-import com.xchanging.etl.mgr.web.client.ds.LatestJobExecutionDataSource;
+import com.xchanging.etl.mgr.web.client.ds.RealTimeJobExecutionDataSource;
 import com.xchanging.etl.mgr.web.shared.WebConstants;
 
 /**
  * @author Sabuj
  *
  */
-public class JobExecutionRealtimeGrid extends ListGrid {
+public class RealTimeJobMonitorGrid extends ListGrid {
 
 	
 	private List<JobMonitorHistoryVo> jobExecutionData;
-	private LatestJobExecutionDataSource jobMonitorHistoryDS = LatestJobExecutionDataSource.getInstance();
+	private RealTimeJobExecutionDataSource jobMonitorHistoryDS = RealTimeJobExecutionDataSource.getInstance();
 	
 	/**
 	 * 
 	 */
-	public JobExecutionRealtimeGrid() {
+	public RealTimeJobMonitorGrid() {
 		addColumns();
 		setDataSource(jobMonitorHistoryDS);
 		setShowAllRecords(true); 
