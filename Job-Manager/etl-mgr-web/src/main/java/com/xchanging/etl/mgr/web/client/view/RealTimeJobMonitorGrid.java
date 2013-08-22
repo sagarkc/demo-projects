@@ -34,14 +34,19 @@ public class RealTimeJobMonitorGrid extends ListGrid {
 	 * 
 	 */
 	public RealTimeJobMonitorGrid() {
-		setID(ID);
-		addColumns();
+		
 		setShowAllRecords(true); 
 		setAutoFetchData(false);
 		setCanExpandRecords(false);
 		setShowRecordComponents(true);
 		setShowRecordComponentsByCell(true);
 		setShowAllColumns(true);
+		setGroupByField(JobExecutionHistoryVo.Fields.STATUS_CODE);
+		SortSpecifier sortSpecifier = new SortSpecifier(
+				JobExecutionHistoryVo.Fields.STATUS_CODE, 
+				SortDirection.DESCENDING);
+		setSort(new SortSpecifier[]{sortSpecifier});
+		addColumns();
 		invalidateCache();
 	}
 	
@@ -105,12 +110,6 @@ public class RealTimeJobMonitorGrid extends ListGrid {
 		ListGridField executeJobField = new ListGridField("executeJob", "Action");
 		executeJobField.setAlign(Alignment.RIGHT);
 		executeJobField.setWidth(75);
-		
-		setGroupByField(JobExecutionHistoryVo.Fields.STATUS_CODE);
-		SortSpecifier sortSpecifier = new SortSpecifier(
-				JobExecutionHistoryVo.Fields.STATUS_CODE, 
-				SortDirection.DESCENDING);
-		setSort(new SortSpecifier[]{sortSpecifier});
 		
 		setFields(nameField, exitCodeField, statusCodeField, 
 				startTimeField, endTimeField, executeJobField);
