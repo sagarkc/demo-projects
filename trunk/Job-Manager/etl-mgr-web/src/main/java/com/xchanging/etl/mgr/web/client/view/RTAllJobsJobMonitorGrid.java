@@ -20,20 +20,21 @@ import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
+import com.xchanging.etl.mgr.web.client.ds.RTAllJobsJobMonitorDataSource;
 import com.xchanging.etl.mgr.web.shared.WebConstants;
 
 /**
  * @author Sabuj
  *
  */
-public class RealTimeJobMonitorGrid extends ListGrid {
+public class RTAllJobsJobMonitorGrid extends ListGrid {
 
-	public static final String ID = "RealTimeJobMonitorGrid";
+	public static final String ID = "RTAllJobsJobMonitorGrid";
 	
 	/**
 	 * 
 	 */
-	public RealTimeJobMonitorGrid() {
+	public RTAllJobsJobMonitorGrid() {
 		setID(ID);
 		addColumns();
 		setShowAllRecords(true); 
@@ -43,6 +44,10 @@ public class RealTimeJobMonitorGrid extends ListGrid {
 		setShowRecordComponentsByCell(true);
 		setShowAllColumns(true);
 		invalidateCache();
+		setDataSource(
+				RTAllJobsJobMonitorDataSource.getInstance()
+				);
+		fetchData();
 	}
 	
 	

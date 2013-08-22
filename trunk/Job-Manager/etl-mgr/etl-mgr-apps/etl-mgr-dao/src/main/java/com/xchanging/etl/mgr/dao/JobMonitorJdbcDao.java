@@ -7,6 +7,7 @@ package com.xchanging.etl.mgr.dao;
 import java.util.List;
 
 import com.xchanging.etl.mgr.common.exception.ApplicationException;
+import com.xchanging.etl.mgr.model.criteria.RTJobFilterCriteria;
 import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.xchanging.etl.mgr.model.vo.JobMonitorVo;
@@ -32,5 +33,19 @@ public interface JobMonitorJdbcDao {
 
 	public List<JobExecutionHistoryVo> loadJobCurrentExecutionData(
 			String[] jobNames) throws ApplicationException;
+
+	/**
+	 * @return
+	 * @throws ApplicationException 
+	 */
+	public List<JobExecutionHistoryVo> loadRealtimeJobMonitorData() throws ApplicationException;
+
+	/**
+	 * @param filterCriteria
+	 * @return
+	 * @throws ApplicationException 
+	 */
+	public List<JobExecutionHistoryVo> loadRealtimeJobMonitorData(
+			RTJobFilterCriteria filterCriteria) throws ApplicationException;
 	
 }

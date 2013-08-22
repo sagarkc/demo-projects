@@ -12,8 +12,6 @@ package com.xchanging.etl.mgr.web.client.ds;
 
 import java.util.List;
 
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSourceField;
@@ -22,30 +20,20 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.xchanging.etl.mgr.web.client.core.GwtRpcObjectDataSource;
-import com.xchanging.etl.mgr.web.client.endpoint.RemoteServiceEndpointFactory;
-import com.xchanging.etl.mgr.web.client.service.JobMonitorServiceAsync;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
  *
  */
-public class RealTimeJobExecutionDataSource extends GwtRpcObjectDataSource {
-	private static RealTimeJobExecutionDataSource instance = null;  
-	private final JobMonitorServiceAsync monitorService
-		= RemoteServiceEndpointFactory.getInstance().getJobMonitorServiceEndpoint();
+public abstract class RealTimeJobExecutionDataSource extends GwtRpcObjectDataSource {
 	
-    public static RealTimeJobExecutionDataSource getInstance() {  
-        if (instance == null) {  
-            instance = new RealTimeJobExecutionDataSource("LatestJobExecutionDataSource");  
-        }  
-        return instance;  
-    }  
+	
+	
 	/**
 	 * 
 	 */
-	private RealTimeJobExecutionDataSource(String id) {
+	protected RealTimeJobExecutionDataSource(String id) {
 		setID(id);
-		
 		DataSourceField executionIdField = new DataSourceField(JobExecutionHistoryVo.Fields.JOB_EXECUTION_ID, FieldType.INTEGER);
 		executionIdField.setPrimaryKey(true);
 		
@@ -68,45 +56,33 @@ public class RealTimeJobExecutionDataSource extends GwtRpcObjectDataSource {
 		addField(exitMessageField);
 	}
 	
-	@Override
-	protected void executeFetch(final String requestId, DSRequest request,
-			final DSResponse response) {
-		String[] jobNames = null;
-		if(null != request.getCriteria()){
-			jobNames = request.getCriteria().getAttributeAsStringArray("value");
+		
+	/**
+	 * @param requestId
+	 * @param response
+	 * @param jobExecutionData
+	 * @param records
+	 */
+	protected void populateData(final String requestId,
+			final DSResponse response,
+			List<JobExecutionHistoryVo> jobExecutionData,
+			ListGridRecord[] records) {
+		if(null == jobExecutionData || jobExecutionData.size() <= 0){
+			return;
 		}
-		monitorService.loadJobCurrentExecutionData(jobNames, new AsyncCallback<List<JobExecutionHistoryVo>>() {
-			
-			@Override
-			public void onSuccess(List<JobExecutionHistoryVo> jobExecutionData) {
-				ListGridRecord[] records = new ListGridRecord[jobExecutionData.size()];
-				if(null == jobExecutionData || jobExecutionData.size() <= 0){
-					response.setData(records);
-					processResponse(requestId, response);
-					return;
-				}
-				
-				for (int i = 0; i < jobExecutionData.size(); i++) {
-					JobExecutionHistoryVo monitorVo = jobExecutionData.get(i);
-					ListGridRecord record = new ListGridRecord();
-					record.setAttribute(JobExecutionHistoryVo.Fields.JOB_NAME, monitorVo.getJobName());
-					record.setAttribute(JobExecutionHistoryVo.Fields.JOB_EXECUTION_ID, monitorVo.getJobExecutionId());
-					record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_CODE, monitorVo.getExitCode());
-					record.setAttribute(JobExecutionHistoryVo.Fields.STATUS_CODE, monitorVo.getStatusCode());
-					record.setAttribute(JobExecutionHistoryVo.Fields.START_TIME, monitorVo.getStartTime());
-					record.setAttribute(JobExecutionHistoryVo.Fields.END_TIME, monitorVo.getEndTime());
-					record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_MESSAGE, monitorVo.getExitMessage());
-					records[i] = record;
-				}
-				response.setData(records);
-				processResponse(requestId, response);
-			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				Window.alert("ERROR from loadHistoricalMonitorData(): " + caught.getStackTrace());
-			}
-		});
+		records = new ListGridRecord[jobExecutionData.size()];
+		for (int i = 0; i < jobExecutionData.size(); i++) {
+			JobExecutionHistoryVo monitorVo = jobExecutionData.get(i);
+			ListGridRecord record = new ListGridRecord();
+			record.setAttribute(JobExecutionHistoryVo.Fields.JOB_NAME, monitorVo.getJobName());
+			record.setAttribute(JobExecutionHistoryVo.Fields.JOB_EXECUTION_ID, monitorVo.getJobExecutionId());
+			record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_CODE, monitorVo.getExitCode());
+			record.setAttribute(JobExecutionHistoryVo.Fields.STATUS_CODE, monitorVo.getStatusCode());
+			record.setAttribute(JobExecutionHistoryVo.Fields.START_TIME, monitorVo.getStartTime());
+			record.setAttribute(JobExecutionHistoryVo.Fields.END_TIME, monitorVo.getEndTime());
+			record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_MESSAGE, monitorVo.getExitMessage());
+			records[i] = record;
+		}
 	}
 
 	@Override

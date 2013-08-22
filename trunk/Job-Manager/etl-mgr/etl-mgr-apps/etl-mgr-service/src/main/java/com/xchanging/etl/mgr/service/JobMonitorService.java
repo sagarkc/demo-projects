@@ -6,7 +6,8 @@ package com.xchanging.etl.mgr.service;
 
 import java.util.List;
 
-import com.xchanging.etl.mgr.model.vo.JobMonitorVo;
+import com.xchanging.etl.mgr.model.criteria.RTJobFilterCriteria;
+import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
@@ -14,6 +15,6 @@ import com.xchanging.etl.mgr.model.vo.JobMonitorVo;
  */
 public interface JobMonitorService {
 
-	public List<JobMonitorVo> getJobExecutionHistory();
-	
+	public List<JobExecutionHistoryVo> loadRealtimeJobMonitorData(
+			RTJobFilterCriteria filterCriteria);
 }

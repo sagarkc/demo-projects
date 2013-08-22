@@ -16,6 +16,18 @@ import com.xchanging.etl.mgr.web.client.service.JobMonitorPushService;
 import com.xchanging.etl.mgr.web.client.service.JobMonitorPushServiceAsync;
 import com.xchanging.etl.mgr.web.client.service.JobMonitorService;
 import com.xchanging.etl.mgr.web.client.service.JobMonitorServiceAsync;
+import com.xchanging.etl.mgr.web.client.service.rt.RTAllJobsJobMonitorPushService;
+import com.xchanging.etl.mgr.web.client.service.rt.RTAllJobsJobMonitorPushServiceAsync;
+import com.xchanging.etl.mgr.web.client.service.rt.RTFilteredJobMonitorPushService;
+import com.xchanging.etl.mgr.web.client.service.rt.RTFilteredJobMonitorPushServiceAsync;
+import com.xchanging.etl.mgr.web.client.service.rt.RTLastDayJobMonitorPushService;
+import com.xchanging.etl.mgr.web.client.service.rt.RTLastDayJobMonitorPushServiceAsync;
+import com.xchanging.etl.mgr.web.client.service.rt.RTLastHourJobMonitorPushService;
+import com.xchanging.etl.mgr.web.client.service.rt.RTLastHourJobMonitorPushServiceAsync;
+import com.xchanging.etl.mgr.web.client.service.rt.RTSelectedJobMonitorPushService;
+import com.xchanging.etl.mgr.web.client.service.rt.RTSelectedJobMonitorPushServiceAsync;
+import com.xchanging.etl.mgr.web.client.service.rt.RealTimeJobMonitorService;
+import com.xchanging.etl.mgr.web.client.service.rt.RealTimeJobMonitorServiceAsync;
 import com.xchanging.etl.mgr.web.shared.WebConstants;
 
 /**
@@ -28,6 +40,13 @@ public final class RemoteServiceEndpointFactory {
 	
 	private final JobMonitorServiceAsync jobMonitorServiceEndpoint;
 	private final JobMonitorPushServiceAsync jobMonitorPushServiceEndpoint;
+	private final RealTimeJobMonitorServiceAsync realTimeJobMonitorServiceEndpoint;
+	
+	private final RTAllJobsJobMonitorPushServiceAsync rtAllJobsJobMonitorPushServiceEndpoint;
+	private final RTFilteredJobMonitorPushServiceAsync rtFilteredJobMonitorPushServiceEndpoint;
+	private final RTLastDayJobMonitorPushServiceAsync rtLastDayJobMonitorPushServiceEndpoint;
+	private final RTLastHourJobMonitorPushServiceAsync rtLastHourJobMonitorPushServiceEndpoint;
+	private final RTSelectedJobMonitorPushServiceAsync rtSelectedJobMonitorPushServiceEndpoint;
 	
 	private RemoteServiceEndpointFactory(){
 		jobMonitorServiceEndpoint = GWT.create(JobMonitorService.class);
@@ -36,6 +55,13 @@ public final class RemoteServiceEndpointFactory {
 				+ JobMonitorService.RPC_TARGET + WebConstants.RPC_EXT);
 		
 		jobMonitorPushServiceEndpoint = GWT.create(JobMonitorPushService.class);
+		realTimeJobMonitorServiceEndpoint = GWT.create(RealTimeJobMonitorService.class);
+		
+		rtAllJobsJobMonitorPushServiceEndpoint = GWT.create(RTAllJobsJobMonitorPushService.class);
+		rtFilteredJobMonitorPushServiceEndpoint = GWT.create(RTFilteredJobMonitorPushService.class);
+		rtLastDayJobMonitorPushServiceEndpoint = GWT.create(RTLastDayJobMonitorPushService.class);
+		rtLastHourJobMonitorPushServiceEndpoint = GWT.create(RTLastHourJobMonitorPushService.class);
+		rtSelectedJobMonitorPushServiceEndpoint = GWT.create(RTSelectedJobMonitorPushService.class);
 		
 	}
 
@@ -65,6 +91,48 @@ public final class RemoteServiceEndpointFactory {
 	 */
 	public JobMonitorPushServiceAsync getJobMonitorPushServiceEndpoint() {
 		return jobMonitorPushServiceEndpoint;
+	}
+
+	/**
+	 * @return the realTimeJobMonitorServiceEndpoint
+	 */
+	public RealTimeJobMonitorServiceAsync getRealTimeJobMonitorServiceEndpoint() {
+		return realTimeJobMonitorServiceEndpoint;
+	}
+
+	/**
+	 * @return the rtAllJobsJobMonitorPushServiceEndpoint
+	 */
+	public RTAllJobsJobMonitorPushServiceAsync getRtAllJobsJobMonitorPushServiceEndpoint() {
+		return rtAllJobsJobMonitorPushServiceEndpoint;
+	}
+
+	/**
+	 * @return the rtFilteredJobMonitorPushServiceEndpoint
+	 */
+	public RTFilteredJobMonitorPushServiceAsync getRtFilteredJobMonitorPushServiceEndpoint() {
+		return rtFilteredJobMonitorPushServiceEndpoint;
+	}
+
+	/**
+	 * @return the rtLastDayJobMonitorPushServiceEndpoint
+	 */
+	public RTLastDayJobMonitorPushServiceAsync getRtLastDayJobMonitorPushServiceEndpoint() {
+		return rtLastDayJobMonitorPushServiceEndpoint;
+	}
+
+	/**
+	 * @return the rtLastHourJobMonitorPushServiceEndpoint
+	 */
+	public RTLastHourJobMonitorPushServiceAsync getRtLastHourJobMonitorPushServiceEndpoint() {
+		return rtLastHourJobMonitorPushServiceEndpoint;
+	}
+
+	/**
+	 * @return the rtSelectedJobMonitorPushServiceEndpoint
+	 */
+	public RTSelectedJobMonitorPushServiceAsync getRtSelectedJobMonitorPushServiceEndpoint() {
+		return rtSelectedJobMonitorPushServiceEndpoint;
 	}
 	
 	

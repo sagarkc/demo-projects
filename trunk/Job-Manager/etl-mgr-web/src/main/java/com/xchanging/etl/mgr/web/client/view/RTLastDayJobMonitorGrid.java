@@ -1,5 +1,12 @@
 /**
+ * -------------------------------------------------------------------------- *
+ * 								ETL Manager
+ * 						Monitor | Manage | Admin
+ * -------------------------------------------------------------------------- *
+ * Type:	com.xchanging.etl.mgr.web.client.view.RTLastDayJobMonitorGrid
+ * Date:	Aug 22, 2013  7:58:05 PM
  * 
+ * -------------------------------------------------------------------------- *
  */
 package com.xchanging.etl.mgr.web.client.view;
 
@@ -20,20 +27,21 @@ import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
+import com.xchanging.etl.mgr.web.client.ds.RTLastDayJobMonitorDataSource;
 import com.xchanging.etl.mgr.web.shared.WebConstants;
 
 /**
- * @author Sabuj
+ * @author Sabuj Das | sabuj.das@asia.xchanging.com
  *
  */
-public class RealTimeJobMonitorGrid extends ListGrid {
+public class RTLastDayJobMonitorGrid extends ListGrid {
 
-	public static final String ID = "RealTimeJobMonitorGrid";
+	public static final String ID = "RTLastDayJobMonitorGrid";
 	
 	/**
 	 * 
 	 */
-	public RealTimeJobMonitorGrid() {
+	public RTLastDayJobMonitorGrid() {
 		setID(ID);
 		addColumns();
 		setShowAllRecords(true); 
@@ -43,6 +51,10 @@ public class RealTimeJobMonitorGrid extends ListGrid {
 		setShowRecordComponentsByCell(true);
 		setShowAllColumns(true);
 		invalidateCache();
+		setDataSource(
+				RTLastDayJobMonitorDataSource.getInstance()
+				);
+		fetchData();
 	}
 	
 	
