@@ -42,19 +42,23 @@ public class RTLastDayJobMonitorGrid extends ListGrid {
 	 * 
 	 */
 	public RTLastDayJobMonitorGrid() {
-		setID(ID);
-		addColumns();
 		setShowAllRecords(true); 
 		setAutoFetchData(false);
 		setCanExpandRecords(false);
 		setShowRecordComponents(true);
 		setShowRecordComponentsByCell(true);
 		setShowAllColumns(true);
+		setGroupStartOpen(WebConstants.JOB_EXIT_CODE_STARTED, WebConstants.JOB_EXIT_CODE_FAILED);
+		setGroupByField(JobExecutionHistoryVo.Fields.STATUS_CODE);
+		SortSpecifier sortSpecifier = new SortSpecifier(
+				JobExecutionHistoryVo.Fields.STATUS_CODE, 
+				SortDirection.DESCENDING);
+		setSort(new SortSpecifier[]{sortSpecifier});
 		invalidateCache();
 		setDataSource(
 				RTLastDayJobMonitorDataSource.getInstance()
 				);
-		fetchData();
+		addColumns();
 	}
 	
 	
@@ -117,12 +121,6 @@ public class RTLastDayJobMonitorGrid extends ListGrid {
 		ListGridField executeJobField = new ListGridField("executeJob", "Action");
 		executeJobField.setAlign(Alignment.RIGHT);
 		executeJobField.setWidth(75);
-		
-		setGroupByField(JobExecutionHistoryVo.Fields.STATUS_CODE);
-		SortSpecifier sortSpecifier = new SortSpecifier(
-				JobExecutionHistoryVo.Fields.STATUS_CODE, 
-				SortDirection.DESCENDING);
-		setSort(new SortSpecifier[]{sortSpecifier});
 		
 		setFields(nameField, exitCodeField, statusCodeField, 
 				startTimeField, endTimeField, executeJobField);

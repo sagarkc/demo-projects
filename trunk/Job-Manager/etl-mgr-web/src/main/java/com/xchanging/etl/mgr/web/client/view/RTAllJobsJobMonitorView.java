@@ -101,6 +101,7 @@ public class RTAllJobsJobMonitorView extends VLayout{
 		jobMonitorGrid.setHeight100();  
 		
 		addMember(jobMonitorGrid);  
+		jobMonitorGrid.fetchData();
 		enableClientPush();
 	}
 
