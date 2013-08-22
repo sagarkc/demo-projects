@@ -41,7 +41,7 @@ public interface WebConstants {
 
 	// JOB Status cell Styles
 	String STYLE_JOB_STATUS_STARTED = 
-			"border: .1em solid; border-radius:.5em; color: #00529B; "
+			"color: #00529B; "
 			+ "background-color: #BDE5F8; font-weight:bold; ";
 	String STYLE_JOB_STATUS_COMPLETED = 
 			"border: .1em solid; border-radius:.5em; color: #4F8A10; "

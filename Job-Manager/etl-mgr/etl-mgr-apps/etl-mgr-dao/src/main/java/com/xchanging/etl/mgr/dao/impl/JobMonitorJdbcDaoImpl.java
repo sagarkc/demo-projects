@@ -26,6 +26,7 @@ import org.springframework.stereotype.Repository;
 import com.xchanging.etl.mgr.common.exception.ApplicationException;
 import com.xchanging.etl.mgr.core.jdbc.ReflectionBasedRowMapper;
 import com.xchanging.etl.mgr.dao.JobMonitorJdbcDao;
+import com.xchanging.etl.mgr.model.criteria.RTJobFilterCriteria;
 import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.xchanging.etl.mgr.model.vo.JobMonitorVo;
@@ -131,6 +132,60 @@ public class JobMonitorJdbcDaoImpl implements JobMonitorJdbcDao {
 			params.addValue("selectedJobNames", Arrays.asList(jobNames), java.sql.Types.VARCHAR);
 			sql = SQL_currentJobExecutionByJobNamesFiltered;
 		}
+		try{
+			List<JobExecutionHistoryVo> jobExecHistory 
+			= namedParameterJdbcTemplate.query(
+					sql,
+					params,
+					new ReflectionBasedRowMapper<JobExecutionHistoryVo>(JobExecutionHistoryVo.class)
+				);
+			return jobExecHistory;
+		} catch (Exception e){
+			logger.error(e);
+			e.printStackTrace();
+			throw new ApplicationException(e);
+		}
+	}
+
+	
+	@Override
+	public List<JobExecutionHistoryVo> loadRealtimeJobMonitorData() throws ApplicationException {
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		String sql = SQL_currentJobExecutionByJobNames;
+		try{
+			List<JobExecutionHistoryVo> jobExecHistory 
+			= namedParameterJdbcTemplate.query(
+					sql,
+					params,
+					new ReflectionBasedRowMapper<JobExecutionHistoryVo>(JobExecutionHistoryVo.class)
+				);
+			return jobExecHistory;
+		} catch (Exception e){
+			logger.error(e);
+			e.printStackTrace();
+			throw new ApplicationException(e);
+		}
+	}
+
+	
+	@Override
+	public List<JobExecutionHistoryVo> loadRealtimeJobMonitorData(
+			RTJobFilterCriteria filterCriteria) throws ApplicationException {
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		String sql = SQL_currentJobExecutionByJobNames;
+		
+		if(null != filterCriteria){
+			if(null != filterCriteria.getJobNames() && filterCriteria.getJobNames().size() > 0){
+				params.addValue("selectedJobNames", filterCriteria.getJobNames(), java.sql.Types.VARCHAR);
+			}
+			if(null != filterCriteria.getStartedOnOrAfter()){
+				Timestamp timestamp = new Timestamp(filterCriteria.getStartedOnOrAfter().getTime());
+				params.addValue("selectedTime", timestamp, Types.TIMESTAMP);
+			}
+			sql = SQL_currentJobExecutionByJobNamesFiltered;
+		}
+		
+		
 		try{
 			List<JobExecutionHistoryVo> jobExecHistory 
 			= namedParameterJdbcTemplate.query(

@@ -11,8 +11,6 @@
 package com.xchanging.etl.mgr.web.client.view;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.smartgwt.client.data.Criterion;
-import com.smartgwt.client.types.OperatorId;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
@@ -25,13 +23,11 @@ import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
 import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.xchanging.etl.mgr.web.client.EtlManager;
-import com.xchanging.etl.mgr.web.client.core.UIEventManager;
 import com.xchanging.etl.mgr.web.client.dialog.AddJobsToMyJobMonitorDialog;
 import com.xchanging.etl.mgr.web.client.endpoint.RemoteServiceEndpointFactory;
-import com.xchanging.etl.mgr.web.client.event.MyJobSelectedJobNamesChangedEvent;
-import com.xchanging.etl.mgr.web.client.event.MyJobSelectedJobNamesChangedEventListener;
 import com.xchanging.etl.mgr.web.client.event.push.RealtimeJobMonitorDataEvent;
-import com.xchanging.etl.mgr.web.client.event.push.RealtimeJobMonitorDataEventListener;
+import com.xchanging.etl.mgr.web.client.event.push.RealtimeJobMonitorEventListener;
+import com.xchanging.etl.mgr.web.client.event.push.RealtimeJobMonitorSummaryEvent;
 import com.xchanging.etl.mgr.web.shared.WebConstants;
 
 import de.novanic.eventservice.client.event.RemoteEventService;
@@ -41,12 +37,11 @@ import de.novanic.eventservice.client.event.RemoteEventServiceFactory;
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
  *
  */
-public class RTAllJobsJobMonitorView extends VLayout
-		implements MyJobSelectedJobNamesChangedEventListener{
+public class RTAllJobsJobMonitorView extends VLayout{
 
 	
-	private final RealTimeJobMonitorGrid jobMonitorGrid 
-		= new RealTimeJobMonitorGrid();
+	private final RTAllJobsJobMonitorGrid jobMonitorGrid 
+		= new RTAllJobsJobMonitorGrid();
 	private final ToolStrip jobsToolStrip = new ToolStrip();
 	
 	/**
@@ -58,7 +53,6 @@ public class RTAllJobsJobMonitorView extends VLayout
 		setHeight100();
 		setLayoutMargin(2);
 		initComponents();
-		UIEventManager.getInstance().addListener(MyJobSelectedJobNamesChangedEvent.TYPE, this);
 	}
 	
 	private void initComponents() {
@@ -102,13 +96,12 @@ public class RTAllJobsJobMonitorView extends VLayout
 		
 		addMember(header);
 		
+		
 		jobMonitorGrid.setWidth100();  
 		jobMonitorGrid.setHeight100();  
 		
 		addMember(jobMonitorGrid);  
-        
 		enableClientPush();
-		
 	}
 
 	/**
@@ -121,55 +114,57 @@ public class RTAllJobsJobMonitorView extends VLayout
 				.getRemoteEventService();
 		
 		theEventService.addListener(WebConstants.DOMAIN_MONITOR_JOB, 
-			new RealtimeJobMonitorDataEventListener() {
+			new RealtimeJobMonitorEventListener() {
 
 				@Override
-				public void onDataPush(RealtimeJobMonitorDataEvent event) {
+				public void onJobMonitorDataPushed(RealtimeJobMonitorDataEvent event) {
 					if(null == event.getCurrentExecutionData())
 						return;
-					ListGridRecord records[] = new ListGridRecord[event.getCurrentExecutionData().size()];
-					for (int i = 0; i < event.getCurrentExecutionData().size(); i++) {
-						JobExecutionHistoryVo monitorVo = event.getCurrentExecutionData().get(i);
-						ListGridRecord record = new ListGridRecord();
-						record.setAttribute(JobExecutionHistoryVo.Fields.JOB_NAME, monitorVo.getJobName());
-						record.setAttribute(JobExecutionHistoryVo.Fields.JOB_EXECUTION_ID, monitorVo.getJobExecutionId());
-						record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_CODE, monitorVo.getExitCode());
-						record.setAttribute(JobExecutionHistoryVo.Fields.STATUS_CODE, monitorVo.getStatusCode());
-						record.setAttribute(JobExecutionHistoryVo.Fields.START_TIME, monitorVo.getStartTime());
-						record.setAttribute(JobExecutionHistoryVo.Fields.END_TIME, monitorVo.getEndTime());
-						record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_MESSAGE, monitorVo.getExitMessage());
-						records[i] = record;
-					}
-					jobMonitorGrid.setData(records);
+					updateGridData(event);
 				}
-			});
-		
-		RemoteServiceEndpointFactory.getInstance().getJobMonitorPushServiceEndpoint().start(
-			new AsyncCallback<Void>() {
-				
+
+				/* (non-Javadoc)
+				 * @see com.xchanging.etl.mgr.web.client.event.push.RealtimeJobMonitorEventListener#onJobMonitorSummaryPushed(com.xchanging.etl.mgr.web.client.event.push.RealtimeJobMonitorSummaryEvent)
+				 */
 				@Override
-				public void onSuccess(Void result) {
+				public void onJobMonitorSummaryPushed(
+						RealtimeJobMonitorSummaryEvent event) {
+					// TODO Auto-generated method stub
 					
 				}
 				
+			});
+		
+		RemoteServiceEndpointFactory.getInstance().getRtAllJobsJobMonitorPushServiceEndpoint().start(
+			new AsyncCallback<Void>() {
+				@Override
+				public void onSuccess(Void result) {
+				}
 				@Override
 				public void onFailure(Throwable caught) {
 					SC.say("Server Push on MyJob Job Monitor Data Fail");
 				}
 			});
 	}
-
-	/* (non-Javadoc)
-	 * @see com.xchanging.etl.mgr.web.client.event.MyJobSelectedJobNamesChangedEventListener#selectedJobNamesChanged(com.xchanging.etl.mgr.web.client.event.MyJobSelectedJobNamesChangedEvent)
-	 */
-	@Override
-	public void selectedJobNamesChanged(MyJobSelectedJobNamesChangedEvent event) {
-		if(null != event && null != event.getSelectedJobNames()){
-			jobMonitorGrid.filterData(
-					new Criterion("jobNames", OperatorId.IN_SET, 
-							event.getSelectedJobNames()));
+	
+	private void updateGridData(RealtimeJobMonitorDataEvent event){
+		ListGridRecord records[] = new ListGridRecord[event.getCurrentExecutionData().size()];
+		for (int i = 0; i < event.getCurrentExecutionData().size(); i++) {
+			JobExecutionHistoryVo monitorVo = event.getCurrentExecutionData().get(i);
+			ListGridRecord record = new ListGridRecord();
+			record.setAttribute(JobExecutionHistoryVo.Fields.JOB_NAME, monitorVo.getJobName());
+			record.setAttribute(JobExecutionHistoryVo.Fields.JOB_EXECUTION_ID, monitorVo.getJobExecutionId());
+			record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_CODE, monitorVo.getExitCode());
+			record.setAttribute(JobExecutionHistoryVo.Fields.STATUS_CODE, monitorVo.getStatusCode());
+			record.setAttribute(JobExecutionHistoryVo.Fields.START_TIME, monitorVo.getStartTime());
+			record.setAttribute(JobExecutionHistoryVo.Fields.END_TIME, monitorVo.getEndTime());
+			record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_MESSAGE, monitorVo.getExitMessage());
+			records[i] = record;
 		}
+		jobMonitorGrid.setData(records);
 	}
+
+	
 	
 	
 }
