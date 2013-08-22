@@ -25,7 +25,8 @@ import com.smartgwt.client.widgets.layout.SectionStackSection;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.xchanging.etl.mgr.web.client.EtlManager;
 import com.xchanging.etl.mgr.web.client.UIConstants;
-import com.xchanging.etl.mgr.web.client.i18n.ApplicationMessages;
+import com.xchanging.etl.mgr.web.client.dialog.AddJMXSchedulerDialog;
+import com.xchanging.etl.mgr.web.client.dialog.AddJobsToMyJobMonitorDialog;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
@@ -33,6 +34,7 @@ import com.xchanging.etl.mgr.web.client.i18n.ApplicationMessages;
  */
 public class NavigationView extends VLayout implements ResizedHandler {
 	public static final String JOB_MONITOR_BTN_GROUP = "job.monitor.btn.group";
+	public static final String SCHEDULER_MONITOR_BTN_GROUP = "scheduler.monitor.btn.group";
 	
 	private final SectionStack navigationStack = new SectionStack();   
 	
@@ -40,6 +42,9 @@ public class NavigationView extends VLayout implements ResizedHandler {
 	private final VLayout monitorSectionContent = new VLayout();
 	private final SectionStackSection historySection = new SectionStackSection();
 	private final VLayout historySectionContent = new VLayout();
+	private final SectionStackSection schedulerSection = new SectionStackSection();
+	private final VLayout schedulerSectionContent = new VLayout();
+	private final VLayout addedSchedulerSectionContent = new VLayout();
 	
 	public NavigationView() {
 
@@ -66,22 +71,82 @@ public class NavigationView extends VLayout implements ResizedHandler {
 		monitorSectionContent.setHeight("*");
 		
 		
-		Button myJobsMonitorButton = new Button(
-				EtlManager.MESSAGES.getLabel4JobMonitorMyJobs()
+		Button rtAllJobsButton = new Button(
+				"Realtime: All Jobs"
 				);
-		myJobsMonitorButton.setStyleName("navigationButton");
-		myJobsMonitorButton.setWidth100();
-		myJobsMonitorButton.addClickHandler(new ClickHandler() {
+		rtAllJobsButton.setStyleName("navigationButton");
+		rtAllJobsButton.setWidth100();
+		rtAllJobsButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				BaseContainerView.getContainer().setView(new MyJobsJobMonitorView());
+				BaseContainerView.getContainer().setView(new RTAllJobsJobMonitorView());
 			}
 		});
-		myJobsMonitorButton.setActionType(SelectionType.RADIO);
-		myJobsMonitorButton.setRadioGroup(JOB_MONITOR_BTN_GROUP);
+		rtAllJobsButton.setActionType(SelectionType.RADIO);
+		rtAllJobsButton.setRadioGroup(JOB_MONITOR_BTN_GROUP);
+		monitorSectionContent.addMember(rtAllJobsButton);
 		
-		monitorSectionContent.addMember(myJobsMonitorButton);
+		Button rtLastHourButton = new Button(
+				"Realtime: Last Hour"
+				);
+		rtLastHourButton.setStyleName("navigationButton");
+		rtLastHourButton.setWidth100();
+		rtLastHourButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				BaseContainerView.getContainer().setView(new RTLastHourJobMonitorView());
+			}
+		});
+		rtLastHourButton.setActionType(SelectionType.RADIO);
+		rtLastHourButton.setRadioGroup(JOB_MONITOR_BTN_GROUP);
+		monitorSectionContent.addMember(rtLastHourButton);
 		
+		Button rtLastDayButton = new Button(
+				"Realtime: Last Day"
+				);
+		rtLastDayButton.setStyleName("navigationButton");
+		rtLastDayButton.setWidth100();
+		rtLastDayButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				BaseContainerView.getContainer().setView(new RTLastDayJobMonitorView());
+			}
+		});
+		rtLastDayButton.setActionType(SelectionType.RADIO);
+		rtLastDayButton.setRadioGroup(JOB_MONITOR_BTN_GROUP);
+		monitorSectionContent.addMember(rtLastDayButton);
+		
+		Button rtSelectedJobsButton = new Button(
+				"Realtime: Selected Jobs"
+				);
+		rtSelectedJobsButton.setStyleName("navigationButton");
+		rtSelectedJobsButton.setWidth100();
+		rtSelectedJobsButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				BaseContainerView.getContainer().setView(new RTSelectedJobMonitorView());
+			}
+		});
+		rtSelectedJobsButton.setActionType(SelectionType.RADIO);
+		rtSelectedJobsButton.setRadioGroup(JOB_MONITOR_BTN_GROUP);
+		monitorSectionContent.addMember(rtSelectedJobsButton);
+		
+		Button rtFilteredJobsButton = new Button(
+				"Realtime: Filtered Jobs"
+				);
+		rtFilteredJobsButton.setStyleName("navigationButton");
+		rtFilteredJobsButton.setWidth100();
+		rtFilteredJobsButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				BaseContainerView.getContainer().setView(new RTFilteredJobMonitorView());
+			}
+		});
+		rtFilteredJobsButton.setActionType(SelectionType.RADIO);
+		rtFilteredJobsButton.setRadioGroup(JOB_MONITOR_BTN_GROUP);
+		monitorSectionContent.addMember(rtFilteredJobsButton);
+		
+				
 		Button historicalJobMonitorButton = new Button(
 				EtlManager.MESSAGES.getLabel4JobMonitorHistorical()
 				);
@@ -110,6 +175,31 @@ public class NavigationView extends VLayout implements ResizedHandler {
 		historySection.addItem(historySectionContent);
 		navigationStack.addSection(historySection);
 		
+		schedulerSection.setTitle("Scheduler");
+		schedulerSection.setExpanded(false);
+		schedulerSectionContent.setWidth100();   
+		schedulerSectionContent.setHeight("*");
+		addedSchedulerSectionContent.setWidth100();   
+		addedSchedulerSectionContent.setHeight("*");
+		
+		Button addJmxSchedulerButton = new Button(
+				"Add JMX Scheduler"
+				);
+		addJmxSchedulerButton.setStyleName("navigationButton");
+		addJmxSchedulerButton.setWidth100();
+		addJmxSchedulerButton.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				final AddJMXSchedulerDialog dialog
+					= new AddJMXSchedulerDialog();
+				dialog.show();
+			}
+		});
+		
+		schedulerSectionContent.addMember(addJmxSchedulerButton);
+		
+		schedulerSection.addItem(schedulerSectionContent);
+		navigationStack.addSection(schedulerSection);
 		
 		HLayout topLayout = new HLayout();
 		topLayout.setWidth(200);
