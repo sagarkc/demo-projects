@@ -10,7 +10,11 @@
  */
 package com.xchanging.etl.mgr.web.client.event.push;
 
+import java.util.List;
+
 import com.google.gwt.user.client.rpc.IsSerializable;
+import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
+import com.xchanging.etl.mgr.model.vo.JobExecutionSummaryVo;
 
 import de.novanic.eventservice.client.event.Event;
 import de.novanic.eventservice.client.event.listener.RemoteEventListener;
@@ -27,16 +31,31 @@ public abstract class RealtimeJobMonitorEventListener implements RemoteEventList
 			return;
 		if(anEvent instanceof RealtimeJobMonitorDataEvent){
 			RealtimeJobMonitorDataEvent event = (RealtimeJobMonitorDataEvent) anEvent;
-			onJobMonitorDataPushed(event);
+			if(RealtimeJobMonitorDataEvent.RT_ALL_JOBS.equals(event.getEventType())){
+				rtAllJobsDataPushed(event.getCurrentExecutionData());
+			} else if(RealtimeJobMonitorDataEvent.RT_LAST_HOUR_JOBS.equals(event.getEventType())){
+				rtLastHourDataPushed(event.getCurrentExecutionData());
+			} else if(RealtimeJobMonitorDataEvent.RT_LAST_DAY_JOBS.equals(event.getEventType())){
+				rtLastDayDataPushed(event.getCurrentExecutionData());
+			} else if(RealtimeJobMonitorDataEvent.RT_SELECTED_JOBS.equals(event.getEventType())){
+				rtSelectedJobsDataPushed(event.getCurrentExecutionData());
+			} else if(RealtimeJobMonitorDataEvent.RT_FILTERED_JOBS.equals(event.getEventType())){
+				rtFilteredJobsDataPushed(event.getCurrentExecutionData());
+			} 
 		}
 		else if(anEvent instanceof RealtimeJobMonitorSummaryEvent){
 			RealtimeJobMonitorSummaryEvent event = (RealtimeJobMonitorSummaryEvent) anEvent;
-			onJobMonitorSummaryPushed(event);
+			onJobMonitorSummaryPushed(event.getCurrentExecutionSummary());
 		}
 	}
 	
-	public abstract void onJobMonitorDataPushed(RealtimeJobMonitorDataEvent event);
+
+	public abstract void rtAllJobsDataPushed(List<JobExecutionHistoryVo> jobExecutionData) ;
+	public abstract void rtLastHourDataPushed(List<JobExecutionHistoryVo> jobExecutionData) ;
+	public abstract void rtLastDayDataPushed(List<JobExecutionHistoryVo> jobExecutionData) ;
+	public abstract void rtSelectedJobsDataPushed(List<JobExecutionHistoryVo> jobExecutionData) ;
+	public abstract void rtFilteredJobsDataPushed(List<JobExecutionHistoryVo> jobExecutionData) ;
 	
-	public abstract void onJobMonitorSummaryPushed(RealtimeJobMonitorSummaryEvent event);
+	public abstract void onJobMonitorSummaryPushed(List<JobExecutionSummaryVo> currentExecutionSummary);
 	
 }

@@ -53,7 +53,7 @@ public class RTLastHourJobMonitorPushServerEndpoint extends
 			List<JobExecutionHistoryVo> data = jobMonitorService
 					.loadRealtimeJobMonitorData(jobFilterCriteria);
 			addEvent(WebConstants.DOMAIN_MONITOR_JOB,
-					new RealtimeJobMonitorDataEvent(data));
+					new RealtimeJobMonitorDataEvent(RealtimeJobMonitorDataEvent.RT_LAST_HOUR_JOBS, data));
 		}
 	}
 

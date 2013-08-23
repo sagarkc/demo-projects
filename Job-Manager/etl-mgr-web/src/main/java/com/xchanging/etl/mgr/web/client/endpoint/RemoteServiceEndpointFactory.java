@@ -12,8 +12,6 @@ package com.xchanging.etl.mgr.web.client.endpoint;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
-import com.xchanging.etl.mgr.web.client.service.JobMonitorPushService;
-import com.xchanging.etl.mgr.web.client.service.JobMonitorPushServiceAsync;
 import com.xchanging.etl.mgr.web.client.service.JobMonitorService;
 import com.xchanging.etl.mgr.web.client.service.JobMonitorServiceAsync;
 import com.xchanging.etl.mgr.web.client.service.rt.RTAllJobsJobMonitorPushService;
@@ -39,7 +37,6 @@ public final class RemoteServiceEndpointFactory {
 	private static RemoteServiceEndpointFactory instance;
 	
 	private final JobMonitorServiceAsync jobMonitorServiceEndpoint;
-	private final JobMonitorPushServiceAsync jobMonitorPushServiceEndpoint;
 	private final RealTimeJobMonitorServiceAsync realTimeJobMonitorServiceEndpoint;
 	
 	private final RTAllJobsJobMonitorPushServiceAsync rtAllJobsJobMonitorPushServiceEndpoint;
@@ -54,7 +51,6 @@ public final class RemoteServiceEndpointFactory {
 		endpoint.setServiceEntryPoint(GWT.getModuleBaseURL()
 				+ JobMonitorService.RPC_TARGET + WebConstants.RPC_EXT);
 		
-		jobMonitorPushServiceEndpoint = GWT.create(JobMonitorPushService.class);
 		realTimeJobMonitorServiceEndpoint = GWT.create(RealTimeJobMonitorService.class);
 		
 		rtAllJobsJobMonitorPushServiceEndpoint = GWT.create(RTAllJobsJobMonitorPushService.class);
@@ -84,13 +80,6 @@ public final class RemoteServiceEndpointFactory {
 	 */
 	public JobMonitorServiceAsync getJobMonitorServiceEndpoint() {
 		return jobMonitorServiceEndpoint;
-	}
-
-	/**
-	 * @return the jobMonitorPushServiceEndpoint
-	 */
-	public JobMonitorPushServiceAsync getJobMonitorPushServiceEndpoint() {
-		return jobMonitorPushServiceEndpoint;
 	}
 
 	/**

@@ -31,17 +31,12 @@ public class RTJobFilterCriteria implements IsSerializable, Serializable {
 	private String criteriaName;
 	private Set<String> jobNames;
 	private Date startedOnOrAfter;
+	private String rtMonitorType;
 	
 	/**
 	 * 
 	 */
 	public RTJobFilterCriteria() {
-		/*Comparator<String> jobNameComparator = new Comparator<String>() {
-			@Override
-			public int compare(String name1, String name2) {
-				return name1.compareTo(name2);
-			}
-		};*/
 		jobNames = new LinkedHashSet<String>();
 	}
 
@@ -85,6 +80,14 @@ public class RTJobFilterCriteria implements IsSerializable, Serializable {
 	 */
 	public void setStartedOnOrAfter(Date startedOnOrAfter) {
 		this.startedOnOrAfter = startedOnOrAfter;
+	}
+
+	public String getRtMonitorType() {
+		return rtMonitorType;
+	}
+
+	public void setRtMonitorType(String rtMonitorType) {
+		this.rtMonitorType = rtMonitorType;
 	}
 
 	/**

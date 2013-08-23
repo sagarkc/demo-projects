@@ -22,6 +22,7 @@ import com.xchanging.etl.mgr.dao.JobMonitorJdbcDao;
 import com.xchanging.etl.mgr.model.criteria.RTJobFilterCriteria;
 import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.xchanging.etl.mgr.service.JobMonitorService;
+import com.xchanging.etl.mgr.util.DateUtility;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
@@ -41,6 +42,9 @@ public class JobMonitorServiceImpl implements JobMonitorService {
 			if(null == filterCriteria || !filterCriteria.hasCriteria()){
 				historyVos = jobMonitorJdbcDao.loadRealtimeJobMonitorData();
 			} else {
+				if(null == filterCriteria.getStartedOnOrAfter()){
+					filterCriteria.setStartedOnOrAfter(DateUtility.get1970());
+				}
 				historyVos = jobMonitorJdbcDao.loadRealtimeJobMonitorData(filterCriteria);
 			}
 			

@@ -3,8 +3,8 @@
  * 								ETL Manager
  * 						Monitor | Manage | Admin
  * -------------------------------------------------------------------------- *
- * Type:	com.xchanging.etl.mgr.web.server.endpoint.rt.RTAllJobsJobMonitorPushServerEndpoint
- * Date:	Aug 22, 2013  4:59:49 PM
+ * Type:	com.xchanging.etl.mgr.web.server.endpoint.rt.RTLastDayJobMonitorPushServerEndpoint
+ * Date:	Aug 22, 2013  6:02:06 PM
  * 
  * -------------------------------------------------------------------------- *
  */
@@ -19,23 +19,22 @@ import org.springframework.stereotype.Component;
 import com.xchanging.etl.mgr.model.criteria.RTJobFilterCriteria;
 import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.xchanging.etl.mgr.service.JobMonitorService;
+import com.xchanging.etl.mgr.util.DateUtility;
 import com.xchanging.etl.mgr.web.client.event.push.RealtimeJobMonitorDataEvent;
-import com.xchanging.etl.mgr.web.client.service.rt.RTAllJobsJobMonitorPushService;
+import com.xchanging.etl.mgr.web.client.service.rt.RTLastDayJobMonitorPushService;
+import com.xchanging.etl.mgr.web.client.service.rt.RTLastHourJobMonitorPushService;
 import com.xchanging.etl.mgr.web.shared.WebConstants;
 
 import de.novanic.eventservice.service.RemoteEventServiceServlet;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
- * 
+ *
  */
-@Component(value = RTAllJobsJobMonitorPushService.RPC_TARGET)
-public class RTAllJobsJobMonitorPushServerEndpoint extends
-		RemoteEventServiceServlet implements RTAllJobsJobMonitorPushService {
+@Component(value=RTLastDayJobMonitorPushService.RPC_TARGET)
+public class RTLastDayJobMonitorPushServerEndpoint extends
+		RemoteEventServiceServlet implements RTLastHourJobMonitorPushService {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6191185376142083455L;
 
 	private static Logger logger = Logger
@@ -48,10 +47,14 @@ public class RTAllJobsJobMonitorPushServerEndpoint extends
 
 	public void pushToClient() {
 		if (pushEnabled) {
+			if(null == jobFilterCriteria){
+				jobFilterCriteria = new RTJobFilterCriteria();
+			}
+			jobFilterCriteria.setStartedOnOrAfter(DateUtility.getCurrentDateWithoutTime());
 			List<JobExecutionHistoryVo> data = jobMonitorService
 					.loadRealtimeJobMonitorData(jobFilterCriteria);
 			addEvent(WebConstants.DOMAIN_MONITOR_JOB,
-					new RealtimeJobMonitorDataEvent(RealtimeJobMonitorDataEvent.RT_ALL_JOBS, data));
+					new RealtimeJobMonitorDataEvent(RealtimeJobMonitorDataEvent.RT_LAST_DAY_JOBS, data));
 		}
 	}
 
