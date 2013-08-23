@@ -13,7 +13,9 @@ package com.xchanging.etl.mgr.web.server.trigger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.xchanging.etl.mgr.web.server.endpoint.JobMonitorPushServiceEndpoint;
+import com.xchanging.etl.mgr.web.server.endpoint.rt.RTAllJobsJobMonitorPushServerEndpoint;
+import com.xchanging.etl.mgr.web.server.endpoint.rt.RTLastDayJobMonitorPushServerEndpoint;
+import com.xchanging.etl.mgr.web.server.endpoint.rt.RTLastHourJobMonitorPushServerEndpoint;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
@@ -22,12 +24,28 @@ import com.xchanging.etl.mgr.web.server.endpoint.JobMonitorPushServiceEndpoint;
 @Component(value="realtimeJobMonitorTrigger")
 public class RealtimeJobMonitorTrigger {
 
-	@Autowired private JobMonitorPushServiceEndpoint jobMonitorPushService;
+	@Autowired private RTAllJobsJobMonitorPushServerEndpoint allJobsJobMonitorPushServerEndpoint;
+	@Autowired private RTLastDayJobMonitorPushServerEndpoint lastDayJobMonitorPushServerEndpoint;
+	@Autowired private RTLastHourJobMonitorPushServerEndpoint lastHourJobMonitorPushServerEndpoint;
 	
 	public void loadCurrentJobInfo(){
-		if(null != jobMonitorPushService){
+		if(null != allJobsJobMonitorPushServerEndpoint){
 			try {
-				jobMonitorPushService.pushToClient();
+				allJobsJobMonitorPushServerEndpoint.pushToClient();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if(null != lastDayJobMonitorPushServerEndpoint){
+			try {
+				lastDayJobMonitorPushServerEndpoint.pushToClient();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if(null != lastHourJobMonitorPushServerEndpoint){
+			try {
+				lastHourJobMonitorPushServerEndpoint.pushToClient();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

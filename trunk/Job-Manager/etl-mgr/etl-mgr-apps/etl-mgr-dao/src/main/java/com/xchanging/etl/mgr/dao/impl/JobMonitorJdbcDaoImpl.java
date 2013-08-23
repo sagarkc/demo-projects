@@ -9,16 +9,12 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.SqlTypeValue;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -52,7 +48,7 @@ public class JobMonitorJdbcDaoImpl implements JobMonitorJdbcDao {
 	@Autowired private String SQL_currentJobExecutionByJobNames;
 	@Autowired private String SQL_currentJobExecutionByJobNamesFiltered;
 
-		
+	@Autowired private String SQL_loadRTAllJobsJobMonitorData;
 	
 	public List<JobMonitorVo> getAllJobHistory() throws ApplicationException{
 		if(logger.isDebugEnabled()){
@@ -150,13 +146,11 @@ public class JobMonitorJdbcDaoImpl implements JobMonitorJdbcDao {
 	
 	@Override
 	public List<JobExecutionHistoryVo> loadRealtimeJobMonitorData() throws ApplicationException {
-		MapSqlParameterSource params = new MapSqlParameterSource();
-		String sql = SQL_currentJobExecutionByJobNames;
+		String sql = SQL_loadRTAllJobsJobMonitorData;
 		try{
 			List<JobExecutionHistoryVo> jobExecHistory 
-			= namedParameterJdbcTemplate.query(
+			= jdbcTemplate.query(
 					sql,
-					params,
 					new ReflectionBasedRowMapper<JobExecutionHistoryVo>(JobExecutionHistoryVo.class)
 				);
 			return jobExecHistory;
@@ -175,14 +169,15 @@ public class JobMonitorJdbcDaoImpl implements JobMonitorJdbcDao {
 		String sql = SQL_currentJobExecutionByJobNames;
 		
 		if(null != filterCriteria){
-			if(null != filterCriteria.getJobNames() && filterCriteria.getJobNames().size() > 0){
-				params.addValue("selectedJobNames", filterCriteria.getJobNames(), java.sql.Types.VARCHAR);
-			}
 			if(null != filterCriteria.getStartedOnOrAfter()){
 				Timestamp timestamp = new Timestamp(filterCriteria.getStartedOnOrAfter().getTime());
 				params.addValue("selectedTime", timestamp, Types.TIMESTAMP);
 			}
-			sql = SQL_currentJobExecutionByJobNamesFiltered;
+			
+			if(null != filterCriteria.getJobNames() && filterCriteria.getJobNames().size() > 0){
+				sql = SQL_currentJobExecutionByJobNamesFiltered;
+				params.addValue("selectedJobNames", filterCriteria.getJobNames(), java.sql.Types.VARCHAR);
+			}
 		}
 		
 		
@@ -200,7 +195,6 @@ public class JobMonitorJdbcDaoImpl implements JobMonitorJdbcDao {
 			throw new ApplicationException(e);
 		}
 	}
-	
-	
+
 	
 }

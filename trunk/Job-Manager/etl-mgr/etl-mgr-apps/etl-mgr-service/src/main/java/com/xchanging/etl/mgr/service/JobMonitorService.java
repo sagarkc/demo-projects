@@ -17,4 +17,6 @@ public interface JobMonitorService {
 
 	public List<JobExecutionHistoryVo> loadRealtimeJobMonitorData(
 			RTJobFilterCriteria filterCriteria);
+	
+	
 }

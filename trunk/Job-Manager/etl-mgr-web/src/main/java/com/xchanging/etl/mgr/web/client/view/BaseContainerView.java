@@ -1,8 +1,11 @@
 package com.xchanging.etl.mgr.web.client.view;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.layout.Layout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.xchanging.etl.mgr.web.client.endpoint.RemoteServiceEndpointFactory;
 
 public final class BaseContainerView extends VLayout {
 
@@ -33,7 +36,21 @@ public final class BaseContainerView extends VLayout {
 		this.content = view;
 		Canvas[] children = getMembers();
 		if(null != children && children.length > 0){
-			removeMembers(children);
+			for (Canvas canvas : children) {
+				if(canvas instanceof RTAllJobsJobMonitorView){
+					RemoteServiceEndpointFactory.getInstance().getRtAllJobsJobMonitorPushServiceEndpoint().stop(
+							new AsyncCallback<Void>() {
+								@Override
+								public void onSuccess(Void result) {
+								}
+								@Override
+								public void onFailure(Throwable caught) {
+									SC.say("Failed to stop push");
+								}
+							});
+				}
+				removeMember(canvas);
+			}
 		}
 		addMember(view);
 	}
