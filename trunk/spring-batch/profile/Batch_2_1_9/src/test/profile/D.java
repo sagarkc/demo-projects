@@ -1,5 +1,7 @@
 package test.profile;
 
+import java.util.Random;
+
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
@@ -37,6 +39,11 @@ public class D implements InitializingBean, ItemReader<String> {
 		if (!hasRun) {
 			hasRun = true;
 			Thread.sleep(1000*25);
+			Random rand = new Random(35);
+			int x = rand.nextInt();
+			if(x % 13 == 0 || x % 19 == 0 || x % 11 == 0){
+				throw new Exception("Unknown error: [ " + x + " ]");
+			}
 			return "Hello from D...";
 		}
 		return null;

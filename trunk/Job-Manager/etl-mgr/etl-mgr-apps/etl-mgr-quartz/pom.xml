@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.xchanging.etl.mgr</groupId>
+		<artifactId>etl-mgr-apps</artifactId>
+		<version>0.1</version>
+	</parent>
+	<groupId>com.xchanging.etl.mgr</groupId>
+	<artifactId>etl-mgr-quartz</artifactId>
+	<version>0.1</version>
+	<name>etl-mgr-quartz</name>
+	
+	<properties>
+		<quartz.version>2.2.0</quartz.version>
+	</properties>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>${quartz.version}</version>
+		</dependency>
+	</dependencies>
+</project>

@@ -17,6 +17,7 @@
 	<modules>
     <module>etl-mgr-dao</module>
     <module>etl-mgr-service</module>
+    <module>etl-mgr-quartz</module>
   </modules>
 	
 	
