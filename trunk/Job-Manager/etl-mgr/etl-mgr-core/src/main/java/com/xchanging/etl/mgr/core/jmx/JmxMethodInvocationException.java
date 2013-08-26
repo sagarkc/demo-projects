@@ -16,4 +16,30 @@ package com.xchanging.etl.mgr.core.jmx;
  */
 public class JmxMethodInvocationException extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7755447546313813628L;
+
+	public JmxMethodInvocationException() {
+		super();
+	}
+
+	public JmxMethodInvocationException(String message, Throwable cause,
+			boolean enableSuppression, boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
+	}
+
+	public JmxMethodInvocationException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public JmxMethodInvocationException(String message) {
+		super(message);
+	}
+
+	public JmxMethodInvocationException(Throwable cause) {
+		super(cause);
+	}
+
 }
