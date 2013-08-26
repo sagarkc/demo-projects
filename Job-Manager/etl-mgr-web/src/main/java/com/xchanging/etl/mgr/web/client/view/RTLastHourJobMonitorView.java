@@ -1,5 +1,8 @@
 package com.xchanging.etl.mgr.web.client.view;
 
+import java.util.List;
+
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.util.SC;
@@ -9,6 +12,8 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.CheckboxItem;
+import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
+import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -21,6 +26,7 @@ import com.xchanging.etl.mgr.web.client.endpoint.RemoteServiceEndpointFactory;
 import com.xchanging.etl.mgr.web.client.event.push.RealtimeJobMonitorDataEvent;
 import com.xchanging.etl.mgr.web.client.event.push.RealtimeJobMonitorEventListener;
 import com.xchanging.etl.mgr.web.client.event.push.RealtimeJobMonitorSummaryEvent;
+import com.xchanging.etl.mgr.web.client.service.rt.RealTimeJobMonitorServiceAsync;
 import com.xchanging.etl.mgr.web.shared.WebConstants;
 
 import de.novanic.eventservice.client.event.RemoteEventService;
@@ -30,7 +36,8 @@ public class RTLastHourJobMonitorView extends VLayout {
 
 	private final RTLastHourJobMonitorGrid jobMonitorGrid = new RTLastHourJobMonitorGrid();
 	private final ToolStrip jobsToolStrip = new ToolStrip();
-
+	private final RealTimeJobMonitorServiceAsync realTimeJobMonitorService
+	= RemoteServiceEndpointFactory.getInstance().getRealTimeJobMonitorServiceEndpoint();
 
 	public RTLastHourJobMonitorView() {
 		setStyleName("job-monitor-realTime");
@@ -71,21 +78,52 @@ public class RTLastHourJobMonitorView extends VLayout {
         refreshListButton.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				jobMonitorGrid.fetchData();
+				realTimeJobMonitorService.loadRTLastHourJobMonitorData(new AsyncCallback<List<JobExecutionHistoryVo>>() {
+					
+					@Override
+					public void onSuccess(List<JobExecutionHistoryVo> jobExecutionData) {
+						ListGridRecord[] records = new ListGridRecord[0];
+						if(null == jobExecutionData || jobExecutionData.size() <= 0){
+							return;
+						}
+						records = new ListGridRecord[jobExecutionData.size()];
+						for (int i = 0; i < jobExecutionData.size(); i++) {
+							JobExecutionHistoryVo monitorVo = jobExecutionData.get(i);
+							ListGridRecord record = new ListGridRecord();
+							record.setAttribute(JobExecutionHistoryVo.Fields.JOB_NAME, monitorVo.getJobName());
+							record.setAttribute(JobExecutionHistoryVo.Fields.JOB_EXECUTION_ID, monitorVo.getJobExecutionId());
+							record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_CODE, monitorVo.getExitCode());
+							record.setAttribute(JobExecutionHistoryVo.Fields.STATUS_CODE, monitorVo.getStatusCode());
+							record.setAttribute(JobExecutionHistoryVo.Fields.START_TIME, monitorVo.getStartTime());
+							record.setAttribute(JobExecutionHistoryVo.Fields.END_TIME, monitorVo.getEndTime());
+							record.setAttribute(JobExecutionHistoryVo.Fields.EXIT_MESSAGE, monitorVo.getExitMessage());
+							records[i] = record;
+						}
+						jobMonitorGrid.setData(records);
+					}
+
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert("ERROR from loadRealtimeJobMonitorData(): " + caught.getMessage());
+					}
+				});
 			}
+			
 		});
         
         DynamicForm autoRefreshForm = new DynamicForm();
         final CheckboxItem autoCheckboxItem = new CheckboxItem("autoRefresh");
+        autoCheckboxItem.setTitle("Auto Refresh");
         autoCheckboxItem.setTextAlign(Alignment.RIGHT);
         autoCheckboxItem.setLabelAsTitle(true);
         autoCheckboxItem.setValue(true);
         autoCheckboxItem.setWidth(100);
-        autoCheckboxItem.addClickHandler(new com.smartgwt.client.widgets.form.fields.events.ClickHandler() {
+        autoCheckboxItem.addChangedHandler(new ChangedHandler() {
+			
 			@Override
-			public void onClick(
-					com.smartgwt.client.widgets.form.fields.events.ClickEvent event) {
-				if(autoCheckboxItem.getAttributeAsBoolean("value")){
+			public void onChanged(ChangedEvent event) {
+				if((Boolean)event.getValue() ){
 					refreshListButton.setDisabled(true);
 					RemoteServiceEndpointFactory.getInstance().getRtLastHourJobMonitorPushServiceEndpoint().start(
 							new AsyncCallback<Void>() {
@@ -141,6 +179,16 @@ public class RTLastHourJobMonitorView extends VLayout {
 
 		theEventService.addListener(WebConstants.DOMAIN_MONITOR_JOB,
 				new RTJobMonitorPushEventProcessor(jobMonitorGrid));
+		RemoteServiceEndpointFactory.getInstance().getRtLastHourJobMonitorPushServiceEndpoint().start(
+				new AsyncCallback<Void>() {
+					@Override
+					public void onSuccess(Void result) {
+					}
+					@Override
+					public void onFailure(Throwable caught) {
+						SC.say("Server Push on MyJob Job Monitor Data Fail");
+					}
+				});
 	}
 
 	

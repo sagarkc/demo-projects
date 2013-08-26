@@ -65,14 +65,14 @@ public class NavigationView extends VLayout implements ResizedHandler {
 		navigationStack.setOverflow(Overflow.HIDDEN);
 		navigationStack.setStyleName("navigationAccordianTitle");
 
-		monitorSection.setTitle(EtlManager.MESSAGES.getSectionTitle4JobMonitor());
+		monitorSection.setTitle("Job Monitor");
 		monitorSection.setExpanded(true);
 		monitorSectionContent.setWidth100();   
 		monitorSectionContent.setHeight("*");
 		
 		
 		Button rtAllJobsButton = new Button(
-				"Realtime: All Jobs"
+				"All Jobs"
 				);
 		rtAllJobsButton.setStyleName("navigationButton");
 		rtAllJobsButton.setWidth100();
@@ -87,7 +87,7 @@ public class NavigationView extends VLayout implements ResizedHandler {
 		monitorSectionContent.addMember(rtAllJobsButton);
 		
 		Button rtLastHourButton = new Button(
-				"Realtime: Last Hour"
+				"Last Hour"
 				);
 		rtLastHourButton.setStyleName("navigationButton");
 		rtLastHourButton.setWidth100();
@@ -102,7 +102,7 @@ public class NavigationView extends VLayout implements ResizedHandler {
 		monitorSectionContent.addMember(rtLastHourButton);
 		
 		Button rtLastDayButton = new Button(
-				"Realtime: Last Day"
+				"Last Day"
 				);
 		rtLastDayButton.setStyleName("navigationButton");
 		rtLastDayButton.setWidth100();
@@ -117,7 +117,7 @@ public class NavigationView extends VLayout implements ResizedHandler {
 		monitorSectionContent.addMember(rtLastDayButton);
 		
 		Button rtSelectedJobsButton = new Button(
-				"Realtime: Selected Jobs"
+				"Selected Jobs"
 				);
 		rtSelectedJobsButton.setStyleName("navigationButton");
 		rtSelectedJobsButton.setWidth100();
@@ -132,7 +132,7 @@ public class NavigationView extends VLayout implements ResizedHandler {
 		monitorSectionContent.addMember(rtSelectedJobsButton);
 		
 		Button rtFilteredJobsButton = new Button(
-				"Realtime: Filtered Jobs"
+				"Filtered Jobs"
 				);
 		rtFilteredJobsButton.setStyleName("navigationButton");
 		rtFilteredJobsButton.setWidth100();
