@@ -24,7 +24,7 @@
 		</property>
 	</bean> -->
 	
-	<bean id="step_Test_Hello_01" parent="simpleStep"  scope="prototype">
+	<bean id="step_Test_Hello_01_00" parent="simpleStep"  scope="prototype">
 		<property name="itemReader">
 			<bean class="test.profile.A" />
 		</property>
@@ -68,7 +68,7 @@
 			<list>
 				<bean class="test.profile.batch.JobStepFactoryBean">
 					<constructor-arg>
-						<value>step_Test_Hello_01</value>
+						<value>step_Test_Hello_01_00</value>
 					</constructor-arg>
 				</bean>
 				<bean class="test.profile.batch.JobStepFactoryBean">
@@ -78,7 +78,7 @@
 				</bean>
 				<bean class="test.profile.batch.JobStepFactoryBean">
 					<constructor-arg>
-						<value>step_Test_Hello_01</value>
+						<value>step_Test_Hello_01_00</value>
 					</constructor-arg>
 				</bean>
 			</list>
@@ -95,7 +95,7 @@
 				</bean>
 				<bean class="test.profile.batch.JobStepFactoryBean">
 					<constructor-arg>
-						<value>step_Test_Hello_01</value>
+						<value>step_Test_Hello_01_00</value>
 					</constructor-arg>
 				</bean>
 			</list>
