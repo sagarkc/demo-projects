@@ -10,7 +10,11 @@
  */
 package org.etl.mgr.apps.quartz;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.xchanging.etl.mgr.core.jmx.JmxMethodInvocationException;
@@ -23,13 +27,28 @@ import com.xchanging.etl.mgr.model.scheduler.JobDetail;
  */
 public class QuartzSchedulerMBean implements SchedulerMBean {
 
+	private String schedulerName;
+	private Set<String> allJobNames ;
+	private Map<String, Set<String>> jobNamesByGroup;
+	private List<JobDetail> allJobDetails;
+	private Map<String, List<JobDetail>> jobDetailsByGroup;
+	
+	/**
+	 * 
+	 */
+	public QuartzSchedulerMBean() {
+		allJobNames = new HashSet<>();
+		jobNamesByGroup = new LinkedHashMap<>();
+		allJobDetails = new ArrayList<>();
+		jobDetailsByGroup = new LinkedHashMap<>();
+	}
+	
 	/* (non-Javadoc)
 	 * @see com.xchanging.etl.mgr.core.jmx.SchedulerMBean#getSchedulerName()
 	 */
 	@Override
 	public String getSchedulerName() {
-		// TODO Auto-generated method stub
-		return null;
+		return schedulerName;
 	}
 
 	/* (non-Javadoc)
@@ -37,8 +56,7 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 	 */
 	@Override
 	public Set<String> getAllJobNames() {
-		// TODO Auto-generated method stub
-		return null;
+		return allJobNames;
 	}
 
 	/* (non-Javadoc)
@@ -46,8 +64,7 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 	 */
 	@Override
 	public Set<String> getAllJobNames(String jobGroupName) {
-		// TODO Auto-generated method stub
-		return null;
+		return jobNamesByGroup.get(jobGroupName);
 	}
 
 	/* (non-Javadoc)
@@ -55,8 +72,7 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 	 */
 	@Override
 	public List<JobDetail> getAllJobDetails() {
-		// TODO Auto-generated method stub
-		return null;
+		return allJobDetails;
 	}
 
 	/* (non-Javadoc)
@@ -64,8 +80,7 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 	 */
 	@Override
 	public List<JobDetail> getAllJobDetails(String groupName) {
-		// TODO Auto-generated method stub
-		return null;
+		return jobDetailsByGroup.get(groupName);
 	}
 
 	/* (non-Javadoc)
@@ -78,4 +93,62 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 
 	}
 
+	/**
+	 * @return the jobNamesByGroup
+	 */
+	public Map<String, Set<String>> getJobNamesByGroup() {
+		return jobNamesByGroup;
+	}
+
+	/**
+	 * @param jobNamesByGroup the jobNamesByGroup to set
+	 */
+	public void setJobNamesByGroup(Map<String, Set<String>> jobNamesByGroup) {
+		this.jobNamesByGroup = jobNamesByGroup;
+	}
+
+	/**
+	 * @return the allJobDetails
+	 */
+	public List<JobDetail> getAllJobDetailNames() {
+		return allJobDetails;
+	}
+
+	
+	/**
+	 * @param allJobDetails the allJobDetails to set
+	 */
+	public void setAllJobDetails(List<JobDetail> allJobDetails) {
+		this.allJobDetails = allJobDetails;
+	}
+	
+	/**
+	 * @return the jobDetailsByGroup
+	 */
+	public Map<String, List<JobDetail>> getJobDetailsByGroup() {
+		return jobDetailsByGroup;
+	}
+
+	/**
+	 * @param jobDetailsByGroup the jobDetailsByGroup to set
+	 */
+	public void setJobDetailsByGroup(Map<String, List<JobDetail>> jobDetailsByGroup) {
+		this.jobDetailsByGroup = jobDetailsByGroup;
+	}
+
+	/**
+	 * @param schedulerName the schedulerName to set
+	 */
+	public void setSchedulerName(String schedulerName) {
+		this.schedulerName = schedulerName;
+	}
+
+	/**
+	 * @param allJobNames the allJobNames to set
+	 */
+	public void setAllJobNames(Set<String> allJobNames) {
+		this.allJobNames = allJobNames;
+	}
+
+	
 }

@@ -1,1 +1,1 @@
-java -Dsun.security.ssl.allowUnsafeRenegotiation=true -Dcom.sun.management.jmxremote.port=8500 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -jar batch-test-01.jar
+java -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=9010 -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -jar batch-test-01.jar

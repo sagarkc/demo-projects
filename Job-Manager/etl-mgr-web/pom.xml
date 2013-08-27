@@ -79,6 +79,11 @@
 			<artifactId>etl-mgr-service</artifactId>
 			<version>${etl.mgr.release.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.xchanging.etl.mgr</groupId>
+			<artifactId>etl-mgr-quartz</artifactId>
+			<version>${etl.mgr.release.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
