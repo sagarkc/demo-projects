@@ -13,7 +13,7 @@
 		<property name="registrationBehaviorName" value="REGISTRATION_REPLACE_EXISTING" />
 		<property name="beans">
 			<map>
-				<entry key="bean:name=SchedulerMonitorBean" value-ref="scheduler" />
+				<entry key="scheduler.jmx.mbean:name=SchedulerMonitorBean" value-ref="scheduler" />
 			</map>
 		</property>
 	</bean>

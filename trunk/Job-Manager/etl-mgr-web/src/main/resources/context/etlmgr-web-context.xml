@@ -68,5 +68,5 @@
 	</bean>
 
 	<import resource="server-push-scheduler-context.xml"/>
-
+	<import resource="etlmgr-configuration-context.xml"/>
 </beans>

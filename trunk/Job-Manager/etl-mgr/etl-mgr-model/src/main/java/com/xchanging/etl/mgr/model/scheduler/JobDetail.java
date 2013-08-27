@@ -10,12 +10,28 @@
  */
 package com.xchanging.etl.mgr.model.scheduler;
 
+import java.io.Serializable;
+
+import com.google.gwt.user.client.rpc.IsSerializable;
+
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
  *
  */
-public class JobDetail {
+public class JobDetail implements Serializable, IsSerializable{
+
+	public interface Fields{
+		String JOB_NAME = "jobName";
+		String GROUP_NAME = "groupName";
+		String JOB_CLASS_NAME = "jobClassName";
+		String DESCRIPTION = "description";
+	}
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 15465746546876541L;
 
 	private String jobName;
     private String groupName;
@@ -26,7 +42,6 @@ public class JobDetail {
 	 * 
 	 */
 	public JobDetail() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public String getJobName() {

@@ -22,6 +22,7 @@ public final class SchedulerJmxContextFactory {
 	private static SchedulerJmxContextFactory contextFactory;
 	
 	private Map<String, SchedulerJmxContext> schedulerJmxContextMap;
+	private SchedulerJmxContextProvider schedulerJmxContextProvider;
 	
 	/**
 	 * 
@@ -30,6 +31,22 @@ public final class SchedulerJmxContextFactory {
 		schedulerJmxContextMap = new LinkedHashMap<>();
 	}
 	
+	/**
+	 * @return the schedulerJmxContextProvider
+	 */
+	public SchedulerJmxContextProvider getSchedulerJmxContextProvider() {
+		return schedulerJmxContextProvider;
+	}
+
+	/**
+	 * @param schedulerJmxContextProvider the schedulerJmxContextProvider to set
+	 */
+	public void setSchedulerJmxContextProvider(
+			SchedulerJmxContextProvider schedulerJmxContextProvider) {
+		this.schedulerJmxContextProvider = schedulerJmxContextProvider;
+	}
+
+
 	public static SchedulerJmxContextFactory getInstance() {
 		if(null != contextFactory)
 			return contextFactory;
@@ -41,12 +58,12 @@ public final class SchedulerJmxContextFactory {
 		return contextFactory;
 	}
 
-	public SchedulerJmxContext createSchedulerJmxContext(String jmxUrl) throws Exception{
+	public SchedulerJmxContext createSchedulerJmxContext(String jmxHost, int jmxPort) throws Exception{
+		String jmxUrl = schedulerJmxContextProvider.formJmxUrl(jmxHost, jmxPort);
 		if(schedulerJmxContextMap.containsKey(jmxUrl)){
 			return schedulerJmxContextMap.get(jmxUrl);
 		}
-		SchedulerJmxContext context = new SchedulerJmxContext();
-		context.initContext(jmxUrl);
+		SchedulerJmxContext context = schedulerJmxContextProvider.createContext(jmxUrl);
 		schedulerJmxContextMap.put(jmxUrl, context);
 		return context;
 		

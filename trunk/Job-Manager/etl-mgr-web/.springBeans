@@ -8,6 +8,7 @@
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
 		<config>src/main/resources/context/server-push-scheduler-context.xml</config>
+		<config>src/main/resources/context/etlmgr-configuration-context.xml</config>
 	</configs>
 	<configSets>
 	</configSets>

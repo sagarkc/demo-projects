@@ -26,9 +26,9 @@ public class SpringBeanProfiler {
 			Scheduler scheduler = (Scheduler) applicationContext.getBean("scheduler");
 			System.out.println(scheduler.getJobNames(Scheduler.DEFAULT_GROUP));
 			//scheduler.shutdown();
-			if(null != applicationContext.getBean("mbeanServer")){
+			/*if(null != applicationContext.getBean("mbeanServer")){
 				MBeanServer mBeanServer = (MBeanServer) applicationContext.getBean("mbeanServer");
-				ObjectName objectName = new ObjectName("bean:name=SchedulerMonitorBean");
+				ObjectName objectName = new ObjectName("scheduler.jmx.mbean:name=SchedulerMonitorBean");
 				Set<ObjectInstance> insts = mBeanServer.queryMBeans(objectName, null);
 				if(null != insts){
 					for (ObjectInstance oi : insts) {
@@ -61,15 +61,15 @@ public class SpringBeanProfiler {
 						
 					}
 					
-					/*System.out.println(objectName);
+					System.out.println(objectName);
 					Scheduler schedulerJmx = (Scheduler) MBeanServerInvocationHandler.newProxyInstance(mBeanServer, 
 							objectName, Scheduler.class, 
 							false);
 					MBeanInfo info = mBeanServer.getMBeanInfo( objectName );
 					schedulerJmx.getJobDetail(Scheduler.DEFAULT_GROUP, "");
-					System.out.println(schedulerJmx);*/
+					System.out.println(schedulerJmx);
 				}
-			}
+			}*/
 			//scheduler.start();
 		} catch (Exception e) {
 			e.printStackTrace();
