@@ -116,7 +116,7 @@ public class SchedulerJmxContextProviderImpl implements
 									String[] jobNames = (String[]) jobObject;
 									for (String jobName : jobNames) {
 										quartzSchedulerMBean.getJobNamesByGroup().get(grpName).add(jobName);
-										JobKey jobKey = new JobKey(jobName, grpName);
+										/*JobKey jobKey = new JobKey(jobName, grpName);
 										
 										Object jobDetailObject = mBeanServerCon.invoke(
 												objectInstance.getObjectName(), 
@@ -131,7 +131,7 @@ public class SchedulerJmxContextProviderImpl implements
 											jobDetail.setDescription(detail.getDescription());
 											jobDetail.setJobClassName(detail.getJobClass().getCanonicalName());
 											quartzSchedulerMBean.getJobDetailsByGroup().get(grpName).add(jobDetail);
-										} 
+										} */
 									}
 								}
 							}

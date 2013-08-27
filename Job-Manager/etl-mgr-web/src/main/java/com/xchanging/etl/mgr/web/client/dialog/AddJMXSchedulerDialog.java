@@ -25,6 +25,7 @@ import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.xchanging.etl.mgr.model.scheduler.SchedulerDetail;
 import com.xchanging.etl.mgr.web.client.jmx.ds.MBeanSchedulerNamesDataSource;
 
 /**
@@ -63,7 +64,7 @@ public class AddJMXSchedulerDialog extends Window {
         mbeanNamesGrid.setSelectionType(SelectionStyle.SIMPLE);  
         mbeanNamesGrid.setSelectionAppearance(SelectionAppearance.CHECKBOX);
         ListGridField jobNameField 
-	    	= new ListGridField("schedulerMbeanName", "Job Name");  
+	    	= new ListGridField(SchedulerDetail.Fields.SCHEDULER_NAME, "Job Name");  
         mbeanNamesGrid.setFields(jobNameField); 
         mbeanNamesGrid.setDataSource(MBeanSchedulerNamesDataSource.getInstance());
         mbeanNamesGrid.setAutoFetchData(false);
