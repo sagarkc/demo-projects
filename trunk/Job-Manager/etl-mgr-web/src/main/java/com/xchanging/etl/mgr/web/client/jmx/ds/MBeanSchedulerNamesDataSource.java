@@ -73,7 +73,7 @@ public class MBeanSchedulerNamesDataSource extends GwtRpcObjectDataSource {
 					for (int i = 0; i < result.size(); i++) {
 						String jobName = result.get(i);
 						Record record = new Record();
-						record.setAttribute(JobMonitorHistoryVo.Fields.JOB_NAME, jobName);
+						record.setAttribute(SchedulerDetail.Fields.SCHEDULER_NAME, jobName);
 						records[i] = record;
 					}
 				}
