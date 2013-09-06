@@ -8,13 +8,23 @@
 		class="org.etl.mgr.apps.quartz.jmx.SchedulerJmxContextProviderImpl">
 		<constructor-arg index="0">
 			<value>scheduler.jmx.mbean</value>
-		</constructor-arg>	
+		</constructor-arg>
 	</bean>
 
 	<bean id="schedulerJmxContextFactory"
 		class="com.xchanging.etl.mgr.core.jmx.SchedulerJmxContextFactory"
 		factory-method="getInstance">
-		<property name="schedulerJmxContextProvider" ref="schedulerJmxContextProvider"/>
+		<property name="schedulerJmxContextProvider" ref="schedulerJmxContextProvider" />
+	</bean>
+
+	<bean id="localMBeanServerConnection_localhost_8500"
+		class="org.springframework.jmx.support.MBeanServerConnectionFactoryBean">
+		<property name="serviceUrl" value="service:jmx:rmi:///jndi/rmi://localhost:8500/jmxrmi" />
+	</bean>
+	
+	<bean id="localMBeanServerConnection_localhost_8501"
+		class="org.springframework.jmx.support.MBeanServerConnectionFactoryBean">
+		<property name="serviceUrl" value="service:jmx:rmi:///jndi/rmi://localhost:8500/jmxrmi" />
 	</bean>
 
 </beans>

@@ -1,18 +1,17 @@
 package test.profile;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import javax.management.MBeanInfo;
-import javax.management.MBeanOperationInfo;
 import javax.management.MBeanServer;
-import javax.management.MBeanServerConnection;
+import javax.management.MBeanServerInvocationHandler;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
+import org.quartz.JobDetail;
+import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -31,14 +30,13 @@ public class SpringBeanProfiler {
 				= new ClassPathXmlApplicationContext(new String[]{"app-context.xml", "jmx-context.xml"});
 			System.out.println("Total initilized bean count: "+applicationContext.getBeanDefinitionCount());
 			Scheduler scheduler = (Scheduler) applicationContext.getBean("scheduler");
-			System.out.println(scheduler.getJobNames(Scheduler.DEFAULT_GROUP));
 			//scheduler.shutdown();
-			/*if(null != applicationContext.getBean("mbeanServer")){
+			if(null != applicationContext.getBean("mbeanServer")){
 				MBeanServer mBeanServer = (MBeanServer) applicationContext.getBean("mbeanServer");
 				ObjectName objectName = new ObjectName("scheduler.jmx.mbean:name=SchedulerMonitorBean");
 				Set<ObjectInstance> insts = mBeanServer.queryMBeans(objectName, null);
 				if(null != insts){
-					for (ObjectInstance oi : insts) {
+					/*for (ObjectInstance oi : insts) {
 						MBeanInfo info = mBeanServer.getMBeanInfo( oi.getObjectName() );
 						System.out.println(info.getClassName());
 						MBeanOperationInfo[] ops = info.getOperations();
@@ -66,17 +64,27 @@ public class SpringBeanProfiler {
 							}
 						}
 						
-					}
+					}*/
 					
 					System.out.println(objectName);
 					Scheduler schedulerJmx = (Scheduler) MBeanServerInvocationHandler.newProxyInstance(mBeanServer, 
 							objectName, Scheduler.class, 
 							false);
 					MBeanInfo info = mBeanServer.getMBeanInfo( objectName );
-					schedulerJmx.getJobDetail(Scheduler.DEFAULT_GROUP, "");
+					/*String[] jobNames = schedulerJmx.getJobNames("quartz-batch");
+					if(null != jobNames){
+						for (String n : jobNames) {
+							System.out.println(n);
+						}
+					}*/
+					JobKey jobKey = new JobKey("jobDetail_Test_Hello_01", "quartz-batch");
+					JobDetail jobDetail = scheduler.getJobDetail(jobKey);
+					if(null != jobDetail){
+						System.out.println(jobDetail);
+					}
 					System.out.println(schedulerJmx);
 				}
-			}*/
+			}
 			//scheduler.start();
 		} catch (Exception e) {
 			e.printStackTrace();
