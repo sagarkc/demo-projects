@@ -23,6 +23,7 @@ import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.ExpansionMode;
 import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.types.OperatorId;
+import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -31,8 +32,10 @@ import com.smartgwt.client.widgets.grid.CellFormatter;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.widgets.layout.HLayout;
 import com.xchanging.etl.mgr.web.client.ds.JobExecutionHistoryDataSource;
 import com.xchanging.etl.mgr.web.client.ds.JobMonitorHistoryDataSource;
+import com.xchanging.etl.mgr.web.shared.WebConstants;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
@@ -162,22 +165,50 @@ public class JobExecutionHistoryGrid extends ListGrid {
 	@Override
 	protected Canvas createRecordComponent(final ListGridRecord record, Integer colNum) {
 		String fieldName = this.getFieldName(colNum); 
+		String statusCode = record.getAttributeAsString(JobExecutionHistoryVo.Fields.STATUS_CODE);
+		String exitCode = record.getAttributeAsString(JobExecutionHistoryVo.Fields.EXIT_CODE);
 		if (fieldName.equals("executeJob")) {  
-            IButton button = new IButton();  
-            button.setHeight(18);  
-            button.setWidth(65);                      
-            button.setTitle("Run");  
-            button.addClickHandler(new ClickHandler() {  
+            HLayout hLayout = new HLayout();
+            hLayout.setWidth100();
+            hLayout.setHeight100();
+			hLayout.setMembersMargin(2);
+			hLayout.setAlign(Alignment.RIGHT);
+			hLayout.setAlign(VerticalAlignment.CENTER);
+            
+            if(WebConstants.JOB_EXIT_CODE_FAILED.equalsIgnoreCase(exitCode)){
+            	IButton exitMgsButton = new IButton();  
+                exitMgsButton.setHeight(18);  
+                exitMgsButton.setWidth(65);                      
+                exitMgsButton.setTitle("Exit Msg");  
+                exitMgsButton.addClickHandler(new ClickHandler() {  
+                    public void onClick(ClickEvent event) {  
+                    	Window.alert(record.getAttributeAsString(JobExecutionHistoryVo.Fields.EXIT_MESSAGE));  
+                    }  
+                });
+                hLayout.addMember(exitMgsButton);
+            }
+            
+			IButton runButton = new IButton();  
+            runButton.setHeight(18);  
+            runButton.setWidth(65);                      
+            runButton.setTitle("Run");  
+            runButton.addClickHandler(new ClickHandler() {  
                 public void onClick(ClickEvent event) {  
                 	Window.alert(record.getAttribute("jobName") + " execute clicked.");  
                 }  
-            });  
-            return button;  
+            });
+            
+            if(WebConstants.JOB_STATUS_STARTED.equalsIgnoreCase(statusCode)){
+            	runButton.setDisabled(true);
+            } else {
+            	runButton.setDisabled(false);
+            }
+            
+            hLayout.addMember(runButton);
+            
+            return hLayout;  
         } else {  
         	return super.createRecordComponent(record, colNum);
-        }  
-		
-		
-		
+        } 
 	}
 }
