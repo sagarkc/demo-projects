@@ -18,6 +18,7 @@ import com.smartgwt.client.data.SortSpecifier;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.types.SortDirection;
+import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -26,6 +27,7 @@ import com.smartgwt.client.widgets.grid.CellFormatter;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
+import com.smartgwt.client.widgets.layout.HLayout;
 import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.xchanging.etl.mgr.web.client.ds.RTAllJobsJobMonitorDataSource;
 import com.xchanging.etl.mgr.web.shared.WebConstants;
@@ -50,10 +52,13 @@ public class RTLastHourJobMonitorGrid extends ListGrid {
 		setShowAllColumns(true);
 		setGroupStartOpen(WebConstants.JOB_EXIT_CODE_STARTED, WebConstants.JOB_EXIT_CODE_FAILED);
 		setGroupByField(JobExecutionHistoryVo.Fields.STATUS_CODE);
-		SortSpecifier sortSpecifier = new SortSpecifier(
+		SortSpecifier jobStatusSortSpecifier = new SortSpecifier(
 				JobExecutionHistoryVo.Fields.STATUS_CODE, 
 				SortDirection.DESCENDING);
-		setSort(new SortSpecifier[]{sortSpecifier});
+		SortSpecifier jobNameSortSpecifier = new SortSpecifier(
+				JobExecutionHistoryVo.Fields.JOB_NAME, 
+				SortDirection.ASCENDING);
+		setSort(new SortSpecifier[]{jobStatusSortSpecifier, jobNameSortSpecifier});
 		invalidateCache();
 		setDataSource(
 				RTAllJobsJobMonitorDataSource.getInstance()
@@ -120,7 +125,7 @@ public class RTLastHourJobMonitorGrid extends ListGrid {
 		
 		ListGridField executeJobField = new ListGridField("executeJob", "Action");
 		executeJobField.setAlign(Alignment.RIGHT);
-		executeJobField.setWidth(75);
+		executeJobField.setWidth(175);
 		
 		
 		setFields(nameField, exitCodeField, statusCodeField, 
@@ -187,17 +192,48 @@ public class RTLastHourJobMonitorGrid extends ListGrid {
 	@Override
 	protected Canvas createRecordComponent(final ListGridRecord record, Integer colNum) {
 		String fieldName = this.getFieldName(colNum); 
+		String statusCode = record.getAttributeAsString(JobExecutionHistoryVo.Fields.STATUS_CODE);
+		String exitCode = record.getAttributeAsString(JobExecutionHistoryVo.Fields.EXIT_CODE);
 		if (fieldName.equals("executeJob")) {  
-            IButton button = new IButton();  
-            button.setHeight(18);  
-            button.setWidth(65);                      
-            button.setTitle("Run");  
-            button.addClickHandler(new ClickHandler() {  
+            HLayout hLayout = new HLayout();
+            hLayout.setWidth100();
+            hLayout.setHeight100();
+			hLayout.setMembersMargin(2);
+			hLayout.setAlign(Alignment.RIGHT);
+			hLayout.setAlign(VerticalAlignment.CENTER);
+            
+            if(WebConstants.JOB_EXIT_CODE_FAILED.equalsIgnoreCase(exitCode)){
+            	IButton exitMgsButton = new IButton();  
+                exitMgsButton.setHeight(18);  
+                exitMgsButton.setWidth(65);                      
+                exitMgsButton.setTitle("Exit Msg");  
+                exitMgsButton.addClickHandler(new ClickHandler() {  
+                    public void onClick(ClickEvent event) {  
+                    	Window.alert(record.getAttributeAsString(JobExecutionHistoryVo.Fields.EXIT_MESSAGE));  
+                    }  
+                });
+                hLayout.addMember(exitMgsButton);
+            }
+            
+			IButton runButton = new IButton();  
+            runButton.setHeight(18);  
+            runButton.setWidth(65);                      
+            runButton.setTitle("Run");  
+            runButton.addClickHandler(new ClickHandler() {  
                 public void onClick(ClickEvent event) {  
                 	Window.alert(record.getAttribute("jobName") + " execute clicked.");  
                 }  
-            });  
-            return button;  
+            });
+            
+            if(WebConstants.JOB_STATUS_STARTED.equalsIgnoreCase(statusCode)){
+            	runButton.setDisabled(true);
+            } else {
+            	runButton.setDisabled(false);
+            }
+            
+            hLayout.addMember(runButton);
+            
+            return hLayout;  
         } else {  
         	return super.createRecordComponent(record, colNum);
         }  

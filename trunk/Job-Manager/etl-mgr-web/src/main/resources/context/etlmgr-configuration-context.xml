@@ -10,6 +10,7 @@
 			<value>scheduler.jmx.mbean</value>
 		</constructor-arg>
 	</bean>
+	
 
 	<bean id="schedulerJmxContextFactory"
 		class="com.xchanging.etl.mgr.core.jmx.SchedulerJmxContextFactory"
@@ -17,7 +18,7 @@
 		<property name="schedulerJmxContextProvider" ref="schedulerJmxContextProvider" />
 	</bean>
 
-	<bean id="localMBeanServerConnection_localhost_8500"
+	<!-- <bean id="localMBeanServerConnection_localhost_8500"
 		class="org.springframework.jmx.support.MBeanServerConnectionFactoryBean">
 		<property name="serviceUrl" value="service:jmx:rmi:///jndi/rmi://localhost:8500/jmxrmi" />
 	</bean>
@@ -25,6 +26,6 @@
 	<bean id="localMBeanServerConnection_localhost_8501"
 		class="org.springframework.jmx.support.MBeanServerConnectionFactoryBean">
 		<property name="serviceUrl" value="service:jmx:rmi:///jndi/rmi://localhost:8500/jmxrmi" />
-	</bean>
+	</bean> -->
 
 </beans>

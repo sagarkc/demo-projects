@@ -43,7 +43,7 @@ public class RemoteBatchMbeanExporter extends MBeanExporter implements SmartLife
 
 	@Override
 	public void start() {
-		this.lifecycleLock.lock();
+		/*this.lifecycleLock.lock();
 		try {
 			if (!this.running) {
 				this.doStart();
@@ -55,7 +55,7 @@ public class RemoteBatchMbeanExporter extends MBeanExporter implements SmartLife
 		}
 		finally {
 			this.lifecycleLock.unlock();
-		}
+		}*/
 	}
 
 	@Override
@@ -92,18 +92,18 @@ public class RemoteBatchMbeanExporter extends MBeanExporter implements SmartLife
 	
 	protected void doStart() {
 		registerJobs();
-		registerSteps();
+		//registerSteps();
 	}
 	
 	private void registerJobs() {
-		for (String jobName : jobService.listJobs(0, Integer.MAX_VALUE)) {
+		/*for (String jobName : jobService.listJobs(0, Integer.MAX_VALUE)) {
 			if (!jobKeys.contains(jobName)) {
 				jobKeys.add(jobName);
 				logger.info("Registering job execution " + jobName);
 				registerBeanNameOrInstance(jobExecutionMetricsFactory.createMetricsForJob(jobName),
 						getBeanKeyForJobExecution(jobName));
 			}
-		}
+		}*/
 	}
 
 }
