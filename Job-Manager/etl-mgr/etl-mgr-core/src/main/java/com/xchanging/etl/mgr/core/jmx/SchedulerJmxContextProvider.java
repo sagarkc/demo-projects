@@ -10,7 +10,6 @@
  */
 package com.xchanging.etl.mgr.core.jmx;
 
-import java.io.IOException;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
@@ -18,6 +17,11 @@ import java.io.IOException;
  */
 public interface SchedulerJmxContextProvider {
 
+	String getHostName();
+	int getPortNumber();
+	String getJmxUrl();
+	SchedulerJmxContext getSchedulerJmxContext();
+	
 	String formJmxUrl(String host, int port);
 
 	/**
@@ -25,6 +29,6 @@ public interface SchedulerJmxContextProvider {
 	 * @return
 	 * @throws Exception 
 	 */
-	SchedulerJmxContext createContext(String jmxUrl) throws  Exception;
+	void createContext(String jmxUrl) throws  Exception;
 	
 }

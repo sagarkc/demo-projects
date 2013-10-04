@@ -11,13 +11,10 @@
 package com.xchanging.etl.mgr.web.server.endpoint.jmx;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.xchanging.etl.mgr.core.jmx.SchedulerJmxContext;
-import com.xchanging.etl.mgr.core.jmx.SchedulerJmxContextFactory;
 import com.xchanging.etl.mgr.web.client.service.JmxMBeanInfoService;
 
 /**
@@ -31,9 +28,10 @@ public class JmxMBeanInfoServerEndpoint implements JmxMBeanInfoService{
 	
 	@Override
 	public List<String> getSchedulerMbeanNames(String jmxHost, int jmxPort) {
-		try {
+		// TODO nned to implement
+		/*try {
 			SchedulerJmxContext schedulerJmxContext = SchedulerJmxContextFactory.getInstance()
-					.createSchedulerJmxContext(jmxHost, jmxPort);
+					.getSchedulerJmxContext(jmxHost, jmxPort);
 			
 			if(null != schedulerJmxContext){
 				return Arrays.asList(schedulerJmxContext.getMbeanNames());
@@ -42,7 +40,7 @@ public class JmxMBeanInfoServerEndpoint implements JmxMBeanInfoService{
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		return new ArrayList<String>();
 	}
 

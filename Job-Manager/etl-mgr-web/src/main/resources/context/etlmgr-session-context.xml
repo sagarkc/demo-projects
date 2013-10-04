@@ -17,11 +17,21 @@
 	<bean id="etlMgrDataSource"
 		class="org.apache.commons.dbcp.BasicDataSource" 
 		destroy-method="close">
-		<property name="url" value="${jdbc.connection.url}" />
-		<property name="driverClassName" value="${jdbc.driver.class.name}" />
-		<property name="username" value="${jdbc.user.name}" />
-		<property name="password" value="${jdbc.password}" />
+		<property name="url" value="${etlMgr.jdbc.connection.url}" />
+		<property name="driverClassName" value="${etlMgr.jdbc.driver.class.name}" />
+		<property name="username" value="${etlMgr.jdbc.user.name}" />
+		<property name="password" value="${etlMgr.jdbc.password}" />
 	</bean> 
+	
+	<bean id="jobServerDataSource"
+		class="org.apache.commons.dbcp.BasicDataSource" 
+		destroy-method="close">
+		<property name="url" value="${jobServer.jdbc.connection.url}" />
+		<property name="driverClassName" value="${jobServer.jdbc.driver.class.name}" />
+		<property name="username" value="${jobServer.jdbc.user.name}" />
+		<property name="password" value="${jobServer.jdbc.password}" />
+	</bean> 
+	
 	<!-- <bean id="dbDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 	    <property name="jndiName" value="java:comp/env/jdbc/DatabaseName"/>
 	</bean> -->

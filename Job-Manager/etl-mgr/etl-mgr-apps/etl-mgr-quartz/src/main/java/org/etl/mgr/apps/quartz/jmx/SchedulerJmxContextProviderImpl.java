@@ -22,7 +22,9 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 
+import org.apache.log4j.Logger;
 import org.etl.mgr.apps.quartz.QuartzSchedulerMBean;
+import org.springframework.beans.factory.FactoryBean;
 import org.springframework.stereotype.Component;
 
 import com.xchanging.etl.mgr.core.jmx.SchedulerJmxContext;
@@ -35,19 +37,94 @@ import com.xchanging.etl.mgr.model.scheduler.JobDetail;
  */
 @Component
 public class SchedulerJmxContextProviderImpl implements
-		SchedulerJmxContextProvider {
+		SchedulerJmxContextProvider, FactoryBean<SchedulerJmxContext> {
 
-	private String mbeanNamePrefix;
+	private static Logger logger = Logger.getLogger(SchedulerJmxContextProviderImpl.class);
+	
+	private String hostName;
+	private int portNumber;
+	private String jmxUrl;
+	
+	private SchedulerJmxContext schedulerJmxContext;
 	
 	/**
-	 * @param mbeanNamePrefix
+	 * @param hostName
+	 * @param portNumber
 	 */
-	public SchedulerJmxContextProviderImpl(String mbeanNamePrefix) {
-		if(null == mbeanNamePrefix)
-			throw new IllegalArgumentException("mbeanNamePrefix must be probided...");
-		this.mbeanNamePrefix = mbeanNamePrefix;
+	public SchedulerJmxContextProviderImpl(String hostName, int portNumber) {
+		this.hostName = hostName;
+		this.portNumber = portNumber;
+		this.jmxUrl = formJmxUrl(hostName, portNumber); 
+		try {
+			createContext(jmxUrl);
+		} catch (Exception e) {
+			logger.error(e);
+		}
+	}
+	
+	
+
+	/**
+	 * @param jmxUrl
+	 */
+	public SchedulerJmxContextProviderImpl(String jmxUrl) {
+		this.jmxUrl = jmxUrl;
+		try {
+			createContext(jmxUrl);
+		} catch (Exception e) {
+			logger.error(e);
+		}
 	}
 
+
+
+	public String getHostName() {
+		return hostName;
+	}
+
+
+
+	public int getPortNumber() {
+		return portNumber;
+	}
+
+
+
+	public String getJmxUrl() {
+		return jmxUrl;
+	}
+
+
+
+	public SchedulerJmxContext getSchedulerJmxContext() {
+		return schedulerJmxContext;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.springframework.beans.factory.FactoryBean#getObject()
+	 */
+	@Override
+	public SchedulerJmxContext getObject() throws Exception {
+		return schedulerJmxContext;
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.springframework.beans.factory.FactoryBean#getObjectType()
+	 */
+	@Override
+	public Class<?> getObjectType() {
+		return SchedulerJmxContext.class;
+	}
+
+
+
+	/* (non-Javadoc)
+	 * @see org.springframework.beans.factory.FactoryBean#isSingleton()
+	 */
+	@Override
+	public boolean isSingleton() {
+		return true;
+	}
 	/* (non-Javadoc)
 	 * @see com.xchanging.etl.mgr.core.jmx.SchedulerJmxContextProvider#formJmxUrl(java.lang.String, int)
 	 */
@@ -61,8 +138,8 @@ public class SchedulerJmxContextProviderImpl implements
 	 * @see com.xchanging.etl.mgr.core.jmx.SchedulerJmxContextProvider#createContext(java.lang.String)
 	 */
 	@Override
-	public SchedulerJmxContext createContext(String jmxUrl) throws Exception {
-		SchedulerJmxContext schedulerJmxContext = new SchedulerJmxContext();
+	public void createContext(String jmxUrl) throws Exception {
+		schedulerJmxContext = new SchedulerJmxContext();
 		JMXServiceURL serviceURL = new JMXServiceURL(jmxUrl);
 		//JMXConnectorServer jmxConnectorServer = JMXConnectorServerFactory.newJMXConnectorServer(serviceURL, null, null);
 		JMXConnector jmxConnector = JMXConnectorFactory.connect(serviceURL, null);//jmxConnectorServer.toJMXConnector(null);
@@ -76,64 +153,65 @@ public class SchedulerJmxContextProviderImpl implements
 			for (Iterator<ObjectInstance> iterator = objInstances.iterator(); iterator.hasNext();) {
 				ObjectInstance objectInstance =  iterator.next();
 				String name = objectInstance.getObjectName().getCanonicalName();
-				if(name.startsWith(mbeanNamePrefix)){
-					mbeanNames[i] = name;
-					QuartzSchedulerMBean quartzSchedulerMBean = new QuartzSchedulerMBean();
-					
-					MBeanInfo mBeanInfo = mBeanServerCon.getMBeanInfo( objectInstance.getObjectName() );
-					if(null != mBeanInfo){
-						Object groupObject = mBeanServerCon.invoke(
-								objectInstance.getObjectName(), 
-								"getJobGroupNames", 
-								null, 
-								null);
-						if(null != groupObject && groupObject instanceof String[]){
-							String[] grpNames = (String[]) groupObject;
-							for (String grpName : grpNames) {
-								if(null == quartzSchedulerMBean.getJobNamesByGroup().get(grpName)){
-									quartzSchedulerMBean.getJobNamesByGroup().put(grpName, new LinkedHashSet<String>());
-								}
-								if(null == quartzSchedulerMBean.getJobDetailsByGroup().get(grpName)){
-									quartzSchedulerMBean.getJobDetailsByGroup().put(grpName, new ArrayList<JobDetail>());
-								}
-								Object jobObject = mBeanServerCon.invoke(
-										objectInstance.getObjectName(), 
-										"getJobNames", 
-										new Object[]{grpName}, 
-										new String[]{"java.lang.String"});
-								if(null != jobObject && jobObject instanceof String[]){
-									String[] jobNames = (String[]) jobObject;
-									for (String jobName : jobNames) {
-										quartzSchedulerMBean.getJobNamesByGroup().get(grpName).add(jobName);
-										/*JobKey jobKey = new JobKey(jobName, grpName);
-										
-										Object jobDetailObject = mBeanServerCon.invoke(
-												objectInstance.getObjectName(), 
-												"getJobDetail", 
-												new Object[]{jobKey}, 
-												new String[]{"org.quartz.JobKey"});
-										if(null != jobDetailObject && jobDetailObject instanceof org.quartz.JobDetail){
-											org.quartz.JobDetail detail = (org.quartz.JobDetail) jobDetailObject;
-											JobDetail jobDetail = new JobDetail();
-											jobDetail.setGroupName(grpName);
-											jobDetail.setJobName(jobName);
-											jobDetail.setDescription(detail.getDescription());
-											jobDetail.setJobClassName(detail.getJobClass().getCanonicalName());
-											quartzSchedulerMBean.getJobDetailsByGroup().get(grpName).add(jobDetail);
-										} */
-									}
+				mbeanNames[i] = name;
+				QuartzSchedulerMBean quartzSchedulerMBean = new QuartzSchedulerMBean();
+				
+				MBeanInfo mBeanInfo = mBeanServerCon.getMBeanInfo( objectInstance.getObjectName() );
+				if(null != mBeanInfo){
+					Object groupObject = mBeanServerCon.invoke(
+							objectInstance.getObjectName(), 
+							"getJobGroupNames", 
+							null, 
+							null);
+					if(null != groupObject && groupObject instanceof String[]){
+						String[] grpNames = (String[]) groupObject;
+						for (String grpName : grpNames) {
+							if(null == quartzSchedulerMBean.getJobNamesByGroup().get(grpName)){
+								quartzSchedulerMBean.getJobNamesByGroup().put(grpName, new LinkedHashSet<String>());
+							}
+							if(null == quartzSchedulerMBean.getJobDetailsByGroup().get(grpName)){
+								quartzSchedulerMBean.getJobDetailsByGroup().put(grpName, new ArrayList<JobDetail>());
+							}
+							Object jobObject = mBeanServerCon.invoke(
+									objectInstance.getObjectName(), 
+									"getJobNames", 
+									new Object[]{grpName}, 
+									new String[]{"java.lang.String"});
+							if(null != jobObject && jobObject instanceof String[]){
+								String[] jobNames = (String[]) jobObject;
+								for (String jobName : jobNames) {
+									quartzSchedulerMBean.getJobNamesByGroup().get(grpName).add(jobName);
+									/*JobKey jobKey = new JobKey(jobName, grpName);
+									
+									Object jobDetailObject = mBeanServerCon.invoke(
+											objectInstance.getObjectName(), 
+											"getJobDetail", 
+											new Object[]{jobKey}, 
+											new String[]{"org.quartz.JobKey"});
+									if(null != jobDetailObject && jobDetailObject instanceof org.quartz.JobDetail){
+										org.quartz.JobDetail detail = (org.quartz.JobDetail) jobDetailObject;
+										JobDetail jobDetail = new JobDetail();
+										jobDetail.setGroupName(grpName);
+										jobDetail.setJobName(jobName);
+										jobDetail.setDescription(detail.getDescription());
+										jobDetail.setJobClassName(detail.getJobClass().getCanonicalName());
+										quartzSchedulerMBean.getJobDetailsByGroup().get(grpName).add(jobDetail);
+									} */
 								}
 							}
 						}
-						
-						schedulerJmxContext.getSchedulerMbaenMap().put(name, quartzSchedulerMBean);
-						i++;
 					}
+					
+					schedulerJmxContext.getSchedulerMbaenMap().put(name, quartzSchedulerMBean);
+					i++;
 				}
 				schedulerJmxContext.setMbeanNames(mbeanNames);
 			}
 		}
-		return schedulerJmxContext;
 	}
+
+
+
+	
 
 }
