@@ -7,7 +7,10 @@
 	<bean id="schedulerJmxContextProvider"
 		class="org.etl.mgr.apps.quartz.jmx.SchedulerJmxContextProviderImpl">
 		<constructor-arg index="0">
-			<value>scheduler.jmx.mbean</value>
+			<value>localhost</value>
+		</constructor-arg>
+		<constructor-arg index="1">
+			<value>8500</value>
 		</constructor-arg>
 	</bean>
 	
@@ -15,7 +18,11 @@
 	<bean id="schedulerJmxContextFactory"
 		class="com.xchanging.etl.mgr.core.jmx.SchedulerJmxContextFactory"
 		factory-method="getInstance">
-		<property name="schedulerJmxContextProvider" ref="schedulerJmxContextProvider" />
+		<property name="schedulerJmxContextMap">
+			<map>
+				<entry key="localSchedulerJmxContextProvider_localhost_8500" value-ref="schedulerJmxContextProvider" />
+			</map>
+		</property>
 	</bean>
 
 	<!-- <bean id="localMBeanServerConnection_localhost_8500"
