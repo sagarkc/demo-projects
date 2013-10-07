@@ -5,15 +5,15 @@ public class S {
 	private static int instanceCount = 0;
 	public S(){
 		instanceCount++;
-		System.out.println("S:: Instance created with ID: " + hashCode());
-		System.out.println("S:: Instance count: " + instanceCount);
+		//System.out.println("S:: Instance created with ID: " + hashCode());
+		//System.out.println("S:: Instance count: " + instanceCount);
 	}
 	
 	protected void finalize() throws Throwable {
 		super.finalize();
 		instanceCount--;
-		System.out.println("S:: Instance GC with ID: " + hashCode());
-		System.out.println("S:: Instance count: " + instanceCount);
+		//System.out.println("S:: Instance GC with ID: " + hashCode());
+		//System.out.println("S:: Instance count: " + instanceCount);
 	}
 	
 	private A a;

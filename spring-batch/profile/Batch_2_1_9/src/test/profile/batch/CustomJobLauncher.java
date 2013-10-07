@@ -12,38 +12,38 @@ import org.springframework.batch.core.repository.JobExecutionAlreadyRunningExcep
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
 
-
 public class CustomJobLauncher extends SimpleJobLauncher {
 
 	private static Map<String, String> jobExecutions = new HashMap<String, String>();
 
 	@Override
-	public JobExecution run(Job job, JobParameters jobParameters) throws JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+	public JobExecution run(Job job, JobParameters jobParameters)
+			throws JobExecutionAlreadyRunningException, JobRestartException,
+			JobInstanceAlreadyCompleteException {
 
-		
-			JobExecution jobExecution = null;
-		
-			String status = jobExecutions.get(job.getName());
+		JobExecution jobExecution = null;
 
-			if (status == null || !status.equals("RUNNING")) {
-				jobExecutions.put(job.getName(), "RUNNING");
+		String status = jobExecutions.get(job.getName());
+
+		if (status == null || !status.equals("RUNNING")) {
+			jobExecutions.put(job.getName(), "RUNNING");
+			try {
 				try {
-					try {
-						jobExecution = super.run(job, jobParameters);
-					} catch (JobParametersInvalidException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				
-				} finally {
-					jobExecutions.put(job.getName(), "FINISHED");
+					jobExecution = super.run(job, jobParameters);
+				} catch (JobParametersInvalidException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				return jobExecution;
 
-			} else {
-				throw new JobExecutionAlreadyRunningException("Job '" + job.getName() + "'is running already.");
+			} finally {
+				jobExecutions.put(job.getName(), "FINISHED");
 			}
-		
+			return jobExecution;
+
+		} else {
+			throw new JobExecutionAlreadyRunningException("Job '"
+					+ job.getName() + "'is running already.");
+		}
 
 	}
 }

@@ -25,7 +25,7 @@
 	<classpathentry kind="lib" path="lib/spring-aop-3.0.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-asm-3.0.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-batch-core-2.1.9.RELEASE-sources.jar"/>
-	<classpathentry kind="lib" path="lib/spring-batch-core-2.1.9.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-batch-core-2.1.9.RELEASE.jar" sourcepath="lib/spring-batch-core-2.1.9.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="lib/spring-batch-infrastructure-2.1.9.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="lib/spring-batch-infrastructure-2.1.9.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring-beans-3.0.1.RELEASE.jar"/>
