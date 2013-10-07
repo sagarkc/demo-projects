@@ -13,15 +13,15 @@ public class A implements InitializingBean, ItemReader<String> {
 
 	public A() {
 		instanceCount++;
-		System.out.println("A:: Instance created with ID: " + hashCode());
-		System.out.println("A:: Instance count: " + instanceCount);
+		//System.out.println("A:: Instance created with ID: " + hashCode());
+		//System.out.println("A:: Instance count: " + instanceCount);
 	}
 
 	protected void finalize() throws Throwable {
 		super.finalize();
 		instanceCount--;
-		System.out.println("A:: Instance GC with ID: " + hashCode());
-		System.out.println("A:: Instance count: " + instanceCount);
+		//System.out.println("A:: Instance GC with ID: " + hashCode());
+		//System.out.println("A:: Instance count: " + instanceCount);
 	}
 
 	@Override

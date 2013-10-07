@@ -9,15 +9,15 @@ public class C implements ItemWriter<String>{
 	private static int instanceCount = 0;
 	public C(){
 		instanceCount++;
-		System.out.println("C:: Instance created with ID: " + hashCode());
-		System.out.println("C:: Instance count: " + instanceCount);
+		//System.out.println("C:: Instance created with ID: " + hashCode());
+		//System.out.println("C:: Instance count: " + instanceCount);
 	}
 	
 	protected void finalize() throws Throwable {
 		super.finalize();
 		instanceCount--;
-		System.out.println("C:: Instance GC with ID: " + hashCode());
-		System.out.println("C:: Instance count: " + instanceCount);
+		//System.out.println("C:: Instance GC with ID: " + hashCode());
+		//System.out.println("C:: Instance count: " + instanceCount);
 	}
 	
 	@Override

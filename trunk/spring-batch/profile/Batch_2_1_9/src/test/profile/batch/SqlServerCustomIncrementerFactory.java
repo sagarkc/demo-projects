@@ -24,7 +24,7 @@ public class SqlServerCustomIncrementerFactory implements DataFieldMaxValueIncre
 
 	public DataFieldMaxValueIncrementer getIncrementer(String databaseType, String incrementerName) {
 		SqlServerMaxValueIncrementer inc=  new SqlServerMaxValueIncrementer(dataSource, incrementerName,  "ID");
-		inc.setCacheSize(100);
+		inc.setCacheSize(1000);
 		return inc;
 	}
 

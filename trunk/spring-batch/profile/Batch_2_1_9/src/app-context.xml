@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
+
+	<aop:aspectj-autoproxy proxy-target-class="false">
+        <aop:include name="applicationCommonAspect"/>
+    </aop:aspectj-autoproxy>
+
+	<bean id="applicationCommonAspect" class="test.profile.batch.ApplicationCommonAspect" />
 
 	<bean id="customEditorConfigurer"
 		class="org.springframework.beans.factory.config.CustomEditorConfigurer">
@@ -38,13 +46,17 @@
 		</property>
 		<property name="triggers">
 			<list>
+				<!-- <bean class="org.springframework.scheduling.quartz.CronTriggerBean">
+					<property name="jobDetail" ref="jobDetail_Test_Hello_01" />
+					<property name="cronExpression" value="0 0/2 * * * ?" />
+				</bean> -->
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_01" />
-					<property name="cronExpression" value="0 0/5 * * * ?" />
+					<property name="cronExpression" value="0 0/3 * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_02" />
-					<property name="cronExpression" value="0 0/10 * * * ?" />
+					<property name="cronExpression" value="0 0/3 * * * ?" />
 				</bean> 
 			</list>
 		</property>
@@ -88,6 +100,7 @@
 		class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
 		<property name="dataSource" ref="sqlServerDs" />
 		<property name="transactionManager" ref="transactionManager" />
+		<!-- <property name="isolationLevelForCreate" value="ISOLATION_REPEATABLE_READ" /> -->
 		<property name="incrementerFactory">
 			<bean class="test.profile.batch.SqlServerCustomIncrementerFactory">
 				<property name="dataSource" ref="sqlServerDs" />
