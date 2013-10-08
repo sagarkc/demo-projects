@@ -10,6 +10,7 @@
  */
 package com.xchanging.etl.mgr.web.client.service;
 
+import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.xchanging.etl.mgr.web.shared.WebConstants;
 
@@ -18,9 +19,9 @@ import com.xchanging.etl.mgr.web.shared.WebConstants;
  *
  */
 @RemoteServiceRelativePath(JmxJobRunnerService.RPC_TARGET + WebConstants.RPC_EXT)
-public interface JmxJobRunnerService {
+public interface JmxJobRunnerService extends RemoteService{
 
 	String RPC_TARGET = "jmxJobRunnerService";
 	
-	
+	public String runJob(String jobName);
 }

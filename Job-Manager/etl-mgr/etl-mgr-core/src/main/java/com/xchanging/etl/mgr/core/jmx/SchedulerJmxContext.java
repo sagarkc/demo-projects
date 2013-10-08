@@ -10,10 +10,13 @@
  */
 package com.xchanging.etl.mgr.core.jmx;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.management.remote.JMXConnector;
+
+import com.xchanging.etl.mgr.model.scheduler.BatchJobDetail;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
@@ -22,12 +25,13 @@ import javax.management.remote.JMXConnector;
 public final class SchedulerJmxContext {
 
 	private JMXConnector jmxConnector;
-	private Map<String , SchedulerMBean> schedulerMbaenMap;
-	private String[] mbeanNames;
+	private Map<String, Map<String, String>> jobsByGroup;
+	private Map<String, SchedulerMBean> schedulerMBeanMap;
+	
 	
 	public SchedulerJmxContext(){
-		schedulerMbaenMap = new HashMap<>();
-		mbeanNames = new String[0];
+		jobsByGroup = new LinkedHashMap<String, Map<String, String>>();
+		schedulerMBeanMap = new LinkedHashMap<String, SchedulerMBean>();
 	}
 
 	public JMXConnector getJmxConnector() {
@@ -38,21 +42,35 @@ public final class SchedulerJmxContext {
 		this.jmxConnector = jmxConnector;
 	}
 
-	public Map<String, SchedulerMBean> getSchedulerMbaenMap() {
-		return schedulerMbaenMap;
+	public Map<String, Map<String, String>> getJobsByGroup() {
+		return jobsByGroup;
 	}
 
-	public void setSchedulerMbaenMap(Map<String, SchedulerMBean> schedulerMbaenMap) {
-		this.schedulerMbaenMap = schedulerMbaenMap;
+	public void setJobsByGroup(Map<String, Map<String, String>> jobsByGroup) {
+		this.jobsByGroup = jobsByGroup;
 	}
 
-	public String[] getMbeanNames() {
-		return mbeanNames;
+	public Map<String, SchedulerMBean> getSchedulerMBeanMap() {
+		return schedulerMBeanMap;
 	}
 
-	public void setMbeanNames(String[] mbeanNames) {
-		this.mbeanNames = mbeanNames;
+	public void setSchedulerMBeanMap(Map<String, SchedulerMBean> schedulerMBeanMap) {
+		this.schedulerMBeanMap = schedulerMBeanMap;
 	}
+
 	
+	public void triggerJob(String jobName){
+		SchedulerMBean schedulerMBean = schedulerMBeanMap.get("scheduler.jmx.mbean:name=SchedulerMonitorBean");
+		if(null != schedulerMBean){
+			List<BatchJobDetail> jobDetails = schedulerMBean.getAllJobDetails();
+			if(null != jobDetails){
+				for (BatchJobDetail jobDetail : jobDetails) {
+					if(jobDetail.getJobName().equals(jobName)){
+						
+					}
+				}
+			}
+		}
+	}
 	
 }

@@ -19,7 +19,7 @@ import java.util.Set;
 
 import com.xchanging.etl.mgr.core.jmx.JmxMethodInvocationException;
 import com.xchanging.etl.mgr.core.jmx.SchedulerMBean;
-import com.xchanging.etl.mgr.model.scheduler.JobDetail;
+import com.xchanging.etl.mgr.model.scheduler.BatchJobDetail;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
@@ -30,8 +30,8 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 	private String schedulerName;
 	private Set<String> allJobNames ;
 	private Map<String, Set<String>> jobNamesByGroup;
-	private List<JobDetail> allJobDetails;
-	private Map<String, List<JobDetail>> jobDetailsByGroup;
+	private List<BatchJobDetail> allJobDetails;
+	private Map<String, List<BatchJobDetail>> jobDetailsByGroup;
 	
 	/**
 	 * 
@@ -71,7 +71,7 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 	 * @see com.xchanging.etl.mgr.core.jmx.SchedulerMBean#getAllJobDetails()
 	 */
 	@Override
-	public List<JobDetail> getAllJobDetails() {
+	public List<BatchJobDetail> getAllJobDetails() {
 		return allJobDetails;
 	}
 
@@ -79,15 +79,15 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 	 * @see com.xchanging.etl.mgr.core.jmx.SchedulerMBean#getAllJobDetails(java.lang.String)
 	 */
 	@Override
-	public List<JobDetail> getAllJobDetails(String groupName) {
+	public List<BatchJobDetail> getAllJobDetails(String groupName) {
 		return jobDetailsByGroup.get(groupName);
 	}
 
 	/* (non-Javadoc)
-	 * @see com.xchanging.etl.mgr.core.jmx.SchedulerMBean#executeJob(com.xchanging.etl.mgr.model.scheduler.JobDetail)
+	 * @see com.xchanging.etl.mgr.core.jmx.SchedulerMBean#executeJob(com.xchanging.etl.mgr.model.scheduler.BatchJobDetail)
 	 */
 	@Override
-	public void executeJob(JobDetail jobDetail)
+	public void executeJob(BatchJobDetail jobDetail)
 			throws JmxMethodInvocationException {
 		// TODO Auto-generated method stub
 
@@ -110,7 +110,7 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 	/**
 	 * @return the allJobDetails
 	 */
-	public List<JobDetail> getAllJobDetailNames() {
+	public List<BatchJobDetail> getAllJobDetailNames() {
 		return allJobDetails;
 	}
 
@@ -118,21 +118,21 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 	/**
 	 * @param allJobDetails the allJobDetails to set
 	 */
-	public void setAllJobDetails(List<JobDetail> allJobDetails) {
+	public void setAllJobDetails(List<BatchJobDetail> allJobDetails) {
 		this.allJobDetails = allJobDetails;
 	}
 	
 	/**
 	 * @return the jobDetailsByGroup
 	 */
-	public Map<String, List<JobDetail>> getJobDetailsByGroup() {
+	public Map<String, List<BatchJobDetail>> getJobDetailsByGroup() {
 		return jobDetailsByGroup;
 	}
 
 	/**
 	 * @param jobDetailsByGroup the jobDetailsByGroup to set
 	 */
-	public void setJobDetailsByGroup(Map<String, List<JobDetail>> jobDetailsByGroup) {
+	public void setJobDetailsByGroup(Map<String, List<BatchJobDetail>> jobDetailsByGroup) {
 		this.jobDetailsByGroup = jobDetailsByGroup;
 	}
 

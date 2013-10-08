@@ -46,10 +46,10 @@
 		</property>
 		<property name="triggers">
 			<list>
-				<!-- <bean class="org.springframework.scheduling.quartz.CronTriggerBean">
+				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_01" />
 					<property name="cronExpression" value="0 0/2 * * * ?" />
-				</bean> -->
+				</bean> 
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_01" />
 					<property name="cronExpression" value="0 0/3 * * * ?" />
@@ -100,7 +100,7 @@
 		class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
 		<property name="dataSource" ref="sqlServerDs" />
 		<property name="transactionManager" ref="transactionManager" />
-		<!-- <property name="isolationLevelForCreate" value="ISOLATION_REPEATABLE_READ" /> -->
+		<property name="isolationLevelForCreate" value="ISOLATION_REPEATABLE_READ" />
 		<property name="incrementerFactory">
 			<bean class="test.profile.batch.SqlServerCustomIncrementerFactory">
 				<property name="dataSource" ref="sqlServerDs" />

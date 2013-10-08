@@ -38,20 +38,20 @@
 		
 	
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" > 
-		<property name="dataSource" ref="etlMgrDataSource" />
+		<property name="dataSource" ref="jobServerDataSource" />
 	</bean>
 	
 	<bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-		<constructor-arg ref="etlMgrDataSource" /> 
+		<constructor-arg ref="jobServerDataSource" /> 
 	</bean>
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="etlMgrDataSource" />
+		<property name="dataSource" ref="jobServerDataSource" />
 		<property name="persistenceUnitName" value="etlmgr.persistence.uinit" />
 		<property name="jpaVendorAdapter">
 			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<property name="database" value="${jdbc.target.database.type}" />
+				<property name="database" value="${jobServer.jdbc.target.database.type}" />
 				<property name="showSql" value="${hibernate.show.sql}" />
     		</bean>
 		</property>

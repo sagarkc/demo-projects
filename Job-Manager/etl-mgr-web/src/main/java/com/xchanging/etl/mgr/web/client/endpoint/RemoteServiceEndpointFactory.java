@@ -12,6 +12,8 @@ package com.xchanging.etl.mgr.web.client.endpoint;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
+import com.xchanging.etl.mgr.web.client.service.JmxJobRunnerService;
+import com.xchanging.etl.mgr.web.client.service.JmxJobRunnerServiceAsync;
 import com.xchanging.etl.mgr.web.client.service.JmxMBeanInfoService;
 import com.xchanging.etl.mgr.web.client.service.JmxMBeanInfoServiceAsync;
 import com.xchanging.etl.mgr.web.client.service.JobMonitorService;
@@ -48,6 +50,7 @@ public final class RemoteServiceEndpointFactory {
 	private final RTSelectedJobMonitorPushServiceAsync rtSelectedJobMonitorPushServiceEndpoint;
 	
 	private final JmxMBeanInfoServiceAsync jmxMBeanInfoServerEndpoint;
+	private final JmxJobRunnerServiceAsync jmxJobRunnerServiceEndpoint;
 	
 	private RemoteServiceEndpointFactory(){
 		jobMonitorServiceEndpoint = GWT.create(JobMonitorService.class);
@@ -64,6 +67,7 @@ public final class RemoteServiceEndpointFactory {
 		rtSelectedJobMonitorPushServiceEndpoint = GWT.create(RTSelectedJobMonitorPushService.class);
 		
 		jmxMBeanInfoServerEndpoint = GWT.create(JmxMBeanInfoService.class);
+		jmxJobRunnerServiceEndpoint = GWT.create(JmxJobRunnerService.class);
 		
 	}
 
@@ -132,6 +136,10 @@ public final class RemoteServiceEndpointFactory {
 
 	public JmxMBeanInfoServiceAsync getJmxMBeanInfoServerEndpoint() {
 		return jmxMBeanInfoServerEndpoint;
+	}
+
+	public JmxJobRunnerServiceAsync getJmxJobRunnerServiceEndpoint() {
+		return jmxJobRunnerServiceEndpoint;
 	}
 	
 	

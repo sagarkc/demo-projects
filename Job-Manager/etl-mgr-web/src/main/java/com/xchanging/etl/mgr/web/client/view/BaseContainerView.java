@@ -48,7 +48,32 @@ public final class BaseContainerView extends VLayout {
 									SC.say("Failed to stop push");
 								}
 							});
+				} 
+				if(canvas instanceof RTLastHourJobMonitorView){
+					RemoteServiceEndpointFactory.getInstance().getRtLastHourJobMonitorPushServiceEndpoint().stop(
+							new AsyncCallback<Void>() {
+								@Override
+								public void onSuccess(Void result) {
+								}
+								@Override
+								public void onFailure(Throwable caught) {
+									SC.say("Failed to stop push");
+								}
+							});
 				}
+				if(canvas instanceof RTLastDayJobMonitorView){
+					RemoteServiceEndpointFactory.getInstance().getRtLastDayJobMonitorPushServiceEndpoint().stop(
+							new AsyncCallback<Void>() {
+								@Override
+								public void onSuccess(Void result) {
+								}
+								@Override
+								public void onFailure(Throwable caught) {
+									SC.say("Failed to stop push");
+								}
+							});
+				}
+				
 				removeMember(canvas);
 			}
 		}
