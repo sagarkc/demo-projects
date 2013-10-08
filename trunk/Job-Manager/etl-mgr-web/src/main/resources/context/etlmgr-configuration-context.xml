@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
 
-	<bean id="schedulerJmxContextProvider"
+
+	<bean id="schedulerJmxContextProvider_localhost_9010"
 		class="org.etl.mgr.apps.quartz.jmx.SchedulerJmxContextProviderImpl">
 		<constructor-arg index="0">
 			<value>localhost</value>
 		</constructor-arg>
 		<constructor-arg index="1">
-			<value>8500</value>
+			<value>9010</value>
+		</constructor-arg>
+		<constructor-arg index="2">
+			<value>scheduler.jmx.mbean:name=SchedulerMonitorBean</value>
 		</constructor-arg>
 	</bean>
 	
@@ -20,7 +26,7 @@
 		factory-method="getInstance">
 		<property name="schedulerJmxContextMap">
 			<map>
-				<entry key="localSchedulerJmxContextProvider_localhost_8500" value-ref="schedulerJmxContextProvider" />
+				<entry key="localSchedulerJmxContextProvider_localhost_9010" value-ref="schedulerJmxContextProvider_localhost_9010" />
 			</map>
 		</property>
 	</bean>

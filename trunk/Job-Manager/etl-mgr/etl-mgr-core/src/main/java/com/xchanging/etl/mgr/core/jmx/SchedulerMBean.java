@@ -13,7 +13,7 @@ package com.xchanging.etl.mgr.core.jmx;
 import java.util.List;
 import java.util.Set;
 
-import com.xchanging.etl.mgr.model.scheduler.JobDetail;
+import com.xchanging.etl.mgr.model.scheduler.BatchJobDetail;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
@@ -21,17 +21,21 @@ import com.xchanging.etl.mgr.model.scheduler.JobDetail;
  */
 public interface SchedulerMBean {
 
+	//String getJobDetailName(String jobName);
+	
 	String getSchedulerName();
 
 	Set<String> getAllJobNames();
 
 	Set<String> getAllJobNames(String jobGroupName);
 
-	List<JobDetail> getAllJobDetails();
+	List<BatchJobDetail> getAllJobDetails();
 
-	List<JobDetail> getAllJobDetails(String groupName);
+	List<BatchJobDetail> getAllJobDetails(String groupName);
 
-	void executeJob(JobDetail jobDetail) throws JmxMethodInvocationException;
+	void executeJob(String jobName) throws JmxMethodInvocationException;
+	
+	void executeJob(BatchJobDetail jobDetail) throws JmxMethodInvocationException;
 
 	/*Set<String> getTriggerGroupNames();
 

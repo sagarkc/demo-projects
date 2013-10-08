@@ -23,10 +23,13 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.SectionStack;
 import com.smartgwt.client.widgets.layout.SectionStackSection;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.toolbar.ToolStrip;
+import com.smartgwt.client.widgets.toolbar.ToolStripButton;
+import com.smartgwt.client.widgets.tree.TreeGrid;
+import com.smartgwt.client.widgets.tree.TreeGridField;
 import com.xchanging.etl.mgr.web.client.EtlManager;
 import com.xchanging.etl.mgr.web.client.UIConstants;
 import com.xchanging.etl.mgr.web.client.dialog.AddJMXSchedulerDialog;
-import com.xchanging.etl.mgr.web.client.dialog.AddJobsToMyJobMonitorDialog;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
@@ -46,18 +49,61 @@ public class NavigationView extends VLayout implements ResizedHandler {
 	private final VLayout schedulerSectionContent = new VLayout();
 	private final VLayout addedSchedulerSectionContent = new VLayout();
 	
+	private final ToolStrip jobServerToolStrip = new ToolStrip();
+	private final TreeGrid treeGrid = new TreeGrid();  
+	
 	public NavigationView() {
-
 		super();
-		addResizedHandler(this);
-		setWidth(UIConstants.NAV_WEST_WIDTH);
-		setHeight100();
+		this.addResizedHandler(this);
+		this.setWidth(UIConstants.NAV_WEST_WIDTH);
+		this.setHeight100();
 		this.setMembersMargin(20);
 		this.setOverflow(Overflow.HIDDEN);
 		this.setShowResizeBar(true);
 		
+		jobServerToolStrip.setWidth100();
+		jobServerToolStrip.setHeight(25);
+		ToolStripButton addServerButton = new ToolStripButton();
+		addServerButton.setTitle("Add");
+		ToolStripButton editServerButton = new ToolStripButton();
+		editServerButton.setTitle("Edit");
+		ToolStripButton removeServerButton = new ToolStripButton();
+		removeServerButton.setTitle("Rem");
+		jobServerToolStrip.addButton(addServerButton);
+		jobServerToolStrip.addButton(editServerButton);
+		jobServerToolStrip.addButton(removeServerButton);
+		jobServerToolStrip.addSeparator();
+		ToolStripButton exportServerButton = new ToolStripButton();
+		exportServerButton.setTitle("Export");
+		ToolStripButton importServerButton = new ToolStripButton();
+		importServerButton.setTitle("Import");
+		jobServerToolStrip.addButton(exportServerButton);
+		jobServerToolStrip.addButton(importServerButton);
 		
+		addMember(jobServerToolStrip);
 
+		
+		/*
+		
+        treeGrid.setCanEdit(true);  
+        treeGrid.setLoadDataOnDemand(false);  
+        treeGrid.setWidth100();  
+        treeGrid.setHeight100();  
+        //treeGrid.setDataSource(employeesDS);  
+        treeGrid.setNodeIcon("icons/16/folder_document.png");  
+        treeGrid.setFolderIcon("icons/16/document_plain_new.png");  
+        treeGrid.setShowOpenIcons(false);  
+        treeGrid.setShowDropIcons(false);  
+        treeGrid.setClosedIconSuffix("");  
+        treeGrid.setAutoFetchData(true);  
+  
+        TreeGridField nameField = new TreeGridField("Server Name");  
+        TreeGridField jobField = new TreeGridField("Status");  
+  
+        treeGrid.setFields(nameField, jobField);  
+		addMember(treeGrid);*/
+		
+		
 		navigationStack.setVisibilityMode(VisibilityMode.MUTEX);   
 		navigationStack.setWidth("227");   
 		navigationStack.setHeight100();   

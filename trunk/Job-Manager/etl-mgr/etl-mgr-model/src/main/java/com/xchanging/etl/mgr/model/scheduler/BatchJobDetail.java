@@ -3,7 +3,7 @@
  * 								ETL Manager
  * 						Monitor | Manage | Admin
  * -------------------------------------------------------------------------- *
- * Type:	com.xchanging.etl.mgr.model.scheduler.JobDetail
+ * Type:	com.xchanging.etl.mgr.model.scheduler.BatchJobDetail
  * Date:	Aug 26, 2013  4:05:40 PM
  * 
  * -------------------------------------------------------------------------- *
@@ -19,7 +19,7 @@ import com.google.gwt.user.client.rpc.IsSerializable;
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
  *
  */
-public class JobDetail implements Serializable, IsSerializable{
+public class BatchJobDetail implements Serializable, IsSerializable{
 
 	public interface Fields{
 		String JOB_NAME = "jobName";
@@ -34,6 +34,7 @@ public class JobDetail implements Serializable, IsSerializable{
 	private static final long serialVersionUID = 15465746546876541L;
 
 	private String jobName;
+	private String jobDetailName;
     private String groupName;
     private String description;
     private String jobClassName;
@@ -41,7 +42,7 @@ public class JobDetail implements Serializable, IsSerializable{
     /**
 	 * 
 	 */
-	public JobDetail() {
+	public BatchJobDetail() {
 	}
 	
 	public String getJobName() {
@@ -76,6 +77,14 @@ public class JobDetail implements Serializable, IsSerializable{
 		this.jobClassName = jobClassName;
 	}
 
+	public String getJobDetailName() {
+		return jobDetailName;
+	}
+
+	public void setJobDetailName(String jobDetailName) {
+		this.jobDetailName = jobDetailName;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -94,10 +103,10 @@ public class JobDetail implements Serializable, IsSerializable{
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof JobDetail)) {
+		if (!(obj instanceof BatchJobDetail)) {
 			return false;
 		}
-		JobDetail other = (JobDetail) obj;
+		BatchJobDetail other = (BatchJobDetail) obj;
 		if (groupName == null) {
 			if (other.groupName != null) {
 				return false;
@@ -118,7 +127,7 @@ public class JobDetail implements Serializable, IsSerializable{
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("JobDetail [");
+		builder.append("BatchJobDetail [");
 		if (jobName != null)
 			builder.append("jobName=").append(jobName).append(", ");
 		if (groupName != null)

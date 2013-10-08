@@ -36,15 +36,15 @@ public class SchedulerDetail implements Serializable, IsSerializable{
 	private static final long serialVersionUID = 15465746546876541L;
 	
 	private String schedulerName;
-	private List<JobDetail> allJobDetails;
-	private Map<String, List<JobDetail>> jobDetailsByJobGroup;
+	private List<BatchJobDetail> allJobDetails;
+	private Map<String, List<BatchJobDetail>> jobDetailsByJobGroup;
 	
 	/**
 	 * 
 	 */
 	public SchedulerDetail() {
-		jobDetailsByJobGroup = new LinkedHashMap<String, List<JobDetail>>();
-		allJobDetails = new ArrayList<JobDetail>();
+		jobDetailsByJobGroup = new LinkedHashMap<String, List<BatchJobDetail>>();
+		allJobDetails = new ArrayList<BatchJobDetail>();
 	}
 
 	public String getSchedulerName() {
@@ -55,20 +55,20 @@ public class SchedulerDetail implements Serializable, IsSerializable{
 		this.schedulerName = schedulerName;
 	}
 
-	public List<JobDetail> getAllJobDetails() {
+	public List<BatchJobDetail> getAllJobDetails() {
 		return allJobDetails;
 	}
 
-	public void setAllJobDetails(List<JobDetail> allJobDetails) {
+	public void setAllJobDetails(List<BatchJobDetail> allJobDetails) {
 		this.allJobDetails = allJobDetails;
 	}
 
-	public Map<String, List<JobDetail>> getJobDetailsByJobGroup() {
+	public Map<String, List<BatchJobDetail>> getJobDetailsByJobGroup() {
 		return jobDetailsByJobGroup;
 	}
 
 	public void setJobDetailsByJobGroup(
-			Map<String, List<JobDetail>> jobDetailsByJobGroup) {
+			Map<String, List<BatchJobDetail>> jobDetailsByJobGroup) {
 		this.jobDetailsByJobGroup = jobDetailsByJobGroup;
 	}
 
