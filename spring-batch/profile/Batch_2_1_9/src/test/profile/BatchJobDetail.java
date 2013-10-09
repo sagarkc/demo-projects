@@ -10,6 +10,8 @@
  */
 package test.profile;
 
+import java.io.Serializable;
+
 import org.springframework.batch.core.configuration.JobRegistry;
 import org.springframework.batch.core.launch.JobLauncher;
 
@@ -17,8 +19,12 @@ import org.springframework.batch.core.launch.JobLauncher;
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
  *
  */
-public class BatchJobDetail {
+public class BatchJobDetail implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3937801689863744172L;
 	private String jobDetailName;
 	private String targetJobName;
 	private JobRegistry jobRegistry;

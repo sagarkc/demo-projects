@@ -30,7 +30,12 @@ public class A implements InitializingBean, ItemReader<String> {
 
 	}
 
+	private String input;
 	private boolean hasRun = false;
+
+	public void setInput(String input) {
+		this.input = input;
+	}
 
 	@Override
 	public String read() throws Exception, UnexpectedInputException,
@@ -44,7 +49,7 @@ public class A implements InitializingBean, ItemReader<String> {
 			if(x % 31 == 0 || x % 17 == 0){
 				throw new Exception("Unknown error: [ " + x + " ]");
 			}
-			return "Hello from A...";
+			return input + " from A...";
 		}
 		return null;
 	}

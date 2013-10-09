@@ -14,9 +14,20 @@
 		<property name="beans">
 			<map>
 				<entry key="scheduler.jmx.mbean:name=SchedulerMonitorBean" value-ref="scheduler" />
+				<entry key="scheduler.jmx.mbean:name=JobdetailMapperBean" value-ref="jobdetailMapper" />
+				<entry key="scheduler.jmx.mbean:name=JobdetailMapBean" value-ref="jobdetailMap" />
 			</map>
 		</property>
 	</bean>
 	
+	<bean id="jobdetailMapper" class="test.profile.JobDataMapperServiceImpl">
+		<property name="jobNameKey" value="jobName" />
+		<property name="scheduler" ref="scheduler" />
+	</bean>
+	
+	<bean id="jobdetailMap" class="test.profile.JobDataMapperServiceTest">
+		<property name="jobNameKey" value="jobName" />
+		<property name="scheduler" ref="scheduler" />
+	</bean>
 	
 </beans>
