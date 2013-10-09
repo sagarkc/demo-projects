@@ -59,17 +59,10 @@ public final class SchedulerJmxContext {
 	}
 
 	
-	public void triggerJob(String jobName){
+	public void triggerJob(String jobName) throws Exception{
 		SchedulerMBean schedulerMBean = schedulerMBeanMap.get("scheduler.jmx.mbean:name=SchedulerMonitorBean");
 		if(null != schedulerMBean){
-			List<BatchJobDetail> jobDetails = schedulerMBean.getAllJobDetails();
-			if(null != jobDetails){
-				for (BatchJobDetail jobDetail : jobDetails) {
-					if(jobDetail.getJobName().equals(jobName)){
-						
-					}
-				}
-			}
+			schedulerMBean.executeJob(jobName);
 		}
 	}
 	

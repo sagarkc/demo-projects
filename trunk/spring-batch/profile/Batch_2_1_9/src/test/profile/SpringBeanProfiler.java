@@ -33,7 +33,7 @@ public class SpringBeanProfiler {
 			ApplicationContext applicationContext
 				= new ClassPathXmlApplicationContext(new String[]{"app-context.xml", "jmx-context.xml"});
 			System.out.println("Total initilized bean count: "+applicationContext.getBeanDefinitionCount());
-			Scheduler scheduler = (Scheduler) applicationContext.getBean("scheduler");
+			/*Scheduler scheduler = (Scheduler) applicationContext.getBean("scheduler");
 			//scheduler.shutdown();
 			if(null != applicationContext.getBean("mbeanServer")){
 				MBeanServer mBeanServerCon = (MBeanServer) applicationContext.getBean("mbeanServer");
@@ -94,7 +94,7 @@ public class SpringBeanProfiler {
 						
 					}
 				}
-			}
+			}*/
 			//scheduler.start();
 		} catch (Exception e) {
 			e.printStackTrace();

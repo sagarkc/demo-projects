@@ -176,6 +176,8 @@ public class SchedulerJmxContextProviderImpl implements
 				QuartzSchedulerMBean quartzSchedulerMBean = new QuartzSchedulerMBean();
 				
 				MBeanInfo mBeanInfo = mBeanServerCon.getMBeanInfo( objectInstance.getObjectName() );
+				quartzSchedulerMBean.setSchedulerJmxInstance(objectInstance);
+				quartzSchedulerMBean.setMbeanServerConnection(mBeanServerCon);
 				if(null != mBeanInfo){
 					Object groupObject = mBeanServerCon.invoke(
 							objectInstance.getObjectName(), 

@@ -10,8 +10,13 @@
  */
 package com.xchanging.etl.mgr.core.jmx;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
+
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
+import javax.management.ReflectionException;
 
 import com.xchanging.etl.mgr.model.scheduler.BatchJobDetail;
 
@@ -21,8 +26,8 @@ import com.xchanging.etl.mgr.model.scheduler.BatchJobDetail;
  */
 public interface SchedulerMBean {
 
-	//String getJobDetailName(String jobName);
-	
+	// String getJobDetailName(String jobName);
+
 	String getSchedulerName();
 
 	Set<String> getAllJobNames();
@@ -33,16 +38,21 @@ public interface SchedulerMBean {
 
 	List<BatchJobDetail> getAllJobDetails(String groupName);
 
-	void executeJob(String jobName) throws JmxMethodInvocationException;
-	
-	void executeJob(BatchJobDetail jobDetail) throws JmxMethodInvocationException;
+	void executeJob(String jobName) throws JmxMethodInvocationException,
+			InstanceNotFoundException, MBeanException, ReflectionException,
+			IOException;
 
-	/*Set<String> getTriggerGroupNames();
+	void executeJob(BatchJobDetail jobDetail)
+			throws JmxMethodInvocationException;
 
-	Set<String> getAllTriggerNames();
-
-	Set<String> getAllTriggerNames(String troggerGroupName);
-
-	void executeTrigger(String triggerName, String triggerGroupName)
-			throws JmxMethodInvocationException;*/
+	/*
+	 * Set<String> getTriggerGroupNames();
+	 * 
+	 * Set<String> getAllTriggerNames();
+	 * 
+	 * Set<String> getAllTriggerNames(String troggerGroupName);
+	 * 
+	 * void executeTrigger(String triggerName, String triggerGroupName) throws
+	 * JmxMethodInvocationException;
+	 */
 }

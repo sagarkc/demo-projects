@@ -10,6 +10,7 @@
  */
 package org.etl.mgr.apps.quartz;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -17,22 +18,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
+import javax.management.MBeanInfo;
+import javax.management.MBeanServer;
+import javax.management.MBeanServerConnection;
+import javax.management.ObjectInstance;
+import javax.management.ReflectionException;
+
 import com.xchanging.etl.mgr.core.jmx.JmxMethodInvocationException;
 import com.xchanging.etl.mgr.core.jmx.SchedulerMBean;
 import com.xchanging.etl.mgr.model.scheduler.BatchJobDetail;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
- *
+ * 
  */
 public class QuartzSchedulerMBean implements SchedulerMBean {
 
 	private String schedulerName;
-	private Set<String> allJobNames ;
+	private ObjectInstance schedulerJmxInstance;
+	private MBeanServerConnection mbeanServerConnection;
+	private Set<String> allJobNames;
 	private Map<String, Set<String>> jobNamesByGroup;
 	private List<BatchJobDetail> allJobDetails;
 	private Map<String, List<BatchJobDetail>> jobDetailsByGroup;
-	
+
 	/**
 	 * 
 	 */
@@ -42,8 +53,10 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 		allJobDetails = new ArrayList<>();
 		jobDetailsByGroup = new LinkedHashMap<>();
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.xchanging.etl.mgr.core.jmx.SchedulerMBean#getSchedulerName()
 	 */
 	@Override
@@ -51,7 +64,9 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 		return schedulerName;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.xchanging.etl.mgr.core.jmx.SchedulerMBean#getAllJobNames()
 	 */
 	@Override
@@ -59,15 +74,21 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 		return allJobNames;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.xchanging.etl.mgr.core.jmx.SchedulerMBean#getAllJobNames(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.xchanging.etl.mgr.core.jmx.SchedulerMBean#getAllJobNames(java.lang
+	 * .String)
 	 */
 	@Override
 	public Set<String> getAllJobNames(String jobGroupName) {
 		return jobNamesByGroup.get(jobGroupName);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.xchanging.etl.mgr.core.jmx.SchedulerMBean#getAllJobDetails()
 	 */
 	@Override
@@ -75,23 +96,18 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 		return allJobDetails;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.xchanging.etl.mgr.core.jmx.SchedulerMBean#getAllJobDetails(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.xchanging.etl.mgr.core.jmx.SchedulerMBean#getAllJobDetails(java.lang
+	 * .String)
 	 */
 	@Override
 	public List<BatchJobDetail> getAllJobDetails(String groupName) {
 		return jobDetailsByGroup.get(groupName);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.xchanging.etl.mgr.core.jmx.SchedulerMBean#executeJob(com.xchanging.etl.mgr.model.scheduler.BatchJobDetail)
-	 */
-	@Override
-	public void executeJob(BatchJobDetail jobDetail)
-			throws JmxMethodInvocationException {
-		// TODO Auto-generated method stub
-
-	}
 
 	/**
 	 * @return the jobNamesByGroup
@@ -101,7 +117,8 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 	}
 
 	/**
-	 * @param jobNamesByGroup the jobNamesByGroup to set
+	 * @param jobNamesByGroup
+	 *            the jobNamesByGroup to set
 	 */
 	public void setJobNamesByGroup(Map<String, Set<String>> jobNamesByGroup) {
 		this.jobNamesByGroup = jobNamesByGroup;
@@ -114,14 +131,14 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 		return allJobDetails;
 	}
 
-	
 	/**
-	 * @param allJobDetails the allJobDetails to set
+	 * @param allJobDetails
+	 *            the allJobDetails to set
 	 */
 	public void setAllJobDetails(List<BatchJobDetail> allJobDetails) {
 		this.allJobDetails = allJobDetails;
 	}
-	
+
 	/**
 	 * @return the jobDetailsByGroup
 	 */
@@ -130,25 +147,77 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 	}
 
 	/**
-	 * @param jobDetailsByGroup the jobDetailsByGroup to set
+	 * @param jobDetailsByGroup
+	 *            the jobDetailsByGroup to set
 	 */
-	public void setJobDetailsByGroup(Map<String, List<BatchJobDetail>> jobDetailsByGroup) {
+	public void setJobDetailsByGroup(
+			Map<String, List<BatchJobDetail>> jobDetailsByGroup) {
 		this.jobDetailsByGroup = jobDetailsByGroup;
 	}
 
 	/**
-	 * @param schedulerName the schedulerName to set
+	 * @param schedulerName
+	 *            the schedulerName to set
 	 */
 	public void setSchedulerName(String schedulerName) {
 		this.schedulerName = schedulerName;
 	}
 
 	/**
-	 * @param allJobNames the allJobNames to set
+	 * @param allJobNames
+	 *            the allJobNames to set
 	 */
 	public void setAllJobNames(Set<String> allJobNames) {
 		this.allJobNames = allJobNames;
 	}
 
+	public ObjectInstance getSchedulerJmxInstance() {
+		return schedulerJmxInstance;
+	}
+
+	public void setSchedulerJmxInstance(ObjectInstance schedulerJmxInstance) {
+		this.schedulerJmxInstance = schedulerJmxInstance;
+	}
+
+	public MBeanServerConnection getMbeanServerConnection() {
+		return mbeanServerConnection;
+	}
+
+	public void setMbeanServerConnection(
+			MBeanServerConnection mbeanServerConnection) {
+		this.mbeanServerConnection = mbeanServerConnection;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.xchanging.etl.mgr.core.jmx.SchedulerMBean#executeJob(com.xchanging
+	 * .etl.mgr.model.scheduler.BatchJobDetail)
+	 */
+	@Override
+	public void executeJob(BatchJobDetail jobDetail)
+			throws JmxMethodInvocationException {
+		// TODO Auto-generated method stub
+
+	}
 	
+	@Override
+	public void executeJob(String jobName) throws JmxMethodInvocationException,
+			InstanceNotFoundException, MBeanException, ReflectionException,
+			IOException {
+		List<BatchJobDetail> jobDetails = getAllJobDetails();
+		if (null != jobDetails && mbeanServerConnection != null) {
+			for (BatchJobDetail jobDetail : jobDetails) {
+				if (jobDetail.getJobName().equals(jobName)) {
+					mbeanServerConnection.invoke(
+							schedulerJmxInstance.getObjectName(), "triggerJob",
+							new Object[] { jobDetail.getJobDetailName(),
+									jobDetail.getGroupName() }, new String[] {
+									"java.lang.String", "java.lang.String" });
+				}
+			}
+		}
+	}
+
 }
