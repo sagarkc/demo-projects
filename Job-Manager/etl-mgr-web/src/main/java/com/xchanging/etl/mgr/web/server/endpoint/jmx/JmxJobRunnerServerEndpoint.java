@@ -42,7 +42,7 @@ public class JmxJobRunnerServerEndpoint implements JmxJobRunnerService {
 				.getSchedulerJmxContext("localSchedulerJmxContextProvider_localhost_9010");
 		if(null != jmxContext){
 			try{
-				jmxContext.triggerJob(jobName);
+				jmxContext.executeJob(jobName);
 			} catch (Exception e){
 				System.out.println(e);
 				return "FAILED";

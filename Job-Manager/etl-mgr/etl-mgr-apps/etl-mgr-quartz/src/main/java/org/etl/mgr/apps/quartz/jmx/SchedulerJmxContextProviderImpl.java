@@ -186,7 +186,11 @@ public class SchedulerJmxContextProviderImpl implements
 				jobDataMap = (Map<String, Map<String, String>>) jobDataMapObject;
 			}
 			
-			for (Iterator<ObjectInstance> iterator = schedulerObjInstances.iterator(); 
+			schedulerJmxContext.setJobsByGroup(jobDataMap);
+			schedulerJmxContext.setSchedulerJmxInstance(schedulerObjInstances.iterator().next());
+			schedulerJmxContext.setMbeanServerConnection(mBeanServerCon);
+			
+			/*for (Iterator<ObjectInstance> iterator = schedulerObjInstances.iterator(); 
 					iterator.hasNext() && null != jobDataMap && jobDataMap.size() > 0;) {
 				ObjectInstance objectInstance =  iterator.next();
 				String schedulerMbeanName = objectInstance.getObjectName().getCanonicalName();
@@ -226,7 +230,7 @@ public class SchedulerJmxContextProviderImpl implements
 									quartzSchedulerMBean.getJobDetailsByGroup().get(grpName).add(jobDetail);
 									
 									
-									/*
+									
 									Object jobDetailObject = mBeanServerCon.invoke(
 											objectInstance.getObjectName(), 
 											"getJobDetail", 
@@ -241,7 +245,7 @@ public class SchedulerJmxContextProviderImpl implements
 										jobDetail.setDescription(detail.getDescription());
 										jobDetail.setJobClassName(detail.getJobClass().getCanonicalName());
 										quartzSchedulerMBean.getJobDetailsByGroup().get(grpName).add(jobDetail);
-									} */
+									} 
 								}
 							}
 						}
@@ -249,7 +253,7 @@ public class SchedulerJmxContextProviderImpl implements
 					
 				}
 				schedulerJmxContext.getSchedulerMBeanMap().put(schedulerMbeanName, quartzSchedulerMBean);
-			}
+			}*/
 		}
 	}
 

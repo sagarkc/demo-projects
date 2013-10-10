@@ -331,4 +331,188 @@
 			<bean class="test.profile.C"></bean>
 		</property>
 	</bean>
+	
+	<bean id="job_Test_Hello_08" class="test.profile.batch.SimplePrototypeJob"
+		scope="prototype">
+		<property name="jobRepository" ref="jobRepository" />
+		<property name="restartable" value="true" />
+		<property name="steps">
+			<list>
+				<bean class="test.profile.batch.JobStepFactoryBean">
+					<constructor-arg>
+						<value>step_Test_Hello_08_01</value>
+					</constructor-arg>
+				</bean>
+				<bean class="test.profile.batch.JobStepFactoryBean">
+					<constructor-arg>
+						<value>step_Test_Hello_08_02</value>
+					</constructor-arg>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<bean id="step_Test_Hello_08_01" parent="simpleStep"  scope="prototype">
+		<property name="itemReader">
+			<bean class="test.profile.A" >
+			    <property name="input" value="Hello_08" />
+			</bean>
+		</property>
+		<property name="itemProcessor">
+			<bean class="test.profile.B"></bean>
+		</property>
+		<property name="itemWriter">
+			<bean class="test.profile.C"></bean>
+		</property>
+	</bean>
+	<bean id="step_Test_Hello_08_02" parent="simpleStep"  scope="prototype">
+		<property name="itemReader">
+			<bean class="test.profile.A" >
+			    <property name="input" value="Hello_08*" />
+			</bean>
+		</property>
+		<property name="itemProcessor">
+			<bean class="test.profile.B"></bean>
+		</property>
+		<property name="itemWriter">
+			<bean class="test.profile.C"></bean>
+		</property>
+	</bean>
+	
+	<bean id="job_Test_Hello_09" class="test.profile.batch.SimplePrototypeJob"
+		scope="prototype">
+		<property name="jobRepository" ref="jobRepository" />
+		<property name="restartable" value="true" />
+		<property name="steps">
+			<list>
+				<bean class="test.profile.batch.JobStepFactoryBean">
+					<constructor-arg>
+						<value>step_Test_Hello_09_01</value>
+					</constructor-arg>
+				</bean>
+				<bean class="test.profile.batch.JobStepFactoryBean">
+					<constructor-arg>
+						<value>step_Test_Hello_09_02</value>
+					</constructor-arg>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<bean id="step_Test_Hello_09_01" parent="simpleStep"  scope="prototype">
+		<property name="itemReader">
+			<bean class="test.profile.A" >
+			    <property name="input" value="Hello_09" />
+			</bean>
+		</property>
+		<property name="itemProcessor">
+			<bean class="test.profile.B"></bean>
+		</property>
+		<property name="itemWriter">
+			<bean class="test.profile.C"></bean>
+		</property>
+	</bean>
+	<bean id="step_Test_Hello_09_02" parent="simpleStep"  scope="prototype">
+		<property name="itemReader">
+			<bean class="test.profile.A" >
+			    <property name="input" value="Hello_09*" />
+			</bean>
+		</property>
+		<property name="itemProcessor">
+			<bean class="test.profile.B"></bean>
+		</property>
+		<property name="itemWriter">
+			<bean class="test.profile.C"></bean>
+		</property>
+	</bean>
+	
+	<bean id="job_Test_Hello_10" class="test.profile.batch.SimplePrototypeJob"
+		scope="prototype">
+		<property name="jobRepository" ref="jobRepository" />
+		<property name="restartable" value="true" />
+		<property name="steps">
+			<list>
+				<bean class="test.profile.batch.JobStepFactoryBean">
+					<constructor-arg>
+						<value>step_Test_Hello_10_01</value>
+					</constructor-arg>
+				</bean>
+				<bean class="test.profile.batch.JobStepFactoryBean">
+					<constructor-arg>
+						<value>step_Test_Hello_10_02</value>
+					</constructor-arg>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<bean id="step_Test_Hello_10_01" parent="simpleStep"  scope="prototype">
+		<property name="itemReader">
+			<bean class="test.profile.A" >
+			    <property name="input" value="Hello_10" />
+			</bean>
+		</property>
+		<property name="itemProcessor">
+			<bean class="test.profile.B"></bean>
+		</property>
+		<property name="itemWriter">
+			<bean class="test.profile.C"></bean>
+		</property>
+	</bean>
+	<bean id="step_Test_Hello_10_02" parent="simpleStep"  scope="prototype">
+		<property name="itemReader">
+			<bean class="test.profile.A" >
+			    <property name="input" value="Hello_10*" />
+			</bean>
+		</property>
+		<property name="itemProcessor">
+			<bean class="test.profile.B"></bean>
+		</property>
+		<property name="itemWriter">
+			<bean class="test.profile.C"></bean>
+		</property>
+	</bean>
+	
+	<bean id="job_Test_Hello_XX" class="test.profile.batch.SimplePrototypeJob"
+		scope="prototype">
+		<property name="jobRepository" ref="jobRepository" />
+		<property name="restartable" value="true" />
+		<property name="steps">
+			<list>
+				<bean class="test.profile.batch.JobStepFactoryBean">
+					<constructor-arg>
+						<value>step_Test_Hello_XX_01</value>
+					</constructor-arg>
+				</bean>
+				<bean class="test.profile.batch.JobStepFactoryBean">
+					<constructor-arg>
+						<value>step_Test_Hello_XX_02</value>
+					</constructor-arg>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<bean id="step_Test_Hello_XX_01" parent="simpleStep"  scope="prototype">
+		<property name="itemReader">
+			<bean class="test.profile.A" >
+			    <property name="input" value="Hello_XX" />
+			</bean>
+		</property>
+		<property name="itemProcessor">
+			<bean class="test.profile.B"></bean>
+		</property>
+		<property name="itemWriter">
+			<bean class="test.profile.C"></bean>
+		</property>
+	</bean>
+	<bean id="step_Test_Hello_XX_02" parent="simpleStep"  scope="prototype">
+		<property name="itemReader">
+			<bean class="test.profile.A" >
+			    <property name="input" value="Hello_XX*" />
+			</bean>
+		</property>
+		<property name="itemProcessor">
+			<bean class="test.profile.B"></bean>
+		</property>
+		<property name="itemWriter">
+			<bean class="test.profile.C"></bean>
+		</property>
+	</bean>
 </beans>

@@ -50,11 +50,11 @@
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_02" />
-					<property name="cronExpression" value="35 0/1 * * * ?" />
+					<property name="cronExpression" value="35 0/2 * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_03" />
-					<property name="cronExpression" value="55 0/1 * * * ?" />
+					<property name="cronExpression" value="55 0/3 * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_04" />
@@ -62,15 +62,27 @@
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_05" />
-					<property name="cronExpression" value="30 0/2 * * * ?" />
+					<property name="cronExpression" value="30 0/3 * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_06" />
-					<property name="cronExpression" value="50 0/2 * * * ?" />
+					<property name="cronExpression" value="50 0/4 * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_07" />
-					<property name="cronExpression" value="0 0/3 * * * ?" />
+					<property name="cronExpression" value="0 0/5 * * * ?" />
+				</bean>
+				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
+					<property name="jobDetail" ref="jobDetail_Test_Hello_08" />
+					<property name="cronExpression" value="0 0/10 * * * ?" />
+				</bean>
+				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
+					<property name="jobDetail" ref="jobDetail_Test_Hello_09" />
+					<property name="cronExpression" value="0 0/15 * * * ?" />
+				</bean>
+				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
+					<property name="jobDetail" ref="jobDetail_Test_Hello_10" />
+					<property name="cronExpression" value="0 0/20 * * * ?" />
 				</bean>
 			</list>
 		</property>
@@ -86,7 +98,7 @@
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
 		lazy-init="true">
-		<property name="dataSource" ref="sqlServerDs" />
+		<property name="dataSource" ref="mySqlDs" />
 	</bean>
 	<bean id="sqlServerDs" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
@@ -114,12 +126,12 @@
 
 	<bean id="jobRepository"
 		class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
-		<property name="dataSource" ref="sqlServerDs" />
+		<property name="dataSource" ref="mySqlDs" />
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="isolationLevelForCreate" value="ISOLATION_REPEATABLE_READ" />
 		<property name="incrementerFactory">
-			<bean class="test.profile.batch.SqlServerCustomIncrementerFactory">
-				<property name="dataSource" ref="sqlServerDs" />
+			<bean class="test.profile.batch.MysqlDataFieldMaxValueIncrementerFactory">
+				<property name="dataSource" ref="mySqlDs" />
 			</bean>
 		</property>
 	</bean>
@@ -238,6 +250,42 @@
 		<property name="jobDataAsMap">
 			<map>
 				<entry key="jobName" value="job_Test_Hello_07" />
+				<entry key="jobLocator" value-ref="jobRegistry" />
+				<entry key="jobLauncher" value-ref="jobLauncher" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="jobDetail_Test_Hello_08" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="test.profile.batch.JobLauncherDetails" />
+		<property name="group" value="quartz-batch" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="jobName" value="job_Test_Hello_08" />
+				<entry key="jobLocator" value-ref="jobRegistry" />
+				<entry key="jobLauncher" value-ref="jobLauncher" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="jobDetail_Test_Hello_09" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="test.profile.batch.JobLauncherDetails" />
+		<property name="group" value="quartz-batch" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="jobName" value="job_Test_Hello_09" />
+				<entry key="jobLocator" value-ref="jobRegistry" />
+				<entry key="jobLauncher" value-ref="jobLauncher" />
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="jobDetail_Test_Hello_10" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="test.profile.batch.JobLauncherDetails" />
+		<property name="group" value="quartz-batch" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="jobName" value="job_Test_Hello_10" />
 				<entry key="jobLocator" value-ref="jobRegistry" />
 				<entry key="jobLauncher" value-ref="jobLauncher" />
 			</map>
