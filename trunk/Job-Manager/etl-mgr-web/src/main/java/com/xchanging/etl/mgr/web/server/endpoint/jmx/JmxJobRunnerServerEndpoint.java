@@ -10,21 +10,14 @@
  */
 package com.xchanging.etl.mgr.web.server.endpoint.jmx;
 
-import java.util.List;
 import java.util.Set;
 
-import javax.management.MBeanInfo;
 import javax.management.MBeanServerConnection;
 import javax.management.MBeanServerInvocationHandler;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
-import org.quartz.JobDetail;
-import org.quartz.JobKey;
 import org.quartz.Scheduler;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.stereotype.Component;
@@ -72,7 +65,7 @@ public class JmxJobRunnerServerEndpoint implements JmxJobRunnerService {
 					objectName, Scheduler.class, 
 					false);
 			if(null != schedulerJmx){
-				schedulerJmx.triggerJob(new JobKey(jobName));
+				//schedulerJmx.triggerJob(jobName);
 			}
 		}
 		

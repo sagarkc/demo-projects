@@ -37,6 +37,7 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcOperations;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.jdbc.support.incrementer.AbstractDataFieldMaxValueIncrementer;
 import org.springframework.util.Assert;
 
@@ -81,7 +82,7 @@ public class JdbcSearchableJobExecutionDao extends JdbcJobExecutionDao implement
 		Assert.state(dataSource != null, "DataSource must be provided");
 
 		if (getJdbcTemplate() == null) {
-			setJdbcTemplate((SimpleJdbcOperations) new JdbcTemplate(dataSource));
+			setJdbcTemplate(new SimpleJdbcTemplate(dataSource));
 		}
 		setJobExecutionIncrementer(new AbstractDataFieldMaxValueIncrementer() {
 			@Override
@@ -125,7 +126,7 @@ public class JdbcSearchableJobExecutionDao extends JdbcJobExecutionDao implement
 		fromClause = "%PREFIX%JOB_EXECUTION E, %PREFIX%JOB_INSTANCE I" + (fromClause == null ? "" : ", " + fromClause);
 		factory.setFromClause(getQuery(fromClause));
 		factory.setSelectClause(FIELDS);
-		
+		factory.setSortKey("E.JOB_INSTANCE_ID");
 		whereClause = "E.JOB_INSTANCE_ID=I.JOB_INSTANCE_ID" + (whereClause == null ? "" : " and " + whereClause);
 		if (whereClause != null) {
 			factory.setWhereClause(whereClause);
@@ -164,7 +165,7 @@ public class JdbcSearchableJobExecutionDao extends JdbcJobExecutionDao implement
 	public List<JobExecution> getJobExecutions(String jobName, int start, int count) {
 		if (start <= 0) {
 			return getJdbcTemplate().query(byJobNamePagingQueryProvider.generateFirstPageQuery(count),
-					new JobExecutionRowMapper(), jobName);
+					new JobExecutionRowMapper(jobName), jobName);
 		}
 		try {
 			Long startAfterValue = getJdbcTemplate().queryForObject(
@@ -220,7 +221,14 @@ public class JdbcSearchableJobExecutionDao extends JdbcJobExecutionDao implement
 	 */
 	protected static class JobExecutionRowMapper implements RowMapper<JobExecution> {
 
+		private final String jobName;
+		
 		public JobExecutionRowMapper() {
+			this.jobName = "";
+		}
+		
+		public JobExecutionRowMapper(String jobName) {
+			this.jobName = jobName;
 		}
 
 		@Override
@@ -228,7 +236,7 @@ public class JdbcSearchableJobExecutionDao extends JdbcJobExecutionDao implement
 			Long id = rs.getLong(1);
 			JobExecution jobExecution;
 
-			JobInstance jobInstance = new JobInstance(rs.getLong(10), new JobParameters(), "");
+			JobInstance jobInstance = new JobInstance(rs.getLong(10), new JobParameters(), jobName);
 			jobExecution = new JobExecution(jobInstance, null);
 			jobExecution.setId(id);
 

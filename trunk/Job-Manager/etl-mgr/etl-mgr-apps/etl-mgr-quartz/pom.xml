@@ -14,14 +14,25 @@
 	<name>etl-mgr-quartz</name>
 	
 	<properties>
-		<quartz.version>2.2.0</quartz.version>
+		<quartz.version>1.6.2</quartz.version>
 	</properties>
 	
 	<dependencies>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
 			<version>${quartz.version}</version>
+		</dependency> -->
+		
+		<dependency>
+			<groupId>opensymphony</groupId>
+			<artifactId>quartz-all</artifactId>
+			<version>${quartz.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.xchanging.support.batch.admin</groupId>
+			<artifactId>batch-admin-support</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

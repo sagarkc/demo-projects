@@ -19,11 +19,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -37,9 +35,8 @@ import org.springframework.batch.item.database.PagingQueryProvider;
 import org.springframework.batch.item.database.support.SqlPagingQueryProviderFactoryBean;
 import org.springframework.batch.support.PatternMatcher;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.simple.SimpleJdbcOperations;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.jdbc.support.incrementer.AbstractDataFieldMaxValueIncrementer;
 import org.springframework.util.Assert;
 
@@ -83,7 +80,7 @@ public class JdbcSearchableStepExecutionDao extends JdbcStepExecutionDao
 		Assert.state(dataSource != null, "DataSource must be provided");
 
 		if (getJdbcTemplate() == null) {
-			setJdbcTemplate((SimpleJdbcOperations) new JdbcTemplate(dataSource));
+			setJdbcTemplate(new SimpleJdbcTemplate(dataSource));
 		}
 		setStepExecutionIncrementer(new AbstractDataFieldMaxValueIncrementer() {
 			@Override

@@ -15,6 +15,7 @@ import java.util.List;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.xchanging.etl.mgr.model.vo.JobExecutionHistoryVo;
 import com.xchanging.etl.mgr.model.vo.JobMonitorHistoryVo;
 import com.smartgwt.client.data.Criterion;
@@ -24,6 +25,7 @@ import com.smartgwt.client.types.ExpansionMode;
 import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.types.OperatorId;
 import com.smartgwt.client.types.VerticalAlignment;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -35,6 +37,7 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.xchanging.etl.mgr.web.client.ds.JobExecutionHistoryDataSource;
 import com.xchanging.etl.mgr.web.client.ds.JobMonitorHistoryDataSource;
+import com.xchanging.etl.mgr.web.client.endpoint.RemoteServiceEndpointFactory;
 import com.xchanging.etl.mgr.web.shared.WebConstants;
 
 /**
@@ -194,7 +197,21 @@ public class JobExecutionHistoryGrid extends ListGrid {
             runButton.setTitle("Run");  
             runButton.addClickHandler(new ClickHandler() {  
                 public void onClick(ClickEvent event) {  
-                	Window.alert(record.getAttribute("jobName") + " execute clicked.");  
+                	String jobName = record.getAttribute("jobName");
+                	//Window.alert(record.getAttribute("jobName") + " execute clicked.");
+                	RemoteServiceEndpointFactory.getInstance()
+                		.getJmxJobRunnerServiceEndpoint().runJob(jobName, new AsyncCallback<String>() {
+							
+							@Override
+							public void onSuccess(String result) {
+								SC.say(result);
+							}
+							
+							@Override
+							public void onFailure(Throwable caught) {
+								SC.say(caught.getMessage());
+							}
+						});
                 }  
             });
             

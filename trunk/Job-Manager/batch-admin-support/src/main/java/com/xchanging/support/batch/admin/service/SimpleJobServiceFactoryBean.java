@@ -40,6 +40,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcOperations;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.jdbc.support.lob.DefaultLobHandler;
 import org.springframework.jdbc.support.lob.LobHandler;
 import org.springframework.util.Assert;
@@ -57,7 +58,7 @@ public class SimpleJobServiceFactoryBean implements FactoryBean<JobService>, Ini
 
 	private DataSource dataSource;
 
-	private JdbcOperations jdbcTemplate;
+	private SimpleJdbcOperations jdbcTemplate;
 
 	private String databaseType;
 
@@ -170,7 +171,7 @@ public class SimpleJobServiceFactoryBean implements FactoryBean<JobService>, Ini
 		Assert.notNull(jobLocator, "JobLocator must not be null.");
 		Assert.notNull(jobLauncher, "JobLauncher must not be null.");
 
-		jdbcTemplate = new JdbcTemplate(dataSource);
+		jdbcTemplate = new SimpleJdbcTemplate(dataSource);
 
 		if (incrementerFactory == null) {
 			incrementerFactory = new DefaultDataFieldMaxValueIncrementerFactory(dataSource);
@@ -193,7 +194,7 @@ public class SimpleJobServiceFactoryBean implements FactoryBean<JobService>, Ini
 
 	protected SearchableJobInstanceDao createJobInstanceDao() throws Exception {
 		JdbcSearchableJobInstanceDao dao = new JdbcSearchableJobInstanceDao();
-		dao.setJdbcTemplate((SimpleJdbcOperations) jdbcTemplate);
+		dao.setJdbcTemplate( jdbcTemplate);
 		dao.setJobIncrementer(incrementerFactory.getIncrementer(databaseType, tablePrefix + "JOB_SEQ"));
 		dao.setTablePrefix(tablePrefix);
 		dao.afterPropertiesSet();
