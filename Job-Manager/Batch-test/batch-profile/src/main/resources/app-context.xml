@@ -118,7 +118,7 @@
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="isolationLevelForCreate" value="ISOLATION_REPEATABLE_READ" />
 		<property name="incrementerFactory">
-			<bean class="test.profile.batch.MysqlDataFieldMaxValueIncrementerFactory">
+			<bean class="test.profile.batch.SqlServerCustomIncrementerFactory">
 				<property name="dataSource" ref="sqlServerDs" />
 			</bean>
 		</property>

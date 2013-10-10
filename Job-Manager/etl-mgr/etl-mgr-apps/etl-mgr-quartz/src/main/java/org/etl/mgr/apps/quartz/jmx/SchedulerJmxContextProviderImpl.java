@@ -13,6 +13,7 @@ package org.etl.mgr.apps.quartz.jmx;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.management.MBeanInfo;
@@ -25,13 +26,13 @@ import javax.management.remote.JMXServiceURL;
 
 import org.apache.log4j.Logger;
 import org.etl.mgr.apps.quartz.QuartzSchedulerMBean;
-import org.quartz.JobKey;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.stereotype.Component;
 
 import com.xchanging.etl.mgr.core.jmx.SchedulerJmxContext;
 import com.xchanging.etl.mgr.core.jmx.SchedulerJmxContextProvider;
 import com.xchanging.etl.mgr.model.scheduler.BatchJobDetail;
+import com.xchanging.support.batch.admin.model.JobDataMapper;
 
 /**
  * @author Sabuj Das | sabuj.das@asia.xchanging.com
@@ -156,7 +157,8 @@ public class SchedulerJmxContextProviderImpl implements
 		
 		MBeanServerConnection  mBeanServerCon = jmxConnector.getMBeanServerConnection();
 		
-		ObjectName objectName = new ObjectName(mbeanObjectName);
+		ObjectName schedulerObjectName = new ObjectName(mbeanObjectName);
+		ObjectName jobDataObjectName = new ObjectName(JobDataMapper.JMX_MBEAN_NAME);
 		
 		/*Set<ObjectInstance> insts = mBeanServerCon.queryMBeans(objectName, null);
 		if(null != insts){
@@ -168,9 +170,24 @@ public class SchedulerJmxContextProviderImpl implements
 		}*/
 		
 		
-		Set<ObjectInstance> objInstances = mBeanServerCon.queryMBeans(objectName, null);
-		if(null != objInstances && objInstances.size() > 0){
-			for (Iterator<ObjectInstance> iterator = objInstances.iterator(); iterator.hasNext();) {
+		Set<ObjectInstance> jobDataObjInstances = mBeanServerCon.queryMBeans(jobDataObjectName, null);
+		Set<ObjectInstance> schedulerObjInstances = mBeanServerCon.queryMBeans(schedulerObjectName, null);
+		if(null != schedulerObjInstances && schedulerObjInstances.size() > 0
+				&& null != jobDataObjInstances && jobDataObjInstances.size() > 0){
+			
+			ObjectInstance jobDataObjectInstance = jobDataObjInstances.iterator().next();
+			Object jobDataMapObject = mBeanServerCon.invoke(
+					jobDataObjectInstance.getObjectName(), 
+					"getBatchJobDetailMapByJobGroup", 
+					null, 
+					null);
+			Map<String, Map<String, String>> jobDataMap = null;
+			if(jobDataMapObject != null && jobDataMapObject instanceof Map){
+				jobDataMap = (Map<String, Map<String, String>>) jobDataMapObject;
+			}
+			
+			for (Iterator<ObjectInstance> iterator = schedulerObjInstances.iterator(); 
+					iterator.hasNext() && null != jobDataMap && jobDataMap.size() > 0;) {
 				ObjectInstance objectInstance =  iterator.next();
 				String schedulerMbeanName = objectInstance.getObjectName().getCanonicalName();
 				QuartzSchedulerMBean quartzSchedulerMBean = new QuartzSchedulerMBean();
@@ -202,8 +219,14 @@ public class SchedulerJmxContextProviderImpl implements
 								String[] jobNames = (String[]) jobObject;
 								for (String jobBeanName : jobNames) {
 									quartzSchedulerMBean.getJobNamesByGroup().get(grpName).add(jobBeanName);
-									JobKey jobKey = new JobKey(jobBeanName, grpName);
+									BatchJobDetail jobDetail = new BatchJobDetail();
+									jobDetail.setGroupName(grpName);
+									jobDetail.setJobDetailName(jobDataMap.get(grpName).get(jobBeanName));
+									jobDetail.setJobName(jobBeanName);
+									quartzSchedulerMBean.getJobDetailsByGroup().get(grpName).add(jobDetail);
 									
+									
+									/*
 									Object jobDetailObject = mBeanServerCon.invoke(
 											objectInstance.getObjectName(), 
 											"getJobDetail", 
@@ -218,7 +241,7 @@ public class SchedulerJmxContextProviderImpl implements
 										jobDetail.setDescription(detail.getDescription());
 										jobDetail.setJobClassName(detail.getJobClass().getCanonicalName());
 										quartzSchedulerMBean.getJobDetailsByGroup().get(grpName).add(jobDetail);
-									} 
+									} */
 								}
 							}
 						}

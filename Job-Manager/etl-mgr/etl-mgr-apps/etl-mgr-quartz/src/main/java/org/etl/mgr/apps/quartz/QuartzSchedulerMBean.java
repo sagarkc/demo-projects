@@ -12,6 +12,7 @@ package org.etl.mgr.apps.quartz;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -203,19 +204,26 @@ public class QuartzSchedulerMBean implements SchedulerMBean {
 	}
 	
 	@Override
-	public void executeJob(String jobName) throws JmxMethodInvocationException,
+	public synchronized void executeJob(String jobName) throws JmxMethodInvocationException,
 			InstanceNotFoundException, MBeanException, ReflectionException,
 			IOException {
-		List<BatchJobDetail> jobDetails = getAllJobDetails();
-		if (null != jobDetails && mbeanServerConnection != null) {
-			for (BatchJobDetail jobDetail : jobDetails) {
-				if (jobDetail.getJobName().equals(jobName)) {
-					mbeanServerConnection.invoke(
-							schedulerJmxInstance.getObjectName(), "triggerJob",
-							new Object[] { jobDetail.getJobDetailName(),
-									jobDetail.getGroupName() }, new String[] {
-									"java.lang.String", "java.lang.String" });
+		Collection<List<BatchJobDetail>> jobDetailsByGroup = getJobDetailsByGroup().values();
+		if (null != jobDetailsByGroup && mbeanServerConnection != null) {
+			for (List<BatchJobDetail> jobDetails : jobDetailsByGroup) {
+				if(null != jobDetails && jobDetails.size() > 0){
+					for (BatchJobDetail jobDetail : jobDetails) {
+						if (jobDetail.getJobName().equals(jobName)) {
+							mbeanServerConnection.invoke(
+									schedulerJmxInstance.getObjectName(), "triggerJob",
+									new Object[] { jobDetail.getJobDetailName(),
+											jobDetail.getGroupName() }, new String[] {
+											"java.lang.String", "java.lang.String" });
+							System.out.println(jobName + " is triggred");
+							return;
+						}
+					}
 				}
+				
 			}
 		}
 	}

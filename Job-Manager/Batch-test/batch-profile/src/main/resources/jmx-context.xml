@@ -2,8 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<util:constant id="jobdetailMapperBeanKey" 
+		static-field="com.xchanging.support.batch.admin.model.JobDataMapper.JMX_MBEAN_NAME" />
 
 	<bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean">
 		<property name="locateExistingServerIfPossible" value="true" />
@@ -16,23 +21,19 @@
 		<property name="beans">
 			<map>
 				<entry key="scheduler.jmx.mbean:name=SchedulerMonitorBean" value-ref="scheduler" />
-				<entry key="scheduler.jmx.mbean:name=JobdetailMapperBean" value-ref="jobdetailMapper" />
-				<entry key="scheduler.jmx.mbean:name=JobdetailMapBean" value-ref="jobdetailMap" />
+				<entry key-ref="jobdetailMapperBeanKey" value-ref="jobdetailMapper" />
 			</map>
 		</property>
 	</bean>
 	
-	<bean id="jobdetailMapper" class="test.profile.JobDataMapperServiceImpl">
+	<bean id="jobdetailMapper" class="com.xchanging.support.batch.admin.service.impl.JobDataMapperServiceImpl">
 		<property name="jobNameKey" value="jobName" />
 		<property name="scheduler" ref="scheduler" />
 	</bean>
 	
-	<bean id="jobdetailMap" class="test.profile.JobDataMapperServiceTest">
-		<property name="jobNameKey" value="jobName" />
-		<property name="scheduler" ref="scheduler" />
-	</bean>
 	
-	<context:mbean-export default-domain="spring.application" server="mbeanServer" />
+	
+	<context:mbean-export default-domain="org.springframework.batch" server="mbeanServer" />
 
 	<bean id="batchMBeanExporter" class="com.xchanging.support.batch.admin.jmx.SchedulerMBeanExporter">
 		<property name="server" ref="mbeanServer" />
@@ -42,7 +43,7 @@
 				<property name="interceptorNames" value="cacheInterceptor" />
 			</bean>
 		</property>
-		<property name="defaultDomain" value="spring.application" />
+		<property name="defaultDomain" value="org.springframework.batch" />
 	</bean>
 
 	<bean id="cacheInterceptor" class="com.xchanging.support.batch.admin.util.SchedulerEhCacheInterceptor" />
