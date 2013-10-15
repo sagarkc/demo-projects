@@ -24,15 +24,15 @@ public class SpringBeanProfiler {
 
 	public static void main(String[] args) {
 		try {
-			
-			DOMConfigurator.configure(SpringBeanProfiler.class.getResource("/logger/log4j.xml"));
-			
-			Logger logger = Logger.getLogger(SpringBeanProfiler.class);
-			logger.info("starting app...");
-			//new ClassPathXmlJobRegistry();
 			ApplicationContext applicationContext
 				= new ClassPathXmlApplicationContext(new String[]{"app-context.xml", "jmx-context.xml"});
-			System.out.println("Total initilized bean count: "+applicationContext.getBeanDefinitionCount());
+			Logger.getLogger(SpringBeanProfiler.class).info("Total initilized bean count: "+applicationContext.getBeanDefinitionCount());
+			//DOMConfigurator.configure(SpringBeanProfiler.class.getResource("/logger/log4j.xml"));
+			
+			/*Logger logger = Logger.getLogger(SpringBeanProfiler.class);
+			logger.info("starting app...");*/
+			//new ClassPathXmlJobRegistry();
+			
 			/*Scheduler scheduler = (Scheduler) applicationContext.getBean("scheduler");
 			//scheduler.shutdown();
 			if(null != applicationContext.getBean("mbeanServer")){

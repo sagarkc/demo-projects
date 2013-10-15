@@ -2,13 +2,14 @@ package test.profile;
 
 import java.util.Random;
 
+import org.apache.log4j.Logger;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
 import org.springframework.beans.factory.InitializingBean;
 
 public class A implements InitializingBean, ItemReader<String> {
-
+	private static Logger logger = Logger.getLogger(A.class);
 	private static int instanceCount = 0;
 
 	public A() {
@@ -40,7 +41,7 @@ public class A implements InitializingBean, ItemReader<String> {
 	@Override
 	public String read() throws Exception, UnexpectedInputException,
 			ParseException {
-
+		logger.info("Start Reader ........");
 		if (!hasRun) {
 			hasRun = true;
 			Thread.sleep(1000*20);

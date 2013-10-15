@@ -13,11 +13,22 @@
 		</layout>
 	</appender>
 
+	<appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
+      <layout class="org.apache.log4j.PatternLayout">
+         <param name="ConversionPattern" value="%d{dd MMM yyyy HH:mm:ss} %5p %c{1} - %m%n"/>
+      </layout>
+   </appender>
 
 	<!-- This priority value can be configured based your needs. -->
-	<category name="test" additivity="false">
+	<!-- <category name="*" additivity="false">
 		<priority value="DEBUG" />
+		<appender-ref ref="consoleAppender" />
 		<appender-ref ref="APPL_LOG" />
-	</category>
+	</category> -->
         
+    <root> 
+    	<priority value ="info" /> 
+    	<appender-ref ref="consoleAppender" /> 
+    	<appender-ref ref="APPL_LOG" />
+  	</root>
 </log4j:configuration>

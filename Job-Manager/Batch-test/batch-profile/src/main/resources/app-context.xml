@@ -12,6 +12,18 @@
 
 	<bean id="applicationCommonAspect" class="test.profile.batch.ApplicationCommonAspect" />
 
+
+	<bean id="log4jInitializer" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="staticMethod">
+			<value>org.springframework.util.Log4jConfigurer.initLogging</value>
+		</property>
+		<property name="arguments">
+			<list>
+				<value>classpath:logger/log4j.xml</value>
+			</list>
+		</property>
+	</bean>
+
 	<bean id="customEditorConfigurer"
 		class="org.springframework.beans.factory.config.CustomEditorConfigurer">
 		<property name="customEditors">
@@ -50,39 +62,39 @@
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_02" />
-					<property name="cronExpression" value="35 0/2 * * * ?" />
+					<property name="cronExpression" value="20 0/1 * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_03" />
-					<property name="cronExpression" value="55 0/3 * * * ?" />
+					<property name="cronExpression" value="20 0/1 * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_04" />
-					<property name="cronExpression" value="20 0/2 * * * ?" />
+					<property name="cronExpression" value="20 0/1 * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_05" />
-					<property name="cronExpression" value="30 0/3 * * * ?" />
+					<property name="cronExpression" value="20 0/1 * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_06" />
-					<property name="cronExpression" value="50 0/4 * * * ?" />
+					<property name="cronExpression" value="20 0/1 * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_07" />
-					<property name="cronExpression" value="0 0/5 * * * ?" />
+					<property name="cronExpression" value="20 0/1 * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_08" />
-					<property name="cronExpression" value="0 0/10 * * * ?" />
+					<property name="cronExpression" value="20 0/1 * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_09" />
-					<property name="cronExpression" value="0 0/15 * * * ?" />
+					<property name="cronExpression" value="20 0/1 * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_10" />
-					<property name="cronExpression" value="0 0/20 * * * ?" />
+					<property name="cronExpression" value="20 0/1 * * * ?" />
 				</bean>
 			</list>
 		</property>
@@ -98,7 +110,7 @@
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
 		lazy-init="true">
-		<property name="dataSource" ref="mySqlDs" />
+		<property name="dataSource" ref="sqlServerDs" />
 	</bean>
 	<bean id="sqlServerDs" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
@@ -126,12 +138,12 @@
 
 	<bean id="jobRepository"
 		class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
-		<property name="dataSource" ref="mySqlDs" />
+		<property name="dataSource" ref="sqlServerDs" />
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="isolationLevelForCreate" value="ISOLATION_REPEATABLE_READ" />
 		<property name="incrementerFactory">
-			<bean class="test.profile.batch.MysqlDataFieldMaxValueIncrementerFactory">
-				<property name="dataSource" ref="mySqlDs" />
+			<bean class="test.profile.batch.SqlServerCustomIncrementerFactory">
+				<property name="dataSource" ref="sqlServerDs" />
 			</bean>
 		</property>
 	</bean>
