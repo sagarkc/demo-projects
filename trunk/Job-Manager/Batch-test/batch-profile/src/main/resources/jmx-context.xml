@@ -52,7 +52,7 @@
 		<property name="jobRepository" ref="jobRepository" />
 		<property name="jobLauncher" ref="jobLauncher" />
 		<property name="jobLocator" ref="jobRegistry" />
-		<property name="dataSource" ref="mySqlDs" />
+		<property name="dataSource" ref="sqlServerDs" />
 	</bean>
 	
 </beans>

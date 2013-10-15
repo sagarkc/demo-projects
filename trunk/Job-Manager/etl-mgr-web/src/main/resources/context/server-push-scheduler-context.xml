@@ -13,7 +13,7 @@
 		<property name="triggers">
 			<list>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-					<property name="cronExpression" value="0/10 * * * * ?" />
+					<property name="cronExpression" value="0/1 * * * * ?" />
 					<property name="startDelay" value="0" />
 					<property name="name" value="realtimeJobMonitorTrigger" />
 					<property name="jobDetail" ref="jobDetail_realtimeJobMonitor" />

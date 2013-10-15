@@ -2,10 +2,11 @@ package test.profile;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.batch.item.ItemWriter;
 
 public class C implements ItemWriter<String>{
-
+	private static Logger logger = Logger.getLogger(C.class);
 	private static int instanceCount = 0;
 	public C(){
 		instanceCount++;
@@ -24,7 +25,7 @@ public class C implements ItemWriter<String>{
 	public void write(List<? extends String> l) throws Exception {
 		if(null != l){
 			for (String string : l) {
-				System.out.println("C writes: " + string);
+				logger.info("C writes: " + string);
 			}
 		}
 	}

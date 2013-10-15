@@ -19,10 +19,11 @@ public class ApplicationCommonAspect {
 	}
 
 	
+	
 	@AfterThrowing(pointcut = "execution(* org.springframework.batch.core.*.*.*(..)))", 
 			throwing = "ex")
-	public void x(JoinPoint point, DeadlockLoserDataAccessException ex){
-		System.out.println("************ Exception from: " + point.getSignature().getName());
-		System.out.println("************ Exception: " + ex.getMessage());
+	public void detectedException(JoinPoint point, Exception ex){
+		logger.error("************ Exception from: " + point.getSignature().getName());
+		logger.error("************ Exception: " + ex.getMessage(), ex);
 	}
 }
