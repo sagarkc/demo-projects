@@ -1,423 +1,414 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.xchanging.etl.mgr.desk</groupId>
-	<artifactId>etl-mgr-desk</artifactId>
-	<version>1.0</version>
-	<name>ETL Manager - Desktop App</name>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.xchanging.etl.mgr.desk</groupId>
+    <artifactId>etl-mgr-desk</artifactId>
+    <version>1.0</version>
+    <name>ETL Manager - Desktop App</name>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.test.skip>true</maven.test.skip>
-		<downloadSources>true</downloadSources>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.test.skip>true</maven.test.skip>
+        <downloadSources>true</downloadSources>
 
-		<!-- env type = dev | lab | prod -->
-		<environment.type>dev</environment.type>
-		<jdk.version>1.7</jdk.version>
-		<etl.mgr.release.version>0.1</etl.mgr.release.version>
-		<release.version>1.0</release.version>
+        <!-- env type = dev | lab | prod -->
+        <environment.type>dev</environment.type>
+        <jdk.version>1.7</jdk.version>
+        <etl.mgr.release.version>0.1</etl.mgr.release.version>
+        <release.version>1.0</release.version>
 		
-		<springframework.version>3.2.3.RELEASE</springframework.version>
-		<spring.security.version>3.1.4.RELEASE</spring.security.version>
-		<spring.batch.version>2.2.0.RELEASE</spring.batch.version>
-		<hibernate.version>4.1.4.Final</hibernate.version>
-		<hibernate.validator.version>4.3.0.Final</hibernate.validator.version>
-		<mysql.connector.version>5.1.20</mysql.connector.version>
-		<derby.db.version>10.9.1.0</derby.db.version>
+        <springframework.version>3.2.3.RELEASE</springframework.version>
+        <spring.security.version>3.1.4.RELEASE</spring.security.version>
+        <spring.batch.version>2.2.0.RELEASE</spring.batch.version>
+        <hibernate.version>4.1.4.Final</hibernate.version>
+        <hibernate.validator.version>4.3.0.Final</hibernate.validator.version>
+        <mysql.connector.version>5.1.20</mysql.connector.version>
+        <derby.db.version>10.9.1.0</derby.db.version>
 		
-		<slf4j.version>1.6.6</slf4j.version>
-		<setup.dir>../setup</setup.dir>
-		<release.dir>../release/desk</release.dir>
-	</properties>
+        <slf4j.version>1.6.6</slf4j.version>
+        <setup.dir>../setup</setup.dir>
+        <release.dir>../release/desk</release.dir>
+    </properties>
 
-	<repositories>
-		<repository>
-			<id>spring-snapshots</id>
-			<name>Spring Maven Snapshot Repository</name>
-			<url>http://s3.amazonaws.com/maven.springframework.org/snapshot</url>
-		</repository>
-	</repositories>
+    <repositories>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Maven Snapshot Repository</name>
+            <url>http://s3.amazonaws.com/maven.springframework.org/snapshot</url>
+        </repository>
+    </repositories>
 	
-	<dependencies>
-		<dependency>
-			<groupId>com.xchanging.etl.mgr</groupId>
-			<artifactId>etl-mgr-common</artifactId>
-			<version>${etl.mgr.release.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.xchanging.etl.mgr</groupId>
-			<artifactId>etl-mgr-model</artifactId>
-			<version>${etl.mgr.release.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.xchanging.etl.mgr</groupId>
-			<artifactId>etl-mgr-util</artifactId>
-			<version>${etl.mgr.release.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.xchanging.etl.mgr</groupId>
-			<artifactId>etl-mgr-core</artifactId>
-			<version>${etl.mgr.release.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.xchanging.etl.mgr</groupId>
-			<artifactId>etl-mgr-dao</artifactId>
-			<version>${etl.mgr.release.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.xchanging.etl.mgr</groupId>
-			<artifactId>etl-mgr-service</artifactId>
-			<version>${etl.mgr.release.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.xchanging.etl.mgr</groupId>
-			<artifactId>etl-mgr-quartz</artifactId>
-			<version>${etl.mgr.release.version}</version>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>com.xchanging.etl.mgr</groupId>
+            <artifactId>etl-mgr-common</artifactId>
+            <version>${etl.mgr.release.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xchanging.etl.mgr</groupId>
+            <artifactId>etl-mgr-model</artifactId>
+            <version>${etl.mgr.release.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xchanging.etl.mgr</groupId>
+            <artifactId>etl-mgr-util</artifactId>
+            <version>${etl.mgr.release.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xchanging.etl.mgr</groupId>
+            <artifactId>etl-mgr-core</artifactId>
+            <version>${etl.mgr.release.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xchanging.etl.mgr</groupId>
+            <artifactId>etl-mgr-dao</artifactId>
+            <version>${etl.mgr.release.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xchanging.etl.mgr</groupId>
+            <artifactId>etl-mgr-service</artifactId>
+            <version>${etl.mgr.release.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xchanging.etl.mgr</groupId>
+            <artifactId>etl-mgr-quartz</artifactId>
+            <version>${etl.mgr.release.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.7</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.7</version>
+            <scope>test</scope>
+        </dependency>
 		
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.14</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-lang</groupId>
-			<artifactId>commons-lang</artifactId>
-			<version>2.6</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging-api</artifactId>
-			<version>1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>3.2.1</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-digester</groupId>
-			<artifactId>commons-digester</artifactId>
-			<version>1.8</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.2.2</version>
-		</dependency>
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib-nodep</artifactId>
-			<version>2.2.2</version>
-			<scope>runtime</scope>
-		</dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.14</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging-api</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-digester</groupId>
+            <artifactId>commons-digester</artifactId>
+            <version>1.8</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <version>2.2.2</version>
+            <scope>runtime</scope>
+        </dependency>
 
 
-		<!-- Spring dependencies -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${springframework.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-			<version>${springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>${springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<version>${springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-expression</artifactId>
-			<version>${springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>${springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>${springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-oxm</artifactId>
-			<version>${springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<version>${spring.security.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>${spring.security.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>${spring.security.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-taglibs</artifactId>
-			<version>${spring.security.version}</version>
-		</dependency>
+        <!-- Spring dependencies -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${springframework.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        
 
-		<!-- Spring Batch -->
-		<dependency>
-			<groupId>org.springframework.batch</groupId>
-			<artifactId>spring-batch-core</artifactId>
-			<version>${spring.batch.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.codehaus.jettison</groupId>
-					<artifactId>jettison</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.batch</groupId>
-			<artifactId>spring-batch-infrastructure</artifactId>
-			<version>${spring.batch.version}</version>
-		</dependency>
+        <!-- Spring Batch -->
+        <dependency>
+            <groupId>org.springframework.batch</groupId>
+            <artifactId>spring-batch-core</artifactId>
+            <version>${spring.batch.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.codehaus.jettison</groupId>
+                    <artifactId>jettison</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.batch</groupId>
+            <artifactId>spring-batch-infrastructure</artifactId>
+            <version>${spring.batch.version}</version>
+        </dependency>
 
 
-		<!-- JPA dependencies -->
-		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<version>1.0.1.Final</version>
-		</dependency>
+        <!-- JPA dependencies -->
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.0-api</artifactId>
+            <version>1.0.1.Final</version>
+        </dependency>
 
-		<!-- Hibernate dependencies -->
+        <!-- Hibernate dependencies -->
 
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-			<version>${hibernate.validator.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate.validator.version}</version>
+        </dependency>
 
-		<!-- JDBC Connectors dependencies -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.connector.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derby</artifactId>
-			<version>${derby.db.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.microsoft</groupId>
-			<artifactId>sqljdbc4</artifactId>
-			<version>1.0</version>
-			<scope>runtime</scope>
-		</dependency>
+        <!-- JDBC Connectors dependencies -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>${derby.db.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft</groupId>
+            <artifactId>sqljdbc4</artifactId>
+            <version>1.0</version>
+            <scope>runtime</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-			<version>1.1.0.Final</version>
-		</dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.1.0.Final</version>
+        </dependency>
 
-		<!-- Jackson JSON Mapper -->
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.12</version>
-		</dependency>
+        <!-- Jackson JSON Mapper -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.12</version>
+        </dependency>
 		
-		<dependency>
-			<groupId>org.quartz-scheduler</groupId>
-			<artifactId>quartz</artifactId>
-			<version>2.2.0</version>
-		</dependency>
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.0</version>
+        </dependency>
 		
-	</dependencies>
+    </dependencies>
 
 
-	<build>
+    <build>
 
 		
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.0</version>
-				<configuration>
-					<source>${jdk.version}</source>
-					<target>${jdk.version}</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.3.1</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>com.xchanging.etl.mgr.desk.EtlManagerLauncher</mainClass>
-							<addClasspath>true</addClasspath>
-							<addExtensions>false</addExtensions>
-							<classpathPrefix>lib/</classpathPrefix>
-							<classpathMavenRepositoryLayout>false</classpathMavenRepositoryLayout>
-						</manifest>
-						<!-- <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile> 
-							<classpathLayoutType>repository</classpathLayoutType> <classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout> -->
-					</archive>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>test-jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.3.1</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.xchanging.etl.mgr.desk.EtlManagerLauncher</mainClass>
+                            <addClasspath>true</addClasspath>
+                            <addExtensions>false</addExtensions>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <classpathMavenRepositoryLayout>false</classpathMavenRepositoryLayout>
+                        </manifest>
+                        <!-- <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile> 
+                        <classpathLayoutType>repository</classpathLayoutType> <classpathMavenRepositoryLayout>true</classpathMavenRepositoryLayout> -->
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<!-- Coping JAR to release directory -->
-					<execution>
-						<id>defaultcopy</id>
-						<phase>package</phase>
-						<configuration>
-							<tasks>
-								<!-- Coping JAR to release directory -->
-								<copy todir="${release.dir}/etlmgr-${release.version}"
-									overwrite="true" failonerror="true" includeEmptyDirs="true">
-									<fileset dir="target">
-										<include name="etl-mgr-desk-${release.version}.jar" />
-									</fileset>
-								</copy>
-								<!-- Coping Application data to release directory -->
-								<copy todir="${release.dir}/etlmgr-${release.version}"
-									overwrite="true" failonerror="true" includeEmptyDirs="true">
-									<fileset dir="${setup.dir}">
-										<include name="application-data/**/*.*" />
-									</fileset>
-								</copy>
-								<!-- Coping DbEx.bat -->
-								<copy todir="${release.dir}/etlmgr-${release.version}"
-									overwrite="true" failonerror="true" includeEmptyDirs="false">
-									<fileset dir="${setup.dir}/bin">
-										<include name="EtlMgr-${release.version}.exe" />
-									</fileset>
-								</copy>
-							</tasks>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <!-- Coping JAR to release directory -->
+                    <execution>
+                        <id>defaultcopy</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <tasks>
+                                <!-- Coping JAR to release directory -->
+                                <copy todir="${release.dir}/etlmgr-${release.version}"
+                                                                      overwrite="true" failonerror="true" includeEmptyDirs="true">
+                                    <fileset dir="target">
+                                        <include name="etl-mgr-desk-${release.version}.jar" />
+                                    </fileset>
+                                </copy>
+                                <!-- Coping Application data to release directory -->
+                                <copy todir="${release.dir}/etlmgr-${release.version}"
+                                                                      overwrite="true" failonerror="true" includeEmptyDirs="true">
+                                    <fileset dir="${setup.dir}">
+                                        <include name="application-data/**/*.*" />
+                                    </fileset>
+                                </copy>
+                                <!-- Coping DbEx.bat -->
+                                <copy todir="${release.dir}/etlmgr-${release.version}"
+                                                                      overwrite="true" failonerror="true" includeEmptyDirs="false">
+                                    <fileset dir="${setup.dir}/bin">
+                                        <include name="EtlMgr-${release.version}.exe" />
+                                    </fileset>
+                                </copy>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-dependencies</id>
-						<phase>package</phase>
-						<goals>
-							<goal>copy-dependencies</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${release.dir}/etlmgr-${release.version}/lib/</outputDirectory>
-							<overWriteReleases>false</overWriteReleases>
-							<overWriteSnapshots>false</overWriteSnapshots>
-							<overWriteIfNewer>true</overWriteIfNewer>
-							<useRepositoryLayout>false</useRepositoryLayout>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${release.dir}/etlmgr-${release.version}/lib/</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                            <useRepositoryLayout>false</useRepositoryLayout>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
-			<!-- see install.xml to see how MyHelloPanel is used 
-			<plugin>
-				<groupId>org.codehaus.izpack</groupId>
-				<artifactId>izpack-maven-plugin</artifactId>
-				<version>1.0-alpha-5</version>
-				<dependencies>
-					<dependency>
-						<groupId>org.codehaus.izpack</groupId>
-						<artifactId>izpack-standalone-compiler</artifactId>
-						<version>${izpack-standalone.version}</version>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<izpackBasedir>${staging.dir}</izpackBasedir>
-					<customPanelDirectory>${staging.dir}</customPanelDirectory>
-				</configuration>
-				<executions>
-					<execution>
-						<id>standard-installer</id>
-						<phase>package</phase>
-						<goals>
-							<goal>izpack</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
--->
-			<!--<plugin> <artifactId>maven-resources-plugin</artifactId> <version>2.4.2</version> 
-				<executions> <execution> <id>copy-resources</id> <phase>validate</phase> 
-				<goals> <goal>copy-resources</goal> </goals> <configuration> <encoding>UTF-8</encoding> 
-				<outputDirectory>${staging.dir}</outputDirectory> <resources> <resource> 
-				<directory>src/main/resources/izpack</directory> </resource> </resources> 
-				</configuration> </execution> </executions> </plugin> -->
-		</plugins>
-	</build>
+            <!-- see install.xml to see how MyHelloPanel is used 
+                                    <plugin>
+                                            <groupId>org.codehaus.izpack</groupId>
+                                            <artifactId>izpack-maven-plugin</artifactId>
+                                            <version>1.0-alpha-5</version>
+                                            <dependencies>
+                                                    <dependency>
+                                                            <groupId>org.codehaus.izpack</groupId>
+                                                            <artifactId>izpack-standalone-compiler</artifactId>
+                                                            <version>${izpack-standalone.version}</version>
+                                                    </dependency>
+                                            </dependencies>
+                                            <configuration>
+                                                    <izpackBasedir>${staging.dir}</izpackBasedir>
+                                                    <customPanelDirectory>${staging.dir}</customPanelDirectory>
+                                            </configuration>
+                                            <executions>
+                                                    <execution>
+                                                            <id>standard-installer</id>
+                                                            <phase>package</phase>
+                                                            <goals>
+                                                                    <goal>izpack</goal>
+                                                            </goals>
+                                                    </execution>
+                                            </executions>
+                                    </plugin>
+            -->
+            <!--<plugin> <artifactId>maven-resources-plugin</artifactId> <version>2.4.2</version> 
+            <executions> <execution> <id>copy-resources</id> <phase>validate</phase> 
+            <goals> <goal>copy-resources</goal> </goals> <configuration> <encoding>UTF-8</encoding> 
+            <outputDirectory>${staging.dir}</outputDirectory> <resources> <resource> 
+            <directory>src/main/resources/izpack</directory> </resource> </resources> 
+            </configuration> </execution> </executions> </plugin> -->
+        </plugins>
+    </build>
 	
 </project>
