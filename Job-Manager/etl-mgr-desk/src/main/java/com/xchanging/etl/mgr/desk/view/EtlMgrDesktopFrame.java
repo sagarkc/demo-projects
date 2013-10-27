@@ -4,17 +4,42 @@
  */
 package com.xchanging.etl.mgr.desk.view;
 
+import com.xchanging.etl.mgr.desk.EtlManagerConstants;
+import com.xchanging.etl.mgr.desk.util.ResourceBundleManager;
+import com.xchanging.etl.mgr.desk.util.WindowManager;
+import com.xchanging.etl.mgr.desk.util.WindowUtil;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.util.ResourceBundle;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author sg1736
  */
 public class EtlMgrDesktopFrame extends javax.swing.JFrame {
-
+    private static final WindowManager WINDOW_MANAGER = WindowManager.getManager();
+    private ResourceBundle bundle = ResourceBundleManager.getBundleManager().getResourceBundle();
     /**
      * Creates new form EtlMgrDesktopFrame
      */
     public EtlMgrDesktopFrame() {
+        setTitle(bundle.getString("app.title")
+                + " " + bundle.getString("app.version"));
+        setSize(800, 540);
+        setMinimumSize(getSize());
+        setIconImage((new ImageIcon(getClass()
+                .getResource("/images/etl-mgr-frame-icon.png"))).getImage());
+        WindowUtil.bringToCenter(this);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
         initComponents();
+        
+        
     }
 
     /**
@@ -25,57 +50,434 @@ public class EtlMgrDesktopFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        windowManagerPopupMenu = new javax.swing.JPopupMenu();
+        showAllMenuItem = new javax.swing.JMenuItem();
+        baseDesktopPopupMenu = new javax.swing.JPopupMenu();
+        minimizeAllMenuItem = new javax.swing.JMenuItem();
+        maximizeAllMenuItem = new javax.swing.JMenuItem();
+        baseToolBar = new javax.swing.JToolBar();
+        editSettingsButton = new javax.swing.JButton();
+        baseStatusBar = new javax.swing.JToolBar();
+        jLabel1 = new javax.swing.JLabel();
+        windowManagerLabel = new javax.swing.JLabel();
+        jSeparator5 = new javax.swing.JToolBar.Separator();
+        statusPanel = new javax.swing.JPanel();
+        statusLabel = new javax.swing.JLabel();
+        jSeparator8 = new javax.swing.JToolBar.Separator();
+        baseDesktopPane = new javax.swing.JDesktopPane();
+        desktopImageLabel = new javax.swing.JLabel();
+        baseMenuBar = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        minimize2trayMenuItem = new javax.swing.JMenuItem();
+        exitMenuItem = new javax.swing.JMenuItem();
+        jobServerMenu = new javax.swing.JMenu();
+        editMenu = new javax.swing.JMenu();
+        settingsMenuItem = new javax.swing.JMenuItem();
+        viewMenu = new javax.swing.JMenu();
+        showToolbarChkbxMenuItem = new javax.swing.JCheckBoxMenuItem();
+        showStatusbarChkbxMenuItem = new javax.swing.JCheckBoxMenuItem();
+        jSeparator9 = new javax.swing.JPopupMenu.Separator();
+        showLogMenuItem = new javax.swing.JMenuItem();
+        exploreLogFolderMenuItem = new javax.swing.JMenuItem();
+        jSeparator10 = new javax.swing.JPopupMenu.Separator();
+        windowsMenu = new javax.swing.JMenu();
+        windowsTilesMenuItem = new javax.swing.JMenuItem();
+        windowsCascadeMenuItem = new javax.swing.JMenuItem();
+        helpMenu = new javax.swing.JMenu();
+        helpMenuItem = new javax.swing.JMenuItem();
+        aboutMenuItem = new javax.swing.JMenuItem();
+
+        showAllMenuItem.setText("Show All");
+        showAllMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showAllMenuItemActionPerformed(evt);
+            }
+        });
+        windowManagerPopupMenu.add(showAllMenuItem);
+
+        minimizeAllMenuItem.setText("Minimize All");
+        minimizeAllMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                minimizeAllMenuItemActionPerformed(evt);
+            }
+        });
+        baseDesktopPopupMenu.add(minimizeAllMenuItem);
+
+        maximizeAllMenuItem.setText("Maximize All");
+        maximizeAllMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                maximizeAllMenuItemActionPerformed(evt);
+            }
+        });
+        baseDesktopPopupMenu.add(maximizeAllMenuItem);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 711, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 392, Short.MAX_VALUE)
-        );
+        baseToolBar.setFloatable(false);
+        baseToolBar.setRollover(true);
+
+        editSettingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/settings.png"))); // NOI18N
+        editSettingsButton.setFocusable(false);
+        editSettingsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        editSettingsButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        editSettingsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editSettingsButtonActionPerformed(evt);
+            }
+        });
+        baseToolBar.add(editSettingsButton);
+
+        getContentPane().add(baseToolBar, java.awt.BorderLayout.PAGE_START);
+
+        baseStatusBar.setFloatable(false);
+        baseStatusBar.setRollover(true);
+        baseStatusBar.setMaximumSize(new java.awt.Dimension(36, 25));
+        baseStatusBar.setMinimumSize(new java.awt.Dimension(47, 23));
+        baseStatusBar.setPreferredSize(new java.awt.Dimension(100, 23));
+
+        jLabel1.setText(" ");
+        baseStatusBar.add(jLabel1);
+
+        windowManagerLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/window-manager_24x24.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("i18n/message"); // NOI18N
+        windowManagerLabel.setText(bundle.getString("Window.Manager.Text")); // NOI18N
+        windowManagerLabel.setEnabled(false);
+        windowManagerLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                windowManagerLabelMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                windowManagerLabelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                windowManagerLabelMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                windowManagerLabelMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                windowManagerLabelMouseReleased(evt);
+            }
+        });
+        baseStatusBar.add(windowManagerLabel);
+        baseStatusBar.add(jSeparator5);
+
+        statusPanel.setLayout(new java.awt.GridBagLayout());
+
+        statusLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        statusPanel.add(statusLabel, gridBagConstraints);
+
+        baseStatusBar.add(statusPanel);
+        baseStatusBar.add(jSeparator8);
+
+        getContentPane().add(baseStatusBar, java.awt.BorderLayout.PAGE_END);
+
+        baseDesktopPane.setDoubleBuffered(true);
+        baseDesktopPane.setMinimumSize(new java.awt.Dimension(500, 300));
+        baseDesktopPane.setPreferredSize(new java.awt.Dimension(640, 350));
+        baseDesktopPane.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                baseDesktopPaneComponentResized(evt);
+            }
+        });
+
+        desktopImageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/etl-mgr-256x256.png"))); // NOI18N
+        desktopImageLabel.setMaximumSize(new java.awt.Dimension(2640, 264));
+        desktopImageLabel.setMinimumSize(new java.awt.Dimension(260, 260));
+        desktopImageLabel.setPreferredSize(new java.awt.Dimension(2640, 264));
+        baseDesktopPane.add(desktopImageLabel);
+        desktopImageLabel.setBounds(364, 114, 260, 240);
+
+        getContentPane().add(baseDesktopPane, java.awt.BorderLayout.CENTER);
+
+        fileMenu.setText(bundle.getString("fileMenu.text")); // NOI18N
+        fileMenu.setActionCommand("");
+
+        minimize2trayMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.ALT_MASK));
+        minimize2trayMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hide.png"))); // NOI18N
+        minimize2trayMenuItem.setText(bundle.getString("minimize2trayMenuItem.text")); // NOI18N
+        minimize2trayMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                minimize2trayMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(minimize2trayMenuItem);
+
+        exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit.png"))); // NOI18N
+        exitMenuItem.setText(bundle.getString("exitMenuItem.text")); // NOI18N
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(exitMenuItem);
+
+        baseMenuBar.add(fileMenu);
+
+        jobServerMenu.setText(bundle.getString("jobServerMenu.text")); // NOI18N
+        baseMenuBar.add(jobServerMenu);
+
+        editMenu.setText(bundle.getString("editMenu.text")); // NOI18N
+        editMenu.setActionCommand("");
+
+        settingsMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/settings.png"))); // NOI18N
+        settingsMenuItem.setText(bundle.getString("settingsMenuItem.text")); // NOI18N
+        settingsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsMenuItemActionPerformed(evt);
+            }
+        });
+        editMenu.add(settingsMenuItem);
+
+        baseMenuBar.add(editMenu);
+
+        viewMenu.setText(bundle.getString("viewMenu.text")); // NOI18N
+        viewMenu.setActionCommand("");
+
+        showToolbarChkbxMenuItem.setSelected(true);
+        showToolbarChkbxMenuItem.setText(bundle.getString("showToolbarChkbxMenuItem.text")); // NOI18N
+        showToolbarChkbxMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showToolbarChkbxMenuItemActionPerformed(evt);
+            }
+        });
+        viewMenu.add(showToolbarChkbxMenuItem);
+
+        showStatusbarChkbxMenuItem.setSelected(true);
+        showStatusbarChkbxMenuItem.setText(bundle.getString("showStatusbarChkbxMenuItem.text")); // NOI18N
+        showStatusbarChkbxMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showStatusbarChkbxMenuItemActionPerformed(evt);
+            }
+        });
+        viewMenu.add(showStatusbarChkbxMenuItem);
+        viewMenu.add(jSeparator9);
+
+        showLogMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/file_extension_log.png"))); // NOI18N
+        showLogMenuItem.setText(bundle.getString("showLogMenuItem.text")); // NOI18N
+        showLogMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                showLogMenuItemActionPerformed(evt);
+            }
+        });
+        viewMenu.add(showLogMenuItem);
+
+        exploreLogFolderMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/folder_explore.png"))); // NOI18N
+        exploreLogFolderMenuItem.setText(bundle.getString("exploreLogFolderMenuItem.text")); // NOI18N
+        exploreLogFolderMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exploreLogFolderMenuItemActionPerformed(evt);
+            }
+        });
+        viewMenu.add(exploreLogFolderMenuItem);
+        viewMenu.add(jSeparator10);
+
+        windowsMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/window-manager_16x16.png"))); // NOI18N
+        windowsMenu.setText("Windows");
+
+        windowsTilesMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/application_view_tile.png"))); // NOI18N
+        windowsTilesMenuItem.setText(bundle.getString("windowsTilesMenuItem.text")); // NOI18N
+        windowsTilesMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                windowsTilesMenuItemActionPerformed(evt);
+            }
+        });
+        windowsMenu.add(windowsTilesMenuItem);
+
+        windowsCascadeMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/application_cascade.png"))); // NOI18N
+        windowsCascadeMenuItem.setText(bundle.getString("windowsCascadeMenuItem.text")); // NOI18N
+        windowsCascadeMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                windowsCascadeMenuItemActionPerformed(evt);
+            }
+        });
+        windowsMenu.add(windowsCascadeMenuItem);
+
+        viewMenu.add(windowsMenu);
+
+        baseMenuBar.add(viewMenu);
+
+        helpMenu.setText(bundle.getString("helpMenu.text")); // NOI18N
+        helpMenu.setActionCommand("");
+
+        helpMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        helpMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help.png"))); // NOI18N
+        helpMenuItem.setText(bundle.getString("helpMenuItem.text")); // NOI18N
+        helpMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                helpMenuItemActionPerformed(evt);
+            }
+        });
+        helpMenu.add(helpMenuItem);
+
+        aboutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/info.png"))); // NOI18N
+        aboutMenuItem.setText(bundle.getString("aboutMenuItem.text")); // NOI18N
+        aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutMenuItemActionPerformed(evt);
+            }
+        });
+        helpMenu.add(aboutMenuItem);
+
+        baseMenuBar.add(helpMenu);
+
+        setJMenuBar(baseMenuBar);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+    private void minimize2trayMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimize2trayMenuItemActionPerformed
+        ActionListener exitListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EtlMgrDesktopFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EtlMgrDesktopFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EtlMgrDesktopFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EtlMgrDesktopFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+        };
+        WindowUtil.minimizeToTray(this, new javax.swing.ImageIcon(getClass()
+            .getResource("/images/etl-mgr-frame-icon.png")).getImage(),
+        exitListener);
+    }//GEN-LAST:event_minimize2trayMenuItemActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EtlMgrDesktopFrame().setVisible(true);
-            }
-        });
-    }
+    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
+
+        System.exit(0);
+    }//GEN-LAST:event_exitMenuItemActionPerformed
+
+    private void settingsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsMenuItemActionPerformed
+        
+    }//GEN-LAST:event_settingsMenuItemActionPerformed
+
+    private void showToolbarChkbxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showToolbarChkbxMenuItemActionPerformed
+        if (!showToolbarChkbxMenuItem.isSelected()) {
+            baseToolBar.setVisible(false);
+        } else {
+            baseToolBar.setVisible(true);
+        }
+    }//GEN-LAST:event_showToolbarChkbxMenuItemActionPerformed
+
+    private void showStatusbarChkbxMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showStatusbarChkbxMenuItemActionPerformed
+        if (!showStatusbarChkbxMenuItem.isSelected()) {
+            baseStatusBar.setVisible(false);
+        } else {
+            baseStatusBar.setVisible(true);
+        }
+    }//GEN-LAST:event_showStatusbarChkbxMenuItemActionPerformed
+
+    private void showLogMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showLogMenuItemActionPerformed
+        
+    }//GEN-LAST:event_showLogMenuItemActionPerformed
+
+    private void exploreLogFolderMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exploreLogFolderMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_exploreLogFolderMenuItemActionPerformed
+
+    private void windowsTilesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windowsTilesMenuItemActionPerformed
+        WINDOW_MANAGER.tileWindows(baseDesktopPane);
+    }//GEN-LAST:event_windowsTilesMenuItemActionPerformed
+
+    private void windowsCascadeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_windowsCascadeMenuItemActionPerformed
+        WINDOW_MANAGER.cascadeWindows(baseDesktopPane);
+    }//GEN-LAST:event_windowsCascadeMenuItemActionPerformed
+
+    private void helpMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpMenuItemActionPerformed
+        
+    }//GEN-LAST:event_helpMenuItemActionPerformed
+
+    private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
+        
+    }//GEN-LAST:event_aboutMenuItemActionPerformed
+
+    private void showAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showAllMenuItemActionPerformed
+        WINDOW_MANAGER.showAllFrames();
+    }//GEN-LAST:event_showAllMenuItemActionPerformed
+
+    private void minimizeAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizeAllMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_minimizeAllMenuItemActionPerformed
+
+    private void maximizeAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maximizeAllMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_maximizeAllMenuItemActionPerformed
+
+    private void editSettingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSettingsButtonActionPerformed
+        settingsMenuItemActionPerformed(evt);
+    }//GEN-LAST:event_editSettingsButtonActionPerformed
+
+    private void windowManagerLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_windowManagerLabelMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_windowManagerLabelMouseClicked
+
+    private void windowManagerLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_windowManagerLabelMouseEntered
+        windowManagerLabel.setForeground(EtlManagerConstants.LINK_FG_COLOR);
+        windowManagerLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_windowManagerLabelMouseEntered
+
+    private void windowManagerLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_windowManagerLabelMouseExited
+        windowManagerLabel.setForeground(Color.BLACK);
+        windowManagerLabel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }//GEN-LAST:event_windowManagerLabelMouseExited
+
+    private void windowManagerLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_windowManagerLabelMousePressed
+        if (MouseEvent.BUTTON1 == evt.getButton() && windowManagerLabel.isEnabled()) {
+            windowManagerPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_windowManagerLabelMousePressed
+
+    private void windowManagerLabelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_windowManagerLabelMouseReleased
+        if (MouseEvent.BUTTON1 == evt.getButton() && windowManagerLabel.isEnabled()) {
+            windowManagerPopupMenu.show(evt.getComponent(), evt.getX(), evt.getY());
+        }
+    }//GEN-LAST:event_windowManagerLabelMouseReleased
+
+    private void baseDesktopPaneComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_baseDesktopPaneComponentResized
+        Dimension d = baseDesktopPane.getSize();
+        int x = d.width - 264;
+        int y = d.height - 264;
+        desktopImageLabel.setBounds(x, y, 260, 260);
+    }//GEN-LAST:event_baseDesktopPaneComponentResized
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JDesktopPane baseDesktopPane;
+    private javax.swing.JPopupMenu baseDesktopPopupMenu;
+    private javax.swing.JMenuBar baseMenuBar;
+    private javax.swing.JToolBar baseStatusBar;
+    private javax.swing.JToolBar baseToolBar;
+    private javax.swing.JLabel desktopImageLabel;
+    private javax.swing.JMenu editMenu;
+    private javax.swing.JButton editSettingsButton;
+    private javax.swing.JMenuItem exitMenuItem;
+    private javax.swing.JMenuItem exploreLogFolderMenuItem;
+    private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem helpMenuItem;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPopupMenu.Separator jSeparator10;
+    private javax.swing.JToolBar.Separator jSeparator5;
+    private javax.swing.JToolBar.Separator jSeparator8;
+    private javax.swing.JPopupMenu.Separator jSeparator9;
+    private javax.swing.JMenu jobServerMenu;
+    private javax.swing.JMenuItem maximizeAllMenuItem;
+    private javax.swing.JMenuItem minimize2trayMenuItem;
+    private javax.swing.JMenuItem minimizeAllMenuItem;
+    private javax.swing.JMenuItem settingsMenuItem;
+    private javax.swing.JMenuItem showAllMenuItem;
+    private javax.swing.JMenuItem showLogMenuItem;
+    private javax.swing.JCheckBoxMenuItem showStatusbarChkbxMenuItem;
+    private javax.swing.JCheckBoxMenuItem showToolbarChkbxMenuItem;
+    private javax.swing.JLabel statusLabel;
+    private javax.swing.JPanel statusPanel;
+    private javax.swing.JMenu viewMenu;
+    private javax.swing.JLabel windowManagerLabel;
+    private javax.swing.JPopupMenu windowManagerPopupMenu;
+    private javax.swing.JMenuItem windowsCascadeMenuItem;
+    private javax.swing.JMenu windowsMenu;
+    private javax.swing.JMenuItem windowsTilesMenuItem;
     // End of variables declaration//GEN-END:variables
 }

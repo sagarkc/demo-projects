@@ -326,21 +326,21 @@
                             <tasks>
                                 <!-- Coping JAR to release directory -->
                                 <copy todir="${release.dir}/etlmgr-${release.version}"
-                                                                      overwrite="true" failonerror="true" includeEmptyDirs="true">
+                                      overwrite="true" failonerror="true" includeEmptyDirs="true">
                                     <fileset dir="target">
                                         <include name="etl-mgr-desk-${release.version}.jar" />
                                     </fileset>
                                 </copy>
                                 <!-- Coping Application data to release directory -->
                                 <copy todir="${release.dir}/etlmgr-${release.version}"
-                                                                      overwrite="true" failonerror="true" includeEmptyDirs="true">
+                                      overwrite="true" failonerror="true" includeEmptyDirs="true">
                                     <fileset dir="${setup.dir}">
                                         <include name="application-data/**/*.*" />
                                     </fileset>
                                 </copy>
                                 <!-- Coping DbEx.bat -->
                                 <copy todir="${release.dir}/etlmgr-${release.version}"
-                                                                      overwrite="true" failonerror="true" includeEmptyDirs="false">
+                                      overwrite="true" failonerror="true" includeEmptyDirs="false">
                                     <fileset dir="${setup.dir}/bin">
                                         <include name="EtlMgr-${release.version}.exe" />
                                     </fileset>
