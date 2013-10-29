@@ -11,7 +11,10 @@
 package com.xchanging.etl.mgr.desk;
 
 import com.xchanging.etl.mgr.desk.view.EtlMgrDesktopFrame;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 /**
@@ -26,9 +29,13 @@ public class EtlManagerLauncher {
     public static void main(String args[]) {
        
         try {
-            javax.swing.UIManager.setLookAndFeel(new NimbusLookAndFeel());
+            javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(EtlMgrDesktopFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            try {
+                javax.swing.UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            } catch (Exception ex1) {
+                Logger.getLogger(EtlManagerLauncher.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         } 
         
         /* Create and display the form */
