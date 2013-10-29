@@ -58,6 +58,15 @@ public class EtlMgrDesktopFrame extends javax.swing.JFrame {
         minimizeAllMenuItem = new javax.swing.JMenuItem();
         maximizeAllMenuItem = new javax.swing.JMenuItem();
         baseToolBar = new javax.swing.JToolBar();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jSeparator3 = new javax.swing.JToolBar.Separator();
+        jButton4 = new javax.swing.JButton();
+        jSeparator11 = new javax.swing.JToolBar.Separator();
         editSettingsButton = new javax.swing.JButton();
         baseStatusBar = new javax.swing.JToolBar();
         jLabel1 = new javax.swing.JLabel();
@@ -69,10 +78,23 @@ public class EtlMgrDesktopFrame extends javax.swing.JFrame {
         baseDesktopPane = new javax.swing.JDesktopPane();
         desktopImageLabel = new javax.swing.JLabel();
         baseMenuBar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
+        etlSystemMenu = new javax.swing.JMenu();
+        myJobsMenuItem = new javax.swing.JMenuItem();
+        realtimeJobStatusMenu = new javax.swing.JMenu();
+        realtimeLastHourJobStatusMenuItem = new javax.swing.JMenuItem();
+        realtimeLastDayJobStatusMenuItem = new javax.swing.JMenuItem();
+        realtimeAllJobStatusMenuItem = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        realtimeFilteredJobStatusMenuItem = new javax.swing.JMenuItem();
+        historicalJobSatusMenuItem = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        activeJobServerMenu = new javax.swing.JMenu();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        manageConfigurationsMenuItem = new javax.swing.JMenuItem();
+        jobLauncherMenuItem = new javax.swing.JMenuItem();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
         minimize2trayMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
-        jobServerMenu = new javax.swing.JMenu();
         editMenu = new javax.swing.JMenu();
         settingsMenuItem = new javax.swing.JMenuItem();
         viewMenu = new javax.swing.JMenu();
@@ -117,6 +139,44 @@ public class EtlMgrDesktopFrame extends javax.swing.JFrame {
 
         baseToolBar.setFloatable(false);
         baseToolBar.setRollover(true);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/my-job-16x16.png"))); // NOI18N
+        jButton1.setText("My Jobs");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        baseToolBar.add(jButton1);
+
+        jButton2.setText("Last Hour Jobs");
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        baseToolBar.add(jButton2);
+
+        jButton3.setText("Historical Jobs");
+        jButton3.setFocusable(false);
+        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        baseToolBar.add(jButton3);
+        baseToolBar.add(jSeparator2);
+
+        jLabel2.setText("Current Job Server: ");
+        baseToolBar.add(jLabel2);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setLightWeightPopupEnabled(false);
+        jComboBox1.setMaximumSize(new java.awt.Dimension(156, 20));
+        jComboBox1.setPreferredSize(new java.awt.Dimension(156, 20));
+        baseToolBar.add(jComboBox1);
+        baseToolBar.add(jSeparator3);
+
+        jButton4.setText("Manage Config");
+        jButton4.setToolTipText("");
+        jButton4.setFocusable(false);
+        jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        baseToolBar.add(jButton4);
+        baseToolBar.add(jSeparator11);
 
         editSettingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/settings.png"))); // NOI18N
         editSettingsButton.setFocusable(false);
@@ -195,8 +255,51 @@ public class EtlMgrDesktopFrame extends javax.swing.JFrame {
 
         getContentPane().add(baseDesktopPane, java.awt.BorderLayout.CENTER);
 
-        fileMenu.setText(bundle.getString("fileMenu.text")); // NOI18N
-        fileMenu.setActionCommand("");
+        etlSystemMenu.setText(bundle.getString("etlSystemMenu.text")); // NOI18N
+        etlSystemMenu.setActionCommand("");
+
+        myJobsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
+        myJobsMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/my-job-16x16.png"))); // NOI18N
+        myJobsMenuItem.setText(bundle.getString("myJobsMenuItem.text")); // NOI18N
+        etlSystemMenu.add(myJobsMenuItem);
+
+        realtimeJobStatusMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/realtime-16x16.png"))); // NOI18N
+        realtimeJobStatusMenu.setText(bundle.getString("realtimeJobStatusMenu.text")); // NOI18N
+
+        realtimeLastHourJobStatusMenuItem.setText(bundle.getString("realtimeLastHourJobStatusMenuItem.text")); // NOI18N
+        realtimeJobStatusMenu.add(realtimeLastHourJobStatusMenuItem);
+
+        realtimeLastDayJobStatusMenuItem.setText(bundle.getString("realtimeTodaysJobStatusMenuItem")); // NOI18N
+        realtimeJobStatusMenu.add(realtimeLastDayJobStatusMenuItem);
+
+        realtimeAllJobStatusMenuItem.setText(bundle.getString("realtimeAllJobStatusMenuItem")); // NOI18N
+        realtimeJobStatusMenu.add(realtimeAllJobStatusMenuItem);
+        realtimeJobStatusMenu.add(jSeparator1);
+
+        realtimeFilteredJobStatusMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/filter-16x16.png"))); // NOI18N
+        realtimeFilteredJobStatusMenuItem.setText(bundle.getString("realtimeFilteredJobStatusMenuItem.text")); // NOI18N
+        realtimeJobStatusMenu.add(realtimeFilteredJobStatusMenuItem);
+
+        etlSystemMenu.add(realtimeJobStatusMenu);
+
+        historicalJobSatusMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/historical-16x16.png"))); // NOI18N
+        historicalJobSatusMenuItem.setText(bundle.getString("historicalJobSatusMenuItem.text")); // NOI18N
+        etlSystemMenu.add(historicalJobSatusMenuItem);
+        etlSystemMenu.add(jSeparator4);
+
+        activeJobServerMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/active-server-icon-16x16.png"))); // NOI18N
+        activeJobServerMenu.setText(bundle.getString("activeJobServerMenu.text")); // NOI18N
+        etlSystemMenu.add(activeJobServerMenu);
+        etlSystemMenu.add(jSeparator6);
+
+        manageConfigurationsMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/manage-config-16x16.png"))); // NOI18N
+        manageConfigurationsMenuItem.setText(bundle.getString("manageConfigurationsMenuItem.text")); // NOI18N
+        etlSystemMenu.add(manageConfigurationsMenuItem);
+
+        jobLauncherMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/launcher-16x16.png"))); // NOI18N
+        jobLauncherMenuItem.setText(bundle.getString("jobLauncherMenuItem.text")); // NOI18N
+        etlSystemMenu.add(jobLauncherMenuItem);
+        etlSystemMenu.add(jSeparator7);
 
         minimize2trayMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.ALT_MASK));
         minimize2trayMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hide.png"))); // NOI18N
@@ -206,7 +309,7 @@ public class EtlMgrDesktopFrame extends javax.swing.JFrame {
                 minimize2trayMenuItemActionPerformed(evt);
             }
         });
-        fileMenu.add(minimize2trayMenuItem);
+        etlSystemMenu.add(minimize2trayMenuItem);
 
         exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         exitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit.png"))); // NOI18N
@@ -216,12 +319,9 @@ public class EtlMgrDesktopFrame extends javax.swing.JFrame {
                 exitMenuItemActionPerformed(evt);
             }
         });
-        fileMenu.add(exitMenuItem);
+        etlSystemMenu.add(exitMenuItem);
 
-        baseMenuBar.add(fileMenu);
-
-        jobServerMenu.setText(bundle.getString("jobServerMenu.text")); // NOI18N
-        baseMenuBar.add(jobServerMenu);
+        baseMenuBar.add(etlSystemMenu);
 
         editMenu.setText(bundle.getString("editMenu.text")); // NOI18N
         editMenu.setActionCommand("");
@@ -444,6 +544,7 @@ public class EtlMgrDesktopFrame extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JMenu activeJobServerMenu;
     private javax.swing.JDesktopPane baseDesktopPane;
     private javax.swing.JPopupMenu baseDesktopPopupMenu;
     private javax.swing.JMenuBar baseMenuBar;
@@ -452,20 +553,41 @@ public class EtlMgrDesktopFrame extends javax.swing.JFrame {
     private javax.swing.JLabel desktopImageLabel;
     private javax.swing.JMenu editMenu;
     private javax.swing.JButton editSettingsButton;
+    private javax.swing.JMenu etlSystemMenu;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenuItem exploreLogFolderMenuItem;
-    private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem helpMenuItem;
+    private javax.swing.JMenuItem historicalJobSatusMenuItem;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
+    private javax.swing.JToolBar.Separator jSeparator11;
+    private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JToolBar.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JToolBar.Separator jSeparator8;
     private javax.swing.JPopupMenu.Separator jSeparator9;
-    private javax.swing.JMenu jobServerMenu;
+    private javax.swing.JMenuItem jobLauncherMenuItem;
+    private javax.swing.JMenuItem manageConfigurationsMenuItem;
     private javax.swing.JMenuItem maximizeAllMenuItem;
     private javax.swing.JMenuItem minimize2trayMenuItem;
     private javax.swing.JMenuItem minimizeAllMenuItem;
+    private javax.swing.JMenuItem myJobsMenuItem;
+    private javax.swing.JMenuItem realtimeAllJobStatusMenuItem;
+    private javax.swing.JMenuItem realtimeFilteredJobStatusMenuItem;
+    private javax.swing.JMenu realtimeJobStatusMenu;
+    private javax.swing.JMenuItem realtimeLastDayJobStatusMenuItem;
+    private javax.swing.JMenuItem realtimeLastHourJobStatusMenuItem;
     private javax.swing.JMenuItem settingsMenuItem;
     private javax.swing.JMenuItem showAllMenuItem;
     private javax.swing.JMenuItem showLogMenuItem;
