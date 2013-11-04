@@ -6,12 +6,17 @@
 
 package com.xchanging.etl.mgr.desk.view;
 
+import com.xchanging.etl.mgr.desk.util.ResourceBundleManager;
+import java.util.ResourceBundle;
+
 /**
  *
  * @author Sabuj
  */
 public class JobMonitorPanel extends javax.swing.JPanel {
-
+    private ResourceBundle bundle 
+            = ResourceBundleManager.getBundleManager().getResourceBundle();
+    
     /**
      * Creates new form JobMonitorPanel
      */
