@@ -12,13 +12,15 @@ import com.gs.utils.swing.display.DisplayUtils;
 import com.gs.utils.swing.file.FileBrowserUtil;
 import com.gs.utils.swing.window.WindowUtil;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 /**
  *
- * @author SG1736
+ * @author sabuj
  */
 public class DocumentExtractorFrame extends javax.swing.JFrame {
 
@@ -56,8 +58,8 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
             private void updateButtonVisibility() {
                 if (null != sourceUrlTextField.getText()
                         && !"".equals(sourceUrlTextField.getText())
-                        && null != folderNameTextField.getText()
-                        && !"".equals(folderNameTextField.getText())) {
+                        && null != targetFolderNameTextField.getText()
+                        && !"".equals(targetFolderNameTextField.getText())) {
                     startButton.setEnabled(true);
                     openTargetFolderButton.setEnabled(true);
                 } else {
@@ -68,7 +70,7 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
         };
 
         sourceUrlTextField.getDocument().addDocumentListener(extractorDocumentListener);
-        folderNameTextField.getDocument().addDocumentListener(extractorDocumentListener);
+        targetFolderNameTextField.getDocument().addDocumentListener(extractorDocumentListener);
 
         WindowUtil.bringToCenter(this);
     }
@@ -86,7 +88,7 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         sourceUrlTextField = new javax.swing.JTextField();
-        folderNameTextField = new javax.swing.JTextField();
+        targetFolderNameTextField = new javax.swing.JTextField();
         browseTargetFolderButton = new javax.swing.JButton();
         startButton = new javax.swing.JButton();
         extractionProgressBar = new javax.swing.JProgressBar();
@@ -110,9 +112,9 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
         sourceUrlTextField.setForeground(new java.awt.Color(0, 0, 204));
         sourceUrlTextField.setText("http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/");
 
-        folderNameTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+        targetFolderNameTextField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                folderNameTextFieldFocusLost(evt);
+                targetFolderNameTextFieldFocusLost(evt);
             }
         });
 
@@ -171,7 +173,7 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(baseContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(extractionProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(folderNameTextField))
+                            .addComponent(targetFolderNameTextField))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(baseContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(browseTargetFolderButton, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -202,7 +204,7 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(baseContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(folderNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(targetFolderNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(browseTargetFolderButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(baseContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -243,22 +245,27 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
                 }
             }
             selectedFolder = folder;
-            folderNameTextField.setText(folder.getAbsolutePath());
+            targetFolderNameTextField.setText(folder.getAbsolutePath());
         }
     }//GEN-LAST:event_browseTargetFolderButtonActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        if (!selectedFolder.exists()) {
-            int option = DisplayUtils.confirmOkCancel(this,
-                    "The selected folder does not exist!!!\n"
-                    + "Do you want to create it?", DisplayTypeEnum.INFO);
-            if (JOptionPane.OK_OPTION == option) {
-                selectedFolder.mkdirs();
-            } else {
-                return;
+        try {
+            if (!selectedFolder.exists()) {
+                int option = DisplayUtils.confirmOkCancel(this,
+                        "The selected folder does not exist!!!\n"
+                                + "Do you want to create it?", DisplayTypeEnum.INFO);
+                if (JOptionPane.OK_OPTION == option) {
+                    selectedFolder.mkdirs();
+                } else {
+                    return;
+                }
             }
+            documentExtractor.extract(sourceUrlTextField.getText(), 
+                    targetFolderNameTextField.getText());
+        } catch (Exception ex) {
+            Logger.getLogger(DocumentExtractorFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void openTargetFolderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTargetFolderButtonActionPerformed
@@ -269,12 +276,12 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
         logTextArea.setText("");
     }//GEN-LAST:event_clearLogButtonActionPerformed
 
-    private void folderNameTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_folderNameTextFieldFocusLost
-        if (null != folderNameTextField.getText()
-                && !"".equals(folderNameTextField.getText())) {
-            selectedFolder = new File(folderNameTextField.getText());
+    private void targetFolderNameTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_targetFolderNameTextFieldFocusLost
+        if (null != targetFolderNameTextField.getText()
+                && !"".equals(targetFolderNameTextField.getText())) {
+            selectedFolder = new File(targetFolderNameTextField.getText());
         }
-    }//GEN-LAST:event_folderNameTextFieldFocusLost
+    }//GEN-LAST:event_targetFolderNameTextFieldFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -282,7 +289,6 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
     private javax.swing.JButton browseTargetFolderButton;
     private javax.swing.JButton clearLogButton;
     private javax.swing.JProgressBar extractionProgressBar;
-    private javax.swing.JTextField folderNameTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -292,5 +298,6 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
     private javax.swing.JButton openTargetFolderButton;
     private javax.swing.JTextField sourceUrlTextField;
     private javax.swing.JButton startButton;
+    private javax.swing.JTextField targetFolderNameTextField;
     // End of variables declaration//GEN-END:variables
 }
