@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.gs.tools.doc.extractor.app.view;
 
+import com.gs.tools.doc.extractor.core.WebDocumentExtractor;
+import com.gs.tools.doc.extractor.core.html.HTMLDocumentExtractor;
 import com.gs.utils.enums.DisplayTypeEnum;
 import com.gs.utils.swing.display.DisplayUtils;
 import com.gs.utils.swing.file.FileBrowserUtil;
@@ -21,6 +22,9 @@ import javax.swing.event.DocumentListener;
  */
 public class DocumentExtractorFrame extends javax.swing.JFrame {
 
+    private final WebDocumentExtractor documentExtractor = new HTMLDocumentExtractor();
+    private File selectedFolder;
+
     /**
      * Creates new form DocumentExtractorFrame
      */
@@ -31,29 +35,29 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
         extractionProgressBar.setVisible(false);
         extractionProgressBar.setIndeterminate(true);
         logTextArea.setTabSize(4);
-        
+
         DocumentListener extractorDocumentListener = new DocumentListener() {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                updateButtonVisibility();     
+                updateButtonVisibility();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                updateButtonVisibility();   
+                updateButtonVisibility();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                updateButtonVisibility();   
+                updateButtonVisibility();
             }
 
             private void updateButtonVisibility() {
-                if(null != sourceUrlTextField.getText() 
+                if (null != sourceUrlTextField.getText()
                         && !"".equals(sourceUrlTextField.getText())
-                        && null != folderNameTextField.getText() 
-                        && !"".equals(folderNameTextField.getText())){
+                        && null != folderNameTextField.getText()
+                        && !"".equals(folderNameTextField.getText())) {
                     startButton.setEnabled(true);
                     openTargetFolderButton.setEnabled(true);
                 } else {
@@ -62,10 +66,10 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
                 }
             }
         };
-        
+
         sourceUrlTextField.getDocument().addDocumentListener(extractorDocumentListener);
         folderNameTextField.getDocument().addDocumentListener(extractorDocumentListener);
-        
+
         WindowUtil.bringToCenter(this);
     }
 
@@ -104,6 +108,13 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
         jLabel2.setText("Target");
 
         sourceUrlTextField.setForeground(new java.awt.Color(0, 0, 204));
+        sourceUrlTextField.setText("http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/");
+
+        folderNameTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                folderNameTextFieldFocusLost(evt);
+            }
+        });
 
         browseTargetFolderButton.setText("Browse");
         browseTargetFolderButton.addActionListener(new java.awt.event.ActionListener() {
@@ -154,12 +165,12 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
                     .addGroup(baseContainerPanelLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(sourceUrlTextField))
+                        .addComponent(sourceUrlTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
                     .addGroup(baseContainerPanelLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(baseContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(extractionProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
+                            .addComponent(extractionProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(folderNameTextField))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(baseContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,23 +229,36 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void browseTargetFolderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseTargetFolderButtonActionPerformed
-        File folder = FileBrowserUtil.openSingleFile(this, null, true);
-        if(null != folder){
-            if(!folder.exists()){
-                int option = DisplayUtils.confirmOkCancel(this, "The selected folder does not exist!!!\n"
+        File folder = FileBrowserUtil.openSingleFile(this, null, true,
+                (null != selectedFolder ? selectedFolder.getAbsolutePath() : "."));
+        if (null != folder) {
+            if (!folder.exists()) {
+                int option = DisplayUtils.confirmOkCancel(this,
+                        "The selected folder does not exist!!!\n"
                         + "Do you want to create it?", DisplayTypeEnum.INFO);
-                if(JOptionPane.OK_OPTION == option){
+                if (JOptionPane.OK_OPTION == option) {
                     folder.mkdirs();
                 } else {
                     return;
                 }
             }
+            selectedFolder = folder;
             folderNameTextField.setText(folder.getAbsolutePath());
         }
     }//GEN-LAST:event_browseTargetFolderButtonActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-        // TODO add your handling code here:
+        if (!selectedFolder.exists()) {
+            int option = DisplayUtils.confirmOkCancel(this,
+                    "The selected folder does not exist!!!\n"
+                    + "Do you want to create it?", DisplayTypeEnum.INFO);
+            if (JOptionPane.OK_OPTION == option) {
+                selectedFolder.mkdirs();
+            } else {
+                return;
+            }
+        }
+        
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void openTargetFolderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openTargetFolderButtonActionPerformed
@@ -245,7 +269,13 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
         logTextArea.setText("");
     }//GEN-LAST:event_clearLogButtonActionPerformed
 
-    
+    private void folderNameTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_folderNameTextFieldFocusLost
+        if (null != folderNameTextField.getText()
+                && !"".equals(folderNameTextField.getText())) {
+            selectedFolder = new File(folderNameTextField.getText());
+        }
+    }//GEN-LAST:event_folderNameTextFieldFocusLost
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel baseContainerPanel;

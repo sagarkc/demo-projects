@@ -12,6 +12,6 @@ package com.gs.tools.doc.extractor.core;
  */
 public interface WebDocumentExtractor {
     
-    
+    long extract(String sourceUrl, String targetFolderName) throws Exception;
     
 }

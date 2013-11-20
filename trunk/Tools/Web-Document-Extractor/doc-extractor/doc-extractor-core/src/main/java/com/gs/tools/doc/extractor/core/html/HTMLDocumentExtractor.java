@@ -6,10 +6,17 @@
 
 package com.gs.tools.doc.extractor.core.html;
 
+import com.gs.tools.doc.extractor.core.WebDocumentExtractor;
+
 /**
  *
- * @author SG1736
+ * @author sabuj
  */
-public class HTMLDocumentExtractor {
+public class HTMLDocumentExtractor implements WebDocumentExtractor{
+
+    public long extract(String sourceUrl, String targetFolderName) throws Exception {
+        
+        return 0L;
+    }
     
 }

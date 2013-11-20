@@ -49,13 +49,13 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel1" linkSize="2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="sourceUrlTextField" max="32767" attributes="0"/>
+                          <Component id="sourceUrlTextField" pref="517" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel2" linkSize="2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="extractionProgressBar" pref="444" max="32767" attributes="0"/>
+                              <Component id="extractionProgressBar" max="32767" attributes="0"/>
                               <Component id="folderNameTextField" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -135,9 +135,13 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="0" red="0" type="rgb"/>
             </Property>
+            <Property name="text" type="java.lang.String" value="http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="folderNameTextField">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="folderNameTextFieldFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="browseTargetFolderButton">
           <Properties>
