@@ -7,12 +7,25 @@
 package com.gs.tools.doc.extractor.app;
 
 import com.gs.tools.doc.extractor.app.view.DocumentExtractorFrame;
+import java.io.File;
+import org.apache.log4j.xml.DOMConfigurator;
 
 /**
  *
  * @author sabuj das
  */
 public class DocumentExtractorLauncher {
+    
+    private static final String CONFIG_PATH = "/config/";
+    
+    static {
+        File f = new File(CONFIG_PATH);
+        f.mkdirs();
+        File loggerFile = new File(CONFIG_PATH + "log4j.xml");
+        if(loggerFile.exists()){
+            DOMConfigurator.configure(CONFIG_PATH + "log4j.xml");
+        }
+    }
     
     /**
      * @param args the command line arguments

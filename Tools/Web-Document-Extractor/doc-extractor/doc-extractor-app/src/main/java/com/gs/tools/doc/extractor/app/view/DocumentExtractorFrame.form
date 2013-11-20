@@ -56,7 +56,7 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="extractionProgressBar" max="32767" attributes="0"/>
-                              <Component id="folderNameTextField" max="32767" attributes="0"/>
+                              <Component id="targetFolderNameTextField" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -91,7 +91,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="folderNameTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="targetFolderNameTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="browseTargetFolderButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -138,9 +138,9 @@
             <Property name="text" type="java.lang.String" value="http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="folderNameTextField">
+        <Component class="javax.swing.JTextField" name="targetFolderNameTextField">
           <Events>
-            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="folderNameTextFieldFocusLost"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="targetFolderNameTextFieldFocusLost"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="browseTargetFolderButton">
