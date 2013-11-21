@@ -8,6 +8,8 @@ package com.gs.tools.doc.extractor.app;
 
 import com.gs.tools.doc.extractor.app.view.DocumentExtractorFrame;
 import java.io.File;
+import javax.swing.UIManager;
+import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 
 /**
@@ -16,44 +18,33 @@ import org.apache.log4j.xml.DOMConfigurator;
  */
 public class DocumentExtractorLauncher {
     
-    private static final String CONFIG_PATH = "/config/";
+    private static final String CONFIG_PATH = "./config/";
     
-    static {
-        File f = new File(CONFIG_PATH);
-        f.mkdirs();
-        File loggerFile = new File(CONFIG_PATH + "log4j.xml");
-        if(loggerFile.exists()){
-            DOMConfigurator.configure(CONFIG_PATH + "log4j.xml");
-        }
-    }
     
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DocumentExtractorFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DocumentExtractorFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DocumentExtractorFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DocumentExtractorFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        File loggerFile = new File(CONFIG_PATH + File.separator + "logger/log4j.xml");
+        if(loggerFile.exists()){
+            DOMConfigurator.configure(CONFIG_PATH + File.separator + "logger/log4j.xml");
         }
-        //</editor-fold>
-
+        else {
+            System.out.println("Could not init logger.... ");
+        }
+                
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+            Logger.getLogger(DocumentExtractorLauncher.class)
+                    .warn("Could not apply System LookNfeel. Using Cross-Platform UI...");
+            try {
+                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            } catch (Exception ex1) {
+                
+            }
+        }
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
