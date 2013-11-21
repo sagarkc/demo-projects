@@ -43,7 +43,7 @@ public class D implements InitializingBean, ItemReader<String> {
 
 		if (!hasRun) {
 			hasRun = true;
-			Thread.sleep(1000*25);
+			//Thread.sleep(1000*25);
 			Random rand = new Random(35);
 			int x = rand.nextInt();
 			if(x % 13 == 0 || x % 19 == 0 || x % 11 == 0){

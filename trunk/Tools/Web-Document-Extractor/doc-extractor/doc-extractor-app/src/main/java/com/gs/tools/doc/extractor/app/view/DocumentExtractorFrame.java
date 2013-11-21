@@ -12,11 +12,11 @@ import com.gs.utils.swing.display.DisplayUtils;
 import com.gs.utils.swing.file.FileBrowserUtil;
 import com.gs.utils.swing.window.WindowUtil;
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -24,6 +24,7 @@ import javax.swing.event.DocumentListener;
  */
 public class DocumentExtractorFrame extends javax.swing.JFrame {
 
+    private static Logger logger = Logger.getLogger(DocumentExtractorFrame.class);
     private final WebDocumentExtractor documentExtractor = new HTMLDocumentExtractor();
     private File selectedFolder;
 
@@ -31,7 +32,10 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
      * Creates new form DocumentExtractorFrame
      */
     public DocumentExtractorFrame() {
+        logger.info("Create Frame...");
         initComponents();
+        setIconImage((new ImageIcon(getClass()
+                .getResource("/images/web-doc-extract_24x24.png"))).getImage());
         startButton.setEnabled(false);
         openTargetFolderButton.setEnabled(false);
         extractionProgressBar.setVisible(false);
@@ -71,7 +75,7 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
 
         sourceUrlTextField.getDocument().addDocumentListener(extractorDocumentListener);
         targetFolderNameTextField.getDocument().addDocumentListener(extractorDocumentListener);
-
+        logger.info("Position Frame to center");
         WindowUtil.bringToCenter(this);
     }
 
@@ -110,8 +114,9 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
         jLabel2.setText("Target");
 
         sourceUrlTextField.setForeground(new java.awt.Color(0, 0, 204));
-        sourceUrlTextField.setText("http://docs.spring.io/spring/docs/3.2.4.RELEASE/spring-framework-reference/html/");
+        sourceUrlTextField.setText("http://docs.spring.io/spring/docs/3.1.x/spring-framework-reference/html/index.html");
 
+        targetFolderNameTextField.setText("../../temp");
         targetFolderNameTextField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 targetFolderNameTextFieldFocusLost(evt);
@@ -125,6 +130,7 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
             }
         });
 
+        startButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/download_16x16.png"))); // NOI18N
         startButton.setText("Start");
         startButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -217,7 +223,7 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
                     .addGroup(baseContainerPanelLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(baseContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(clearLogButton)
@@ -264,7 +270,7 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
             documentExtractor.extract(sourceUrlTextField.getText(), 
                     targetFolderNameTextField.getText());
         } catch (Exception ex) {
-            Logger.getLogger(DocumentExtractorFrame.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error(ex);
         }
     }//GEN-LAST:event_startButtonActionPerformed
 

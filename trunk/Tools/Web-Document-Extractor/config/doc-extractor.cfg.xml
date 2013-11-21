@@ -1,0 +1,40 @@
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>D:\SVN_HOME\demo-projects\trunk\Tools\Web-Document-Extractor\releases\0.1\doc-extractor-app-0.1.jar</jar>
+  <outfile>D:\SVN_HOME\demo-projects\trunk\Tools\Web-Document-Extractor\releases\0.1\Web Document Extractor - 0.1.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir></chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <manifest></manifest>
+  <icon>D:\SVN_HOME\demo-projects\trunk\Tools\Web-Document-Extractor\icons\ico\web-doc-extract_128x128.ico</icon>
+  <classPath>
+    <mainClass>com.gs.tools.doc.extractor.app.DocumentExtractorLauncher</mainClass>
+    <cp>lib/doc-extractor-core-0.1.jar</cp>
+    <cp>lib/log4j-1.2.14.jar</cp>
+    <cp>lib/commons-lang-2.6.jar</cp>
+    <cp>lib/commons-logging-api-1.1.jar</cp>
+    <cp>lib/commons-collections-3.2.1.jar</cp>
+    <cp>lib/commons-logging-1.1.1.jar</cp>
+    <cp>lib/commons-net-3.3.jar</cp>
+    <cp>lib/commons-io-2.4.jar</cp>
+    <cp>lib/httpclient-4.3.1.jar</cp>
+    <cp>lib/httpcore-4.3.jar</cp>
+    <cp>lib/commons-codec-1.6.jar</cp>
+    <cp>lib/commons-httpclient-3.1.jar</cp>
+    <cp>lib/gs-utils-1.0.02.2010.jar</cp>
+  </classPath>
+  <jre>
+    <path></path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <minVersion>1.7.0_0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <initialHeapSize>256</initialHeapSize>
+    <maxHeapSize>1024</maxHeapSize>
+  </jre>
+</launch4jConfig>

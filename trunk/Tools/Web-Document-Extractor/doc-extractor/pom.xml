@@ -15,7 +15,9 @@
         <downloadSources>true</downloadSources>
         <jdk.version>1.7</jdk.version>
         
+        <config.dir>../../config</config.dir>
         <release.dir>../../releases</release.dir>
+        <win.exe.file.name>Web Document Extractor - ${project.version}</win.exe.file.name>
     </properties>
 
     <modules>
@@ -38,6 +40,19 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
+        </repository>
+        <repository>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <layout>default</layout>
         </repository>
     </repositories>
     
@@ -119,6 +134,12 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>net.sourceforge.htmlunit</groupId>
+            <artifactId>htmlunit</artifactId>
+            <version>2.13</version>
+        </dependency>
+            
     </dependencies>
     
     <build>

@@ -58,43 +58,43 @@
 			<list>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_01" />
-					<property name="cronExpression" value="20 0/1 * * * ?" />
+					<property name="cronExpression" value="0/10 * * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_02" />
-					<property name="cronExpression" value="20 0/1 * * * ?" />
+					<property name="cronExpression" value="0/10 * * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_03" />
-					<property name="cronExpression" value="20 0/1 * * * ?" />
+					<property name="cronExpression" value="0/10 * * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_04" />
-					<property name="cronExpression" value="20 0/1 * * * ?" />
+					<property name="cronExpression" value="0/10 * * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_05" />
-					<property name="cronExpression" value="20 0/1 * * * ?" />
+					<property name="cronExpression" value="0/10 * * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_06" />
-					<property name="cronExpression" value="20 0/1 * * * ?" />
+					<property name="cronExpression" value="0/13 * * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_07" />
-					<property name="cronExpression" value="20 0/1 * * * ?" />
+					<property name="cronExpression" value="0/12 * * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_08" />
-					<property name="cronExpression" value="20 0/1 * * * ?" />
+					<property name="cronExpression" value="0/15 * * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_09" />
-					<property name="cronExpression" value="20 0/1 * * * ?" />
+					<property name="cronExpression" value="0/13 * * * * ?" />
 				</bean>
 				<bean class="org.springframework.scheduling.quartz.CronTriggerBean">
 					<property name="jobDetail" ref="jobDetail_Test_Hello_10" />
-					<property name="cronExpression" value="20 0/1 * * * ?" />
+					<property name="cronExpression" value="0/15 * * * * ?" />
 				</bean>
 			</list>
 		</property>
@@ -110,8 +110,9 @@
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
 		lazy-init="true">
-		<property name="dataSource" ref="sqlServerDs" />
+		<property name="dataSource" ref="mySqlDs" />
 	</bean>
+	
 	<bean id="sqlServerDs" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
@@ -138,12 +139,12 @@
 
 	<bean id="jobRepository"
 		class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
-		<property name="dataSource" ref="sqlServerDs" />
+		<property name="dataSource" ref="mySqlDs" />
 		<property name="transactionManager" ref="transactionManager" />
-		<property name="isolationLevelForCreate" value="ISOLATION_REPEATABLE_READ" />
+		<property name="isolationLevelForCreate" value="ISOLATION_READ_COMMITTED" />
 		<property name="incrementerFactory">
-			<bean class="test.profile.batch.SqlServerCustomIncrementerFactory">
-				<property name="dataSource" ref="sqlServerDs" />
+			<bean class="test.profile.batch.MysqlDataFieldMaxValueIncrementerFactory">
+				<property name="dataSource" ref="mySqlDs" />
 			</bean>
 		</property>
 	</bean>

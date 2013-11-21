@@ -44,7 +44,7 @@ public class A implements InitializingBean, ItemReader<String> {
 		logger.info("Start Reader ........");
 		if (!hasRun) {
 			hasRun = true;
-			Thread.sleep(1000*20);
+			//Thread.sleep(1000*20);
 			Random rand = new Random(35);
 			int x = rand.nextInt();
 			if(x % 31 == 0 || x % 17 == 0){

@@ -1,0 +1,56 @@
+<launch4jConfig>
+  <dontWrapJar>true</dontWrapJar>
+  <headerType>gui</headerType>
+  <obj>w32api/crt2.o</obj>
+  <obj>head/guihead.o</obj>
+  <obj>head/head.o</obj>
+  <jar>doc-extractor-app-0.1.jar</jar>
+  <outfile>D:\SVN_HOME\demo-projects\trunk\Tools\Web-Document-Extractor\releases\0.1\Web Document Extractor - 0.1.exe</outfile>
+  <errTitle>WEB Document Extractor - ERROR!!!</errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://java.com/download</downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <manifest></manifest>
+  <icon>D:\SVN_HOME\demo-projects\trunk\Tools\Web-Document-Extractor\icons\ico\web-doc-extract_128x128.ico</icon>
+  <classPath>
+    <mainClass>com.gs.tools.doc.extractor.app.DocumentExtractorLauncher</mainClass>
+    <cp>lib/doc-extractor-core-0.1.jar</cp>
+    <cp>lib/log4j-1.2.14.jar</cp>
+    <cp>lib/commons-lang-2.6.jar</cp>
+    <cp>lib/commons-logging-api-1.1.jar</cp>
+    <cp>lib/commons-collections-3.2.1.jar</cp>
+    <cp>lib/commons-logging-1.1.1.jar</cp>
+    <cp>lib/commons-net-3.3.jar</cp>
+    <cp>lib/commons-io-2.4.jar</cp>
+    <cp>lib/httpclient-4.3.1.jar</cp>
+    <cp>lib/httpcore-4.3.jar</cp>
+    <cp>lib/commons-codec-1.6.jar</cp>
+    <cp>lib/commons-httpclient-3.1.jar</cp>
+    <cp>lib/gs-utils-1.0.02.2010.jar</cp>
+  </classPath>
+  <jre>
+    <path></path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <minVersion>1.7.0_0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <initialHeapSize>64</initialHeapSize>
+    <maxHeapSize>256</maxHeapSize>
+  </jre>
+  <splash>
+    <file>D:\SVN_HOME\demo-projects\trunk\Tools\Web-Document-Extractor\icons\web-doc-extract_splash-0.1.bmp</file>
+    <waitForWindow>true</waitForWindow>
+    <timeout>60</timeout>
+    <timeoutErr>false</timeoutErr>
+  </splash>
+  <messages>
+    <startupErr>An error occurred while starting the application.</startupErr>
+    <bundledJreErr>This application was configured to use a bundled Java Runtime Environment but the runtime is missing or corrupted.</bundledJreErr>
+    <jreVersionErr>This application requires a Java Runtime Environment</jreVersionErr>
+    <launcherErr>The registry refers to a nonexistent Java Runtime Environment installation or the runtime is corrupted.</launcherErr>
+    <instanceAlreadyExistsMsg>An application instance is already running.</instanceAlreadyExistsMsg>
+  </messages>
+</launch4jConfig>
