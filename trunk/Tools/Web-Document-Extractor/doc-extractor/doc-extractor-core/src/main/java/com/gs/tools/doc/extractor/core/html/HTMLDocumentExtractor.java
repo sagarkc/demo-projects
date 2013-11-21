@@ -50,7 +50,45 @@ public class HTMLDocumentExtractor implements WebDocumentExtractor {
         httpsClient = HttpUtility.getLoginHttpsClient(userName, password);
     }
 
+    @Override
+    protected void finalize() throws Throwable {
+        
+        super.finalize(); 
+    }
+    
+    
+
     public long extract(String sourceUrl, String targetFolderName) throws Exception {
+        File rootDir = new File(targetFolderName);
+
+        long fileCount = 0;
+
+        HttpGet httpGet = new HttpGet(sourceUrl);
+        String html = HttpUtility.readContentAsText(httpClient.execute(httpGet));
+        if (null != html && html.length() > 0) {
+            String[] cssLinks = StringUtils.substringsBetween(html, "<link", ">");
+            if (null != cssLinks && cssLinks.length > 0) {
+                for (String link : cssLinks) {
+                    String rel = StringUtils.substringBetween(link, "rel=\"", "\"");
+                    if (rel.equalsIgnoreCase("stylesheet")) {
+                        String css = StringUtils.substringBetween(link, "href=\"", "\"");
+                        if (css.contains("/")) {
+                            String path = css.substring(css.lastIndexOf("/"));
+                            //File cssFile = 
+                        }
+                    }
+                }
+            }
+            String title = StringUtils.substringBetween(html, "<title>", "</title>");
+            File titleFile = new File(rootDir, title);
+            IOUtils.write(html, new BufferedWriter(new FileWriter(titleFile)));
+            fileCount++;
+
+        }
+        return fileCount;
+    }
+    
+    void x(String sourceUrl, String targetFolderName) throws Exception {
         long fileCount = 0;
         try {
             File rootDir = new File(targetFolderName);
@@ -87,16 +125,17 @@ public class HTMLDocumentExtractor implements WebDocumentExtractor {
         } finally {
             webClient.closeAllWindows();
         }
-        return fileCount;
+        //return fileCount;
     }
 
     public long extract(String sourceUrl, String targetFolderName, boolean https) throws Exception {
+        final HttpClient client = (https) ? httpsClient : httpClient;
         File rootDir = new File(targetFolderName);
 
         long fileCount = 0;
 
         HttpGet httpGet = new HttpGet(sourceUrl);
-        String html = HttpUtility.readContentAsText(httpClient.execute(httpGet));
+        String html = HttpUtility.readContentAsText(client.execute(httpGet));
         if (null != html && html.length() > 0) {
             String[] cssLinks = StringUtils.substringsBetween(html, "<link", ">");
             if (null != cssLinks && cssLinks.length > 0) {
