@@ -27,7 +27,7 @@
     </category> -->
         
     <root > 
-        <priority value ="debug" /> 
+        <priority value ="info" /> 
         <appender-ref ref="consoleAppender" /> 
         <appender-ref ref="fileAppender" />
     </root>

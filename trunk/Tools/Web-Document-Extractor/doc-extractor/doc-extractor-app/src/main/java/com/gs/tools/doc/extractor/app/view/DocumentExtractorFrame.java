@@ -114,9 +114,9 @@ public class DocumentExtractorFrame extends javax.swing.JFrame {
         jLabel2.setText("Target");
 
         sourceUrlTextField.setForeground(new java.awt.Color(0, 0, 204));
-        sourceUrlTextField.setText("http://docs.spring.io/spring/docs/3.1.x/spring-framework-reference/html/index.html");
+        sourceUrlTextField.setText("http://docs.spring.io/spring/docs/3.2.x/spring-framework-reference/html/index.html");
 
-        targetFolderNameTextField.setText("../../temp");
+        targetFolderNameTextField.setText("d:\\\\temp\\\\x1\\\\Spring3.2.x ");
         targetFolderNameTextField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 targetFolderNameTextFieldFocusLost(evt);
