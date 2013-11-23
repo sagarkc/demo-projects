@@ -24,7 +24,9 @@ public class TestExtract {
 	@Test
 	public void test1(){
 		try {
-			documentExtractor.extract("http://docs.spring.io/spring/docs/3.1.x/spring-framework-reference/html/index.html", "d:\\temp\\x1");
+			documentExtractor.extract(
+                    "http://docs.spring.io/spring/docs/3.1.x/spring-framework-reference/html/index.html", 
+                    "d:\\temp\\x1");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

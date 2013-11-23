@@ -6,12 +6,16 @@
 
 package com.gs.tools.doc.extractor.core;
 
+import java.nio.charset.Charset;
+
 /**
  *
  * @author sabuj
  */
 public interface WebDocumentExtractor {
+    Charset ENCODING_UTF_8 = Charset.forName("UTF-8");
     
+    String getFileExtension();
     long extract(String sourceUrl, String targetFolderName) throws Exception;
     
 }

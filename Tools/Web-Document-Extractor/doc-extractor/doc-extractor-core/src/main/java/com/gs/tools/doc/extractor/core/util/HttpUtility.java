@@ -57,6 +57,7 @@ import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
@@ -332,7 +333,7 @@ public class HttpUtility {
     
     
 	
-	public static DefaultHttpClient getDefaultHttpsClient() {
+	public static HttpClient getDefaultHttpsClient() {
 		try {
 			KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
 	        trustStore.load(null, null);
@@ -356,8 +357,9 @@ public class HttpUtility {
 					params, registry);
 
 			DefaultHttpClient httpClient = new DefaultHttpClient(ccm, params);
-			
-			return httpClient;
+			HttpClientBuilder b =HttpClientBuilder.create();
+            return b.build();
+			//return httpClient;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new DefaultHttpClient();
