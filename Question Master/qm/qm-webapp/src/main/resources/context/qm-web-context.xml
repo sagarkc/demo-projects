@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	default-autowire="byName"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+
+
+	<!-- MVC -->
+	<mvc:annotation-driven />
+	<context:component-scan base-package="com.gs.gms" />
+
+	<!-- Forwards requests to the "/" resource to the "index" view -->
+	<mvc:view-controller path="/" view-name="index.htm" />
+
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="${system.default.locale}" />
+	</bean>
+
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+	<mvc:interceptors>
+		<!-- Example:: <a href="?countryCode=ar">change coutry</a> -->
+		<bean id="localeChangeInterceptor"
+			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="countryCode" />
+		</bean>
+
+	</mvc:interceptors>
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>classpath:i18n/message</value>
+			</list>
+		</property>
+	</bean>
+
+	
+
+	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+		id="viewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.tiles3.TilesView" />
+
+	</bean>
+
+	<bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer"
+		id="tilesConfigurer">
+		<property name="useMutableTilesContainer" value="true" />
+		<property name="preparerFactoryClass"
+			value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory" />
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/config/tiles-defs.xml</value>
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
+
+	<bean id="freemarkerConfig"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/pages/" />
+		<property name="freemarkerVariables">
+			<map>
+				<entry key="xml_escape" value-ref="fmXmlEscape" />
+			</map>
+		</property>
+	</bean> -->
+
+	<bean id="freemarkerViewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="cache" value="true" />
+		<property name="order" value="1" />
+		<property name="prefix" value="" />
+		<property name="suffix" value=".ftl" />
+		<!-- if you want to use the Spring FreeMarker macros, set this property 
+			to true -->
+		<property name="exposeSpringMacroHelpers" value="true" />
+		<property name="contentType" value="text/html; charset=utf-8"></property>
+	</bean>
+
+	<bean
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver"
+		>
+        <property name="order" value="2"/>
+		<property name="ignoreAcceptHeader" value="true" />
+		<property name="mediaTypes">
+			<map>
+				<entry key="html" value="text/html" />
+				<entry key="html" value="application/xhtml+xml" />
+				<entry key="xml" value="application/xml" />
+				<entry key="json" value="application/json" />
+			</map>
+		</property>
+		<property name="defaultContentType">
+			<value>text/html</value>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean
+					class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+					<property name="marshaller">
+						<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
+                            <property name="autodetectAnnotations" value="true"/>
+                        </bean>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+</beans>

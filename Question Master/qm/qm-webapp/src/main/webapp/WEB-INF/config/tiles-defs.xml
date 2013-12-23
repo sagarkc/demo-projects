@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd"> 
+      
+      
+<tiles-definitions>
+
+    <!-- Default Main Template -->
+    <definition name="home" template="/index/home.ftl"
+		preparer="testBean">
+         <put-attribute name="title" value="My title" type="string" />
+         <put-attribute name="header" value="login"  />
+    </definition>
+  	<definition name="login" template="/login.ftl">
+         <put-attribute name="title" value="My login title" type="string" />
+    </definition>
+</tiles-definitions>
