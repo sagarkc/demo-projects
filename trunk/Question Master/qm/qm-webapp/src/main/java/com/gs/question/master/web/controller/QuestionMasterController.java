@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class QuestionMasterController {
 
 	
-	@RequestMapping(value="/index", method=RequestMethod.GET)
+	@RequestMapping(value="/index.htm", method=RequestMethod.GET)
 	public String index(){
-		return "home";
+		return "homePageView";
 	}
-	
+
+	@RequestMapping(value="/showLogin.htm", method=RequestMethod.GET)
+	public String showLogin(){
+		return "showLoginView";
+	}
 }

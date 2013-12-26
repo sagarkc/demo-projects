@@ -15,7 +15,7 @@
 
 	<!-- MVC -->
 	<mvc:annotation-driven />
-	<context:component-scan base-package="com.gs.gms" />
+	<context:component-scan base-package="com.gs.question.master" />
 
 	<!-- Forwards requests to the "/" resource to the "index" view -->
 	<mvc:view-controller path="/" view-name="index.htm" />
@@ -50,7 +50,7 @@
 	
 
 	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver"
-		id="viewResolver">
+		id="tilesviewResolver">
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.tiles3.TilesView" />
 
@@ -81,17 +81,17 @@
 		</property>
 	</bean> -->
 
-	<bean id="freemarkerViewResolver"
+	<!-- <bean id="freemarkerViewResolver"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
 		<property name="cache" value="true" />
 		<property name="order" value="1" />
 		<property name="prefix" value="" />
 		<property name="suffix" value=".ftl" />
-		<!-- if you want to use the Spring FreeMarker macros, set this property 
-			to true -->
+		if you want to use the Spring FreeMarker macros, set this property 
+			to true
 		<property name="exposeSpringMacroHelpers" value="true" />
 		<property name="contentType" value="text/html; charset=utf-8"></property>
-	</bean>
+	</bean> -->
 
 	<bean
 		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver"
@@ -113,15 +113,17 @@
 			<list>
 				<bean
 					class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
-				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+				<!-- <bean class="org.springframework.web.servlet.view.xml.MarshallingView">
 					<property name="marshaller">
 						<bean class="org.springframework.oxm.xstream.XStreamMarshaller">
                             <property name="autodetectAnnotations" value="true"/>
                         </bean>
 					</property>
-				</bean>
+				</bean> -->
 			</list>
 		</property>
 	</bean>
+	
+	
 
 </beans>

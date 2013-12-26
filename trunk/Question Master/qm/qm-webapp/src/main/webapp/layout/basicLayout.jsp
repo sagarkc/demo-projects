@@ -1,6 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+
 <!DOCTYPE HTML>
 <!--
-	
+	Question Master
+	Sabuj Das | sabuj.das@gmail.com
 -->
 <html>
 	<head>
@@ -37,11 +43,10 @@
                     </div>
                     <div id="header-content">
                         <div id="header-links">
-                            Header Links
+                            <tiles:insertAttribute name="section_HeaderLinks" />
                         </div>
                         <div id="header-user-links">
-                            
-                            User
+                            <tiles:insertAttribute name="section_UserHeaderLinks" />
                         </div>
                         <div id="header-search-box">
                             <form action="#" method="POST">
@@ -55,9 +60,7 @@
                 </div>
             </div>
             <div id="mainContent">
-                Main Content
-            
-                
+	        	<tiles:insertAttribute name="section_MainContent" />    
             </div>
             <div id="footerContainer">Footer</div>
         </div>
