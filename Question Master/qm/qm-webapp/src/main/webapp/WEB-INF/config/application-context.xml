@@ -13,12 +13,12 @@
 	<bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" />
 	
 	<context:annotation-config />
-	<context:component-scan base-package="com.gs.gms" />
+	<context:component-scan base-package="com.gs.question.master" />
 	
 	
 	<import resource="classpath:context/qm-session-context.xml"/>  
 	<import resource="classpath:context/qm-web-context.xml"/> 
-	<import resource="classpath:context/qm-security-context.xml"/> 
+	<!-- <import resource="classpath:context/qm-security-context.xml"/> --> 
 	<import resource="classpath:context/qm-query-context.xml"/> 
 	
 	<bean name="propertyConfigurer"

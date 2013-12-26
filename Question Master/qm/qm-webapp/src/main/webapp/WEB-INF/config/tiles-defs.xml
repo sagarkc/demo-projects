@@ -1,18 +1,33 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE tiles-definitions PUBLIC
-        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
-        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd"> 
+<!DOCTYPE tiles-definitions PUBLIC  
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"  
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
       
       
 <tiles-definitions>
 
     <!-- Default Main Template -->
-    <definition name="home" template="/index/home.ftl"
-		preparer="testBean">
-         <put-attribute name="title" value="My title" type="string" />
-         <put-attribute name="header" value="login"  />
+    <definition name="basicLayout" template="/layout/basicLayout.jsp">
+    	<put-attribute name="section_HeaderLinks" value="/layout/HeaderLinks.jsp" />
+    	<put-attribute name="section_UserHeaderLinks" value="/pages/user/HeaderLoginLink.jsp" />
+    	<put-attribute name="section_MainContent" value="" />
     </definition>
-  	<definition name="login" template="/login.ftl">
-         <put-attribute name="title" value="My login title" type="string" />
+    
+    <!-- Layout after login -->
+    <definition name="loggedinLayout" template="/layout/basicLayout.jsp">
+    	<put-attribute name="section_HeaderLinks" value="/layout/HeaderLinks.jsp" />
+    	<put-attribute name="section_UserHeaderLinks" value="/pages/user/UserHeaderLinks.jsp" />
+    	<put-attribute name="section_MainContent" value="/layout/DefaultMainContent.jsp" />
     </definition>
+    
+    
+    <definition name="homePageView" extends="basicLayout">
+         <put-attribute name="section_MainContent" value="/layout/DefaultMainContent.jsp" />
+    </definition>
+    
+    <definition name="showLoginView" extends="basicLayout">
+         <put-attribute name="section_MainContent" value="/layout/DefaultMainContent.jsp" />
+    </definition>
+    
+  	
 </tiles-definitions>
