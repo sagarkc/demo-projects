@@ -51,8 +51,8 @@ div {
 	min-height: 48px;
 	z-index: 111111;
 	position: fixed;
-	font-family: 'Ubuntu Condensed', 'Trebuchet MS';
-	font-size: 2.5em;
+	font-family: 'Georgia';
+	font-size: 1.4em;
 	font-weight: normal;
 	color: snow;
 	vertical-align: middle;
@@ -74,7 +74,6 @@ div {
 }
 
 #header-content {
-	
 	float: right;
 }
 
@@ -173,7 +172,7 @@ div {
 	background-image: -webkit-linear-gradient(top, #4b4b4b, #222);
 	background-image: -o-linear-gradient(top, #4b4b4b, #222);
 	background-image: linear-gradient(top, #4b4b4b, #222);
-	filter: progid:DXImageTransform.Microsoft.gradient( 
+	filter: progid:DXImageTransform.Microsoft.gradient(   
         startColorstr='#4b4b4b', endColorstr='#222222', GradientType=0);
 	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0
 		rgba(0, 0, 0, 0.1);
@@ -197,7 +196,12 @@ div {
 	bottom: 0;
 	width: 100%;
 	height: 30px; /* Height of the footer */
-	background: #6e6e6e;
+	background: url('images/wood-bg-img.png') repeat-x;
+	color: #462D13;
+	font-family: fantasy;
+	font-weight: normal;
+	font-size: 1.2em;
+	vertical-align: middle;
 }
 
 .blueButton {
@@ -207,8 +211,8 @@ div {
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #79bbff
 		), color-stop(1, #4197ee));
 	background: -moz-linear-gradient(center top, #79bbff 5%, #4197ee 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr= 
-		'#79bbff', endColorstr=  '#4197ee');
+	filter: progid:DXImageTransform.Microsoft.gradient(    startColorstr=   
+		'#79bbff', endColorstr=    '#4197ee');
 	background-color: #79bbff;
 	border: 1px solid #469df5;
 	display: inline-block;
@@ -226,8 +230,8 @@ div {
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #4197ee
 		), color-stop(1, #79bbff));
 	background: -moz-linear-gradient(center top, #4197ee 5%, #79bbff 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr= 
-		'#4197ee', endColorstr=  '#79bbff');
+	filter: progid:DXImageTransform.Microsoft.gradient(    startColorstr=   
+		'#4197ee', endColorstr=    '#79bbff');
 	background-color: #4197ee;
 }
 
@@ -243,8 +247,8 @@ div {
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #77d42a
 		), color-stop(1, #5cb811));
 	background: -moz-linear-gradient(center top, #77d42a 5%, #5cb811 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr= 
-		'#77d42a', endColorstr=  '#5cb811');
+	filter: progid:DXImageTransform.Microsoft.gradient(    startColorstr=   
+		'#77d42a', endColorstr=    '#5cb811');
 	background-color: #77d42a;
 	border: 1px solid #268a16;
 	display: inline-block;
@@ -262,8 +266,8 @@ div {
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #5cb811
 		), color-stop(1, #77d42a));
 	background: -moz-linear-gradient(center top, #5cb811 5%, #77d42a 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr= 
-		'#5cb811', endColorstr=  '#77d42a');
+	filter: progid:DXImageTransform.Microsoft.gradient(    startColorstr=   
+		'#5cb811', endColorstr=    '#77d42a');
 	background-color: #5cb811;
 }
 
@@ -279,8 +283,8 @@ div {
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f6b33d
 		), color-stop(1, #d29105));
 	background: -moz-linear-gradient(center top, #f6b33d 5%, #d29105 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr= 
-		'#f6b33d', endColorstr=  '#d29105');
+	filter: progid:DXImageTransform.Microsoft.gradient(    startColorstr=   
+		'#f6b33d', endColorstr=    '#d29105');
 	background-color: #f6b33d;
 	border: 1px solid #eda933;
 	display: inline-block;
@@ -298,8 +302,8 @@ div {
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #d29105
 		), color-stop(1, #f6b33d));
 	background: -moz-linear-gradient(center top, #d29105 5%, #f6b33d 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr= 
-		'#d29105', endColorstr=  '#f6b33d');
+	filter: progid:DXImageTransform.Microsoft.gradient(    startColorstr=   
+		'#d29105', endColorstr=    '#f6b33d');
 	background-color: #d29105;
 }
 
@@ -315,8 +319,8 @@ div {
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f9f9f9
 		), color-stop(1, #e9e9e9));
 	background: -moz-linear-gradient(center top, #f9f9f9 5%, #e9e9e9 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr= 
-		'#f9f9f9', endColorstr=  '#e9e9e9');
+	filter: progid:DXImageTransform.Microsoft.gradient(    startColorstr=   
+		'#f9f9f9', endColorstr=    '#e9e9e9');
 	background-color: #f9f9f9;
 	border: 1px solid #dcdcdc;
 	display: inline-block;
@@ -334,8 +338,8 @@ div {
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #e9e9e9
 		), color-stop(1, #f9f9f9));
 	background: -moz-linear-gradient(center top, #e9e9e9 5%, #f9f9f9 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(  startColorstr= 
-		'#e9e9e9', endColorstr=  '#f9f9f9');
+	filter: progid:DXImageTransform.Microsoft.gradient(    startColorstr=   
+		'#e9e9e9', endColorstr=    '#f9f9f9');
 	background-color: #e9e9e9;
 }
 
@@ -343,3 +347,68 @@ div {
 	position: relative;
 	top: 1px;
 }
+
+/*  Language Selector *************************************** */
+/* General dropdown styles */
+.dropdown dd,.dropdown dt,.dropdown ul {
+	margin: 0px;
+	padding: 0px;
+}
+
+.dropdown dd {
+	position: relative;
+}
+/* DT styles for sliding doors */
+.dropdown dt a {
+	background: url('images/down-arrow_12x12.png') no-repeat scroll
+		right center;
+	display: block;
+	width: 180px;
+}
+
+
+.dropdown dt a span {
+	cursor: pointer;
+	display: block;
+	padding: 5px;
+}
+
+.dropdown dt a span:hover {
+	color: #BED6FF;
+}
+
+.dropdown span.value { display:none;}
+
+/* UL styles */
+.dropdown dd ul {
+	background: #222 none repeat scroll 0 0;
+	display: none;
+	list-style: none;
+	padding: 5px 0px;
+	position: absolute;
+	left: 0px;
+	top: 2px;
+	width: auto;
+	min-width: 170px;
+}
+
+.dropdown span.value {
+	display: none;
+}
+
+.dropdown dd ul li a {
+	padding: 5px;
+	display: block;
+}
+
+.dropdown dd ul li a:hover { 
+	background-color:#79ABFF;
+}
+
+.dropdown img.flag { 
+	border:none; 
+	vertical-align:middle; 
+	margin-left:10px; 
+}
+.flagvisibility { display:none;}
+
