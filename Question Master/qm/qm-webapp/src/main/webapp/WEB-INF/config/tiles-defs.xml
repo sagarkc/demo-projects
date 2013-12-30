@@ -17,7 +17,7 @@
     <definition name="loggedinLayout" template="/layout/basicLayout.jsp">
     	<put-attribute name="section_HeaderLinks" value="/layout/HeaderLinks.jsp" />
     	<put-attribute name="section_UserHeaderLinks" value="/pages/user/UserHeaderLinks.jsp" />
-    	<put-attribute name="section_MainContent" value="/layout/DefaultMainContent.jsp" />
+    	<put-attribute name="section_MainContent" value="" />
     </definition>
     
     
@@ -26,7 +26,11 @@
     </definition>
     
     <definition name="showLoginView" extends="basicLayout">
-         <put-attribute name="section_MainContent" value="/layout/DefaultMainContent.jsp" />
+         <put-attribute name="section_MainContent" value="/pages/user/login.jsp" />
+    </definition>
+    
+    <definition name="showRegisterView" extends="basicLayout">
+         <put-attribute name="section_MainContent" value="/pages/user/registration.jsp" />
     </definition>
     
   	

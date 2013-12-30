@@ -4,16 +4,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div class="dropdown click-trigger">
-	<div class="current-language" id="site-language-btn">
-		Site language: <strong>
-		
-			<select>
-				<option >jhdkjhsadf</option>
-				<option >jhdkjhsadf</option>
-			</select>
-		
-		</strong><span class="down-arrow"></span>
-	</div>
-	
-</div>
+<a href="?languageCode=en"><img src="assets/images/i18n/lang-en_16x11.png" alt="EN"/></a>
+<span>&nbsp;&nbsp;</span>
+<a href="?languageCode=de"><img src="assets/images/i18n/lang-de_16x11.png"alt="DE"/></a>
