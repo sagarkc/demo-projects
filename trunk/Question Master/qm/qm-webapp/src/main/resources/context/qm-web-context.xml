@@ -14,7 +14,7 @@
 
 
 	<!-- MVC -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven validator="defaultFormValidator"/>
 	<context:component-scan base-package="com.gs.question.master" />
 
 	<!-- Forwards requests to the "/" resource to the "index" view -->
@@ -26,14 +26,14 @@
 		<property name="defaultLocale" value="${system.default.locale}" />
 	</bean>
 
-	<bean id="validator"
+	<bean id="defaultFormValidator"
 		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
 
 	<mvc:interceptors>
-		<!-- Example:: <a href="?countryCode=ar">change coutry</a> -->
+		<!-- Example:: <a href="?languageCode=en">change coutry</a> -->
 		<bean id="localeChangeInterceptor"
 			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-			<property name="paramName" value="countryCode" />
+			<property name="paramName" value="languageCode" />
 		</bean>
 
 	</mvc:interceptors>

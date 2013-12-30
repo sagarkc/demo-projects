@@ -12,13 +12,17 @@ USE `question_master` ;
 DROP TABLE IF EXISTS `user` ;
 
 CREATE TABLE IF NOT EXISTS `user` (
-  `user_id` BIGINT NOT NULL,
+  `user_id` BIGINT NOT NULL AUTO_INCREMENT,
   `user_name` VARCHAR(100) NOT NULL,
   `password` VARCHAR(25) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `first_name` VARCHAR(100) NULL,
   `middle_name` VARCHAR(100) NULL,
   `last_name` VARCHAR(100) NULL,
+  `email_is_user_name` TINYINT(1) NULL,
+  `is_activated` TINYINT(1) NULL,
+  `activation_code` VARCHAR(64) NULL,
+  `activation_expire_by` TIMESTAMP NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE INDEX `uk_email_id` (`email` ASC))
 ENGINE = InnoDB;
@@ -143,7 +147,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `role` ;
 
 CREATE TABLE IF NOT EXISTS `role` (
-  `role_id` BIGINT NOT NULL,
+  `role_id` BIGINT NOT NULL AUTO_INCREMENT,
   `role_title` VARCHAR(120) NULL,
   `role_description` VARCHAR(400) NULL,
   PRIMARY KEY (`role_id`))
@@ -437,8 +441,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `question_master`;
-INSERT INTO `user` (`user_id`, `user_name`, `password`, `email`, `first_name`, `middle_name`, `last_name`) VALUES (1, 'admin', 'admin', 'admin@qm-gsi.com', 'Admin', NULL, 'User');
-INSERT INTO `user` (`user_id`, `user_name`, `password`, `email`, `first_name`, `middle_name`, `last_name`) VALUES (2, 'sabuj', '1234', 'sabuj.das@gmail.com', 'Sabuj', NULL, 'Das');
+INSERT INTO `user` (`user_id`, `user_name`, `password`, `email`, `first_name`, `middle_name`, `last_name`, `email_is_user_name`, `is_activated`, `activation_code`, `activation_expire_by`) VALUES (1, 'admin', 'admin', 'admin@qm-gsi.com', 'Admin', NULL, 'User', NULL, NULL, NULL, NULL);
+INSERT INTO `user` (`user_id`, `user_name`, `password`, `email`, `first_name`, `middle_name`, `last_name`, `email_is_user_name`, `is_activated`, `activation_code`, `activation_expire_by`) VALUES (2, 'sabuj', '1234', 'sabuj.das@gmail.com', 'Sabuj', NULL, 'Das', NULL, NULL, NULL, NULL);
 
 COMMIT;
 

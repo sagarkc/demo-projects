@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE HTML>
 <!--
 	Question Master
@@ -10,7 +10,7 @@
 -->
 <html>
 	<head>
-		<title>Question Master | Practice yourself</title>
+		<title><fmt:message key="application.title" /></title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="question, answer, test, examination" />
@@ -28,6 +28,7 @@
             $(function() {
                 $( "#globalSearchBtn" ).button();
 
+                $( "#user-login-tabs" ).tabs();
 
                 $(".dropdown dt a").click(function() {
                     $(".dropdown dd ul").toggle();
@@ -50,7 +51,7 @@
                         $(".dropdown dd ul").hide();
                 });
 
-
+				
                 
             });
         </script>
@@ -78,7 +79,8 @@
                         <div id="header-search-box">
                         <div class="form-row">
                             <form action="#" method="POST">
-                                <input type="text" name="globalSearchKey" value="Search"
+                                <input type="text" name="globalSearchKey" 
+                                	value='<fmt:message key="search.field.default.text"/>'
                                 	class="search-text-box search-text-aqua">
                                 <input type="button" class="blueButton" 
                                        name="globalSearchBtn" value="Go">
