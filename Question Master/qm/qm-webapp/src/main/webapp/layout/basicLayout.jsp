@@ -57,6 +57,8 @@
 	</head>
 
 	<body>
+        
+        
         <div id="pageContainer">
             <div id="topBar" class="fill">
                 <div id="header">
@@ -74,18 +76,23 @@
                             <tiles:insertAttribute name="section_UserHeaderLinks" />
                         </div>
                         <div id="header-search-box">
+                        <div class="form-row">
                             <form action="#" method="POST">
-                                <input type="text" name="globalSearchKey" value="Search">
+                                <input type="text" name="globalSearchKey" value="Search"
+                                	class="search-text-box search-text-aqua">
                                 <input type="button" class="blueButton" 
                                        name="globalSearchBtn" value="Go">
                             </form>
+                        </div>
                         </div>
                     </div>
                          
                 </div>
             </div>
+            <div id="mainContentWrapper">
             <div id="mainContent">
 	        	<tiles:insertAttribute name="section_MainContent" />    
+            </div>
             </div>
             <div id="footerContainer">Footer</div>
         </div>
