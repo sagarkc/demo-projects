@@ -17,7 +17,6 @@
 		<LINK REL="SHORTCUT ICON" HREF="assets/images/layout/qm-shortcut.png" />
 		<link  rel="stylesheet" href="http://fonts.googleapis.com/css?family=Ubuntu+Condensed">
 		<link  rel="stylesheet" href="assets/css/qm-style.css">
-		<link  rel="stylesheet" href="assets/css/header-menu.css">
 		<link  rel="stylesheet" href="assets/css/framework/jquery-ui-1.10.3-green.css">
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><script src="assets/js/framework/html5shiv.js"></script><![endif]-->
@@ -59,7 +58,10 @@
 	</head>
 
 	<body>
-        
+
+	
+	
+	        
         
         <div id="pageContainer">
             <div id="topBar" class="fill">
@@ -70,35 +72,12 @@
                              src="assets/images/layout/qm-logo.png"/>
                         </a>
                     </div>
-                    <div id="topbar-nav">
-                    	<tiles:insertAttribute name="section_HeaderMenus" />
-                    </div>
-                    <div id="header-content">
-                        <div id="header-links">
-                            <tiles:insertAttribute name="section_HeaderLinks" />
-                        </div>
-                        <div id="header-user-links">
-                            <tiles:insertAttribute name="section_UserHeaderLinks" />
-                        </div>
-                        <div id="header-search-box">
-                        <div class="form-row">
-                            <form action="#" method="POST">
-                                <input type="text" name="globalSearchKey" 
-                                	value='<fmt:message key="search.field.default.text"/>'
-                                	class="search-text-box search-text-aqua">
-                                <input type="button" class="blueButton" 
-                                       name="globalSearchBtn" value="Go">
-                            </form>
-                        </div>
-                        </div>
-                    </div>
-                         
                 </div>
             </div>
             <div id="mainContentWrapper">
-            <div id="mainContent">
-	        	<tiles:insertAttribute name="section_MainContent" />    
-            </div>
+            	<div id="mainContent">
+	        		<tiles:insertAttribute name="section_ErrorContent" />    
+            	</div>
             </div>
             <div id="footerContainer">Footer</div>
         </div>

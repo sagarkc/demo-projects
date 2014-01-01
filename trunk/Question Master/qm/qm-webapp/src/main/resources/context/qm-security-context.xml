@@ -16,20 +16,22 @@
 	<http pattern="/accessDenied.htm*" security="none" />
 	<http pattern="/loginfailed.htm*" security="none" />
 	<http pattern="/register.htm*" security="none" />
-	<http pattern="/doRegister.htm*" security="none" />
+	<http pattern="/showRegister.htm*" security="none" />
+	<http pattern="/errorPage.htm*" security="none" />
+	<http pattern="/activateUser/**" security="none" />
 
 	<http auto-config="true" use-expressions="true">
 		<intercept-url pattern="/*" 		access="isAuthenticated()" />
 		<intercept-url pattern="/admin/*" 	access="hasRole('ROLE_ADMIN')" />
  		
-		<form-login login-page="/login.htm" default-target-url="/GmsMessenger.html"
+		<form-login login-page="/login.htm" default-target-url="/questionMaster.htm"
 			authentication-failure-url="/loginfailed.htm" />
 
-		<logout logout-success-url="/logout.htm" delete-cookies="JSESSIONID"/>
+		<logout logout-success-url="/logout.htm" delete-cookies="QMAPPSESSIONID"/>
 		<access-denied-handler error-page="/accessDenied.htm" />
 		
-		<session-management invalid-session-url="/login.htm" session-fixation-protection="newSession">
-		    <concurrency-control max-sessions="1" error-if-maximum-exceeded="false" expired-url="/login.htm"/>
+		<session-management invalid-session-url="/showLogin.htm" session-fixation-protection="newSession">
+		    <concurrency-control max-sessions="1" error-if-maximum-exceeded="false" expired-url="/index.htm"/>
 		</session-management>
 	</http>
 	
@@ -45,15 +47,15 @@
 
 	<authentication-manager>
 		<authentication-provider>
-			<jdbc-user-service data-source-ref="gmsDataSource"
+			<jdbc-user-service data-source-ref="qmDataSource"
 				users-by-username-query="
-					SELECT USER_NAME AS USERNAME, PASSWORD, IS_ENABLED AS ENABLED 
-					FROM gms_user WHERE USER_NAME=?
+					SELECT USER_NAME AS USERNAME, PASSWORD, IS_ACTIVATED AS ENABLED 
+					FROM USER WHERE USER_NAME=?
 				"
 				authorities-by-username-query="
-					SELECT U.USER_NAME AS USERNAME, R.ROLE_NAME AS AUTHORITY
-					FROM GMS_USER U INNER JOIN GMS_USER_ROLE_MAP URM ON (U.USER_ID = URM.USER_ID)
-						INNER JOIN GMS_ROLE R ON (URM.ROLE_ID = R.ROLE_ID) 
+					SELECT U.USER_NAME AS USERNAME, R.ROLE_TITLE AS AUTHORITY
+					FROM USER U INNER JOIN USER_ROLE_MAP URM ON (U.USER_ID = URM.USER_ID)
+						INNER JOIN ROLE R ON (URM.ROLE_ID = R.ROLE_ID) 
 					WHERE U.USER_NAME = ?
 				" />
 		</authentication-provider>

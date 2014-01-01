@@ -18,7 +18,7 @@
 	
 	<import resource="classpath:context/qm-session-context.xml"/>  
 	<import resource="classpath:context/qm-web-context.xml"/> 
-	<!-- <import resource="classpath:context/qm-security-context.xml"/> --> 
+	<import resource="classpath:context/qm-security-context.xml"/> 
 	<import resource="classpath:context/qm-query-context.xml"/> 
 	
 	<bean name="propertyConfigurer"

@@ -40,6 +40,7 @@ import javax.persistence.TemporalType;
 		@NamedQuery(name = "User.findByUserName", query = "SELECT u FROM User u WHERE u.userName = :userName"),
 		@NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
 		@NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
+		@NamedQuery(name = "User.findByIdActivationCode", query = "SELECT u FROM User u WHERE u.userId = :userId AND u.activationCode = :activationCode"),
 		@NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName") })
 public class User implements Serializable {
 	private static final long serialVersionUID = 11651654656546564L;

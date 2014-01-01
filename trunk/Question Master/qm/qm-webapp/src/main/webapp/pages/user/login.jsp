@@ -8,7 +8,7 @@
 
 	
 <c:if test="${hasSecurityError}">
-	<div class="errorblock">
+	<div class="ui-state-error ui-corner-all">
 		Your login attempt was not successful, try again.<br /> Caused :
 		${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
 	</div>
