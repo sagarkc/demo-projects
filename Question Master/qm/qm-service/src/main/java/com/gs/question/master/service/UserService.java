@@ -14,7 +14,7 @@ public interface UserService {
 
 	Long registerUser(UserDto userDto) throws ApplicationException;
 	
-	Long activateUser(String activationCode) throws ApplicationException;
+	boolean activateUser(Long userId, String activationCode) throws ApplicationException;
 	
 	
 }
