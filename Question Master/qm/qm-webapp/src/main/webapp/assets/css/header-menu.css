@@ -1,161 +1,153 @@
-div#menu {
-	height: 41px;
-}
-
-div#menu ul {
+.menu,.menu ul,.menu li,.menu a {
 	margin: 0;
 	padding: 0;
+	border: none;
+	outline: none;
+}
+
+/* Menu */
+.menu {
+	height: 48px;
+	width: 505px;
+	background-color: #222;
+	background-repeat: repeat-x;
+	background-image: -khtml-gradient(linear, left top, left bottom, from(#4b4b4b),
+		to(#222));
+	background-image: -moz-linear-gradient(top, #4b4b4b, #222);
+	background-image: -ms-linear-gradient(top, #4b4b4b, #222);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #4b4b4b),
+		color-stop(100%, #222));
+	background-image: -webkit-linear-gradient(top, #4b4b4b, #222);
+	background-image: -o-linear-gradient(top, #4b4b4b, #222);
+	background-image: linear-gradient(top, #4b4b4b, #222);
+	filter: progid:DXImageTransform.Microsoft.gradient(    
+        startColorstr='#4b4b4b', endColorstr='#222222', GradientType=0);
+	-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0
+		rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0
+		rgba(0, 0, 0, 0.1);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0
+		rgba(0, 0, 0, 0.1)
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.menu li {
+	position: relative;
 	list-style: none;
 	float: left;
-}
-
-div#menu ul.menu {
-	padding-left: 30px;
-}
-
-div#menu li {
-	position: relative;
-	z-index: 9;
-	margin: 0;
-	padding: 0 5px 0 0;
 	display: block;
-	float: left;
+	height: 48px;
 }
 
-div#menu li:hover>ul {
-	left: -2px;
-}
-
-div#menu a {
-	position: relative;
-	z-index: 10;
-	height: 41px;
+/* Links */
+.menu li a {
 	display: block;
-	float: left;
-	line-height: 41px;
+	padding: 0 14px;
+	margin: 6px 0;
+	line-height: 28px;
 	text-decoration: none;
-	font: normal 13px Trebuchet MS;
+	border-left: 1px solid #393942;
+	border-right: 1px solid #4f5058;
+	font-family: Helvetica, Arial, sans-serif;
+	font-weight: bold;
+	font-size: 13px;
+	color: #f3f3f3;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, .6);
+	-webkit-transition: color .2s ease-in-out;
+	-moz-transition: color .2s ease-in-out;
+	-o-transition: color .2s ease-in-out;
+	-ms-transition: color .2s ease-in-out;
+	transition: color .2s ease-in-out;
 }
 
-div#menu a:hover,div#menu a:hover span {
-	color: #fff;
+.menu li:first-child a {
+	border-left: none;
 }
 
-div#menu li.current a {
-	
+.menu li:last-child a {
+	border-right: none;
 }
 
-div#menu span {
-	display: block;
-	cursor: pointer;
-	background-repeat: no-repeat;
-	background-position: 95% 0;
+.menu li:hover>a {
+	color: #8fde62;
+	text-shadow: 0 1px 1px #000;
+	background-color: #272727;
+	background-repeat: repeat-x;
+	background-image: -khtml-gradient(linear, left top, left bottom, from(#101010), to(#272727));
+	background-image: -moz-linear-gradient(top, #101010, #272727);
+	background-image: -ms-linear-gradient(top, #101010, #272727);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #101010), color-stop(100%, #272727));
+	background-image: -webkit-linear-gradient(top, #101010, #272727);
+	background-image: -o-linear-gradient(top, #101010, #272727);
+	background-image: linear-gradient(top, #101010, #272727);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#101010', endColorstr='#272727', GradientType=0);
+	-webkit-box-shadow: inset 0 2px 6px rgba(0,0,0,0.9);
+	-moz-box-shadow: inset 0 2px 6px rgba(0,0,0,0.9);
+	box-shadow: inset 0 2px 6px rgba(0,0,0,0.9);
 }
 
-div#menu ul ul a.parent span {
-	background-position: 95% 8px;
-	background-image: url(images/item-pointer.gif);
-}
-
-div#menu ul ul a.parent:hover span {
-	background-image: url(images/item-pointer-mover.gif);
-}
-
-/* menu::level1 */
-div#menu a {
-	padding: 0 10px 0 10px;
-	line-height: 30px;
-	color: #e5e5e5;
-}
-
-div#menu span {
-	margin-top: 5px;
-} /**@replace#1*/
-div#menu li {
-	background: url(images/main-delimiter.png) 98% 4px no-repeat;
-}
-
-div#menu li.last {
-	background: none;
-}
-
-/* menu::level2 */
-div#menu ul ul li {
-	background: none;
-}
-
-div#menu ul ul {
+/* Sub Menu */
+.menu ul {
 	position: absolute;
-	top: 38px;
-	left: -999em;
-	width: 163px;
-	padding: 5px 0 0 0;
-	background: rgb(45, 45, 45);
-	margin-top: 1px;
+	top: 48px;
+	left: 0;
+	opacity: 0;
+	background: #1f2024;
+	-webkit-border-radius: 0 0 5px 5px;
+	-moz-border-radius: 0 0 5px 5px;
+	border-radius: 0 0 5px 5px;
+	-webkit-transition: opacity .25s ease .1s;
+	-moz-transition: opacity .25s ease .1s;
+	-o-transition: opacity .25s ease .1s;
+	-ms-transition: opacity .25s ease .1s;
+	transition: opacity .25s ease .1s;
 }
 
-div#menu ul ul a {
-	padding: 0 0 0 15px;
-	height: auto;
-	float: none;
-	display: block;
-	line-height: 24px;
-	color: rgb(169, 169, 169);
+.menu li:hover>ul {
+	opacity: 1;
 }
 
-div#menu ul ul span {
-	margin-top: 0;
-	padding-right: 15px;
-	_padding-right: 20px;
-	color: rgb(169, 169, 169);
-}
-
-div#menu ul ul a:hover span {
-	color: #fff;
-}
-
-div#menu ul ul li.last {
-	background: none;
-}
-
-div#menu ul ul li {
-	width: 100%;
-}
-
-/* menu::level3 */
-div#menu ul ul ul {
+.menu ul li {
+	height: 0;
+	overflow: hidden;
 	padding: 0;
-	margin: -38px 0 0 163px !important;
-	margin-left: 172px;
+	-webkit-transition: height .25s ease .1s;
+	-moz-transition: height .25s ease .1s;
+	-o-transition: height .25s ease .1s;
+	-ms-transition: height .25s ease .1s;
+	transition: height .25s ease .1s;
 }
 
-/* colors */
-div#menu ul ul ul {
-	background: rgb(41, 41, 41);
+.menu li:hover>ul li {
+	height: 36px;
+	overflow: visible;
+	padding: 0;
 }
 
-div#menu ul ul ul ul {
-	background: rgb(38, 38, 38);
+.menu ul li a {
+	width: 100px;
+	padding: 4px 0 4px 48px;
+	margin: 0;
+	border: none;
+	border-bottom: 1px solid #353539;
 }
 
-div#menu ul ul ul ul {
-	background: rgb(35, 35, 35);
+.menu ul li:last-child a {
+	border: none;
 }
 
-/* lava lamp */
-div#menu li.back {
-	background: url(images/lava.png) no-repeat right -44px !important;
-	background-image: url(images/lava.gif);
-	width: 13px;
-	height: 44px;
-	z-index: 8;
-	position: absolute;
-	margin: -1px 0 0 -5px;
+/* Icons */
+.menu a.documents {
+	background: url(../img/docs.png) no-repeat 6px center;
 }
 
-div#menu li.back .left {
-	background: url(images/lava.png) no-repeat top left !important;
-	background-image: url(images/lava.gif);
-	height: 44px;
-	margin-right: 8px;
+.menu a.messages {
+	background: url(../img/bubble.png) no-repeat 6px center;
 }
+
+.menu a.signout {
+	background: url(../img/arrow.png) no-repeat 6px center;
+}
+
