@@ -6,19 +6,16 @@
 
 <ul class="menu">
 
-	<li><a href="#">My dashboard</a></li>
-	<li><a href="#">Likes</a></li>
-	<li><a href="#">Views</a>
+	<li><a href="<%=request.getContextPath()%>/question/listall.htm">Question</a>
 
 		<ul>
-			<li><a href="#" class="documents">Documents</a></li>
-			<li><a href="#" class="messages">Messages</a></li>
-			<li><a href="#" class="signout">Sign Out</a></li>
+			<li><a href="<%=request.getContextPath()%>/question/bank.htm" 
+				class="documents">Question Bank</a></li>
+			<li><a href="<%=request.getContextPath()%>/question/testPaper.htm" 
+				class="messages">Test Paper</a></li>
 		</ul>
-
 	</li>
-	<li><a href="#">Uploads</a></li>
-	<li><a href="#">Videos</a></li>
-	<li><a href="#">Documents</a></li>
+	<li><a href="<%=request.getContextPath()%>/examiner/dashboard.htm">Examiner</a></li>
+	<li><a href="<%=request.getContextPath()%>/admin/dashboard.htm">Admin</a></li>
 
 </ul>

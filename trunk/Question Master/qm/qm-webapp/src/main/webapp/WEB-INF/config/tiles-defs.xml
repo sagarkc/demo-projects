@@ -7,17 +7,18 @@
 <tiles-definitions>
 
     <!-- Default Main Template -->
-    <definition name="basicLayout" template="/layout/basicLayout.jsp">
+    <definition name="basicLayout" template="/layout/BasicLayout.jsp">
     	<put-attribute name="section_HeaderMenus" value="/pages/links/NavigationLinks.jsp" />
     	<put-attribute name="section_HeaderLinks" value="/layout/HeaderLinks.jsp" />
-    	<put-attribute name="section_UserHeaderLinks" value="/pages/user/HeaderLoginLink.jsp" />
+    	<put-attribute name="section_UserProfileLinks" value="/pages/user/HeaderLoginLink.jsp" />
     	<put-attribute name="section_MainContent" value="" />
     </definition>
     
     <!-- Layout after login -->
-    <definition name="loggedinLayout" template="/layout/basicLayout.jsp">
+    <definition name="loggedinLayout" template="/layout/BasicLayout.jsp">
+    	<put-attribute name="section_HeaderMenus" value="/pages/links/NavigationLinks.jsp" />
     	<put-attribute name="section_HeaderLinks" value="/layout/HeaderLinks.jsp" />
-    	<put-attribute name="section_UserHeaderLinks" value="/pages/user/UserHeaderLinks.jsp" />
+    	<put-attribute name="section_UserProfileLinks" value="/pages/user/UserProfileLinks.jsp" />
     	<put-attribute name="section_MainContent" value="" />
     </definition>
     
