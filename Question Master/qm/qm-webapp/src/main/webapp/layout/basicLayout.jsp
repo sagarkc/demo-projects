@@ -14,16 +14,16 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="question, answer, test, examination" />
-		<LINK REL="SHORTCUT ICON" HREF="assets/images/layout/qm-shortcut.png" />
+		<LINK REL="SHORTCUT ICON" HREF="<%=request.getContextPath()%>/assets/images/layout/qm-shortcut.png" />
 		<link  rel="stylesheet" href="http://fonts.googleapis.com/css?family=Ubuntu+Condensed">
-		<link  rel="stylesheet" href="assets/css/qm-style.css">
-		<link  rel="stylesheet" href="assets/css/header-menu.css">
-		<link  rel="stylesheet" href="assets/css/framework/jquery-ui-1.10.3-green.css">
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		<!--[if lte IE 8]><script src="assets/js/framework/html5shiv.js"></script><![endif]-->
+		<link  rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/qm-style.css">
+		<link  rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/header-menu.css">
+		<link  rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/framework/jquery-ui-1.10.3-green.css">
+		<!--[if lte IE 9]><link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><script src="<%=request.getContextPath()%>/assets/js/framework/html5shiv.js"></script><![endif]-->
 		
-        <script src="assets/js/framework/jquery-1.9.1.js"></script>
-		<script src="assets/js/framework/jquery-ui-1.10.3.js"></script>
+        <script src="<%=request.getContextPath()%>/assets/js/framework/jquery-1.9.1.js"></script>
+		<script src="<%=request.getContextPath()%>/assets/js/framework/jquery-ui-1.10.3.js"></script>
         
         <script type="text/javascript">
             $(function() {
@@ -67,7 +67,7 @@
                     <div id="header-logo">
                         <a href="#">
                             <img alt="questionMaster"
-                             src="assets/images/layout/qm-logo.png"/>
+                             src="<%=request.getContextPath()%>/assets/images/layout/qm-logo.png"/>
                         </a>
                     </div>
                     <div id="topbar-nav">
@@ -78,7 +78,7 @@
                             <tiles:insertAttribute name="section_HeaderLinks" />
                         </div>
                         <div id="header-user-links">
-                            <tiles:insertAttribute name="section_UserHeaderLinks" />
+                            <tiles:insertAttribute name="section_UserProfileLinks" />
                         </div>
                         <div id="header-search-box">
                         <div class="form-row">

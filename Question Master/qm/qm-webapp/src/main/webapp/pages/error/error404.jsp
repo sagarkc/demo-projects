@@ -1,7 +1,7 @@
 
 <div style="
 	min-width: 512px; height: 320px; width:100%; max-height: 320px;
-	background: url('assets/images/errors/404.png') no-repeat;
+	background: url('<%=request.getContextPath()%>/assets/images/errors/404.png') no-repeat;
 ">
 	<div style="min-height: 100px; width: 100%;"></div>
 	<div style="padding-left: 300px; ">
@@ -23,7 +23,7 @@
 	<div style="padding-left: 300px; ">
 		<span style="font-size: 1.0em;
 			color: #000;">
-			Click <a href="index.htm">here</a> to open the Home Page!!!
+			Click <a href="<%=request.getContextPath()%>/index.htm">here</a> to open the Home Page!!!
 		</span>
 	</div>
 </div>
