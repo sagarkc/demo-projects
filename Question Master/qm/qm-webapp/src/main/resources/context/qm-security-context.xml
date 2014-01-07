@@ -27,7 +27,7 @@
 		<intercept-url pattern="/admin/*" 	access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/examiner/*" 	access="hasRole('ROLE_EXAMINER')" />
  		
-		<form-login login-page="/login.htm" default-target-url="/questionMaster.htm"
+		<form-login login-page="/login.htm" default-target-url="/user/dashboard.htm"
 			authentication-failure-url="/loginfailed.htm" />
 
 		<logout logout-success-url="/logout.htm" delete-cookies="QMAPPSESSIONID"/>

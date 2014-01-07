@@ -3,6 +3,7 @@
  */
 package com.gs.question.master.web.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -34,7 +35,7 @@ public class HomeController {
 	@Autowired
     private UserService userService;
 	
-	@RequestMapping(value="/index.htm", method=RequestMethod.GET)
+	@RequestMapping(value="/index", method=RequestMethod.GET)
 	public String index(){
 		return "homePageView";
 	}
@@ -42,6 +43,13 @@ public class HomeController {
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String showLogin(ModelMap modelMap){
 		modelMap.addAttribute("hasSecurityError", false);
+		return "showLoginView";
+	}
+	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String logout(ModelMap modelMap, HttpServletRequest request){
+		modelMap.addAttribute("hasSecurityError", false);
+		request.getSession().invalidate();
 		return "showLoginView";
 	}
 	

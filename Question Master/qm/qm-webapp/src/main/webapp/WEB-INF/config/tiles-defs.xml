@@ -17,7 +17,7 @@
     <!-- Layout after login -->
     <definition name="loggedinLayout" template="/layout/BasicLayout.jsp">
     	<put-attribute name="section_HeaderMenus" value="/pages/links/NavigationLinks.jsp" />
-    	<put-attribute name="section_HeaderLinks" value="/layout/HeaderLinks.jsp" />
+    	<put-attribute name="section_HeaderLinks" value="" />
     	<put-attribute name="section_UserProfileLinks" value="/pages/user/UserProfileLinks.jsp" />
     	<put-attribute name="section_MainContent" value="" />
     </definition>
@@ -33,20 +33,26 @@
     </definition>
     
     <definition name="showLoginView" extends="basicLayout">
-         <put-attribute name="section_MainContent" value="/pages/user/login.jsp" />
+         <put-attribute name="section_MainContent" value="/pages/user/Login.jsp" />
     </definition>
     
     <definition name="showRegisterView" extends="basicLayout">
-         <put-attribute name="section_MainContent" value="/pages/user/registration.jsp" />
+         <put-attribute name="section_MainContent" value="/pages/user/Registration.jsp" />
     </definition>
     
     
     <definition name="userActivationErrorView" extends="basicLayout">
-         <put-attribute name="section_MainContent" value="/pages/user/activationError.jsp" />
+         <put-attribute name="section_MainContent" value="/pages/user/ActivationError.jsp" />
     </definition>
     
     <definition name="error404View" extends="errorPageLayout">
-         <put-attribute name="section_ErrorContent" value="/pages/error/error404.jsp" />
+         <put-attribute name="section_ErrorContent" value="/pages/error/Error404.jsp" />
+    </definition>
+    
+    
+    <!-- After login -->
+    <definition name="showUserDashboardView" extends="loggedinLayout">
+         <put-attribute name="section_MainContent" value="/pages/user/Dashboard.jsp" />
     </definition>
   	
 </tiles-definitions>
