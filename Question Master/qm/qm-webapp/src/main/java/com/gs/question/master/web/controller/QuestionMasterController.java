@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  *
  */
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/qm")
 public class QuestionMasterController {
 
 	@RequestMapping(value="/dashboard", method=RequestMethod.GET)
