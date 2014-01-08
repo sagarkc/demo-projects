@@ -11,4 +11,6 @@ public interface WebConstants {
 
 	String SESSION_COOKIE_NAME = "QMAPPSESSIONID";
 	
+	String LOGGED_IN_USER_NAME = "loggedInUserName";
+	
 }
