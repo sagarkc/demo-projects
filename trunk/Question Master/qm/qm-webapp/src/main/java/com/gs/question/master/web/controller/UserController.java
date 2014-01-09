@@ -2,18 +2,24 @@ package com.gs.question.master.web.controller;
 
 import java.security.Principal;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.gs.question.master.web.WebConstants;
 
 
 @Controller
 @RequestMapping("/user")
+@Scope(WebApplicationContext.SCOPE_SESSION)
+@SessionAttributes({WebConstants.LOGGED_IN_USER_NAME})
 public class UserController {
 
+	
 	@RequestMapping(value="/dashboard", method=RequestMethod.GET)
 	public String showDashboard(ModelMap model, Principal principal){
 		
