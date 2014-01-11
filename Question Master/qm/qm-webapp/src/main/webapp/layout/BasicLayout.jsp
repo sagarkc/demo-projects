@@ -18,6 +18,7 @@
 		<link  rel="stylesheet" href="http://fonts.googleapis.com/css?family=Ubuntu+Condensed">
 		<link  rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/qm-style.css">
 		<link  rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/header-menu.css">
+		<link  rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/toolbar-menu.css">
 		<link  rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/framework/jquery-ui-1.10.3-green.css">
 		<!--[if lte IE 9]><link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><script src="<%=request.getContextPath()%>/assets/js/framework/html5shiv.js"></script><![endif]-->
