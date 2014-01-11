@@ -1,7 +1,7 @@
 
 <div style="
 	min-width: 512px; height: 320px; width:100%; max-height: 320px;
-	background: url('<%=request.getContextPath()%>/assets/images/errors/error404.png') no-repeat;
+	background: url('<%=request.getContextPath()%>/assets/images/errors/error405.png') no-repeat;
 ">
 	<div style="min-height: 100px; width: 100%;"></div>
 	<div style="padding-left: 300px; ">
@@ -9,7 +9,7 @@
 			font-style:normal ; font-weight: bold; 
 			font-size: 3.0em;
 			text-shadow: 2px 1px #030D09; color: #2AA46E;">
-			Page Not Found
+			405
 		</span>
 	</div>
 	<div style="padding-left: 300px; ">
@@ -17,7 +17,7 @@
 			font-style:oblique ; font-weight: bold; 
 			font-size: 1.8em;
 			color: #000;">
-			I have no idea about the page you are looking for.
+			405.
 		</span>
 	</div>
 	<div style="padding-left: 300px; ">

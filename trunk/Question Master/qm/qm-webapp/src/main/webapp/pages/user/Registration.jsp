@@ -22,8 +22,10 @@
 -->
 </script>
 
-<div  class="login-caption">
-	<span>Register User</h1>
+<div class="heading fill-glossy-aqua" >
+	<div class="login-caption">
+	Sign up
+	</div>
 </div>
 	
 		<div id="login-wrapper" style="height: auto; width: 370px;">
@@ -41,7 +43,6 @@
 					<tr>
 						<td width="180" align="right">
 							<sf:input path="userName" maxlength="100" id="userName"
-								cssClass="text-box text-aqua" 
 								cssStyle="width: 180px; "/>
 						</td>
 						<td width="180" align="right">
@@ -54,7 +55,6 @@
 					<tr>
 						<td width="180" align="right">
 							<sf:input path="email" maxlength="100" id="email"
-								cssClass="text-box text-aqua"
 								cssStyle="width: 180px;"/>
 						</td>
 						<td width="180" align="right">
@@ -77,12 +77,11 @@
 					<tr>
 						<td width="180" align="right">
 							<sf:password path="password" maxlength="100"
-								cssClass="text-box text-aqua"
 								cssStyle="width: 180px;"/>
 						</td>
 						<td width="180" align="right">
 							<input type="password" name="confirmPassword" 
-							Class="text-box text-aqua" Style="width: 180px; ">
+							 Style="width: 180px; ">
 						</td>
 					</tr>
 					<tr>
@@ -97,12 +96,10 @@
 					<tr>
 						<td width="180" align="right">
 							<sf:input path="firstName" maxlength="100"
-								cssClass="text-box text-aqua" 
 								cssStyle="width: 180px;"/>
 						</td>
 						<td width="180" align="right">
 							<sf:input path="lastName" maxlength="100"
-								cssClass="text-box text-aqua" 
 								cssStyle="width: 180px;"/>
 						</td>
 					</tr>

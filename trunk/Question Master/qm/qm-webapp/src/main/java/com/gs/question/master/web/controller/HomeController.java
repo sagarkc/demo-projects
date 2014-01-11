@@ -105,7 +105,11 @@ public class HomeController {
 	
 	@RequestMapping(value="/error/{errorCode}.htm", method=RequestMethod.GET)
 	public String showErrorPage(@PathVariable int errorCode){
-		return "error404View";
+		if(errorCode >= 500 && errorCode < 600)
+			return "error50xView";
+		if(errorCode >= 400 && errorCode < 500)
+			return "error" + errorCode + "View";
+		return "errorXXXView";
 	}
 	
 }

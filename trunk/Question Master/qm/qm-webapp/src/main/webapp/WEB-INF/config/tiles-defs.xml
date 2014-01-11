@@ -48,11 +48,38 @@
     <definition name="error404View" extends="errorPageLayout">
          <put-attribute name="section_ErrorContent" value="/pages/error/Error404.jsp" />
     </definition>
+    <definition name="error403View" extends="errorPageLayout">
+         <put-attribute name="section_ErrorContent" value="/pages/error/Error403.jsp" />
+    </definition>
+    <definition name="error405View" extends="errorPageLayout">
+         <put-attribute name="section_ErrorContent" value="/pages/error/Error405.jsp" />
+    </definition>
+    <definition name="error50xView" extends="errorPageLayout">
+         <put-attribute name="section_ErrorContent" value="/pages/error/Error50x.jsp" />
+    </definition>
+    <definition name="errorXXXView" extends="errorPageLayout">
+         <put-attribute name="section_ErrorContent" value="/pages/error/ErrorXXX.jsp" />
+    </definition>
     
     
     <!-- After login -->
     <definition name="showUserDashboardView" extends="loggedinLayout">
          <put-attribute name="section_MainContent" value="/pages/user/Dashboard.jsp" />
     </definition>
-  	
+    
+    
+    <!-- Question Bank -->
+  	<definition name="questionBankView" extends="loggedinLayout">
+         <put-attribute name="section_MainContent" value="/pages/question/bank/BankList.jsp" />
+    </definition>
+    <definition name="questionBankAddFormView" extends="loggedinLayout">
+         <put-attribute name="section_MainContent" value="/pages/question/bank/BankCreate.jsp" />
+    </definition>
+    <definition name="questionBankEditFormView" extends="loggedinLayout">
+         <put-attribute name="section_MainContent" value="/pages/question/bank/BankEdit.jsp" />
+    </definition>
+    <definition name="questionBankDetailsView" extends="loggedinLayout">
+         <put-attribute name="section_MainContent" value="/pages/question/bank/BankDetails.jsp" />
+    </definition>
+    
 </tiles-definitions>

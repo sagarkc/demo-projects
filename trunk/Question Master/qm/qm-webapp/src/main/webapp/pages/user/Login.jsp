@@ -13,8 +13,10 @@
 		${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
 	</div>
 </c:if>
-<div  class="login-caption">
-	<span>Login</h1>
+<div class="heading fill-glossy-aqua" >
+	<div class="login-caption">
+	Sign in  
+	</div>
 </div>
 <form name="loginForm" id="loginForm" method="post"
 		action="<c:url value='j_spring_security_check' />">
@@ -23,15 +25,16 @@
 		<table width="320">
 			<tr>
 				<td width="60">User Name:</td>
-				<td width="200" align="right"><input type="text"
+				<td width="200" align="right">
+				<input type="text"
 					name="j_username" style="width: 180px;" maxlength="50"
-					class="text-box text-aqua"></td>
+					></td>
 			</tr>
 			<tr>
 				<td width="60">Password:</td>
 				<td width="200" align="right"><input type="password"
 					name="j_password" style="width: 180px;" maxlength="50"
-					class="text-box text-aqua"></td>
+					></td>
 			</tr>
 			<tr>
 				<td width="60"></td>
