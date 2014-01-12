@@ -2,6 +2,8 @@ package com.gs.question.master.web.controller;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,13 +21,12 @@ import com.gs.question.master.web.WebConstants;
 @SessionAttributes({WebConstants.LOGGED_IN_USER_NAME})
 public class UserController {
 
-	
 	@RequestMapping(value="/dashboard", method=RequestMethod.GET)
-	public String showDashboard(ModelMap model, Principal principal){
+	public String showDashboard(ModelMap model, Principal principal, HttpServletRequest request){
 		
 		String name = principal.getName();
 		model.addAttribute(WebConstants.LOGGED_IN_USER_NAME, name);
-		
+		request.getSession().setAttribute(WebConstants.LOGGED_IN_USER_NAME, principal.getName());
 		return "showUserDashboardView";
 	}
 	

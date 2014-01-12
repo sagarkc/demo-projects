@@ -92,6 +92,7 @@ input:focus {
 #topBar {
 	top: 0px;
 	width: 100%;
+	min-width: 1000px;
 	height: 48px;
 	max-height: 48px;
 	min-height: 48px;
@@ -108,7 +109,7 @@ input:focus {
 #header {
 	margin-left: 0px;
 	margin-right: 50px;
-	min-width: 900px;
+	min-width: 1000px;
 	vertical-align: middle;
 	width: 100%;
 }

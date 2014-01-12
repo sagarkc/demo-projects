@@ -9,12 +9,14 @@
 	<li><a href="#"><c:out value="${loggedInUserName}"/></a>
 
 		<ul>
-			<li><a href="<%=request.getContextPath()%>/user/profile.htm" 
-				class="documents">Profile</a></li>
-			<li><a href="<%=request.getContextPath()%>/user/settings.htm" 
-				class="messages">Settings</a></li>
-			<li><a href="<%=request.getContextPath()%>/logout.htm" 
-				class="messages">Log out</a></li>
+			<li><a href="<%=request.getContextPath()%>/user/course.htm"  class="cources">Courses</a></li>
+			<li><a href="<%=request.getContextPath()%>/user/course.htm"  >Tests</a></li>
+			<li><a href="<%=request.getContextPath()%>/user/profile.htm" >Exams</a></li>
+			
+			<li><a href="<%=request.getContextPath()%>/user/profile.htm"  class="profile">Profile</a></li>
+			
+			<li><a href="<%=request.getContextPath()%>/user/settings.htm"  class="settings">Settings</a></li>
+			<li><a href="<%=request.getContextPath()%>/logout.htm"  class="signout">Sign out</a></li>
 		</ul>
 	</li>
 	

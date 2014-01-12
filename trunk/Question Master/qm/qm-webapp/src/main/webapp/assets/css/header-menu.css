@@ -150,14 +150,22 @@
 
 /* Icons */
 .menu a.documents {
-	background: url(../img/docs.png) no-repeat 6px center;
+	background: url(imgages/document.png) no-repeat 6px center;
 }
 
-.menu a.messages {
-	background: url(../img/bubble.png) no-repeat 6px center;
+.menu a.profile {
+	background: url(imgages/profile.png) no-repeat 6px center;
+}
+
+.menu a.cources {
+	background: url(imgages/cources.png) no-repeat 6px center;
+}
+
+.menu a.settings {
+	background: url(imgages/gear_wheel.png) no-repeat 6px center;
 }
 
 .menu a.signout {
-	background: url(../img/arrow.png) no-repeat 6px center;
+	background: url(images/log-out.png) no-repeat 6px center;
 }
 
