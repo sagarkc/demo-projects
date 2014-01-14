@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE XMI SYSTEM "C:\Users\Sabuj\AppData\Roaming\NetBeans\7.4\.uml\config\UML_2.0EMBT.dtd"> --><XMI xmlns:UML="omg.org/UML/1.4" xmi.version="2.0"> <XMI.header> <XMI.metamodel xmi.name="UML" xmi.version="1.4"/> <XMI.documentation> <XMI.exporter> Embarcadero's Describe </XMI.exporter> <XMI.exporterVersion> 6.0 </XMI.exporterVersion> </XMI.documentation> </XMI.header> <XMI.content> <UML:Project xmi.id="DCE.08CD7ED9-FB39-D03E-6BD8-92DAF686D318" mode="Implementation" defaultLanguage="Java" projVersion="6.1.4.837" name="qm-spec"><UML:Element.ownedElement>
+<UML:Actor xmi.id="DCE.C39C32E5-825E-61F5-9D66-C1FDB81C314C" name="User" owner="DCE.08CD7ED9-FB39-D03E-6BD8-92DAF686D318" clientDependency="DCE.052C5F79-F789-A203-90F0-187EF59B082E"><UML:Element.presentation>
+</UML:Element.presentation></UML:Actor>
+<UML:UseCase xmi.id="DCE.9FCFCF20-D675-8C46-19E8-1D8FDD8F2FF8" name="Unnamed" owner="DCE.08CD7ED9-FB39-D03E-6BD8-92DAF686D318"><UML:Element.presentation>
+</UML:Element.presentation></UML:UseCase>
+<UML:Actor xmi.id="DCE.9EF7216A-3C19-E217-E7E6-AA3929810397" name="Unnamed" owner="DCE.08CD7ED9-FB39-D03E-6BD8-92DAF686D318" supplierDependency="DCE.052C5F79-F789-A203-90F0-187EF59B082E"><UML:Element.presentation>
+</UML:Element.presentation></UML:Actor>
+<UML:Dependency xmi.id="DCE.052C5F79-F789-A203-90F0-187EF59B082E" owner="DCE.08CD7ED9-FB39-D03E-6BD8-92DAF686D318" client="DCE.C39C32E5-825E-61F5-9D66-C1FDB81C314C" supplier="DCE.9EF7216A-3C19-E217-E7E6-AA3929810397"><UML:Element.presentation>
+</UML:Element.presentation></UML:Dependency>
+<UML:Package xmi.id="DCE.A6A83535-85A4-DF1F-2940-90FE569E2622" name="entity" owner="DCE.08CD7ED9-FB39-D03E-6BD8-92DAF686D318"><UML:Element.presentation>
+</UML:Element.presentation><UML:Element.ownedElement>
+
+<UML:Class xmi.id="DCE.C0DE7378-AE0B-740D-FC4E-1C713008295E" name="Unnamed" owner="DCE.A6A83535-85A4-DF1F-2940-90FE569E2622"><UML:Element.presentation>
+</UML:Element.presentation></UML:Class>
+<UML:Class xmi.id="DCE.4255C709-FBBA-17C6-E9EB-F96D82553423" name="Unnamed" owner="DCE.A6A83535-85A4-DF1F-2940-90FE569E2622"><UML:Element.presentation>
+</UML:Element.presentation></UML:Class></UML:Element.ownedElement></UML:Package>
+</UML:Element.ownedElement></UML:Project></XMI.content> </XMI>
