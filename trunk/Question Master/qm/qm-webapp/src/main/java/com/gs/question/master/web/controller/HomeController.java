@@ -35,7 +35,10 @@ public class HomeController {
     private UserService userService;
 	
 	@RequestMapping(value="/index", method=RequestMethod.GET)
-	public String index(){
+	public String index(ModelMap modelMap, HttpServletRequest request){
+		
+		
+		
 		return "homePageView";
 	}
 
@@ -65,7 +68,9 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="/register.htm", method=RequestMethod.POST)
-	public String handleRegister(HttpSession httpSession, @Valid @ModelAttribute("registrationDto") UserDto registrationDto, BindingResult bindingResult){
+	public String handleRegister(HttpSession httpSession, 
+			@Valid @ModelAttribute("registrationDto") UserDto registrationDto, 
+			BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
 			return "showRegisterView";
 		}
