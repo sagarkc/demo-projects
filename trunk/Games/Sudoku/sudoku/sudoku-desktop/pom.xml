@@ -1,27 +1,28 @@
 <?xml version="1.0"?>
 <project
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-    xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>com.gs.games.josephus</groupId>
-        <artifactId>josephus</artifactId>
-        <version>0.1</version>
-    </parent>
-    <groupId>com.gs.games.josephus</groupId>
-    <artifactId>josephus-ui</artifactId>
-    <version>0.1</version>
-    <name>josephus-ui</name>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.gs.games.sudoku</groupId>
+		<artifactId>sudoku</artifactId>
+		<version>0.1</version>
+	</parent>
+	<groupId>com.gs.games.sudoku</groupId>
+	<artifactId>sudoku-desktop</artifactId>
+	<version>0.1</version>
+	<name>sudoku-desktop</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.gs.games.josephus</groupId>
-            <artifactId>josephus-core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
-    
-    <build>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.gs.games.sudoku</groupId>
+			<artifactId>sudoku-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+	
+	<build>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -38,7 +39,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.gs.games.josephus.ui.GameLauncher</mainClass>
+                            <mainClass>com.gs.games.sudoku.desktop.SudokuLauncher</mainClass>
                             <addClasspath>true</addClasspath>
                             <addExtensions>false</addExtensions>
                             <classpathPrefix>lib/</classpathPrefix>
@@ -85,31 +86,16 @@
                         <phase>package</phase>
                         <configuration>
                             <tasks>
-                                <!-- Coping JAR to release directory -->
+                                <!-- Coping JAR and other required resources to release directory -->
                                 <copy todir="${release.dir}/${project.version}/"
                                       overwrite="true" failonerror="true" includeEmptyDirs="true">
                                     <fileset dir="target">
                                         <include name="${artifactId}-${project.version}.jar" />
                                     </fileset>
-                                </copy>
-                                
-                                <!--
-                                <copy todir="${release.dir}/${artifactId}-${release.version}/"
-                                      overwrite="true" failonerror="true" includeEmptyDirs="true">
-                                    <fileset dir="${bin.dir}">
-                                        <include name="bagh-bandhi-${release.version}.exe" />
-                                        <include name="log4j.xml" />
+                                    <fileset dir="${config.dir}/bin">
+                                        <include name="Sudoku-${project.version}.exe" />
                                     </fileset>
                                 </copy>
-                                
-                                
-                                <copy todir="${release.dir}/${artifactId}-${release.version}/help/"
-                                      overwrite="true" failonerror="true" includeEmptyDirs="true">
-                                    <fileset dir="${help.dir}">
-                                        <include name="gsplit-help-${release.version}.html" />
-                                    </fileset>
-                                </copy>
-                                -->
                             </tasks>
                         </configuration>
                         <goals>
