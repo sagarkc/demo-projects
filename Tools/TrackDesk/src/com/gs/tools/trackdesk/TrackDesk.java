@@ -31,7 +31,7 @@ public class TrackDesk {
     public static void main(String args[]) {
         try {
             if(OS_TYPE.indexOf("win") >= 0){
-                UIManager.setLookAndFeel(GlassForestLookAndFeel.class.getCanonicalName());
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } else {
                 UIManager.setLookAndFeel(NimbusLookAndFeel.class.getCanonicalName());
             }
