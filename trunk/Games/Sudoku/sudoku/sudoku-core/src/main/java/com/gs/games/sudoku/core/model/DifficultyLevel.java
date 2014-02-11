@@ -17,6 +17,7 @@ public enum DifficultyLevel {
 	
 	private final int key;
 	private final String value;
+	
 	/**
 	 * @param key
 	 * @param value
@@ -25,12 +26,14 @@ public enum DifficultyLevel {
 		this.key = key;
 		this.value = value;
 	}
+	
 	/**
 	 * @return the key
 	 */
 	public int getKey() {
 		return key;
 	}
+	
 	/**
 	 * @return the value
 	 */
