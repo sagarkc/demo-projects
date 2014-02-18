@@ -6,28 +6,38 @@
 
 package com.gs.games.sudoku.desktop.ui;
 
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.util.ResourceBundle;
+
+import javax.swing.ImageIcon;
+
 import com.gs.games.sudoku.desktop.ResourceBundleManager;
 import com.gs.games.sudoku.desktop.SudokuUiConstants;
 import com.gs.games.sudoku.desktop.WindowManager;
 import com.gs.games.sudoku.desktop.components.SudokuGamePanel;
 import com.gs.utils.swing.window.WindowUtil;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.util.ResourceBundle;
-import javax.swing.ImageIcon;
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
+
 
 /**
+ * @author Sabuj Das | sabuj.das@gmail.com
  *
- * @author SG1736
  */
 public class SudokuGameFrame extends javax.swing.JFrame {
 
-    private static final WindowManager WINDOW_MANAGER = WindowManager.getManager();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1066998621020156017L;
+	
+	private static final WindowManager WINDOW_MANAGER = WindowManager.getManager();
     private ResourceBundle bundle = ResourceBundleManager.getBundleManager().getResourceBundle();
     
     /**
@@ -40,9 +50,25 @@ public class SudokuGameFrame extends javax.swing.JFrame {
         setMinimumSize(getSize());
         setIconImage((new ImageIcon(getClass()
                 .getResource("/images/sudoku-24x24.png"))).getImage());
-        WindowUtil.bringToCenter(this);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         initComponents();
+        
+        WindowUtil.bringToCenter(this);
+        
+        Graphics g = getGraphics();
+        if(null != g){
+        	RenderingHints hints = new RenderingHints(
+    				RenderingHints.KEY_ANTIALIASING,
+    				RenderingHints.VALUE_ANTIALIAS_ON);
+    		hints.add(new RenderingHints(RenderingHints.KEY_RENDERING,
+    				RenderingHints.VALUE_RENDER_QUALITY));
+
+    		Graphics2D g2d = (Graphics2D) g;
+    		g2d.setRenderingHints(hints);
+    		update(g2d);
+        }
+        
+        
         WINDOW_MANAGER.baseDesktopPane = this.baseDesktopPane;
         WINDOW_MANAGER.windowManagerLabel = this.windowManagerLabel;
         WINDOW_MANAGER.windowManagerPopupMenu = this.windowManagerPopupMenu;
