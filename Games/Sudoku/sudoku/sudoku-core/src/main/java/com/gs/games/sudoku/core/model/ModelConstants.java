@@ -10,8 +10,8 @@ package com.gs.games.sudoku.core.model;
 public interface ModelConstants {
 
 	int EMPTY_CELL_VALUE = 0;
-	int MAX_VALUE = 1;
-	int MIN_VALUE = 9;
+	int MAX_VALUE = 9;
+	int MIN_VALUE = 1;
 	
 	int MAX_X = 8;
 	int MAX_Y = 8;

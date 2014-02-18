@@ -14,7 +14,8 @@ package com.gs.games.sudoku.core.model;
 public class Cell extends Box{
 	
 	private int value = ModelConstants.EMPTY_CELL_VALUE;
-
+	private boolean valueProvided;
+	
 	/**
 	 * @param x
 	 * @param y
@@ -38,7 +39,19 @@ public class Cell extends Box{
 			this.value = value;
 	}
 
-	
+	/**
+	 * @return the valueProvided
+	 */
+	public boolean isValueProvided() {
+		return valueProvided;
+	}
+
+	/**
+	 * @param valueProvided the valueProvided to set
+	 */
+	public void setValueProvided(boolean valueProvided) {
+		this.valueProvided = valueProvided;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()

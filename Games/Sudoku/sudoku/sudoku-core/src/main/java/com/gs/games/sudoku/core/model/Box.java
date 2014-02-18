@@ -9,6 +9,7 @@ package com.gs.games.sudoku.core.model;
  */
 public abstract class Box {
 
+	private final int id;
 	private final int x;
 	private final int y;
 	
@@ -22,6 +23,18 @@ public abstract class Box {
 			throw new IllegalArgumentException("Invalid cell identity provided: " + x + ", " + y);
 		this.x = x;
 		this.y = y;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + x;
+		result = prime * result + y;
+		id = result;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
 	}
 
 	/**
