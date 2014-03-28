@@ -153,9 +153,12 @@ public class ColorPaletteManager implements ColorGrabListener, ColorDetectListen
     }
 
     public void removeSelection() {
+        ColorPanelSelectedEvent event = new ColorPanelSelectedEvent(
+                Boolean.FALSE, Boolean.FALSE, instance);
+        event.setOldSelectedPanel(selectedPanel);
+        event.setNewSelectedPanel(null);
         selectedPanel = null;
-        eventManager.fireEvent(new ColorPanelSelectedEvent(
-                Boolean.FALSE, Boolean.FALSE, instance));
+        eventManager.fireEvent(event);
     }
 
     public Set<String> getAllPaletteNames() {
@@ -185,6 +188,15 @@ public class ColorPaletteManager implements ColorGrabListener, ColorDetectListen
         
         selectedPanel.setSelected(b);
         selectedPanel = null;
+    }
+
+    public void selectAll(String paletteName) {
+//        final List<ColorPanel> colorPanels = colorPanelPaletteMap.get(paletteName);
+//        for (ColorPanel p : colorPanels) {
+//            p.setSelected(true);
+//            ColorPanelSelectedEvent event = new ColorPanelSelectedEvent(p.isSelected(), true, this);
+//            ApplicationEventManager.getInstance().fireEvent(event);
+//        }
     }
 
     

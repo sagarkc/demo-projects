@@ -8,24 +8,23 @@ import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author Sabuj
  */
-public class ColorPalette implements Serializable{
-    
+public class ColorPalette implements Serializable {
+
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 8851654449004277988L;
-	private String name;
-    private List<String> colorCodes;
-    transient List<Color> colors;
+     *
+     */
+    private static final long serialVersionUID = 8851654449004277988L;
+    private String name;
+    private List<ColorData> colorDataList;
 
     public ColorPalette() {
-        colors = new ArrayList<Color>();
-        colorCodes = new ArrayList<String>();
+        colorDataList = new ArrayList<ColorData>();
     }
 
     public String getName() {
@@ -36,24 +35,31 @@ public class ColorPalette implements Serializable{
         this.name = name;
     }
 
-    public List<String> getColorCodes() {
-        return colorCodes;
+//
+//    public List<String> getColorCodes() {
+//        return colorCodes;
+//    }
+//
+//    public void setColorCodes(List<String> colorCodes) {
+//        this.colorCodes = colorCodes;
+//    }
+//
+//    public List<Color> getColors() {
+//        if (null != colorCodes) {
+//            for (String code : colorCodes) {
+//                Color c = Color.decode(code);
+//                colors.add(c);
+//            }
+//        }
+//        return colors;
+//    }
+    public List<ColorData> getColorDataList() {
+        return colorDataList;
     }
 
-    public void setColorCodes(List<String> colorCodes) {
-        this.colorCodes = colorCodes;
+    public void setColorDataList(List<ColorData> colorDataList) {
+        this.colorDataList = colorDataList;
     }
-
-    public List<Color> getColors() {
-        if(null != colorCodes){
-            for (String code : colorCodes) {
-                Color c = Color.decode(code);
-                colors.add(c);
-            }
-        }
-        return colors;
-    }
-
 
     @Override
     public int hashCode() {
@@ -83,9 +89,7 @@ public class ColorPalette implements Serializable{
     }
 
     public void add(String colorCode) {
-        this.colorCodes.add(colorCode);
+        this.colorDataList.add(new ColorData(colorCode, colorCode, colorCode, Color.decode(colorCode)));
     }
 
-    
-    
 }
