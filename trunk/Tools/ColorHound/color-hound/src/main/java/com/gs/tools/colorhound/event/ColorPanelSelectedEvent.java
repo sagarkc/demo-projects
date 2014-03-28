@@ -10,6 +10,7 @@
 
 package com.gs.tools.colorhound.event;
 
+import com.gs.tools.colorhound.ui.ColorPanel;
 import java.awt.Color;
 import java.util.EventObject;
 
@@ -23,6 +24,8 @@ public class ColorPanelSelectedEvent extends EventObject
     private Boolean newValue;
     private Object source;
     private Color selectedColor;
+    private ColorPanel oldSelectedPanel;
+    private ColorPanel newSelectedPanel;
     
     public ColorPanelSelectedEvent(Boolean oldValue, Boolean newValue, Object source) {
         super(source);
@@ -53,6 +56,22 @@ public class ColorPanelSelectedEvent extends EventObject
 
     public void setNewValue(Boolean newValue) {
         this.newValue = newValue;
+    }
+
+    public ColorPanel getOldSelectedPanel() {
+        return oldSelectedPanel;
+    }
+
+    public void setOldSelectedPanel(ColorPanel oldSelectedPanel) {
+        this.oldSelectedPanel = oldSelectedPanel;
+    }
+
+    public ColorPanel getNewSelectedPanel() {
+        return newSelectedPanel;
+    }
+
+    public void setNewSelectedPanel(ColorPanel newSelectedPanel) {
+        this.newSelectedPanel = newSelectedPanel;
     }
     
 }

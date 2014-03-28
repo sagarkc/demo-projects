@@ -10,6 +10,7 @@
 
 package com.gs.tools.colorhound.ui;
 
+import com.gs.tools.colorhound.ColorData;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ListModel;
@@ -21,11 +22,11 @@ import javax.swing.event.ListDataListener;
  */
 public class ColorPaletteListModel implements ListModel{
 
-    private final List<String> colorCodeList;
+    private final List<ColorData> colorCodeList;
 
-    public ColorPaletteListModel(List<String> colorCodeList) {
+    public ColorPaletteListModel(List<ColorData> colorCodeList) {
         if(null == colorCodeList){
-            colorCodeList = new ArrayList<String>(0);
+            colorCodeList = new ArrayList<ColorData>(0);
         }
         this.colorCodeList = colorCodeList;
     }
@@ -39,7 +40,7 @@ public class ColorPaletteListModel implements ListModel{
 
     @Override
     public String getElementAt(int index) {
-        return colorCodeList.get(index);
+        return colorCodeList.get(index).getColorCode();
     }
 
     @Override

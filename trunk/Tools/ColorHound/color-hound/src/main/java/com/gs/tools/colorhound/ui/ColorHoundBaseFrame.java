@@ -11,6 +11,7 @@
 package com.gs.tools.colorhound.ui;
 
 import com.gs.tools.colorhound.ApplicationContext;
+import com.gs.tools.colorhound.ColorData;
 import com.gs.tools.colorhound.ColorPalette;
 import com.gs.tools.colorhound.WorkerTaskConstants;
 import com.gs.tools.colorhound.event.AppSettingsChangedEvent;
@@ -108,7 +109,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     
     private ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/Message");
     private static final Toolkit TOOLKIT = Toolkit.getDefaultToolkit();
-    private MouseWatcher mouseWatcher = new MouseWatcher();
+    //private MouseWatcher mouseWatcher = new MouseWatcher();
     private Timer mouseWatchTimer = new Timer();
     private boolean enlargePanelEnabled = true;
     private EnlargedImagePanel enlargedImagePanel;
@@ -125,7 +126,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         setIconImage(frameIcon.getImage());
         textScanProgressBar.setVisible(false);
         colorPickedJList.setModel(
-                    new ColorPaletteListModel(new ArrayList<String>(0)));
+                    new ColorPaletteListModel(new ArrayList<ColorData>(0)));
         colorPickedJList.setCellRenderer(new ColorPaletteListCellRenderer());
         
         WindowUtil.bringToCenter(this);
@@ -143,6 +144,8 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         ApplicationEventManager.getInstance().registerListener(
                 ColorDetectEvent.class, this);
         ApplicationEventManager.getInstance().registerListener(
+                ColorGrabEvent.class, this);
+        ApplicationEventManager.getInstance().registerListener(
                 AppSettingsChangedEvent.class, this);
         ApplicationEventManager.getInstance().registerListener(
                 MouseInfoChangeEvent.class, this);
@@ -154,10 +157,10 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                 ColorPaletteManager.getInstance().addPalette(
                         colorPalette.getName());
                 paletteListComboBox.addItem(colorPalette.getName());
-                List<String> colorCodes = colorPalette.getColorCodes();
-                if(null != colorCodes && colorCodes.size() > 0){
-                    for (String code : colorCodes) {
-                        Color color = Color.decode(code);
+                List<ColorData> colorDatas = colorPalette.getColorDataList();
+                if(null != colorDatas && colorDatas.size() > 0){
+                    for (ColorData colorData : colorDatas) {
+                        Color color = Color.decode(colorData.getColorCode());
                         ColorPanel colorPanel = new ColorPanel(paletteContentPanel, 
                             colorPalette.getName());
                         colorPanel.setSelected(false);
@@ -385,6 +388,8 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         paletteToolBar.add(deleteColorButton);
 
         paletteContentPanel.setBackground(new java.awt.Color(0, 0, 0));
+        paletteContentPanel.addMouseListener(formListener);
+        paletteContentPanel.addKeyListener(formListener);
         paletteContentPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
         paletteContentScrollPane.setViewportView(paletteContentPanel);
 
@@ -881,7 +886,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
 
     // Code for dispatching events from components to event handlers.
 
-    private class FormListener implements java.awt.event.ActionListener, java.awt.event.ComponentListener, java.awt.event.ItemListener, java.awt.event.KeyListener, java.awt.event.WindowListener, java.beans.PropertyChangeListener, javax.swing.event.ChangeListener {
+    private class FormListener implements java.awt.event.ActionListener, java.awt.event.ComponentListener, java.awt.event.ItemListener, java.awt.event.KeyListener, java.awt.event.MouseListener, java.awt.event.WindowListener, java.beans.PropertyChangeListener, javax.swing.event.ChangeListener {
         FormListener() {}
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             if (evt.getSource() == paletteListComboBox) {
@@ -980,6 +985,9 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
             if (evt.getSource() == ColorHoundBaseFrame.this) {
                 ColorHoundBaseFrame.this.formKeyPressed(evt);
             }
+            else if (evt.getSource() == paletteContentPanel) {
+                ColorHoundBaseFrame.this.paletteContentPanelKeyPressed(evt);
+            }
         }
 
         public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -989,6 +997,24 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         }
 
         public void keyTyped(java.awt.event.KeyEvent evt) {
+        }
+
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            if (evt.getSource() == paletteContentPanel) {
+                ColorHoundBaseFrame.this.paletteContentPanelMouseClicked(evt);
+            }
+        }
+
+        public void mouseEntered(java.awt.event.MouseEvent evt) {
+        }
+
+        public void mouseExited(java.awt.event.MouseEvent evt) {
+        }
+
+        public void mousePressed(java.awt.event.MouseEvent evt) {
+        }
+
+        public void mouseReleased(java.awt.event.MouseEvent evt) {
         }
 
         public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -1156,6 +1182,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
         }
         resizePaletteContentPanel();
         paletteContentPanel.updateUI();
+        
     }//GEN-LAST:event_paletteListComboBoxActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -1350,12 +1377,14 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     }//GEN-LAST:event_captureDesktopButtonActionPerformed
 
     private void enableEnlargeAreaChkMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enableEnlargeAreaChkMenuItemActionPerformed
-        if(enableEnlargeAreaChkMenuItem.isSelected()){
-            enlargePanelEnabled = true;
-            mouseWatchTimer.schedule(mouseWatcher, 0, timerPeriod);
-        } else {
-            enlargePanelEnabled = false;
-            mouseWatchTimer.cancel();
+        synchronized(this){
+            if(enableEnlargeAreaChkMenuItem.isSelected()){
+                enlargePanelEnabled = true;
+                mouseWatchTimer.schedule(new MouseWatcher(), 0, timerPeriod);
+            } else {
+                enlargePanelEnabled = false;
+                mouseWatchTimer.cancel();
+            }
         }
     }//GEN-LAST:event_enableEnlargeAreaChkMenuItemActionPerformed
 
@@ -1422,9 +1451,27 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
 
     private void cleatTextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cleatTextButtonActionPerformed
         sourceTextTextArea.setText("");
-        colorPickedJList.setModel(new ColorPaletteListModel(new ArrayList<String>()));
+        colorPickedJList.setModel(new ColorPaletteListModel(new ArrayList<ColorData>()));
         colorPickedJList.updateUI();
     }//GEN-LAST:event_cleatTextButtonActionPerformed
+
+    private void paletteContentPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paletteContentPanelMouseClicked
+        paletteContentPanel.requestFocus();
+        ColorPanelSelectedEvent event = new ColorPanelSelectedEvent(false, false,this);
+        event.setOldSelectedPanel(ColorPaletteManager.getInstance().getSelectPanel());
+        ApplicationEventManager.getInstance().fireEvent(event);
+    }//GEN-LAST:event_paletteContentPanelMouseClicked
+
+    private void paletteContentPanelKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_paletteContentPanelKeyPressed
+        // if CTRL+<key>
+        if(KeyEvent.CTRL_MASK == evt.getModifiers()){
+            if(evt.getKeyCode() == KeyEvent.VK_A){
+                ColorPaletteManager.getInstance().selectAll(paletteListComboBox.getSelectedItem().toString());
+            }
+        }
+        
+        
+    }//GEN-LAST:event_paletteContentPanelKeyPressed
 
     
 
@@ -1622,7 +1669,9 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     
     @Override
     public void colorGrabbed(ColorGrabEvent event) {
-        
+        synchronized(this){
+            mouseWatchTimer.cancel();
+        }
     }
 
     
@@ -1631,14 +1680,13 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                 ? paletteListComboBox.getSelectedItem().toString() : "";
     }
     
-    public void startMouseWatch() {
+    public synchronized void startMouseWatch() {
         try {
-            mouseWatchTimer.purge();
-            mouseWatchTimer.schedule(mouseWatcher, 0, timerPeriod);
-        } catch (IllegalStateException ise) {
             mouseWatchTimer = new Timer();
-            mouseWatcher.cancel();
-            mouseWatchTimer.schedule(mouseWatcher, 0, timerPeriod);
+            mouseWatchTimer.schedule(new MouseWatcher(), 0, timerPeriod);
+        } catch (IllegalStateException ise) {
+            mouseWatchTimer.cancel();
+            //mouseWatchTimer.schedule(new MouseWatcher(), 0, timerPeriod);
         }
     }
     
@@ -1658,7 +1706,11 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
                 hexColorTextField.setText(GraphicsUtil.encodeColor(event.getSelectedColor()));
                 cssRgbTextField.setText(GraphicsUtil.encodeColorForCss(event.getSelectedColor()));
             }
+            
         } else {
+            if(event.getOldSelectedPanel() != null){
+                event.getOldSelectedPanel().colorPanelSelectionRemoved();
+            }
             mouseWatchTimer.cancel();
             editColorButton.setEnabled(false);
             deleteColorButton.setEnabled(false);
@@ -1753,7 +1805,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
             paletteListComboBox.setEnabled(false);
             newMenuItem.setEnabled(false);
             colorPickedJList.setModel(
-                    new ColorPaletteListModel(new ArrayList<String>(0)));
+                    new ColorPaletteListModel(new ArrayList<ColorData>(0)));
             textScanProgressBar.setVisible(true);
             openTextFileButton.setEnabled(false);
             cleatTextButton.setEnabled(false);
@@ -1771,7 +1823,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
             paletteListComboBox.setEnabled(true);
             newMenuItem.setEnabled(true);
             colorPickedJList.setModel(
-                    new ColorPaletteListModel(new ArrayList<String>(0)));
+                    new ColorPaletteListModel(new ArrayList<ColorData>(0)));
             textScanProgressBar.setVisible(false);
             openTextFileButton.setEnabled(true);
             cleatTextButton.setEnabled(true);
@@ -1794,7 +1846,7 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
             cleatTextButton.setEnabled(true);
             ColorPalette colorPalette = (ColorPalette) evt.getNewValue();
             ColorPaletteListModel cplm = new ColorPaletteListModel(
-                    colorPalette.getColorCodes());
+                    colorPalette.getColorDataList());
             addColorPalette(colorPalette);
             colorPickedJList.setModel(cplm);
             colorPickedJList.updateUI();
@@ -1802,13 +1854,13 @@ public class ColorHoundBaseFrame extends javax.swing.JFrame
     }
     
     private void addColorPalette(ColorPalette colorPalette) {
-        if(null != colorPalette && colorPalette.getColorCodes().size() > 0){
+        if(null != colorPalette && colorPalette.getColorDataList().size() > 0){
             boolean added = ColorPaletteManager.getInstance().addPalette(colorPalette.getName());
-            for(String code: colorPalette.getColorCodes()){
+            for(ColorData code: colorPalette.getColorDataList()){
                 ColorPanel colorPanel = new ColorPanel(
                         paletteContentPanel, colorPalette.getName());
                 colorPanel.setColorGrabbed(true);
-                colorPanel.setSelectedColor(Color.decode(code));
+                colorPanel.setSelectedColor(Color.decode(code.getColorCode()));
                 colorPanel.setSelected(false);
                 ColorPaletteManager.getInstance().addPanel(colorPalette.getName(), 
                         colorPanel);

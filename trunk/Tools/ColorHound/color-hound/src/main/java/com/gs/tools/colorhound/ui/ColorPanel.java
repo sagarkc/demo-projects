@@ -12,6 +12,7 @@ package com.gs.tools.colorhound.ui;
 import com.gs.tools.colorhound.event.ApplicationEventManager;
 import com.gs.tools.colorhound.event.ColorGrabEvent;
 import com.gs.tools.colorhound.event.ColorPanelSelectedEvent;
+import com.gs.tools.colorhound.event.ColorPanelSelectedEventListener;
 import com.gs.tools.colorhound.util.GraphicsUtil;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -19,10 +20,13 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
@@ -40,7 +44,9 @@ import javax.swing.plaf.basic.BasicGraphicsUtils;
  *
  * @author Sabuj Das | sabuj.das@gmail.com
  */
-public class ColorPanel extends JPanel implements MouseListener, FocusListener {
+public class ColorPanel extends JPanel implements MouseListener, FocusListener,
+        KeyListener
+{
 
     private final JPanel parentPanel;
     private final String paletteName;
@@ -64,8 +70,9 @@ public class ColorPanel extends JPanel implements MouseListener, FocusListener {
     public ColorPanel(JPanel parent, final String paletteName) {
         this.parentPanel = parent;
         this.paletteName = paletteName;
+        
         selectedColor = Color.WHITE;
-        colorHexCode = Color.BLACK.toString();
+        colorHexCode = GraphicsUtil.encodeColor(Color.BLACK);
         Dimension d = new Dimension(MAX_WIDTH, MAX_HEIGHT);
         setMaximumSize(d);
         setMinimumSize(d);
@@ -74,9 +81,11 @@ public class ColorPanel extends JPanel implements MouseListener, FocusListener {
         setLayout(null);
         setDoubleBuffered(true);
         addMouseListener(this);
+        addKeyListener(this);
         //addFocusListener(this);
         setToolTipText(resourceBundle.getString("tip.color.panel.info"));
 
+        
         colorPanelPopupMenu = new JPopupMenu();
 
         chooseColorMenuItem = new JMenuItem();
@@ -146,8 +155,10 @@ public class ColorPanel extends JPanel implements MouseListener, FocusListener {
         this.selectedColor = selectedColor;
     }
 
+    @Override
     public void mouseClicked(MouseEvent e) {
         if (MouseEvent.BUTTON1 == e.getButton()) {
+            requestFocus();
             selected = true;
             ColorPaletteManager.getInstance().selectPanel(paletteName, this);
             updateUI();
@@ -160,16 +171,20 @@ public class ColorPanel extends JPanel implements MouseListener, FocusListener {
         }
     }
 
+    @Override
     public void mousePressed(MouseEvent e) {
     }
 
+    @Override
     public void mouseReleased(MouseEvent e) {
     }
 
+    @Override
     public void mouseEntered(MouseEvent e) {
         setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
+    @Override
     public void mouseExited(MouseEvent e) {
         setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
@@ -181,21 +196,34 @@ public class ColorPanel extends JPanel implements MouseListener, FocusListener {
 
     @Override
     public void focusLost(FocusEvent e) {
-        selected = false;
-        ColorPaletteManager.getInstance().selectPanel(paletteName, this, false);
-        updateUI();
-        parentPanel.updateUI();
-        ColorPanelSelectedEvent event = new ColorPanelSelectedEvent(false, selected, this);
-        if (colorGrabbed) {
-            event.setSelectedColor(selectedColor);
+        colorPanelSelectionRemoved();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE && selected == true){
+            ColorPanelSelectedEvent event = new ColorPanelSelectedEvent(selected, false, this);
+            event.setOldSelectedPanel(this);
+            ApplicationEventManager.getInstance().fireEvent(event);
         }
-        ApplicationEventManager.getInstance().fireEvent(event);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        
     }
 
     @Override
     public void paint(Graphics graphics) {
         Graphics2D g = (Graphics2D) graphics;
+        
         GraphicsUtil.addRendererHint(g);
+        
         g.setColor((selected ? Color.MAGENTA : Color.BLUE));
         BasicGraphicsUtils.drawDashedRect(g, 0, 0, MAX_WIDTH, MAX_HEIGHT);
         if (null == selectedColor) {
@@ -217,10 +245,27 @@ public class ColorPanel extends JPanel implements MouseListener, FocusListener {
                 );
         g.fill(fillAreaRectangle);
         
-        
-        
+        g.setFont(UiConstants.Fonts.TAHOMA_BOLD_9_5);
+        //g.setColor(UiConstants.Colors.TAG_TXT_FG);
+        g.setColor((selected ? Color.MAGENTA : UiConstants.Colors.TAG_TXT_FG));
+        g.drawString(GraphicsUtil.encodeColor(selectedColor), 8, MAX_HEIGHT-9);
     }
 
+
+    public void colorPanelSelectionRemoved() {
+        selected = false;
+        ColorPaletteManager.getInstance().selectPanel(paletteName, this, false);
+        updateUI();
+        parentPanel.updateUI();
+        ColorPanelSelectedEvent event = new ColorPanelSelectedEvent(false, selected, this);
+        if (colorGrabbed) {
+            event.setSelectedColor(selectedColor);
+        }
+        ApplicationEventManager.getInstance().fireEvent(event);
+    }
+
+    
+    
     public void setColorGrabbed(boolean b) {
         this.colorGrabbed = b;
     }

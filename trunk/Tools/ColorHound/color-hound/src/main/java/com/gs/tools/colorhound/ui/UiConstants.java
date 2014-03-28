@@ -10,6 +10,7 @@
 
 package com.gs.tools.colorhound.ui;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.io.File;
 
@@ -25,7 +26,11 @@ public interface UiConstants {
         public static final Font TAHOMA_PLAIN;
         public static final Font TAHOMA_BOLD;
         public static final Font TAHOMA_PLAIN_8;
+        public static final Font TAHOMA_PLAIN_9;
+        public static final Font TAHOMA_PLAIN_10_5;
+        public static final Font TAHOMA_BOLD_9_5;
         public static final Font VERA_MONO;
+        public static final Font VERA_MONO_PLAIN_9_5;
         static{
             Font font = Font.decode(Font.SANS_SERIF);
             try {
@@ -36,6 +41,8 @@ public interface UiConstants {
             TAHOMA_PLAIN = font;
             DEFAULT_FONT = TAHOMA_PLAIN.deriveFont(Font.PLAIN, 11.0F);
             TAHOMA_PLAIN_8 = TAHOMA_PLAIN.deriveFont(Font.PLAIN, 8.0F);
+            TAHOMA_PLAIN_9 = TAHOMA_PLAIN.deriveFont(Font.PLAIN, 9.0F);
+            TAHOMA_PLAIN_10_5 = TAHOMA_PLAIN.deriveFont(Font.PLAIN, 10.5F);
             
             try {
                  font = Font.createFont(Font.TRUETYPE_FONT,
@@ -43,6 +50,7 @@ public interface UiConstants {
                          + File.separator + "TAHOMABD.TTF" ));
             } catch (Exception ex) { }
             TAHOMA_BOLD = font;
+            TAHOMA_BOLD_9_5 = TAHOMA_BOLD.deriveFont(Font.PLAIN, 9.5F);
             
             try {
                  font = Font.createFont(Font.TRUETYPE_FONT,
@@ -50,7 +58,12 @@ public interface UiConstants {
                          + File.separator + "VeraMono.ttf" ));
             } catch (Exception ex) { }
             VERA_MONO = font;
+            VERA_MONO_PLAIN_9_5 = VERA_MONO.deriveFont(Font.PLAIN, 9.5F);
         }
         
+    }
+    
+    public interface Colors{
+        Color TAG_TXT_FG = Color.decode("0x5CE89C");
     }
 }
