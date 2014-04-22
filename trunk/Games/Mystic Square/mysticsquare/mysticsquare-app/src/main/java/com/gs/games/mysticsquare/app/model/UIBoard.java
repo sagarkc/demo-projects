@@ -3,6 +3,7 @@
  */
 package com.gs.games.mysticsquare.app.model;
 
+import java.awt.Graphics;
 import java.io.Serializable;
 
 import javax.swing.undo.UndoableEditSupport;
@@ -48,4 +49,13 @@ public class UIBoard extends Board implements Drawable, Serializable {
 		}
 		
 	}
+
+	/* (non-Javadoc)
+	 * @see com.gs.games.mysticsquare.app.board.Drawable#draw(java.awt.Graphics)
+	 */
+	public void draw(Graphics graphics) {
+		
+	}
+	
+	
 }
