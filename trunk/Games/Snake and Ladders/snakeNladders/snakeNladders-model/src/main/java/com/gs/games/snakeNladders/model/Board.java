@@ -37,9 +37,22 @@ public class Board {
 	
 	public static Board getDefaultBoard(){
 		Board board = new Board();
+		int size = board.boardSize * board.boardSize;
+		for(int i=1; i <= size; i++){
+			if(i == 1){
+				EntrySquare entrySquare = new EntrySquare(i);
+				board.squares.add(entrySquare);
+				board.squareNumberMap.put(i, entrySquare);
+			} else if(i == size){
+				ExitSquare exitSquare = new ExitSquare(i);
+				board.squares.add(exitSquare);
+				board.squareNumberMap.put(i, exitSquare);
+			} else {
+				
+			}
+		}
 		
-		Navigator snake = new Snake();
-		snake.setSource(source);
+		
 		
 		return board;
 	}
