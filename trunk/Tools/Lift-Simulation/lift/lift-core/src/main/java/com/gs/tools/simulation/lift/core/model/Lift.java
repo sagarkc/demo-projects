@@ -4,6 +4,10 @@
 package com.gs.tools.simulation.lift.core.model;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
@@ -12,14 +16,18 @@ import java.text.DecimalFormat;
 public class Lift {
 
 	public static final String NAME_PREFIX = "LIFT#";
-	public static final DecimalFormat THREE_DIGIT_FORMAT
+	public static final DecimalFormat TWO_DIGIT_FORMAT
 		= new DecimalFormat("00");
 	
 	private final int liftNumber;
-	private String name;
-	
 	private final double capacity;
-	private int maxPassangerCount;
+	
+	private String name;
+	private LiftState state;
+	private Floor location;
+	private Door door;
+	private List<Floor> blockedFloors;
+	private Set<Button> buttons;
 	
 	/**
 	 * @param liftNumber
@@ -28,7 +36,11 @@ public class Lift {
 	public Lift(int liftNumber, double capacity) {
 		this.liftNumber = liftNumber;
 		this.capacity = capacity;
-		this.name = NAME_PREFIX + THREE_DIGIT_FORMAT.format(liftNumber);
+		this.name = NAME_PREFIX + TWO_DIGIT_FORMAT.format(liftNumber);
+		this.door = new Door();
+		this.state = LiftState.IDLE;
+		this.blockedFloors = new ArrayList<Floor>();
+		this.buttons = new TreeSet<Button>();
 	}
 
 	/**
@@ -59,11 +71,44 @@ public class Lift {
 		return capacity;
 	}
 
-	/**
-	 * @return the maxPassangerCount
-	 */
-	public int getMaxPassangerCount() {
-		return maxPassangerCount;
+	public LiftState getState() {
+		return state;
+	}
+
+	public void setState(LiftState state) {
+		this.state = state;
+	}
+
+	public Floor getLocation() {
+		return location;
+	}
+
+	public void setLocation(Floor location) {
+		this.location = location;
+	}
+
+	public Door getDoor() {
+		return door;
+	}
+
+	public void setDoor(Door door) {
+		this.door = door;
+	}
+
+	public List<Floor> getBlockedFloors() {
+		return blockedFloors;
+	}
+
+	public void setBlockedFloors(List<Floor> blockedFloors) {
+		this.blockedFloors = blockedFloors;
+	}
+
+	public Set<Button> getButtons() {
+		return buttons;
+	}
+
+	public void setButtons(Set<Button> buttons) {
+		this.buttons = buttons;
 	}
 
 	/* (non-Javadoc)
