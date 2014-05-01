@@ -18,7 +18,8 @@ public class Floor {
 
 	private final int floorNumber;
 	private String name;
-
+	private Button button;
+	
 	/**
 	 * @param floorNumber
 	 */
@@ -46,6 +47,14 @@ public class Floor {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Button getButton() {
+		return button;
+	}
+
+	public void setButton(Button button) {
+		this.button = button;
 	}
 
 	/* (non-Javadoc)
@@ -86,9 +95,9 @@ public class Floor {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Floor [floorNumber=");
+		builder.append("Floor [floorNumber= ");
 		builder.append(floorNumber);
-		builder.append(", name=");
+		builder.append(", name= ");
 		builder.append(name);
 		builder.append("]");
 		return builder.toString();

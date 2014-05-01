@@ -7,9 +7,10 @@ package com.gs.tools.simulation.lift.core.model;
  * @author Sabuj Das | sabuj.das@gmail.com
  *
  */
-public enum LiftStatus {
+public enum Direction {
 
-	
-	STARTED, STOPPED;
+	UP, 
+	DOWN, 
+	UNKNOWN;
 	
 }
