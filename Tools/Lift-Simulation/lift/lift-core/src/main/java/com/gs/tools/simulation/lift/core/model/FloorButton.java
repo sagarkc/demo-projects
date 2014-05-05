@@ -26,7 +26,7 @@ public class FloorButton extends Button{
 		this.location = location;
 	}
 
-	public void doAction() {
+	public void press() {
 		// TODO Auto-generated method stub
 		
 	}

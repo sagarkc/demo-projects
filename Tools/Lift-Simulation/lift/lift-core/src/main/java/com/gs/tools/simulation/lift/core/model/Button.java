@@ -42,7 +42,7 @@ public abstract class Button {
 		return name;
 	}
 
-	public abstract void doAction();
+	public abstract void press();
 	
 	@Override
 	public int hashCode() {

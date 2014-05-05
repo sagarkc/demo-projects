@@ -4,8 +4,11 @@
 package com.gs.tools.simulation.lift.core.model;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+import com.gs.tools.simulation.lift.core.Controller;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
@@ -15,7 +18,8 @@ public class Building {
 
 	private final String name;
 	private Set<Floor> floors;
-	private Set<Lift> lifts;
+	private Set<Elevator> elevators;
+	private final Controller controller;
 	
 	/**
 	 * @param name
@@ -23,7 +27,8 @@ public class Building {
 	public Building(String name) {
 		this.name = name;
 		this.floors = new LinkedHashSet<Floor>();
-		this.lifts = new HashSet<Lift>();
+		this.elevators = new HashSet<>();
+		this.controller = new Controller(this);
 	}
 
 	public String getName() {
@@ -34,9 +39,6 @@ public class Building {
 		return floors;
 	}
 
-	public Set<Lift> getLifts() {
-		return lifts;
-	}
 
 	@Override
 	public int hashCode() {
@@ -77,6 +79,15 @@ public class Building {
 		return builder.toString();
 	}
 	
+	public Button getFloorButton(int floorNumber){
+		Iterator<Floor> it = floors.iterator();
+		while(it.hasNext()){
+			Floor f = it.next();
+			if(f.getFloorNumber() == floorNumber)
+				return f.getButton();
+		}
+		return null;
+	}
 	
 	
 }

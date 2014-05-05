@@ -13,7 +13,6 @@ public class Passenger {
 
 	private PassengerLocation location;
 	private Floor floor;
-	private Lift lift;
 
 	/**
 	 * @param id
@@ -36,14 +35,6 @@ public class Passenger {
 
 	public void setFloor(Floor floor) {
 		this.floor = floor;
-	}
-
-	public Lift getLift() {
-		return lift;
-	}
-
-	public void setLift(Lift lift) {
-		this.lift = lift;
 	}
 
 	public int getId() {
