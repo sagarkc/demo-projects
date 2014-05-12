@@ -40,6 +40,22 @@ public class Building {
 	}
 
 
+	public Set<Elevator> getElevators() {
+		return elevators;
+	}
+
+	public void setElevators(Set<Elevator> elevators) {
+		this.elevators = elevators;
+	}
+
+	public Controller getController() {
+		return controller;
+	}
+
+	public void setFloors(Set<Floor> floors) {
+		this.floors = floors;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
