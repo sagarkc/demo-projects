@@ -73,6 +73,13 @@ public class Suit implements Serializable{
 		builder.append("]");
 		return builder.toString();
 	}
+
+	/**
+	 * @param c
+	 */
+	public void attachCard(Card c) {
+		cards.add(c);
+	}
 	
 	
 }
