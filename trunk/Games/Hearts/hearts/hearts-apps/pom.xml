@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.gs.games.heatrs</groupId>
+		<artifactId>hearts</artifactId>
+		<version>0.1</version>
+	</parent>
+	<groupId>com.gs.games.heatrs</groupId>
+	<artifactId>hearts-apps</artifactId>
+	<version>0.1</version>
+	<packaging>pom</packaging>
+	<name>Hearts - Apps</name>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<configuration>
+					<locales>en,fr</locales>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+  <modules>
+    <module>hearts-desktop</module>
+  </modules>
+</project>
