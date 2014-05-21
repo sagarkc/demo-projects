@@ -9,6 +9,6 @@ package com.gs.games.heatrs.model.entity;
  */
 public class Hand {
 
-	private final String name;
-	private final Card[] cards;
+	//private final String name;
+	//private final Card[] cards;
 }
