@@ -6,6 +6,7 @@
 
 package com.gs.games.heatrs.apps.desktop.forms;
 
+import com.gs.games.heatrs.apps.desktop.HeartsConstants;
 import com.gs.games.heatrs.commons.ResourceBundleManager;
 import com.gs.utils.swing.window.WindowManager;
 import com.gs.utils.swing.window.WindowUtil;
@@ -20,10 +21,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 /**
  *
- * @author SG1736
+ * @author Sabuj Das
  */
 public class HeartsFrame extends javax.swing.JFrame {
     private static final WindowManager WINDOW_MANAGER = WindowManager.getManager();
@@ -90,7 +92,9 @@ public class HeartsFrame extends javax.swing.JFrame {
         desktopImageLabel = new javax.swing.JLabel();
         baseMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
-        newGameMenuItem = new javax.swing.JMenuItem();
+        newGameMenu = new javax.swing.JMenu();
+        newHeartsMenuItem = new javax.swing.JMenuItem();
+        newBridgeMenuItem = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         minimize2trayMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -199,15 +203,23 @@ public class HeartsFrame extends javax.swing.JFrame {
 
         fileMenu.setText(bundle.getString("HeartsFrame.fileMenu.text")); // NOI18N
 
-        newGameMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
-        newGameMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/symbol-hearts-16x16.png"))); // NOI18N
-        newGameMenuItem.setText(bundle.getString("HeartsFrame.newGameMenuItem.text")); // NOI18N
-        newGameMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        newGameMenu.setText(bundle.getString("HeartsFrame.newGameMenu.text")); // NOI18N
+
+        newHeartsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
+        newHeartsMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/symbol-hearts-16x16.png"))); // NOI18N
+        newHeartsMenuItem.setText(bundle.getString("HeartsFrame.newGameMenuItem.text")); // NOI18N
+        newHeartsMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newGameMenuItemActionPerformed(evt);
+                newHeartsMenuItemActionPerformed(evt);
             }
         });
-        fileMenu.add(newGameMenuItem);
+        newGameMenu.add(newHeartsMenuItem);
+
+        newBridgeMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
+        newBridgeMenuItem.setText(bundle.getString("HeartsFrame.newBridgeMenuItem.text")); // NOI18N
+        newGameMenu.add(newBridgeMenuItem);
+
+        fileMenu.add(newGameMenu);
         fileMenu.add(jSeparator4);
 
         minimize2trayMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.ALT_MASK));
@@ -319,18 +331,18 @@ public class HeartsFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void newGameMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newGameMenuItemActionPerformed
-        /*if (WINDOW_MANAGER.containsFrame(WindowManager.SECURE_SPLIT_WINDOW_TITLE)) {
-            WINDOW_MANAGER.showFrame(WindowManager.SECURE_SPLIT_WINDOW_TITLE);
+    private void newHeartsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newHeartsMenuItemActionPerformed
+        if (WINDOW_MANAGER.containsFrame(HeartsConstants.WindowConstants.HEARTS_WIN_TITLE)) {
+            WINDOW_MANAGER.showFrame(HeartsConstants.WindowConstants.HEARTS_WIN_TITLE);
             return;
         }
-        SecureSplitPanel secureSplitPanel = new SecureSplitPanel();
+        JPanel secureSplitPanel = new HeartsGamePanel();
         BaseInternalFrame baseInternalFrame = new BaseInternalFrame(secureSplitPanel);
-        baseInternalFrame.setTitle(WindowManager.SECURE_SPLIT_WINDOW_TITLE);
+        baseInternalFrame.setTitle(HeartsConstants.WindowConstants.HEARTS_WIN_TITLE);
         baseInternalFrame.setFrameIcon(new javax.swing.ImageIcon(getClass()
-            .getResource("/images/arrow-split.png")));
-        WINDOW_MANAGER.addIFrame(baseInternalFrame);*/
-    }//GEN-LAST:event_newGameMenuItemActionPerformed
+            .getResource("/images/symbol-hearts-24x24.png")));
+        WINDOW_MANAGER.addIFrame(baseInternalFrame);
+    }//GEN-LAST:event_newHeartsMenuItemActionPerformed
 
     private void minimize2trayMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimize2trayMenuItemActionPerformed
         ActionListener exitListener = new ActionListener() {
@@ -434,8 +446,8 @@ public class HeartsFrame extends javax.swing.JFrame {
     private void baseDesktopPaneComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_baseDesktopPaneComponentResized
         Dimension d = baseDesktopPane.getSize();
         int x = d.width - 264;
-        int y = d.height - 244;
-        desktopImageLabel.setBounds(x, y, 260, 240);
+        int y = d.height - 264;
+        desktopImageLabel.setBounds(x, y, 260, 260);
     }//GEN-LAST:event_baseDesktopPaneComponentResized
 
     private void minimizeAllMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minimizeAllMenuItemActionPerformed
@@ -473,7 +485,9 @@ public class HeartsFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem maximizeAllMenuItem;
     private javax.swing.JMenuItem minimize2trayMenuItem;
     private javax.swing.JMenuItem minimizeAllMenuItem;
-    private javax.swing.JMenuItem newGameMenuItem;
+    private javax.swing.JMenuItem newBridgeMenuItem;
+    private javax.swing.JMenu newGameMenu;
+    private javax.swing.JMenuItem newHeartsMenuItem;
     private javax.swing.JMenuItem settingsMenuItem;
     private javax.swing.JMenuItem showAllMenuItem;
     private javax.swing.JCheckBoxMenuItem showStatusbarChkbxMenuItem;
