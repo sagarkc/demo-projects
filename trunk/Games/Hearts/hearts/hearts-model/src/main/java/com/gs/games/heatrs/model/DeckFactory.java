@@ -4,7 +4,7 @@
 package com.gs.games.heatrs.model;
 
 import com.gs.games.heatrs.model.entity.Card;
-import com.gs.games.heatrs.model.entity.Deck;
+import com.gs.games.heatrs.model.entity.HeartsDeck;
 import com.gs.games.heatrs.model.entity.Suit;
 
 /**
@@ -31,7 +31,7 @@ public class DeckFactory {
 		return instance;
 	}
 	
-	public synchronized Deck buildDeck(){
+	public synchronized Deck buildHeartsDeck(){
 		Card[] cards = new Card[52];
 		Suit[] suits = new Suit[4];
 		for (int i = 0, k=0; i < 4; i++ ) {
@@ -46,7 +46,7 @@ public class DeckFactory {
 		}
 		
 		
-		Deck deck = new Deck(cards, suits);
+		Deck deck = new HeartsDeck(cards, suits);
 		
 		return deck;
 	}

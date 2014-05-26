@@ -7,6 +7,8 @@
 package com.gs.games.heatrs.apps.desktop;
 
 import com.gs.games.heatrs.commons.ResourceBundleManager;
+
+import java.awt.Color;
 import java.util.ResourceBundle;
 
 /**
@@ -22,4 +24,16 @@ public interface HeartsConstants {
         String BRIDG_WIN_TITLE = bundle.getString("bridge.win.title");
     }
     
+    public interface Colors{
+    	Color CARD_BG = Color.decode("0x103B68");
+    	Color CARD_BG_BORDER = Color.decode("0x689FC7");
+    	
+    	Color CARD_FG = Color.decode("0xEBDAA1");
+    	Color CARD_FG_BORDER = Color.decode("0xAEA06F");
+    	
+    	Color CARD_SPADES = Color.decode("0x000000");
+    	Color CARD_HEARTS = Color.decode("0xFF0000");
+    	Color CARD_DIAMONDS = Color.decode("0x0000FF");
+    	Color CARD_CLUBS = Color.decode("0x009900");
+    }
 }

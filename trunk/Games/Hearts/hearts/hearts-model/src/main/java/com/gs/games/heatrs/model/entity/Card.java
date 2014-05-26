@@ -27,6 +27,17 @@ public class Card implements Serializable{
 			}
 		
 		};
+		
+	public static final Comparator<Card> CARD_POWER_COMPARATOR
+		= new Comparator<Card>() {
+
+			public int compare(Card c1, Card c2) {
+				Integer cv1 = Integer.valueOf(c1.cardType.getPower());
+				Integer cv2 = Integer.valueOf(c2.cardType.getPower());
+				return cv1.compareTo(cv2);
+			}
+		
+		};
 	
 	
 	
@@ -96,11 +107,7 @@ public class Card implements Serializable{
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Card [cardType=");
-		builder.append(cardType);
-		builder.append(", suitType=");
-		builder.append(suitType);
-		builder.append(", displayText=");
+		builder.append("Card [");
 		builder.append(displayText);
 		builder.append("]");
 		return builder.toString();
