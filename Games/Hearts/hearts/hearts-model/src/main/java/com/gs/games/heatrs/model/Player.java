@@ -1,35 +1,63 @@
 /**
  * 
  */
-package com.gs.games.heatrs.model.entity;
+package com.gs.games.heatrs.model;
 
-import java.util.Arrays;
+import com.gs.games.heatrs.model.entity.Hand;
 
 /**
  * @author Sabuj Das | sabuj.das@gmail.com
  *
  */
-public class Hand {
+public class Player {
 
 	private final String name;
-	private final Card[] cards;
+	private Hand hand;
+	
+	private Player nextPlayer;
 	
 	/**
 	 * @param name
-	 * @param cards
 	 */
-	public Hand(String name, Card[] cards) {
+	public Player(String name) {
 		this.name = name;
-		this.cards = cards;
 	}
+
+
+	/**
+	 * @param name
+	 * @param hand
+	 */
+	public Player(String name, Hand hand) {
+		this.name = name;
+		this.hand = hand;
+	}
+
+
+	public Hand getHand() {
+		return hand;
+	}
+
+
+	public void setHand(Hand hand) {
+		this.hand = hand;
+	}
+
 
 	public String getName() {
 		return name;
 	}
 
-	public Card[] getCards() {
-		return cards;
+
+	public Player getNextPlayer() {
+		return nextPlayer;
 	}
+
+
+	public void setNextPlayer(Player nextPlayer) {
+		this.nextPlayer = nextPlayer;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -39,6 +67,7 @@ public class Hand {
 		return result;
 	}
 
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -47,10 +76,10 @@ public class Hand {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof Hand)) {
+		if (!(obj instanceof Player)) {
 			return false;
 		}
-		Hand other = (Hand) obj;
+		Player other = (Player) obj;
 		if (name == null) {
 			if (other.name != null) {
 				return false;
@@ -61,13 +90,12 @@ public class Hand {
 		return true;
 	}
 
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Hand [name=");
+		builder.append("Player [name=");
 		builder.append(name);
-		builder.append(", cards=");
-		builder.append(Arrays.toString(cards));
 		builder.append("]");
 		return builder.toString();
 	}

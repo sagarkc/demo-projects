@@ -9,19 +9,19 @@ package com.gs.games.heatrs.model.entity;
  */
 public enum CardTypeEnum {
 
-	ACE("ACE", 1, 13),
-	TWO("TWO", 2, 1),
-	THREE("THREE", 3, 2),
-	FOUR("FOUR", 4, 3),
-	FIVE("FIVE", 5, 4),
-	SIX("SIX", 6, 5),
-	SEVEN("SEVEN", 7, 6),
-	EIGHT("EIGHT", 8, 7),
-	NINE("NINE", 9, 8),
-	TEN("TEN", 10, 9),
-	JACK("JACK", 11, 10),
-	QUEEN("QUEEN", 12,11),
-	KING("KING", 13, 12),
+	ACE("A", 1, 13),
+	TWO("2", 2, 1),
+	THREE("3", 3, 2),
+	FOUR("4", 4, 3),
+	FIVE("5", 5, 4),
+	SIX("6", 6, 5),
+	SEVEN("7", 7, 6),
+	EIGHT("8", 8, 7),
+	NINE("9", 9, 8),
+	TEN("10", 10, 9),
+	JACK("J", 11, 10),
+	QUEEN("Q", 12,11),
+	KING("K", 13, 12),
 	INVALID("", -999, -999);
 	
 	private final String name;
