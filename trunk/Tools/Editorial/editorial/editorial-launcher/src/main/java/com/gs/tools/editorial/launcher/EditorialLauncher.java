@@ -6,6 +6,6 @@ package com.gs.tools.editorial.launcher;
  */
 public class EditorialLauncher {
 	public static void main(String[] args) {
-		System.out.println("Hello World!");
+		System.out.println(System.getProperty("user.home"));
 	}
 }
